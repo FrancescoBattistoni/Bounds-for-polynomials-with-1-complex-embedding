@@ -1,0 +1,1979 @@
+/* Study of inequality 22G
+
+         -  +               <= 256/27 <= 9.482
+      +' x  x  -
+      -' +
+         -' +' 2R^(1/2)
+
+*/
+
+Q:=RationalField();
+R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+L:=(1+x*y*z*t)*(1-x*y*z*t*a)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t*a*b)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2); /* times 2*sqrt(1-g^2)  */
+
+/* This is maximized at b = 1 giving
+
+   (1+x*y*z*t)*(1-x*y*z*t*a)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)  */
+
+/* Interior */
+
+L:=(1+x*y*z*t)*(1-x*y*z*t*a)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* times 2*sqrt(1-g^2)  */
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[10,1];
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lt:=Tt[3,1];
+La:=Ta[7,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Lx,Ly,a));
+res1a:=T[2,1];
+T:=Factorization(Resultant(Lx,Lz,a));
+res2a:=T[2,1];
+T:=Factorization(Resultant(Lx,Lt,a));
+res3a:=T[2,1];
+T:=Factorization(Resultant(Lx,La,a));
+res4a:=T[1,1];
+T:=Factorization(Resultant(Lx,Lg,a));
+res5a:=T[1,1];
+
+T:=Factorization(Resultant(res1a,res2a,g));
+res1g:=T[5,1];
+T:=Factorization(Resultant(res1a,res3a,g));
+res2g:=T[1,1];
+T:=Factorization(Resultant(res1a,res4a,g));
+res3g:=T[1,1];
+T:=Factorization(Resultant(res1a,res5a,g));
+res4g:=T[3,1];
+
+T:=Factorization(Resultant(res1g,res2g,x));
+res1xa:=T[3,1];
+res1xb:=T[7,1];
+res1x:=res1xa*res1xb;
+T:=Factorization(Resultant(res1g,res3g,x));
+res2x:=T[5,1];
+T:=Factorization(Resultant(res1g,res4g,x));
+res3x:=T[8,1];
+
+T:=Factorization(Resultant(res1x,res2x,y));
+res1ya:=T[6,1];
+res1yb:=T[7,1];
+res1yc:=T[8,1];
+res1yd:=T[9,1];
+res1ye:=T[10,1];
+res1yf:=T[11,1];
+
+T:=Factorization(Resultant(res1x,res3x,y));
+res2ya:=T[5,1];
+res2yb:=T[6,1];
+res2yc:=T[7,1];
+res2yd:=T[8,1];
+res2ye:=T[9,1];
+res2yf:=T[10,1];
+
+/* We have 6 cases to discuss */
+
+/* CASE A: res1ya = res2ya. When res1ya = 0 we have z*t - 1/2 = 0. */
+
+
+A:=-Coefficient(res1ya,t,0);
+B:=Coefficient(res1ya,t,1);
+S:=0;
+N:=res1x;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+/* The polynomial S obtained is actually equal to 0, so we move on */
+
+
+/* CASE B: res1yb = res2yb. When res1yb = 0 we have z*t - 1/3*t - 2/3 = 0. We substitute in res1g */
+
+
+A:=-Coefficient(res1yb,t,0);
+B:=Coefficient(res1yb,t,1);
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+/* This has no roots in the interior */
+
+
+/* CASE C: res1yc = res2yc. When res1yc = 0 we have z*t + 1/3*t - 2/3 = 0. We substitute in res1g */
+
+A:=-Coefficient(res1yc,t,0);
+B:=Coefficient(res1yc,t,1);
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+/* This has no roots in the interior */
+
+
+/* CASE D: res1yd = res2yd. When res1yd = 0 we have z*t - 2/3*t^2 - 1/3 = 0. We substitute in res1g */
+
+A:=-Coefficient(res1yd,z,0);
+B:=Coefficient(res1yd,z,1);
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,z)] do
+   S:=S+Coefficient(N,z,j)*A^j*B^(Degree(N,z)-j);
+end for;
+T:=Factorization(S);
+
+/* We find t = 1/2: substitution in res1yd gives z = 1, which is a boundary case */
+
+
+/* CASE E: res1ye = res2ye. When res1ye = 0 we have z^2*t - 2/3*z + 1/3*t = 0. We substitute in res1g  */
+
+A:=-Coefficient(res1ye,t,0);
+B:=Coefficient(res1ye,t,1);
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+/* This has no roots in the interior */
+
+
+/* CASE F */
+
+T:=Factorization(Resultant(res1yf,res2yf,z));
+
+resz:=T[4,1]*T[6,1]*T[7,1];
+
+PrintFile("22G_Pari.gp","\{resz=");
+PrintFile("22G_Pari.gp",resz);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1yf=");
+PrintFile("22G_Pari.gp",res1yf);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1x=");
+PrintFile("22G_Pari.gp",res1x);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Ly=");
+PrintFile("22G_Pari.gp",Ly);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The few critical points give small values for the function, < 1.41 */
+
+
+/* x = 0:
+
+   (1-2*y*z*g+(y*z)^2)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)  */
+
+L:=(1-2*y*z*g+(y*z)^2)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* 2*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lt:=Tt[2,1];
+La:=Ta[5,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Lz,Ly,a));
+res1a:=T[2,1];
+T:=Factorization(Resultant(Ly,Lt,a));
+res2a:=T[2,1];
+T:=Factorization(Resultant(Ly,La,a));
+res3a:=T[2,1]*T[3,1];
+T:=Factorization(Resultant(Ly,Lg,a));
+res4a:=T[2,1];
+
+T:=Factorization(Resultant(res1a,res2a,g));
+res1g:=T[2,1]*T[3,1];
+T:=Factorization(Resultant(res1a,res3a,g));
+res2g:=T[1,1]*T[2,1];
+T:=Factorization(Resultant(res1a,res4a,g));
+res3g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,t));
+res1ta:=T[7,1];
+res1tb:=T[11,1];
+res1tc:=T[12,1];
+res1td:=T[14,1];
+T:=Factorization(Resultant(res2g,res3g,t));
+res2ta:=T[7,1];
+res2tb:=T[10,1];
+res2tc:=T[11,1];
+
+
+/* CASE A: res1ta = y*z-1/3 = 0 */
+
+A:=-Coefficient(res1ta,z,0);
+B:=Coefficient(res1ta,z,1);
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,z)] do
+   S:=S+Coefficient(N,z,j)*A^j*B^(Degree(N,z)-j);
+end for;
+T:=Factorization(S);
+res1gSaa:=T[2,1];
+res1gSab:=T[3,1];
+res1gSac:=T[4,1];
+res1gSad:=T[5,1];
+
+
+A:=-Coefficient(res1ta,z,0);
+B:=Coefficient(res1ta,z,1);
+S:=0;
+N:=res2g;
+for j in [0 .. Degree(N,z)] do
+   S:=S+Coefficient(N,z,j)*A^j*B^(Degree(N,z)-j);
+end for;
+T:=Factorization(S);
+res2gSaa:=T[2,1];
+res2gSab:=T[3,1];
+res2gSac:=T[4,1];
+
+/* We have res1gSaa = res2gSaa and res1gSac = res2gSab. We have 3 subcases to consider */
+
+/* CASE A.A: We study res1gSaa = y - 1/3 = 0. This means y = 1/3 and so z = 1 thanks to res1ta = 0.
+
+   Substitution of these values in res1ta = 0 gives t = 1/2.
+
+   Substitution of these 3 values in Ly gives a*g - a + 3*g - 1 and in La gives a^2 - 8/3*a*g + 4*a - 8*g + 4/3: their resultant in g gives a = 2/3.
+
+   Substitution of these 4 values in Ly gives g = 5/11. The function evaluated at these values is circa 3.21   */
+
+
+/* CASE A.B: We study res1gSac = y*t + 2*y -t = 0  */
+
+
+A:=-Coefficient(res1ta,z,0);
+B:=Coefficient(res1ta,z,1);
+S:=0;
+N:=res1a;
+for j in [0 .. Degree(N,z)] do
+   S:=S+Coefficient(N,z,j)*A^j*B^(Degree(N,z)-j);
+end for;
+T:=Factorization(S);
+res1aSz:=T[1,1];
+
+A:=-Coefficient(res1gSac,y,0);
+B:=Coefficient(res1gSac,y,1);
+S:=0;
+N:=res1aSz;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+/* This has no roots in the interior */
+
+
+/* CASE A.C: We have no common factors */
+
+
+T:=Factorization(Resultant(res1gSab*res1gSad,res2gSac,t));
+
+/* The first non-trivial factor is y - 1/3, which we already studied.  */
+
+resgSat:=T[5,1];
+
+PrintFile("22G_Pari.gp","\{resgSat=");
+PrintFile("22G_Pari.gp",resgSat);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res2gSac=");
+PrintFile("22G_Pari.gp",res2gSac);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Ly=");
+PrintFile("22G_Pari.gp",Ly);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The only stationary point gives a value < 3.1 */
+
+
+/* CASE B */
+
+res1t:=res1tb*res1tc*res1td;
+
+res2t:=res2tb*res2tc;
+
+T:=Factorization(Resultant(res1t,res2t,z));
+
+resz:=T[4,1]*T[6,1]*T[7,1]*T[8,1]*T[9,1]*T[10,1];
+
+PrintFile("22G_Pari.gp","\{resz=");
+PrintFile("22G_Pari.gp",resz);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1t=");
+PrintFile("22G_Pari.gp",res1t);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res2g=");
+PrintFile("22G_Pari.gp",res2g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Ly=");
+PrintFile("22G_Pari.gp",Ly);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The critical points we found give values for the function < 3.3 */
+
+
+/* x = 0, y = 0:
+
+   (1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2).
+
+   This is included in 3G, so we know is <= 8 */
+
+
+/* x = 0, z = 0:
+
+  (1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2).
+
+  This is included in 3G, so we know is <= 8 */
+
+
+/* x = 0, t = 0:
+
+   (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*2*sqrt(1-g^2).
+
+   This is included in 3G, so we know is <= 8 */
+
+
+/* x = 0, a = 0:
+
+   (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2).
+
+   This is included in 3G, so we know is <= 8 */
+
+
+/* x = 0, g = 0:
+
+   (1+(y*z)^2)*(1+y*z*t*a)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t*a)^2)*2.   Maximized at y = a = 1 giving
+
+   2*(1+z^2)*(1+z*t)*(1+z^2)*(1-z*t)*(1+t^2)*(1+t^2) =
+
+   2*(1+z^2)^2*(1-(z*t)^2)*(1+t^2)^2.
+
+   In the interior this is maximized at z^2 = t^2 = 2/3 giving a value of 8.58..
+
+   If z = 0 or t = 0 this is <= 8
+
+   If z = 1 (or t = 1) the function becomes 8*(1-t^2)*(1+t^2)^2 = 8*(1-t^4)*(1+t^2) <= 8*32/27 = 256/27 */
+
+
+/* x = 0, y = 1:
+
+   (1-2*z*g+z^2)*(1+z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)
+
+   */
+
+L:= (1-2*z*g+z^2)*(1+z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* times 2*sqrt(1-g^2) */
+
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lz:=Tz[3,1];
+Lt:=Tt[3,1];
+La:=Ta[4,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(La,Lz,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(La,Lt,g));
+res2g:=T[6,1];
+T:=Factorization(Resultant(La,Lg,g));
+res3g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,a));  /* There is the factor z - 1/2 : however, substitution in res1g gives no roots in the interior for t and a */
+res1a:=T[6,1];
+T:=Factorization(Resultant(res2g,res3g,a));
+res2a:=T[8,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+rest:=T[7,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{La=");
+PrintFile("22G_Pari.gp",La);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* Critical points give values of the function below 3.61 */
+
+
+/* x = 0, y = 1, z = 1:
+
+   8*(1-g)*(1+t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*sqrt(1-g^2)   */
+
+
+L:= 8*(1-g)*(1+t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* times sqrt(1-g^2)  */
+
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lt:=Tt[3,1];
+La:=Ta[6,1];
+Lg:=Tg[5,1];
+
+T:=Factorization(Resultant(La,Lt,g));
+
+/* This has no roots in the interior */
+
+
+/* x = 0, y = 1, z = 1, t = 1: the function is zero    */
+
+
+/* x = 0, y = 1, z = 1, a = 1:
+
+   8*(1-g)*(1+t)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*g+t^2)*sqrt(1-g^2). This is maximized at g = 0, so we know is <= 8.58   */
+
+
+/* x = 0, y = 1, z = 1, g = 1: the function is zero   */
+
+
+/* x = 0, y = 1, t = 1:
+
+   (1-2*z*g+z^2)*(1+z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+a^2)*4*sqrt(1-g^2)
+
+   */
+
+
+L:=(1-2*z*g+z^2)*(1+z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+a^2);  /* times 4*sqrt(1-g^2)  */
+
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lz:=Tz[3,1];
+La:=Ta[3,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(La,Lz,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(La,Lg,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,a));  /* We also have z - 1/2, but substitution in res1g gives no roots in t between 0 and 1 */
+resa:=T[7,1];  /* This has no roots in the interior */
+
+
+/* x = 0, y = 1, a = 1:
+
+   (1-2*z*g+z^2)*(1+z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+t^2)*2*sqrt(1-g^2). Maximized at g = 0, so we know is <= 8.58
+
+   */
+
+/* x = 0, y = 1, g = 1: the function is zero  */
+
+
+
+
+/* x = 0, y = 1, t = 1, a = 1:
+
+   (1-2*z*g+z^2)*(1+z)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-g)*8*sqrt(1-g^2).
+
+   This is maximized at g = 0, so we know is <= 8.58
+
+   */
+
+
+/* x = 0, y = 1, t = 1, g = 1: the function is zero
+
+   */
+
+
+
+/* x = 0, z = 1:
+
+   (1-2*y*g+(y)^2)*(1+y*t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*4*sqrt(1-g^2)  */
+
+L:=(1-2*y*g+(y)^2)*(1+y*t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* times 4*sqrt(1-g^2) */
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Ly:=Ty[5,1];
+Lt:=Tt[2,1];
+La:=Ta[5,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(La,Ly,g));
+
+/* This has no roots in the interior */
+
+
+/* x = 0, z = 1, t = 1: the function is zero   */
+
+
+/* x = 0, z = 1, a = 1:
+
+   (1-2*y*g+(y)^2)*(1+y*t)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*g+(t)^2)*4*sqrt(1-g^2)  */
+
+L:=(1-2*y*g+(y)^2)*(1+y*t)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*g+(t)^2);  /* times 4*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[5,1];
+Lt:=Tt[2,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Ly,Lt,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,t));  /* We also have y - 1/3, but substitution in res1g gives no roots in t between 0 and 1 */
+rest:=T[8,1];  /* This has no roots in the interior */
+
+
+/* x = 0, z = 1, a = 1, g = 1: the function is zero  */
+
+
+/* x = 0, t = 1:
+
+   (1-2*y*z*g+(y*z)^2)*(1+y*z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+(a)^2)*4*sqrt(1-g^2)  */
+
+L:=(1-2*y*z*g+(y*z)^2)*(1+y*z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+(a)^2);  /* times 4*sqrt(1-g^2) */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+La:=Ta[4,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(La,Ly,g));
+
+/* No roots in the interior */
+
+
+/* x = 0, t = 1, a = 1:
+
+   (1-2*y*z*g+(y*z)^2)*(1+y*z)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-g)*8*sqrt(1-g^2)  */
+
+L:=(1-2*y*z*g+(y*z)^2)*(1+y*z)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-g);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lg:=Tg[5,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+
+/* No roots in the interior */
+
+
+/* x = 0, t = 1, a = 1, g = 1: the function is zero  */
+
+
+/* x = 0, a = 1:
+
+   (1-2*y*z*g+(y*z)^2)*(1+y*z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+(t)^2)*2*sqrt(1-g^2)  */
+
+L:= (1-2*y*z*g+(y*z)^2)*(1+y*z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+(t)^2);  /* times 2*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lt:=Tt[2,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+res1g:=T[6,1];
+T:=Factorization(Resultant(Ly,Lt,g));
+res2g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res3g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));  /* There is the factor t - 1/2 : however, substitution in res1g gives no roots in the interior for z and a */
+res1y:=T[6,1];
+T:=Factorization(Resultant(res1g,res3g,y));
+res2y:=T[8,1];
+
+T:=Factorization(Resultant(res1y,res2y,t));
+rest:=T[8,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1y=");
+PrintFile("22G_Pari.gp",res1y);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Ly=");
+PrintFile("22G_Pari.gp",Ly);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The value at critical points is < 3.61 */
+
+/* x = 0, a = 1, g = 1: the function is zero */
+
+/* x = 0, g = 1: the function is zero.
+
+   This concludes the case x = 0 */
+
+/* y = 0:
+
+   (1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2).
+
+   This is discussed in 3G, so is <= 8 */
+
+/* z = 0:
+
+   (1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)
+
+   This is discussed in 3G, so we know is <= 8  */
+
+
+/* t = 0:
+
+   (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*2*sqrt(1-g^2).
+
+   This is discussed in 3G, so we know is <= 8 */
+
+
+/* a = 0:
+
+    (1+x*y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2).  Maximized at x = 1 giving
+
+    (1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2)
+
+ */
+
+L:=(1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2);  /* times 2*sqrt(1-g^2) */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[5,1];
+Lz:=Tz[2,1];
+Lt:=Tt[2,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+res1g:=T[6,1];
+T:=Factorization(Resultant(Ly,Lt,g));
+res2g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res3g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));  /* There is the factor t - 1/2 : however, substitution in res1g gives no roots in the interior for z and a */
+res1y:=T[6,1];
+T:=Factorization(Resultant(res1g,res3g,y));
+res2y:=T[8,1];
+
+T:=Factorization(Resultant(res1y,res2y,t));
+rest:=T[4,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1y=");
+PrintFile("22G_Pari.gp",res1y);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Ly=");
+PrintFile("22G_Pari.gp",Ly);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* Critical points give value of the functions < 4.1 */
+
+
+/* a = 0, y = 1:
+
+   (1+z*t)*(1-2*z*g+(z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2)
+
+ */
+
+
+L:=(1+z*t)*(1-2*z*g+(z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2); /* times 2*sqrt(1-g^2) */
+
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lz:=Tz[3,1];
+Lt:=Tt[3,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Lz,Lt,g));
+res1g:=T[3,1];
+T:=Factorization(Resultant(Lt,Lg,g));
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(res1g,res2g,t));
+rest:=T[5,1]*T[6,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Lt=");
+PrintFile("22G_Pari.gp",Lt);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The only critical point gives a value for the function < 5.48 */
+
+
+/* a = 0, y = 1, z = 1:
+
+   (1+t)*(1-g)*(1+g)*(1-t)*(1+2*t*g+t^2)*8*sqrt(1-g^2)
+
+   This is known to be maximized at t = 1/sqrt(7) and g = 1/2/sqrt(7), giving 8*M < 8.35...
+
+ */
+
+
+/* a = 0, y = 1, z = 1, t = 1: the function is zero  */
+
+/* a = 0, y = 1, z = 1, g = 1: the function is zero  */
+
+
+/* a = 0, y = 1, t = 1:
+
+   (1+z)*(1-2*z*g+(z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g)*4*sqrt(1-g^2)
+
+ */
+
+L:=(1+z)*(1-2*z*g+(z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g);  /* times 4*sqrt(1-g^2)  */
+
+Tz:=Factorization(Derivative(L,z));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lz:=Tz[3,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Lz,Lg,g));
+resg:=T[5,1];
+
+/* We do not find critical points */
+
+
+/* a = 0, y = 1, t = 1, g = 1: the function is zero  */
+
+/* a = 0, y = 1, g = 1: the function is zero */
+
+/* a = 0, z = 1:
+
+   (1+y*t)*(1-2*y*g+(y)^2)*(1+g)*(1-t)*(1+2*t*g+t^2)*4*sqrt(1-g^2)   */
+
+L:=(1+y*t)*(1-2*y*g+(y)^2)*(1+g)*(1-t)*(1+2*t*g+t^2);   /* times 4*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[4,1];
+Lt:=Tt[2,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Ly,Lt,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,t));
+rest:=T[4,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Ly=");
+PrintFile("22G_Pari.gp",Ly);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* There is only one critical point: the value of the function is < 1 */
+
+
+/* a = 0, z = 1, t = 1:  the function is zero   */
+
+/* a = 0, z = 1, g = 1: the function is zero   */
+
+
+/* a = 0, t = 1:
+
+  (1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g)*4*sqrt(1-g^2)
+
+ */
+
+
+L:=(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g);  /* times 4*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[5,1];
+Lz:=Tz[2,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+
+/* This has no roots in the interior */
+
+/* a = 0, t = 1, g = 1: the function is zero */
+
+/* a = 0, g = 1: the function is zero. The case a = 0 is concluded */
+
+
+/* g = 0:
+
+   2*(1+x*y*z*t)*(1-x*y*z*t*a)*(1+(y*z)^2)*(1+y*z*t*a)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t*a)^2)
+
+ */
+
+L:=2*(1+x*y*z*t)*(1-x*y*z*t*a)*(1+(y*z)^2)*(1+y*z*t*a)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t*a)^2);
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Lx:=Tx[10,1];
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lt:=Tt[3,1];
+La:=Ta[7,1];
+
+T:=Factorization(Resultant(Lx,Ly,a));
+
+/* This has no roots in the interior */
+
+
+/* g = 0, x = 1:
+
+    2*(1+y*z*t)*(1-y*z*t*a)*(1+(y*z)^2)*(1+y*z*t*a)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t*a)^2)
+
+    2  *   (1-(y*z*t*a)^2)*(1+(y*z)^2)*(1+(t*a)^2)   *  (1-(z*t)^2)*(1+z^2)*(1+t^2)  <=  2 * 2 * 2 = 8  */
+
+
+
+
+/* g = 0, y = 1:
+
+   2*(1+x*z*t)*(1-x*z*t*a)*(1+z^2)*(1+z*t*a)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t*a)^2)
+
+ */
+
+L:= 2*(1+x*z*t)*(1-x*z*t*a)*(1+z^2)*(1+z*t*a)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t*a)^2) ;
+
+Tx:=Factorization(Derivative(L,x));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Lx:=Tx[8,1];
+Lz:=Tz[4,1];
+Lt:=Tt[2,1];
+La:=Ta[6,1];
+
+T:=Factorization(Resultant(Lx,Lz,a));
+res1a:=T[3,1];
+T:=Factorization(Resultant(Lx,Lt,a));
+res2a:=T[3,1];
+T:=Factorization(Resultant(Lx,La,a));
+res3a:=T[1,1];
+
+T:=Factorization(Resultant(res1a,res2a,x));
+res1x:=T[4,1];
+T:=Factorization(Resultant(res1a,res3a,x));
+res2x:=T[4,1];
+
+T:=Factorization(Resultant(res1x,res2x,t));
+rest:=T[4,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1x=");
+PrintFile("22G_Pari.gp",res1x);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Lx=");
+PrintFile("22G_Pari.gp",Lx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+/* g = 0, y = 1, z = 1:
+
+   8*(1+x*t)*(1-x*t*a)*(1+t*a)*(1-t)*(1+t^2)*(1+(t*a)^2)
+
+ */
+
+L:=8*(1+x*t)*(1-x*t*a)*(1+t*a)*(1-t)*(1+t^2)*(1+(t*a)^2);
+
+Tx:=Factorization(Derivative(L,x));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Lx:=Tx[6,1];
+Lt:=Tt[1,1];
+La:=Ta[5,1];
+
+T:=Factorization(Resultant(Lx,Lt,a));
+res1a:=T[3,1];
+T:=Factorization(Resultant(Lx,La,a));
+res2a:=T[1,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+rest:=T[4,1];  /* This has no roots in the interior */
+
+
+/* g = 0, y = 1, z = 1, t = 1: the function is zero  */
+
+
+/* g = 0, y = 1, z = 1, a = 1:
+
+   8*(1+x*t)*(1-x*t)*(1+t)*(1-t)*(1+t^2)*(1+t^2).
+
+   This is maximized at x = 0 and these boundary conditions with x = 0 were already studied, giving the upper bound 256/27
+
+ */
+
+
+
+/* g = 0, y = 1, t = 1:
+
+   4*(1+x*z)*(1-x*z*a)*(1+z^2)*(1+z*a)*(1+z^2)*(1-z)*(1+(a)^2)  <=
+
+
+   4 * (1+x*z)*(1-x*z*a)*(1+a)  * (1-z)*(1+z)*(1+z^2)*(1+z^2)  <=  4 * 2 *32/27  <= 256/27
+
+ */
+
+
+/* g = 0, y = 1, a = 1:
+
+   2*(1+x*z*t)*(1-x*z*t)*(1+z^2)*(1+z*t)*(1+z^2)*(1-z*t)*(1+t^2)*(1+t^2).
+
+   This is maximized at x = 0 and these boundary conditions with x = 0 were already studied, giving the upper bound 256/27
+
+ */
+
+
+
+/* g = 0, z = 1:
+
+   4*(1+x*y*t)*(1-x*y*t*a)*(1+y^2)*(1+y*t*a)*(1-t)*(1+t^2)*(1+(t*a)^2)
+
+ */
+
+L:=4*(1+x*y*t)*(1-x*y*t*a)*(1+y^2)*(1+y*t*a)*(1-t)*(1+t^2)*(1+(t*a)^2);
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Lx:=Tx[8,1];
+Ly:=Ty[4,1];
+Lt:=Tt[2,1];
+La:=Ta[6,1];
+
+T:=Factorization(Resultant(Lx,Ly,a));
+
+/* This has no roots in the interior */
+
+
+/* g = 0, z = 1, t = 1:  the function is zero */
+
+
+/* g = 0, z = 1, a = 1:
+
+   4*(1+x*y*t)*(1-x*y*t)*(1+y^2)*(1+y*t)*(1-t)*(1+t^2)*(1+t^2)
+
+   This is maximized at x = 0 and y = 1 and these boundary conditions were already studied, giving the upper bound 256/27
+
+ */
+
+
+/* g = 0, t = 1:
+
+   4*(1+x*y*z)*(1-x*y*z*a)*(1+(y*z)^2)*(1+y*z*a)*(1+z^2)*(1-z)*(1+a^2)
+
+ */
+
+L:= 4*(1+x*y*z)*(1-x*y*z*a)*(1+(y*z)^2)*(1+y*z*a)*(1+z^2)*(1-z)*(1+a^2);
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Lx:=Tx[8,1];
+Ly:=Ty[5,1];
+
+T:=Factorization(Resultant(Lx,Ly,a));
+
+/* This has no roots in the interior */
+
+
+/* g = 0, t = 1, a = 1
+
+   8*(1+x*y*z)*(1-x*y*z)*(1+(y*z)^2)*(1+y*z)*(1+z^2)*(1-z)
+
+   This is maximized at x = 0 and y = 1 and these boundary conditions were already studied, giving the upper bound 256/27
+
+ */
+
+
+/* g = 0, a = 1:
+
+   2*(1+x*y*z*t)*(1-x*y*z*t)*(1+(y*z)^2)*(1+y*z*t)*(1+z^2)*(1-z*t)*(1+t^2)*(1+(t)^2)
+
+   This is maximized at x = 0 and y = 1 and these boundary conditions were already studied, giving the upper bound 256/27
+
+ */
+
+/* This concludes the case g = 0 and so concludes the 0-boundaries */
+
+
+
+/* We begin with the 1-boundaries */
+
+
+/* a = 1:
+
+   (1+x*y*z*t)*(1-x*y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+(t)^2)*2*sqrt(1-g^2).
+
+   This is maximized at x = 0. so we know is <= 256/27  */
+
+
+/* x = 1:
+
+   (1+y*z*t)*(1-y*z*t*a)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2).
+
+   Since (1-y*z*t*a)*(1+y*z*t*a) <= 1, this function is bounded by
+
+   (1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)
+
+   This is exactly the inequality 24G, which is <= 256/27 */
+
+
+
+/* y = 1:
+
+    (1+x*z*t)*(1-x*z*t*a)*(1-2*z*g+z^2)*(1+z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)  */
+
+L:=(1+x*z*t)*(1-x*z*t*a)*(1-2*z*g+z^2)*(1+z*t*a)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* times 2*sqrt(1-g^2)  */
+
+Tx:=Factorization(Derivative(L,x));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[9,1];
+Lz:=Tz[3,1];
+Lt:=Tt[3,1];
+La:=Ta[7,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Lx,La,g));
+res1g:=T[1,1];
+T:=Factorization(Resultant(La,Lz,g));
+res2g:=T[2,1];
+T:=Factorization(Resultant(Lt,La,g));
+res3g:=T[7,1];
+T:=Factorization(Resultant(La,Lg,g));
+res4g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,a));
+res1a:=T[3,1];
+T:=Factorization(Resultant(res1g,res3g,a));
+res2a:=T[1,1];
+T:=Factorization(Resultant(res1g,res4g,a));
+res3a:=T[2,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+res1ta:=T[4,1];
+res1tb:=T[5,1];
+res1tc:=T[6,1];
+res1td:=T[7,1];
+T:=Factorization(Resultant(res2a,res3a,t));
+res2ta:=T[6,1];
+res2tb:=T[7,1];
+res2tc:=T[8,1];
+res2td:=T[9,1];
+res2te:=T[10,1];
+res2tf:=T[11,1];
+
+/* We have res1ta = res2ta,  res1tb = res2tb, res1tc = res2te (but this last case can be dismissed already, since res1tc = x^2*z^2 - 1/2*x*z^2 - 1/2*z^2 - 1, and if res1tc = 0, then 1 = (x^2-1/2*x-1/2)*z^2, but the coefficient of z^2 is always non-positive for x in [0,1]).  3 Cases to consider */
+
+
+/* CASE A: We assume res1ta = x*z^2 - 2/3*x*z + 2/3*z - 1/3 = 0.  We have x as function of z */
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=Lx;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LxSx:=T[2,1];
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=Lz;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LzSx:=T[2,1];
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=La;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LaSx:=T[3,1];
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=Lg;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LgSx:=T[1,1];
+
+
+
+T:=Factorization(Resultant(LxSx,LzSx,a));
+res1aSxa:=T[2,1];   /* This is z - 2/3: but if z = 2/3, then res1ta with this value cannot be zero. So we discard this factor */
+res1aSxb:=T[3,1];
+res1aSxc:=T[4,1];
+res1aSx:=res1aSxb*res1aSxc;
+
+T:=Factorization(Resultant(LxSx,LaSx,a));
+res2aSx:=T[1,1];
+T:=Factorization(Resultant(LxSx,LgSx,a));
+res3aSx:=T[1,1];
+
+T:=Factorization(Resultant(res1aSx,res2aSx,g));
+res1gSxa:=T[1,1];
+res1gSxb:=T[2,1];
+res1gSxc:=T[3,1];
+T:=Factorization(Resultant(res1aSx,res3aSx,g));
+res2gSxa:=T[5,1];
+res2gSxb:=T[7,1];
+res2gSxc:=T[8,1];
+
+/* We have res1gSxa = res2gSxa and res1gSxb = res2gSxb */
+
+
+/* CASE A.A:  We have res1gSxa = z*t - 3/2*z - 1/2*t + 1 = 0  */
+
+A:=-Coefficient(res1gSxa,t,0);
+B:=Coefficient(res1gSxa,t,1);
+S:=0;
+N:=LxSx;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+/* This gives z = 1/2: substitution in res1ta gives x = 0, so we are ok */
+
+/* CASE A.B: We have res1gSxb = z^2*t - 2*z*t + z + 2/3*t - 2/3 = 0 */
+
+A:=-Coefficient(res1gSxb,t,0);
+B:=Coefficient(res1gSxb,t,1);
+S:=0;
+N:=LxSx;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+LxSxSt:=T[2,1];
+
+
+
+A:=-Coefficient(res1gSxb,t,0);
+B:=Coefficient(res1gSxb,t,1);
+S:=0;
+N:=LaSx;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+LaSxSt:=T[1,1];
+
+
+
+A:=-Coefficient(res1gSxb,t,0);
+B:=Coefficient(res1gSxb,t,1);
+S:=0;
+N:=LgSx;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+LgSxSt:=T[1,1];
+
+
+T:=Factorization(Resultant(LxSxSt,LaSxSt,a));
+res1aSxSta:=T[3,1];  /* This is z - 1/3: but z = 1/3 gives x = -1 with substitution in res1ta */
+res1aSxStb:=T[5,1];
+
+T:=Factorization(Resultant(LxSxSt,LgSxSt,a));
+res2aSxSta:=T[3,1];
+res2aSxStb:=T[4,1];
+
+
+/* We have res1aSxStb = res2aSxSta. This gives a value for z */
+
+PrintFile("22G_Pari.gp","\{res1aSxStb=");
+PrintFile("22G_Pari.gp",res1aSxStb);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1ta=");
+PrintFile("22G_Pari.gp",res1ta);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1gSxb=");
+PrintFile("22G_Pari.gp",res1gSxb);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{LxSxSt=");
+PrintFile("22G_Pari.gp",LxSxSt);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{LaSx=");
+PrintFile("22G_Pari.gp",LaSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points: this concludes A.B */
+
+
+/* CASE A.C: this is a usual resultant */
+
+T:=Factorization(Resultant(res1gSxc,res2gSxc,t));
+
+restSx:=T[7,1]*T[8,1]*T[9,1]*T[10,1]*T[11,1];
+
+PrintFile("22G_Pari.gp","\{restSx=");
+PrintFile("22G_Pari.gp",restSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1ta=");
+PrintFile("22G_Pari.gp",res1ta);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1gSxc=");
+PrintFile("22G_Pari.gp",res1gSxc);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1aSx=");
+PrintFile("22G_Pari.gp",res1aSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{LxSx=");
+PrintFile("22G_Pari.gp",LxSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The values at critical points are below 3.8. This concludes case A.C and so concludes case A */
+
+
+
+
+/* CASE B: We assume res1tb = x*z^2 + 2/3*x*z - 2/3*z - 1/3 = 0.  We have x as function of z */
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=Lx;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LxSx:=T[2,1];
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=Lz;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LzSx:=T[2,1];
+
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=La;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LaSx:=T[3,1];
+
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=Lg;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+LgSx:=T[1,1];
+
+
+T:=Factorization(Resultant(LxSx,LzSx,a));
+res1aSx:=T[4,1];
+T:=Factorization(Resultant(LxSx,LaSx,a));
+res2aSx:=T[1,1];
+T:=Factorization(Resultant(LxSx,LgSx,a));
+res3aSx:=T[1,1];
+
+T:=Factorization(Resultant(res1aSx,res2aSx,g));
+res1gSx:=T[2,1];
+T:=Factorization(Resultant(res1aSx,res3aSx,g));
+res2gSx:=T[7,1];
+
+T:=Factorization(Resultant(res1gSx,res2gSx,t));
+restSx:=T[9,1]*T[10,1]*T[11,1];
+
+PrintFile("22G_Pari.gp","\{restSx=");
+PrintFile("22G_Pari.gp",restSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1tb=");
+PrintFile("22G_Pari.gp",res1tb);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1gSx=");
+PrintFile("22G_Pari.gp",res1gSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1aSx=");
+PrintFile("22G_Pari.gp",res1aSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{LxSx=");
+PrintFile("22G_Pari.gp",LxSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The value of the function at critical points is below 5.1. This concludes Case B */
+
+
+/* CASE C: We consider the last resultants  */
+
+
+
+T:=Factorization(Resultant(res1td,res2tc*res2td*res2tf,x));
+
+resx:=T[5,1]*T[7,1]*T[8,1]*T[9,1]*T[10,1];
+
+PrintFile("22G_Pari.gp","\{resx=");
+PrintFile("22G_Pari.gp",resx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1td=");
+PrintFile("22G_Pari.gp",res1td);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{La=");
+PrintFile("22G_Pari.gp",La);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The values at critical points is below 3.39.
+
+   This concludes the interior of y = 1 */
+
+
+/* y = 1, z = 1:
+
+    (1+x*t)*(1-x*t*a)*(1-g)*(1+t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*8*sqrt(1-g^2)  */
+
+L:=(1+x*t)*(1-x*t*a)*(1-g)*(1+t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);  /* times 8*sqrt(1-g^2)  */
+
+Tx:=Factorization(Derivative(L,x));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[8,1];
+Lt:=Tt[3,1];
+La:=Ta[7,1];
+Lg:=Tg[5,1];
+
+T:=Factorization(Resultant(Lx,Lt,a));
+res1a:=T[3,1];
+T:=Factorization(Resultant(Lx,La,a));
+res2a:=T[1,1];
+T:=Factorization(Resultant(Lx,Lg,a));
+res3a:=T[1,1];
+
+T:=Factorization(Resultant(res1a,res2a,g));
+res1ga:=T[3,1];
+res1gb:=T[5,1];
+T:=Factorization(Resultant(res2a,res3a,g));
+res2ga:=T[3,1];
+res2gb:=T[5,1];
+
+/* We have res1ga = res2ga. 2 cases to consider */
+
+
+/* CASE A. We consider res1ga = x*t - 1/2*t + 1/2 = 0 */
+
+
+A:=-Coefficient(res1ga,x,0);
+B:=Coefficient(res1ga,x,1);
+S:=0;
+N:=res2a;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+/* This has no zeros in the interior */
+
+
+/* CASE B. We proceed with a standard resultant */
+
+T:=Factorization(Resultant(res1gb,res2gb,t));
+rest:=T[5,1]*T[7,1];
+
+PrintFile("22G_Pari.gp","\{rest=");
+PrintFile("22G_Pari.gp",rest);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1gb=");
+PrintFile("22G_Pari.gp",res1gb);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res2a=");
+PrintFile("22G_Pari.gp",res2a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Lx=");
+PrintFile("22G_Pari.gp",Lx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* The values of the function at critical points are below 8.1 */
+
+
+/* y = 1, z = 1, t = 1: the function is zero  */
+
+/* y = 1, z = 1, a = 1: this reduces to a = 1 which we know is <= 256/27  */
+
+/* y = 1, z = 1, g = 1: the function is zero  */
+
+
+/* y = 1, t = 1:
+
+    (1+x*z)*(1-x*z*a)*(1-2*z*g+z^2)*(1+z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+a^2)*4*sqrt(1-g^2)  */
+
+L:= (1+x*z)*(1-x*z*a)*(1-2*z*g+z^2)*(1+z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+a^2);   /* times 4*sqrt(1-g^2)  */
+
+Tx:=Factorization(Derivative(L,x));
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[8,1];
+Lz:=Tz[3,1];
+La:=Ta[6,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Lx,Lz,a));
+res1a:=T[3,1];
+T:=Factorization(Resultant(Lx,La,a));
+res2a:=T[1,1];
+T:=Factorization(Resultant(Lx,Lg,a));
+res3a:=T[1,1];
+
+T:=Factorization(Resultant(res1a,res2a,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(res2a,res3a,g));
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(res1g,res2g,x));
+resx:=T[6,1];
+
+PrintFile("22G_Pari.gp","\{resx=");
+PrintFile("22G_Pari.gp",resx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res2a=");
+PrintFile("22G_Pari.gp",res2a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{Lx=");
+PrintFile("22G_Pari.gp",Lx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+
+/* y = 1, t = 1, a = 1: we reduce to a = 1 which is <= 256/27 */
+
+/* y = 1, t = 1, g = 1: the function is zero  */
+
+/* y = 1, a = 1: this is <= 256/27 as proved for a = 1  */
+
+/* y = 1, g = 1: the function is zero. This concludes y = 1  */
+
+
+
+/* z = 1:
+
+   (1+x*y*t)*(1-x*y*t*a)*(1-2*y*g+y^2)*(1+y*t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*4*sqrt(1-g^2)  */
+
+L:=(1+x*y*t)*(1-x*y*t*a)*(1-2*y*g+y^2)*(1+y*t*a)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2);   /* times 4*sqrt(1-g^2)  */
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[9,1];
+Ly:=Ty[5,1];
+Lt:=Tt[3,1];
+La:=Ta[7,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Lx,La,g));
+res1g:=T[1,1];
+T:=Factorization(Resultant(La,Ly,g));
+res2g:=T[1,1];
+T:=Factorization(Resultant(Lt,La,g));
+res3g:=T[5,1];
+T:=Factorization(Resultant(La,Lg,g));
+res4g:=T[3,1];
+
+T:=Factorization(Resultant(res1g,res2g,a));
+res1a:=T[2,1];
+T:=Factorization(Resultant(res1g,res3g,a));
+res2a:=T[2,1];
+T:=Factorization(Resultant(res1g,res4g,a));
+res3a:=T[2,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+res1ta:=T[4,1];
+res1tb:=T[5,1];
+res1tc:=T[6,1];
+
+T:=Factorization(Resultant(res1a,res3a,t));
+res2ta:=T[7,1];
+res2tb:=T[8,1];
+res2tc:=T[9,1];
+
+/* We have res1ta = res2ta and res1tb = res2tb. 3 cases to consider */
+
+
+/* CASE A: We consider res1ta = x*y^2 - 2/3*x*y + 2/3*y - 1/3 = 0. We obtain an expression for x and subsitute */
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=Lx;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LxSx:=T[2,1];
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=Ly;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LySx:=T[2,1];
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=La;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LaSx:=T[3,1];
+
+
+
+A:=-Coefficient(res1ta,x,0);
+B:=Coefficient(res1ta,x,1);
+S:=0;
+N:=Lg;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LgSx:=T[1,1];
+
+
+T:=Factorization(Resultant(LxSx,LySx,a));
+res1aSxa:=T[2,1];   /* This is y - 2/3: but if y = 2/3, then res1ta with this value cannot be zero. So we discard this factor */
+res1aSxb:=T[3,1];
+res1aSxc:=T[4,1];
+res1aSx:=res1aSxb*res1aSxc;
+T:=Factorization(Resultant(LxSx,LaSx,a));
+res2aSx:=T[1,1];
+T:=Factorization(Resultant(LxSx,LgSx,a));
+res3aSx:=T[1,1];
+
+T:=Factorization(Resultant(res1aSx,res2aSx,g));
+res1gSxa:=T[1,1];
+res1gSxb:=T[2,1];
+T:=Factorization(Resultant(res1aSx,res3aSx,g));
+res2gSxa:=T[3,1];
+res2gSxb:=T[4,1];
+
+/* We have res1gSxa = res2gSxa. Two subcases to consider */
+
+/* CASE A.A: We consider res1gSxa = y*t - 3/2*y - 1/2*t + 1 = 0. */
+
+
+A:=-Coefficient(res1gSxa,t,0);
+B:=Coefficient(res1gSxa,t,1);
+S:=0;
+N:=LxSx;
+for j in [0 .. Degree(N,t)] do
+   S:=S+Coefficient(N,t,j)*A^j*B^(Degree(N,t)-j);
+end for;
+T:=Factorization(S);
+
+/* This gives y = 1/2: substitution in res1ta gives x = 0, so we are ok */
+
+
+/* CASE A.B: We consider the remaining resultant */
+
+
+T:=Factorization(Resultant(res1gSxb,res2gSxb,t));
+
+restSx:=T[7,1]*T[8,1];
+
+PrintFile("22G_Pari.gp","\{restSx=");
+PrintFile("22G_Pari.gp",restSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1ta=");
+PrintFile("22G_Pari.gp",res1ta);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1gSxb=");
+PrintFile("22G_Pari.gp",res1gSxb);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1aSx=");
+PrintFile("22G_Pari.gp",res1aSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{LxSx=");
+PrintFile("22G_Pari.gp",LxSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+
+
+/* CASE B: We consider res1tb = x*y^2 + 2/3*x*y - 2/3*y - 1/3 = 0. We obtain an expression for x and subsitute */
+
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=Lx;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LxSx:=T[2,1];
+
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=Ly;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LySx:=T[2,1];
+
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=La;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LaSx:=T[3,1];
+
+
+
+A:=-Coefficient(res1tb,x,0);
+B:=Coefficient(res1tb,x,1);
+S:=0;
+N:=Lg;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+LgSx:=T[1,1];
+
+T:=Factorization(Resultant(LxSx,LySx,a));
+res1aSx:=T[4,1];
+T:=Factorization(Resultant(LxSx,LaSx,a));
+res2aSx:=T[1,1];
+T:=Factorization(Resultant(LxSx,LgSx,a));
+res3aSx:=T[1,1];
+
+T:=Factorization(Resultant(res1aSx,res2aSx,g));
+res1gSx:=T[1,1];
+T:=Factorization(Resultant(res1aSx,res3aSx,g));
+res2gSx:=T[3,1];
+
+T:=Factorization(Resultant(res1gSx,res2gSx,t));
+restSx:=T[7,1]*T[8,1];
+
+PrintFile("22G_Pari.gp","\{restSx=");
+PrintFile("22G_Pari.gp",restSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1tb=");
+PrintFile("22G_Pari.gp",res1tb);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1gSx=");
+PrintFile("22G_Pari.gp",res1gSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1aSx=");
+PrintFile("22G_Pari.gp",res1aSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{LxSx=");
+PrintFile("22G_Pari.gp",LxSx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+
+/* CASE C: We study the remaining resultants */
+
+T:=Factorization(Resultant(res1tc,res2tc,x));
+
+resx:=T[9,1]*T[10,1];
+
+PrintFile("22G_Pari.gp","\{resx=");
+PrintFile("22G_Pari.gp",resx);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1tc=");
+PrintFile("22G_Pari.gp",res1tc);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{La=");
+PrintFile("22G_Pari.gp",La);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+/* z = 1, t = 1: the function is zero  */
+
+/* z = 1, a = 1: this is <= 256/27 as proved for a = 1  */
+
+/* z = 1, g = 1: the function is zero   */
+
+
+/* t = 1
+
+   (1+x*y*z)*(1-x*y*z*a)*(1-2*y*z*g+(y*z)^2)*(1+y*z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+a^2)*4*sqrt(1-g^2)   */
+
+L:=(1+x*y*z)*(1-x*y*z*a)*(1-2*y*z*g+(y*z)^2)*(1+y*z*a)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-2*a*g+a^2);  /* times 4*sqrt(1-g^2)  */
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[9,1];
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+La:=Ta[6,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Lx,La,g));
+res1g:=T[1,1];
+T:=Factorization(Resultant(La,Ly,g));
+res2g:=T[1,1];
+T:=Factorization(Resultant(Lz,La,g));
+res3g:=T[1,1];
+T:=Factorization(Resultant(La,Lg,g));
+res4g:=T[3,1];
+
+T:=Factorization(Resultant(res1g,res2g,a));
+res1a:=T[2,1];
+T:=Factorization(Resultant(res1g,res3g,a));
+res2a:=T[2,1];
+T:=Factorization(Resultant(res1g,res4g,a));
+res3a:=T[2,1];
+
+T:=Factorization(Resultant(res1a,res2a,z));
+res1z:=T[8,1];
+T:=Factorization(Resultant(res1a,res3a,z));
+res2z:=T[8,1];
+
+T:=Factorization(Resultant(res1z,res2z,y));
+resy:=T[11,1];
+
+PrintFile("22G_Pari.gp","\{resy=");
+PrintFile("22G_Pari.gp",resy);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1z=");
+PrintFile("22G_Pari.gp",res1z);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1a=");
+PrintFile("22G_Pari.gp",res1a);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{res1g=");
+PrintFile("22G_Pari.gp",res1g);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+PrintFile("22G_Pari.gp","\{La=");
+PrintFile("22G_Pari.gp",La);
+PrintFile("22G_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+/* t = 1, a = 1: this is <= 256/27, as proved for a = 1 */
+
+/* t = 1, g = 1: the function is zero */
+
+/* g = 1: the function is zero */
+
+/* Hence our function is <= 256/27 */

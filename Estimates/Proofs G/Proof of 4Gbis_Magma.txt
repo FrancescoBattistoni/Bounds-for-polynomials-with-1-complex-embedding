@@ -1,0 +1,14 @@
+/* Study of inequality 4Gbis
+
+      - - +                 <= 4.36 for y in [0,1/10]
+          -
+          -
+
+*/
+
+  Q:=RationalField();
+  R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+  L:=(1+x)*(1+x*y)*(1-x*y*z)*(1+y*z)*(1+z);
+
+/* This computation is made in PARI; see "4Gbis_Pari.gp" */

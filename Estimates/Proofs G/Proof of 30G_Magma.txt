@@ -1,0 +1,51 @@
+/* Study of inequality 30G)
+
+       + - - +' -           <= 4.35
+         - - +'
+           + -'
+
+ */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+/*
+
+  (1-x)*(1+x*y)*(1+x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+       *(1+y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)
+             *(1-z)*(1+2*g*z*t+(z*t)^2)
+
+
+  This polynomial depends on 6 variables and it is quite complicate to compute its maximum with the usual approach.
+  However, let F denote the polynomial. We split F as PQ, with
+  P = (1-x)*(1+x*y)*(1+x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  Q = (1+y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)
+           *(1-z)  *(1+2*g*z*t+(z*t)^2)
+
+  Actually:
+  P is the polynomial corresponding to    + - - +' -
+  and Q the one corresponding to            - - +'
+                                              + -'
+
+  We split the domain into two regions:
+
+  CASE 1: z >= 4/5: under this assumption P <= 2.24 (by 17B) and Q <= 1.94 (by 11Ebis: pay attention to the shift of
+  variables between the current situation and the normalization for 11Ebis).
+
+  CASE 2: z <= 4/5: under this assumption P <= 1.73 (proved here below) and Q <= 64/27 by 11E.
+
+  Thus F is <= max(2.24 * 1.94, 1.73 * 64/27) <= max(4.35,4.11) = 4.35.
+
+
+========================
+PROOF OF P <= 1.73 when z <= 4/5.
+
+  P is (1-x)*(1+x*y)*(1+x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  it is decreasing in g, so that it is maximized for g = 0, getting
+  (1-x)*(1+x*y)*(1+x*y*z)*(1+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  This function is increasing in y,z,t and a, so that it is maximized for z = 4/5 (by hypothesis)
+  and y = t = a = 1, getting
+  (1-x)*(1+x)*(1+x*(4/5))*(1+(x*(4/5))^2)*(1+x*(4/5)) <= 1.73
+
+END PROOF
+========================

@@ -1,0 +1,379 @@
+/* Study of inequality 29Gtris)
+
+       - - +' +             <= 2.1973   for BOTH z AND t in [1/2,1]
+         + -' -
+
+*/
+
+/*  (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*t) */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*t);
+
+/* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[7,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  T4:= Factorization(Resultant(Lt,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+  res4g:= T4[1,1];
+
+  T11:= Factorization(Resultant(res1g,res4g,t));
+  T12:= Factorization(Resultant(res2g,res4g,t));
+  T13:= Factorization(Resultant(res3g,res4g,t));
+  /* All factors in T13 are strictly positive in the open set */
+
+/* BORDER */
+
+  /* x = 0: (1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*t) maximized for  z = t = g = 1
+            (1-y)*(1+2*y+y^2)*(1+y) <= 27/16 */
+..............................
+  /* y = 0: (1+x) <= 2 */
+..............................
+  /* z = 1/2: (1+x)*(1+x*y)*(1-2*g*x*y*(1/2)+(x*y*(1/2))^2)*(1-x*y*(1/2)*t)*(1-y)*(1+2*g*y*(1/2)+(y*(1/2))^2)*(1+y*(1/2)*t) */
+  L:= (1+x)*(1+x*y)*(1-2*g*x*y*(1/2)+(x*y*(1/2))^2)*(1-x*y*(1/2)*t)*(1-y)*(1+2*g*y*(1/2)+(y*(1/2))^2)*(1+y*(1/2)*t);
+
+  /* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[6,1];
+  Lg:= Tg[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lt,Lg,g));
+  res1g:= T1[3,1];
+  res2g:= T2[5,1];
+  res3g:= T3[1,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,t));
+  T12:= Factorization(Resultant(res2g,res3g,t));
+  res1t:= T11[4,1];
+  res2t:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1t,res2t,x));
+  res1x:= T111[4,1];
+
+  PrintFile("29Gtris_Pari.gp","\{res1x=");
+  PrintFile("29Gtris_Pari.gp",res1x);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res2t=");
+  PrintFile("29Gtris_Pari.gp",res2t);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res3g=");
+  PrintFile("29Gtris_Pari.gp",res3g);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{Lg=");
+  PrintFile("29Gtris_Pari.gp",Lg);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see "29Gtris_Pari.gp") */
+
+  /* BORDER */
+  /* x = 0: already discussed in greater generality (<= 27/16) */
+
+  /* y = 0: already discussed in greater generality (<= 2) */
+
+  /* t = 1/2: (1+x)*(1+x*y)*(1-2*g*x*y*(1/2)+(x*y*(1/2))^2)*(1-x*y*(1/2)*(1/2))*(1-y)*(1+2*g*y*(1/2)+(y*(1/2))^2)*(1+y*(1/2)*(1/2)) <= 2 (see "29Gtris_Pari.gp") */
+
+  /* g = 0: (1+x)*(1+x*y)*(1+(x*y*(1/2))^2)*(1-x*y*(1/2)*t)*(1-y)*(1+(y*(1/2))^2)*(1+y*(1/2)*t) <= 2 (see "29Gtris_Pari.gp") */
+
+  /* x = 1: 2*(1+y)*(1-2*g*y*(1/2)+(y*(1/2))^2)*(1-y*(1/2)*t)*(1-y)*(1+2*g*y*(1/2)+(y*(1/2))^2)*(1+y*(1/2)*t) <= 2 (see "29Gtris_Pari.gp") */
+
+  /* y = 1: NULL */
+
+  /* t = 1: (1+x)*(1+x*y)*(1-2*g*x*y*(1/2)+(x*y*(1/2))^2)*(1-x*y*(1/2))*(1-y)*(1+2*g*y*(1/2)+(y*(1/2))^2)*(1+y*(1/2)) <= 2 (see "29Gtris_Pari.gp") */
+
+  /* g = 1: (1+x)*(1+x*y)*(1-2*x*y*(1/2)+(x*y*(1/2))^2)*(1-x*y*(1/2)*t)*(1-y)*(1+2*y*(1/2)+(y*(1/2))^2)*(1+y*(1/2)*t) <= 2 (see "29Gtris_Pari.gp")  */
+..............................
+
+  /* t = 1/2: (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*(1/2))*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*(1/2)) */
+  L:= (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*(1/2))*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*(1/2));
+
+  /* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,z));
+  T12:= Factorization(Resultant(res2g,res3g,z));
+  res1z:= T11[5,1];
+  res2z:= T12[6,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,x));
+  res1x:= T111[2,1];
+
+  PrintFile("29Gtris_Pari.gp","\{res1x=");
+  PrintFile("29Gtris_Pari.gp",res1x);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res2z=");
+  PrintFile("29Gtris_Pari.gp",res2z);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res3g=");
+  PrintFile("29Gtris_Pari.gp",res3g);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{Lg=");
+  PrintFile("29Gtris_Pari.gp",Lg);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see "29Gtris_Pari.gp") */
+
+  /* BORDER */
+  /* x = 0: already discussed in greater generality (<= 27/16) */
+
+  /* y = 0: already discussed in greater generality (<= 2) */
+
+  /* z = 1/2: already discussed in greater generality (<= 2) */
+
+  /* g = 0: (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-x*y*z*(1/2))*(1-y)*(1+(y*z)^2)*(1+y*z*(1/2))  <= 2.1973 (see "29Gtris_Pari.gp") */
+
+  /* x = 1: 2*(1+y)*(1-2*g*y*z+(y*z)^2)*(1-y*z*(1/2))*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*(1/2))  <= 2.1973 (see "29Gtris_Pari.gp") */
+
+  /* y = 1: NULL */
+
+  /* z = 1: (1+x)*(1+x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y*(1/2))*(1-y)*(1+2*g*y+y^2)*(1+y*(1/2)) <= 2.1973 (see "29Gtris_Pari.gp") */
+
+  /* g = 1: (1+x)*(1+x*y)*(1-2*x*y*z+(x*y*z)^2)*(1-x*y*z*(1/2))*(1-y)*(1+2*y*z+(y*z)^2)*(1+y*z*(1/2)) <= 2 (see "29Gtris_Pari.gp") */
+..............................
+  /* g = 0: (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-x*y*z*t)*(1-y)*(1+(y*z)^2)*(1+y*z*t) */
+  L:= (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-x*y*z*t)*(1-y)*(1+(y*z)^2)*(1+y*z*t);
+
+  /* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  T3:= Factorization(Resultant(Lz,Lt,t));
+  /* All factors in T3 are strictly positive in the open set */
+
+  /* BORDER */
+  /* x = 0: already discussed in greater generality (<= 27/16) */
+  /* y = 0: already discussed in greater generality (<= 2) */
+  /* z = 1/2: already discussed in greater generality (<= 2) */
+  /* t = 1/2: already discussed in greater generality (<= 2.0594) */
+  /* x = 1: 2*(1+y)*(1+(y*z)^2)*(1-y*z*t)*(1-y)*(1+(y*z)^2)*(1+y*z*t) <= 2.1973 (see "29Gtris_Pari.gp") */
+  /* y = 1: NULL */
+  /* z = 1: (1+x)*(1+x*y)*(1+(x*y)^2)*(1-x*y*t)*(1-y)*(1+y^2)*(1+y*t) <= 2 (see "29Gtris_Pari.gp") */
+  /* t = 1: (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+(y*z)^2)*(1+y*z) <= 2 (see "29Gtris_Pari.gp") */
+..............................
+  /* x = 1: 2*(1+y)*(1-2*g*y*z+(y*z)^2)*(1-y*z*t)*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*t) decreasing in t, so it is maximized for t = 1/2
+            2*(1+y)*(1-2*g*y*z+(y*z)^2)*(1-y*z*(1/2))*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z*(1/2)) <= 2.1973 (see "29Gtris_Pari.gp") */
+..............................
+  /* y = 1: NULL */
+..............................
+  /* z = 1: (1+x)*(1+x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y*t)*(1-y)*(1+2*g*y+y^2)*(1+y*t) */
+  L:= (1+x)*(1+x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y*t)*(1-y)*(1+2*g*y+y^2)*(1+y*t);
+
+  /* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[6,1];
+  Lg:= Tg[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lt,Lg,g));
+  res1g:= T1[3,1];
+  res2g:= T2[5,1];
+  res3g:= T3[1,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,t));
+  T12:= Factorization(Resultant(res2g,res3g,t));
+  res1t:= T11[4,1];
+  res2t:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1t,res2t,y));
+  res1y:= T111[3,1];
+
+  PrintFile("29Gtris_Pari.gp","\{res1y=");
+  PrintFile("29Gtris_Pari.gp",res1y);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res2t=");
+  PrintFile("29Gtris_Pari.gp",res2t);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res3g=");
+  PrintFile("29Gtris_Pari.gp",res3g);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{Lg=");
+  PrintFile("29Gtris_Pari.gp",Lg);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see "29Gtris_Pari.gp") */
+
+  /* BORDER */
+  /* x = 0: already discussed in greater generality (<= 27/16) */
+  /* y = 0: already discussed in greater generality (<= 2) */
+  /* t = 1/2: already discussed in greater generality (<= 2.1973) */
+  /* g = 0: already discussed in greater generality (<= 2.1973) */
+  /* x = 1: already discussed in greater generality (<= 2.1973) */
+  /* y = 1: NULL */
+  /* t = 1: (1+x)*(1+x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y)*(1-y)*(1+2*g*y+y^2)*(1+y) <= 2.1973 (see "29Gtris_Pari.gp") */
+  /* g = 1: (1+x)*(1+x*y)*(1+(x*y)^2)*(1-x*y*t)*(1-y)*(1+y^2)*(1+y*t) <= 2.1973 (see "29Gtris_Pari.gp")  */
+..............................
+  /* t = 1: (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z) */
+  L:= (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y*z);
+
+  /* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,z));
+  T12:= Factorization(Resultant(res2g,res3g,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("29Gtris_Pari.gp","\{res1y=");
+  PrintFile("29Gtris_Pari.gp",res1y);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res2z=");
+  PrintFile("29Gtris_Pari.gp",res2z);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res3g=");
+  PrintFile("29Gtris_Pari.gp",res3g);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{Lg=");
+  PrintFile("29Gtris_Pari.gp",Lg);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see "29Gtris_Pari.gp") */
+
+  /* BORDER */
+  /* x = 0: already discussed in greater generality (<= 27/16) */
+  /* y = 0: already discussed in greater generality (<= 2) */
+  /* z = 1/2: already discussed in greater generality (<= 2) */
+  /* g = 0: already discussed in greater generality (<= 2.1973) */
+  /* x = 1: already discussed in greater generality (<= 2.1973) */
+  /* y = 1: NULL */
+  /* z = 1: (1+x)*(1+x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y)*(1-y)*(1+2*g*y+y^2)*(1+y) <= 2.1973 (see "29Gtris_Pari.gp") */
+  /* g = 1: (1+x)*(1+x*y)*(1-2*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+2*y*z+(y*z)^2)*(1+y*z) <= 2.1973 (see "29Gtris_Pari.gp") */
+..............................
+  /* g = 1: (1+x)*(1+x*y)*(1-2*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1-y)*(1+2*y*z+(y*z)^2)*(1+y*z*t) */
+  L:= (1+x)*(1+x*y)*(1-2*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1-y)*(1+2*y*z+(y*z)^2)*(1+y*z*t);
+
+  /* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+  Lt:= Tt[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  T3:= Factorization(Resultant(Lz,Lt,t));
+  res1t:= T1[4,1];
+  res2t:= T2[5,1];
+  res3t:= T3[5,1];
+
+  T11:= Factorization(Resultant(res1t,res3t,z));
+  T12:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("29Gtris_Pari.gp","\{res1y=");
+  PrintFile("29Gtris_Pari.gp",res1y);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res2z=");
+  PrintFile("29Gtris_Pari.gp",res2z);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{res3t=");
+  PrintFile("29Gtris_Pari.gp",res3t);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+
+  PrintFile("29Gtris_Pari.gp","\{Lt=");
+  PrintFile("29Gtris_Pari.gp",Lt);
+  PrintFile("29Gtris_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see "29Gtris_Pari.gp") */
+
+  /* BORDER */
+  /* x = 0: already discussed in greater generality (<= 27/16) */
+  /* y = 0: already discussed in greater generality (<= 2) */
+  /* z = 1/2: already discussed in greater generality (<= 2) */
+  /* t = 1/2: already discussed in greater generality (<= 2.1973) */
+  /* x = 1: already discussed in greater generality (<= 2.1973) */
+  /* y = 1: NULL */
+  /* z = 1: already discussed in greater generality (<= 2.1973) */
+  /* t = 1: already discussed in greater generality (<= 2.1973) */
+
+/* This concludes the proof: the function is <= 2.1973  when z in [1/2,1]  AND  t in [1/2,1] */
+..............................

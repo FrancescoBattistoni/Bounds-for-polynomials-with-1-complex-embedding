@@ -1,0 +1,188 @@
+/*
+  PROVE 19G IN CASE t = 1, I.E. THAT
+
+  2*(1+x*y*z)*(1-x*y*z*a)*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z*a)*(1+2*z*g+z^2)*(1+z)*(1-z*a)*(1-g)*(1+2*a*g+a^2)*(1+a) <= 8.58
+
+  FOR y,z,t,a,g, IN [0,1].
+*/
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+/* t = 1:
+  2*(1+x*y*z)*(1-x*y*z*a)*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z*a)*(1+2*z*g+z^2)*(1+z)*(1-z*a)*(1-g)*(1+2*a*g+a^2)*(1+a) */
+
+/* INNER */
+  L:= 2*(1+x*y*z)*(1-x*y*z*a)*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z*a)*(1+2*z*g+z^2)*(1+z)*(1-z*a)*(1-g)*(1+2*a*g+a^2)*(1+a);
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[12,1];
+  Ly:= Ty[8,1];
+  Lz:= Tz[4,1];
+  La:= Ta[7,1];
+  Lg:= Tg[6,1];
+
+  T1:= Factorization(Resultant(Ly,Lx,a));
+  T2:= Factorization(Resultant(Lz,Lx,a));
+  T3:= Factorization(Resultant(La,Lx,a));
+  T4:= Factorization(Resultant(Lg,Lx,a));
+  res1a:= T1[2,1];
+  res2a:= T2[2,1];
+  res3a:= T3[2,1];
+  res4a:= T4[1,1];
+
+  T11:= Factorization(Resultant(res2a,res1a,x));
+  T12:= Factorization(Resultant(res3a,res1a,x));
+  T13:= Factorization(Resultant(res4a,res1a,x));
+  res1x:= T11[6,1];
+  res2x:= T12[5,1];
+  res3x:= T13[4,1];
+
+  T111:= Factorization(Resultant(res2x,res1x,g));
+  T112:= Factorization(Resultant(res3x,res1x,g));
+  res1ga:= T111[4,1]; /* y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2 */ /* A */
+  res1gb:= T111[5,1];
+  res2ga:= T112[5,1]; /* y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2 */ /* A */
+  res2gb:= T112[6,1];
+
+  /* CASE 1: res1ga = res2ga */
+ /* We use condition res1ga = 0 together Lx=0, Ly=0, La=0, Lg=0
+    (the resulting system is easier since res1ga is simpler than Lz: the points produced by the new system are not necessarily
+    stationary, but for sure every stationary point coming form CASE 1 must appear among the roots of this new system).
+    res1ga:=y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2;   */
+
+  T1:= Factorization(Resultant(Ly,Lx,y));
+  T2:= Factorization(Resultant(res1ga,Lx,y));
+  T3:= Factorization(Resultant(La,Lx,y));
+  T4:= Factorization(Resultant(Lg,Lx,y));
+  res1Ny:= T1[5,1];
+  res2Ny:= T2[2,1];
+  res3Ny:= T3[5,1];
+  res4Ny:= T4[2,1];
+
+  T11:= Factorization(Resultant(res1Ny,res2Ny,z));
+  T12:= Factorization(Resultant(res3Ny,res2Ny,z));
+  T13:= Factorization(Resultant(res4Ny,res2Ny,z));
+  res1Nz:= T11[1,1];
+  res2Nz:= T12[2,1];
+  res3Nz:= T13[1,1];
+
+  T111:= Factorization(Resultant(res2Nz,res1Nz,g));
+  T112:= Factorization(Resultant(res3Nz,res1Nz,g));
+  res1Nga:= T111[3,1]; /* x^2*a^3 - 1/2*x^2*a^2 + 1/2*x^2*a + 3/4*x*a^3 - 3/2*x*a^2 + 5/4*x*a - 1/2*x - 1/2*a^2 + a - 1/2 */ /* A */
+  res1Ngb:= T111[4,1];
+  res2Nga:= T112[6,1]; /* x^2*a^3 - 1/2*x^2*a^2 + 1/2*x^2*a + 3/4*x*a^3 - 3/2*x*a^2 + 5/4*x*a - 1/2*x - 1/2*a^2 + a - 1/2 */ /* A */
+  res2Ngb:= T112[5,1]*T112[7,1];
+
+/* CASE 1.1: res1Nga = res2Nga = x^2*a^3 - 1/2*x^2*a^2 + 1/2*x^2*a + 3/4*x*a^3 - 3/2*x*a^2 + 5/4*x*a - 1/2*x - 1/2*a^2 + a - 1/2 */
+ /* We use conditions res1ga = 0 and res1Nga = 0 together Lx=0, Ly=0, Lg=0
+    (the resulting system is easier since res1ga and res1Nga are simpler than Lz and La: the points produced by the new system are
+    not necessarily stationary, but for sure every stationary point coming from CASE 1.1 must appear among the roots of this new system).
+    res1ga := y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2;
+    res1Nga:= x^2*a^3 - 1/2*x^2*a^2 + 1/2*x^2*a + 3/4*x*a^3 - 3/2*x*a^2 + 5/4*x*a - 1/2*x - 1/2*a^2 + a - 1/2 */
+
+  T1:= Factorization(Resultant(Ly,Lx,y));
+  T2:= Factorization(Resultant(res1ga,Lx,y));
+  T4:= Factorization(Resultant(Lg,Lx,y));
+  res1NNy:= T1[5,1];
+  res2NNy:= T2[2,1];
+  res3NNy:= res1Nga;
+  res4NNy:= T4[2,1];
+
+  T11:= Factorization(Resultant(res1NNy,res2NNy,x));
+  T12:= Factorization(Resultant(res3NNy,res2NNy,x));
+  T13:= Factorization(Resultant(res4NNy,res2NNy,x));
+  res1NNx:= T11[3,1];
+  res2NNx:= T12[4,1];
+  res3NNx:= T13[3,1];
+
+  T111:= Factorization(Resultant(res1NNx,res2NNx,a));
+  T112:= Factorization(Resultant(res3NNx,res2NNx,a));
+  res1NNa:= T111[4,1]*T111[5,1];
+  res2NNa:= T112[1,1]*T112[2,1];
+
+  T1111:= Factorization(Resultant(res1NNa,res2NNa,g));
+  res1NNg:= T1111[6,1]*T1111[7,1]*T1111[8,1]*T1111[9,1]*T1111[10,1]*T1111[11,1]*T1111[12,1]*T1111[13,1]*T1111[14,1];
+
+  PrintFile("19G_t=1_Pari.gp","\{res1NNg=");
+  PrintFile("19G_t=1_Pari.gp",res1NNg);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res1NNa=");
+  PrintFile("19G_t=1_Pari.gp",res1NNa);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res2NNx=");
+  PrintFile("19G_t=1_Pari.gp",res2NNx);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res2NNy=");
+  PrintFile("19G_t=1_Pari.gp",res2NNy);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{Lx=");
+  PrintFile("19G_t=1_Pari.gp",Lx);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+
+  /* CASE 1.2: res1Ngb, res2Ngb */
+  T1111:= Factorization(Resultant(res1Ngb,res2Ngb,x));
+  res1Nx:= T1111[4,1]*T1111[5,1]*T1111[6,1]*T1111[7,1];
+
+  PrintFile("19G_t=1_Pari.gp","\{res1Nx=");
+  PrintFile("19G_t=1_Pari.gp",res1Nx);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res1Ngb=");
+  PrintFile("19G_t=1_Pari.gp",res1Ngb);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res1Nz=");
+  PrintFile("19G_t=1_Pari.gp",res1Nz);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res2Ny=");
+  PrintFile("19G_t=1_Pari.gp",res2Ny);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{Lx=");
+  PrintFile("19G_t=1_Pari.gp",Lx);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+
+  /* CASE 2: res1gb, res2gb */
+  T1111:= Factorization(Resultant(res1gb,res2gb,y));
+  res1y:= T1111[6,1]*T1111[7,1];
+
+  PrintFile("19G_t=1_Pari.gp","\{res1y=");
+  PrintFile("19G_t=1_Pari.gp",res1y);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res1gb=");
+  PrintFile("19G_t=1_Pari.gp",res1gb);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res1x=");
+  PrintFile("19G_t=1_Pari.gp",res1x);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{res1a=");
+  PrintFile("19G_t=1_Pari.gp",res1a);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_t=1_Pari.gp","\{Lx=");
+  PrintFile("19G_t=1_Pari.gp",Lx);
+  PrintFile("19G_t=1_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+  /* This concludes CASE 2 */
+  /* This concludes the INNER */
+
+
+/* BORDER */
+ /* no need to discuss the border since all of them have already been discussed in greater generality */

@@ -1,0 +1,455 @@
+/* Study of inequality 19G
+
+19G)     -  +               <= 8.58
+      +' +  -
+      -' -  +
+         +' -'
+            -
+
+*/
+
+Q:=RationalField();
+R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+L:= (1+x*y*z*t)*(1-x*y*z*t*a)*(1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+
+/* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[13,1];
+  Ly:= Ty[8,1];
+  Lz:= Tz[4,1];
+  Lt:= Tt[4,1];
+  La:= Ta[7,1];
+  Lg:= Tg[6,1];
+
+  T1:= Factorization(Resultant(Ly,Lx,a));
+  T2:= Factorization(Resultant(Lz,Lx,a));
+  T3:= Factorization(Resultant(Lt,Lx,a));
+  T4:= Factorization(Resultant(La,Lx,a));
+  T5:= Factorization(Resultant(Lg,Lx,a));
+  res1a:= T1[2,1];
+  res2a:= T2[2,1];
+  res3a:= T3[3,1];
+  res4a:= T4[2,1];
+  res5a:= T5[1,1];
+
+  T11:= Factorization(Resultant(res2a,res1a,g));
+  T12:= Factorization(Resultant(res3a,res1a,g));
+  T13:= Factorization(Resultant(res4a,res1a,g));
+  T14:= Factorization(Resultant(res5a,res1a,g));
+  res1g:= T11[7,1];
+  res2g:= T12[3,1];
+  res3g:= T13[2,1];
+  res4g:= T14[4,1];
+
+  T111:= Factorization(Resultant(res2g,res1g,x));
+  T112:= Factorization(Resultant(res3g,res1g,x));
+  T113:= Factorization(Resultant(res4g,res1g,x));
+  res1xa:= T111[9,1];
+  res1xb:= T111[8,1]*T111[10,1];
+
+  res2xa:= T112[8,1];
+  res2xb:= T112[9,1];
+
+  res3xa:= T113[8,1];
+  res3xb:= T113[9,1];
+
+/* CASE 1: We have res1xa = res2xa = res3xa. So we study the situation y^2*z^3*t + 1/2*y*z^3*t - 3/4*y*z^2 + 3/4*y*z*t - 1/4*z^2 + 1/4*z*t - 1/2 = 0 */
+
+  At:=-Coefficient(res1xa,t,0);
+  Bt:=Coefficient(res1xa,t,1);
+
+  S:=0;
+  N:=res1g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+
+  res1gSta:=T[2,1];
+  res1gStb:=T[3,1];
+
+
+  S:=0;
+  N:=res2g;
+  for j in [0 .. Degree(N,t)] do
+    S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+
+  res2gSta:=T[3,1];
+  res2gStb:=T[4,1];
+
+  S:=0;
+  N:=res3g;
+  for j in [0 .. Degree(N,t)] do
+    S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+
+  res3gSta:=T[2,1];
+  res3gStb:=T[3,1];
+
+
+/* CASE 1.1: We have res1gSta = res2gSta = res3gSta. We study then x*y^2*z^2 + 1/3*x*y*z^2 + 2/3*x*y + 2/3*y^2*z^2 - 1/6*y*z^2 + 1/2*y - 1/6*z^2 - 1/6 = 0. */
+
+  Ax:=-Coefficient(res1gSta,x,0);
+  Bx:=Coefficient(res1gSta,x,1);
+
+  S:=0;
+  N:=res1a;
+  for j in [0 .. Degree(N,t)] do
+    S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  N:=S;
+  S:=0;
+  for j in [0 .. Degree(N,x)] do
+    S:=S+Coefficient(N,x,j)*Ax^j*Bx^(Degree(N,x)-j);
+  end for;
+  T:=Factorization(S);  /* This has no roots in the interior, so we skip it */
+
+/* CASE 1.2: we proceed with the usual resultants */
+
+  T1111:= Factorization(Resultant(res2gStb,res1gStb,x));
+  T1112:= Factorization(Resultant(res3gStb,res1gStb,x));
+  res1xSt:= T1111[6,1]*T1111[7,1];
+  res2xSt:= T1112[6,1];
+
+  T:= Factorization(Resultant(res2xSt,res1xSt,y));
+  resySt:=T[7,1]*T[8,1];
+
+  PrintFile("19G_Pari.gp","\{resySt=");
+  PrintFile("19G_Pari.gp",resySt);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res2xSt=");
+  PrintFile("19G_Pari.gp",res2xSt);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{tGen=");
+  PrintFile("19G_Pari.gp",At);
+  PrintFile("19G_Pari.gp","/");
+  PrintFile("19G_Pari.gp",Bt);
+  PrintFile("19G_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points in this case */
+  /* This concludes CASE 1.2 */
+  /* This concludes CASE 1 */
+
+
+/* CASE 2: res1xb, res2xb, res3xb */
+
+  T1111:= Factorization(Resultant(res2xb,res1xb,y));
+  T1112:= Factorization(Resultant(res3xb,res1xb,y));
+  res1ya:= T1111[11,1];
+  res1yb:= T1111[12,1];
+  res1yc:= T1111[13,1];
+  res1yd:= T1111[14,1];
+  res2ya:= T1112[15,1];
+  res2yb:= T1112[16,1];
+  res2yc:= T1112[17,1];
+
+  PrintFile("19G_Pari.gp","\{res1xb=");
+  PrintFile("19G_Pari.gp",res1xb);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1g=");
+  PrintFile("19G_Pari.gp",res1g);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1a=");
+  PrintFile("19G_Pari.gp",res1a);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{Lx=");
+  PrintFile("19G_Pari.gp",Lx);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+/* CASE 2.01: res1ya, res2ya */
+  T:= Factorization(Resultant(res1ya,res2ya,t));
+  res1t:=T[2,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1ya=");
+  PrintFile("19G_Pari.gp",res1ya);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points in this case */
+  /* This concludes CASE 2.01 */
+
+/* CASE 2.02: res1ya, res2yb */
+  T:= Factorization(Resultant(res1ya,res2yb,t));
+  res1t:=T[2,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1ya=");
+  PrintFile("19G_Pari.gp",res1ya);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points in this case */
+  /* This concludes CASE 2.02 */
+
+/* CASE 2.03:    res1ya, res2yc */
+  T:= Factorization(Resultant(res1ya,res2yc,t));
+  res1t:=T[2,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1ya=");
+  PrintFile("19G_Pari.gp",res1ya);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points in this case */
+  /* This concludes CASE 2.03 */
+
+/* CASE 2.04:    res1yb, res2ya */
+  T:= Factorization(Resultant(res1yb,res2ya,t));
+  res1t:=T[6,1]*T[7,1]*T[8,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yb=");
+  PrintFile("19G_Pari.gp",res1yb);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are two stationary points with value <= 5.6 */
+  /* This concludes CASE 2.04 */
+
+/* CASE 2.05:    res1yb, res2yb */
+  T:= Factorization(Resultant(res1yb,res2yb,t));
+  res1t:=T[2,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yb=");
+  PrintFile("19G_Pari.gp",res1yb);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are four stationary points with value <= 5.6 */
+  /* This concludes CASE 2.05 */
+
+/* CASE 2.06:    res1yb, res2yc */
+  T:= Factorization(Resultant(res1yb,res2yc,t));
+  res1t:=T[6,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yb=");
+  PrintFile("19G_Pari.gp",res1yb);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are several stationary points with value <= 5.7 */
+  /* This concludes CASE 2.06 */
+
+/* CASE 2.07:    res1yc, res2ya */
+  T:= Factorization(Resultant(res1yc,res2ya,t));
+  res1t:=T[4,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yc=");
+  PrintFile("19G_Pari.gp",res1yc);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are four stationary points with value <= 5.7 */
+  /* This concludes CASE 2.07 */
+
+/* CASE 2.08:    res1yc, res2yb */
+  T:= Factorization(Resultant(res1yc,res2yb,t));
+  res1t:=T[4,1]*T[5,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yc=");
+  PrintFile("19G_Pari.gp",res1yc);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are several stationary points with value <= 5.7 */
+  /* This concludes CASE 2.08 */
+
+/* CASE 2.09:    res1yc, res2yc */
+  T:= Factorization(Resultant(res1yc,res2yc,t));
+  res1t:=T[4,1]*T[5,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yc=");
+  PrintFile("19G_Pari.gp",res1yc);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are several stationary points with value <= 5.7 */
+  /* This concludes CASE 2.09 */
+
+/* CASE 2.10:    res1yd, res2ya */
+  T:= Factorization(Resultant(res1yd,res2ya,t));
+  res1t:=T[4,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yd=");
+  PrintFile("19G_Pari.gp",res1yd);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are several stationary points with value <= 5.7 */
+  /* This concludes CASE 2.10 */
+
+/* CASE 2.11:    res1yd, res2yb */
+  T:= Factorization(Resultant(res1yd,res2yb,t));
+  res1t:=T[4,1]*T[5,1];
+
+  PrintFile("19G_Pari.gp","\{res1t=");
+  PrintFile("19G_Pari.gp",res1t);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yd=");
+  PrintFile("19G_Pari.gp",res1yd);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are several stationary points with value <= 5.7 */
+  /* This concludes CASE 2.11 */
+
+/* CASE 2.12:    res1yd, res2yc */
+  T:= Factorization(Resultant(res1yd,res2yc,t));
+  res1ta:=T[5,1]*T[6,1]*T[7,1]*T[9,1];
+  res1tb:=T[10,1];                      /* This is too big to be joined to the other ones */
+
+  PrintFile("19G_Pari.gp","\{res1ta=");
+  PrintFile("19G_Pari.gp",res1ta);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1tb=");
+  PrintFile("19G_Pari.gp",res1tb);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  PrintFile("19G_Pari.gp","\{res1yd=");
+  PrintFile("19G_Pari.gp",res1yd);
+  PrintFile("19G_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are several stationary points with value <= 5.7 */
+  /* This concludes CASE 2.12 */
+/* This concludes CASE 2 */
+
+
+/* BORDER */
+/* The order which one uses to deal with the border cases affects the proof, since we avoid to treat
+   the sub-border cases if they are already discussed in greater generality in some previous step.
+   For the current problem we follow this order for the border cases:
+   g = 1
+   g = 0
+   x = 1
+   y = 0
+   z = 0
+   t = 0
+   a = 0
+   y = 1
+   x = 0
+   a = 1
+   z = 1
+   t = 1 */
+
+
+/* g = 1:
+  (1+x*y*z*t)*(1-x*y*z*t*a)*(1-y*z)^2*(1-y*z*t)*(1+y*z*t*a)*(1+z)^2*(1+z*t)*(1-z*t*a)*(1-t)^2*(1+t*a)^2*(1+a)  =
+  (1+x*y*z*t)*(1-x*y*z*t*a)*(1-y*z*t)*(1+y*z*t*a)   *  (1-y*z)^2   *   (1+z)*(1+z*t)*(1-t)   *   (1-t)*(1+t*a)*(1+a)  (1+z)*(1-z*t*a)*(1+t*a)  <=
+   1 (by 7A)  * 1  *  2 (by 9A)  * 2 (by 9A)  *  2 (by 9A)  <=  8 */
+
+
+/* g = 0:
+  (1+x*y*z*t)*(1-x*y*z*t*a)*(1+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+z^2)*(1+z*t)*(1-z*t*a)*(1+t^2)*(1+(t*a)^2)*(1+a)
+  which is <=8 (see "19G_g=0_Magma.txt" file) */
+
+
+/* x = 1:
+  (1+y*z*t)*(1-y*z*t*a)*(1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+  The direct study of this function is very complicated. We simplify a bit the computations splitting it as
+  (1-y*z*t*a)*(1+y*z*t*a) * F(yz,z,t,a,g)
+  where  F is the function which is studied in "19G_x=1_auxiliary_function_F_Magma.txt" and is estimated with 8.58.
+  In particular
+  (1-y*z*t*a)*(1+y*z*t*a) * F(yz,z,t,a,g) = (1-(y*z*t*a)^2) * F(yz,z,t,a,g) <= 1 * 8.58 <= 8.58 */
+
+
+/* y = 0:
+  (1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8.58.
+  In fact, the case "y = 0" coincides with the case "x = 1, y = 0" and produce the
+  same function. Hence we know that the current function is <= 8.58 as a consequence
+  of the full proof of the analogous claim for the case "x = 1". */
+
+
+/* z = 0:
+  (1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a)
+  This function is maximized at a = 1, giving
+  2*(1-2*t*g+t^2)*(1+2*t*g+t^2). This is maximized at g = 0 by RMK 1.
+  Hence the function is <= 8 */
+
+
+/* t = 0:
+  (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1+a)
+  This function is maximized at a = 1, giving
+  2*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2).
+  Since the only term containing y is a parabola with positive quadratic coefficient in y,
+  the function is maximized at either y = 0 or y = 1.
+  So the function is <= MAX(2*(1+2*z*g+z^2), 2*(1-2*z*g+z^2)*(1+2*z*g+z^2)) = 8  */
+
+
+/* a = 0:
+  (1+x*y*z*t)*(1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+2*z*g+z^2)*(1+z*t)*(1-2*t*g+t^2)
+  This is maximized at x = 1, so we know that the function is <= 8.58 from the
+  discussion of the general case "x = 1". */
+
+
+/* y = 1:
+  (1+x*z*t)*(1-x*z*t*a)*(1-2*z*g+z^2)*(1-z*t)*(1+z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) =
+  (1+x*z*t)*(1-x*z*t*a)*(1-(z*t)^2)*(1-(z*t*a)^2)*(1-2*z*g+z^2)*(1+2*z*g+z^2)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+  This function is maximized at g  = 0 by RMK 1 (applied to (1-2*z*g+z^2)*(1+2*z*g+z^2) and (1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2))
+  and so it is a subcase of the case "g = 0". In particular it is <= 8 */
+
+
+/* x = 0:
+  (1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8.58
+  The proof is in "19G_x=0_Magma.txt" and is estimated with 8.58. */
+
+
+/* a = 1:
+  2*(1+x*y*z*t)*(1-x*y*z*t)*(1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t)*(1-2*t*g+t^2)*(1+2*t*g+t^2)=
+  2*(1-(x*y*z*t)^2)*(1-(y*z*t)^2)*(1-(z*t)^2)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-2*t*g+t^2)*(1+2*t*g+t^2) <= 8.58
+  This is maximized at x = 0, so we know that the function is <= 8.58 from the
+  discussion of the general case "x = 0". */
+
+
+/* z = 1:
+  2*(1+x*y*t)*(1-x*y*t*a)*(1-2*y*g+y^2)*(1-y*t)*(1+y*t*a)*(1+g)*(1+t)*(1-t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8.58
+  The proof is in "19G_z=1_Magma.txt" and is estimated with 8.58. */
+
+
+/* t = 1:
+  2*(1+x*y*z)*(1-x*y*z*a)*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z*a)*(1+2*z*g+z^2)*(1+z)*(1-z*a)*(1-g)*(1+2*a*g+a^2)*(1+a) <= 8.58 */
+  The proof is in "19G_t=1_Magma.txt" and is estimated with 8.58. */
+
+/* This concludes the proof of the claim */

@@ -1,0 +1,295 @@
+/* Proof of inequality 24G */
+
+
+/*   (1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)*2*sqrt(1-g^2)  */
+
+/* This is maximized at either a = 0 or a = 1 */
+
+Q:=RationalField();
+R<y,z,t,g>:=PolynomialRing(Q,4);
+
+/* a = 1:   (1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+t^2)*2*sqrt(1-g^2)  */
+
+L:=(1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+t^2);  /* times 2*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lt:=Tt[2,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+res1g:=T[6,1];
+T:=Factorization(Resultant(Ly,Lt,g));
+res2g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res3g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));  /* There is the factor t - 1/2, but t = 1/2 in res1g gives no roots for z and y between 0 and 1 */
+res1y:=T[6,1];
+T:=Factorization(Resultant(res1g,res3g,y));
+res2y:=T[8,1];
+
+T:=Factorization(Resultant(res1y,res2y,t));
+rest:=T[4,1]*T[8,1];
+
+PrintFile("24G.gp","\{rest=");
+PrintFile("24G.gp",rest);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{res1y=");
+PrintFile("24G.gp",res1y);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{res1g=");
+PrintFile("24G.gp",res1g);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{Ly=");
+PrintFile("24G.gp",Ly);
+PrintFile("24G.gp",";}\n\n");
+
+
+/* The value of the function at the critical points is < 3.61 */
+
+/* a = 1, yzt = 0: the function reduces to the inequality 3G which is <= 8 */
+
+/* a = 1, g = 0:
+
+   (1+y*z*t)*(1+(y*z)^2)*(1+z^2)*(1-z*t)*(1+t^2)*(1+t^2)*2. This is maximized at y = 1 giving
+
+   2*(1+z^2)^2*(1-(z*t)^2)*(1+t^2)^2.
+
+   Partial derivatives find the maximum point (z,t)=(2/3,2/3): the value of the function at this is <= 8.58.
+
+   If z = 0 (or t = 0) this is <= 8.
+
+   If z = 1 or t = 1 this is <=  8*32/27 = 256/27  */
+
+/* a = 1, y = 1:
+
+    (1+z*t)*(1-2*z*g+z^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*g+t^2)*2*sqrt(1-g^2).
+
+   This is maximized at g = 0, so we know is <= 256/27 */
+
+/* a = 1, z = 1:
+
+   (1+y*t)*(1-2*y*g+y^2)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*g+t^2)*4*sqrt(1-g^2)     */
+
+L:=(1+y*t)*(1-2*y*g+y^2)*(1+g)*(1-t)*(1+2*t*g+t^2)*(1-2*t*g+t^2);  /* times 4*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[5,1];
+Lt:=Tt[2,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Ly,Lt,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));  /* There is the factor t - 1/2, but t = 1/2 in res1g gives no roots for y between 0 and 1 */
+resy:=T[7,1];
+
+/* This has no roots in the interior */
+
+
+/* a = 1, z = 1, t = 1: the function is zero   */
+
+/* a = 1, z = 1, g = 1: the function is zero     */
+
+/* a = 1, t = 1:
+
+   8*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-g)*sqrt(1-g^2)   */
+
+L:= 8*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g)*(1-g);  /* times sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[6,1];
+Lz:=Tz[3,1];
+Lg:=Tg[5,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+/* This has no roots in the interior */
+
+/* a = 1, t = 1, g = 1: the function is zero */
+
+/* a = 1, g = 1: the function is zero */
+
+/* This concludes the case a = 1 */
+
+
+/* a = 0:
+
+  (1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2)  */
+
+/* Interior */
+
+L:=(1+y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2);  /* times 2*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[5,1];
+Lz:=Tz[2,1];
+Lt:=Tt[2,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+res1g:=T[6,1];
+T:=Factorization(Resultant(Ly,Lt,g));
+res2g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res3g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));  /* There is the factor t - 1/2, but t = 1/2 in res1g gives no roots for z and y between 0 and 1 */
+res1y:=T[6,1];
+T:=Factorization(Resultant(res1g,res3g,y));
+res2y:=T[8,1];
+
+T:=Factorization(Resultant(res1y,res2y,t));
+rest:=T[4,1];
+
+PrintFile("24G.gp","\{rest=");
+PrintFile("24G.gp",rest);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{res1y=");
+PrintFile("24G.gp",res1y);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{res1g=");
+PrintFile("24G.gp",res1g);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{Ly=");
+PrintFile("24G.gp",Ly);
+PrintFile("24G.gp",";}\n\n");
+
+/* The function assumes values < 4.1 at the critical points */
+
+
+/* a = 0, yzt = 0: the function reduces to the inequality 3G, which is <= 8   */
+
+/* a = 0, g = 0:
+
+  (1+y*z*t)*(1+(y*z)^2)*(1+z^2)*(1-z*t)*(1+t^2)*2  <= (maximized at y = 1)
+
+  2*(1+z^2)^2*(1-(z*t)^2)*(1+t^2).
+
+  This is <= of the case studied in a = 1, g = 0, so is <= 256/27 */
+
+
+/* a = 0, y = 1:
+
+  (1+z*t)*(1-2*z*g+z^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2)  */
+
+L:=(1+z*t)*(1-2*z*g+(z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2);  /* times 2*sqrt(1-g^2)  */
+
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lz:=Tz[3,1];
+Lt:=Tt[3,1];
+Lg:=Tg[3,1];
+
+T:=Factorization(Resultant(Lz,Lt,g));
+res1g:=T[3,1];
+T:=Factorization(Resultant(Lt,Lg,g));
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(res1g,res2g,t));
+rest:=T[5,1]*T[6,1];
+
+PrintFile("24G.gp","\{rest=");
+PrintFile("24G.gp",rest);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{res1g=");
+PrintFile("24G.gp",res1g);
+PrintFile("24G.gp",";}\n\n");
+
+PrintFile("24G.gp","\{Lt=");
+PrintFile("24G.gp",Lt);
+PrintFile("24G.gp",";}\n\n");
+
+/* The value of the function at critical points is < 5.5 */
+
+
+/* a = 0, y = 1, z = 1:
+
+  8*(1-g^2)*(1-t^2)*(1+2*t*g+t^2)*sqrt(1-g^2)
+
+  This is maximized at t = 1/sqrt(7), g = 1/2/sqrt(7) giving the value 8*M <= 8.4    */
+
+
+/* a = 0, y = 1, t = 1
+
+  (1-2*z*g+z^2)*(1+2*z*g+z^2)*(1-z^2)*(1+g)*4*sqrt(1-g^2)  =
+
+  ((1+z^2)^2-4*z^2*g^2)*(1-z^2)*(1+g)*4*sqrt(1-g^2)  <=
+
+   (1+z^2)^2*(1-z^2)    *   4*(1+g)*sqrt(1-g^2)   <=  32/27  * 3*sqrt(3)   <=  6.2   */
+
+
+/* a = 0, y = 1, g = 1: the function is zero */
+
+
+/* a = 0, z = 1:
+
+    (1+y*t)*(1-2*y*g+y^2)*(1+g)*(1-t)*(1+2*t*g+t^2)*4*sqrt(1-g^2)  */
+
+L:=(1+y*t)*(1-2*y*g+y^2)*(1+g)*(1-t)*(1+2*t*g+t^2);  /* times 4*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[4,1];
+Lt:=Tt[2,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Ly,Lt,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));  /* There is the factor t - 1/2, but t = 1/2 in res1g gives no roots for y between 0 and 1 */
+resy:=T[6,1];
+
+/* This has no roots in the interior */
+
+
+/* a = 0, z = 1, t = 1: the function is zero */
+
+/* a = 0, z = 1, g = 1: the function is zero */
+
+/* a = 0, t = 1:
+
+   (1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g)*4*sqrt(1-g^2)  */
+
+L:=(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z)*(1+g);   /* times 4*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Ly:=Ty[5,1];
+Lz:=Tz[2,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Ly,Lz,g));
+
+/* This has no roots in the interior */
+
+/* a = 0, t = 1, g = 1: the function is zero */
+
+/* a = 0, g = 1: the function is zero */
+
+/* Thus we proved that also for a = 0 the function is <= 256/27 */

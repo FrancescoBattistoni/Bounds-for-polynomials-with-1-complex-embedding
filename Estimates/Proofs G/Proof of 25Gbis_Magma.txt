@@ -1,0 +1,274 @@
+/* Study of inequality 25Gbis
+
+      - - -' + +            <= 1.887 for y in [81/100,1] when the function is written as
+        + +' - -            (1+x)*(1+x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1-x*y*z*t*a)*(1-y)*(1-2*g*y*z+(y*z)^2)*(1+y*z*t)*(1+y*z*t*a)
+
+  This is the horizontal version of
+
+      -  +                  <= 1.887  for a in [81/100,1] when the function is written as
+      -  +                  (1+b)*(1+b*a)*(1+2*b*a*t*g+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1-2*a*t*g+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)
+      +' -'
+      +  -
+         -
+
+  which is (a simplification of) 11G, apart the restriction on a which does not appear in 11G.
+  To easy the comparison with the code for 11G we actually prove that the inequality in the second form, i.e., that
+
+      -  +                  <= 1.887  for a in [81/100,1] when the function is written as
+      -  +                  (1+b)*(1+b*a)*(1+2*b*a*t*g+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1-2*a*t*g+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)
+      +' -'
+      +  -
+         -
+
+     (1+b)*(1+b*a)*(1+2*b*a*t*g+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1-2*a*t*g+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)
+
+*/
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+  L:=(1+b)*(1+b*a)*(1+2*b*a*t*g+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1-2*a*t*g+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y);
+
+/* This is maximized at g=0 thanks to RMK 1, so we have
+  (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y) */
+
+  L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y);
+
+
+
+/* We begin with the left-boundaries */
+
+/* b = 0: (1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y). Maximized at y=z=t=1
+          (1-a)*(1+a^2)*(1+a)^2 <= 1.41 (this is the maximum for a in [0,1]: it is smaller than the target 1.887 so we keep it) */
+....
+/* a = 81/100: (1+b)*(1+b*(81/100))*(1+(b*(81/100)*t)^2)*(1-b*(81/100)*t*z)*(1-b*(81/100)*t*z*y)*(1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t*z)*(1+(81/100)*t*z*y) */
+  L:=(1+b)*(1+b*(81/100))*(1+(b*(81/100)*t)^2)*(1-b*(81/100)*t*z)*(1-b*(81/100)*t*z*y)*(1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t*z)*(1+(81/100)*t*z*y);
+  Tb:=Factorization(Derivative(L,b));
+  Tt:=Factorization(Derivative(L,t));
+  Tz:=Factorization(Derivative(L,z));
+  Ty:=Factorization(Derivative(L,y));
+  Lb:=Tb[4,1];
+  Lt:=Tt[3,1];
+  Lz:=Tz[6,1];
+  Ly:=Ty[9,1];
+
+  T1:=Factorization(Resultant(Lz,Lt,b));
+  /* All factors in T1 are strictly positive in the open set */
+
+  /* a= 81/100, b = 0: (1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t*z)*(1+(81/100)*t*z*y) maximized for t = z = y = 1
+                       (1-(81/100))*(1+((81/100))^2)*(1+(81/100))*(1+(81/100)) <= 1.1 */
+  ....
+  /* a= 81/100, t = 0: (1+b)*(1+b*(81/100))*(1-(81/100)) maximized for b = 1 <= 2*(1+(81/100))*(1-(81/100)) <= 0.7 */
+  ....
+  /* a= 81/100, z = 0: (1+b)*(1+b*(81/100))*(1+(b*(81/100)*t)^2)*(1-(81/100))*(1+((81/100)*t)^2) maximized for b = t = 1
+                       2*(1+(81/100))*(1+((81/100))^2)*(1-(81/100))*(1+((81/100))^2) <= 1.887 */
+  ....
+  /* a= 81/100, y = 0: (1+b)*(1+b*(81/100))*(1+(b*(81/100)*t)^2)*(1-b*(81/100)*t*z)*(1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t*z) <= 1.887 (see "25Gbis_Pari.gp") */
+  ....
+  /* a= 81/100, b = 1: 2*(1+(81/100))*(1+((81/100)*t)^2)*(1-(81/100)*t*z)*(1-(81/100)*t*z*y)*(1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t*z)*(1+(81/100)*t*z*y) <= 1.887 (see "25Gbis_Pari.gp") */
+  ....
+  /* a= 81/100, t = 1: (1+b)*(1+b*(81/100))*(1+(b*(81/100))^2)*(1-b*(81/100)*z)*(1-b*(81/100)*z*y)*(1-(81/100))*(1+(81/100)^2)*(1+(81/100)*z)*(1+(81/100)*z*y) <= 1.887 (see "25Gbis_Pari.gp") */
+  ....
+  /* a= 81/100, z = 1: (1+b)*(1+b*(81/100))*(1+(b*(81/100)*t)^2)*(1-b*(81/100)*t)*(1-b*(81/100)*t*y)*(1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t)*(1+(81/100)*t*y) <= 1.887 (see "25Gbis_Pari.gp") */
+  ....
+  /* a= 81/100, y = 1: (1+b)*(1+b*(81/100))*(1+(b*(81/100)*t)^2)*(1-b*(81/100)*t*z)*(1-b*(81/100)*t*z)*(1-(81/100))*(1+((81/100)*t)^2)*(1+(81/100)*t*z)*(1+(81/100)*t*z) <= 1.887 (see "25Gbis_Pari.gp") */
+....
+
+/* t = 0: (1+b)*(1+b*a)*(1-a) <= 2*(1-a^2) <= 0.7 (recall that a in [81/100,1]) */
+....
+
+/* z = 0: (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-a)*(1+(a*t)^2). Maximized at b=t=1
+          2*(1-a^4)*(1+a^2) <= 1.887 (recall that a in [81/100,1]) */
+
+....
+/* y = 0: (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z) */
+
+  L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z);
+  Tb:=Factorization(Derivative(L,b));
+  Ta:=Factorization(Derivative(L,a));
+  Tt:=Factorization(Derivative(L,t));
+  Tz:=Factorization(Derivative(L,z));
+  Lb:=Tb[4,1];
+  La:=Ta[2,1];
+  Lt:=Tt[5,1];
+  Lz:=Tz[8,1];
+
+  T1:=Factorization(Resultant(Lz,Lt,b));
+  /* All factors are strictly positive in the open set */
+
+    /* y = 0, and b = 0 already discussed in greater generality (<= 1.41) */
+  ....
+    /* y = 0, a = 81/100 already discussed in greater generality (<= 1.887) */
+  ....
+    /* y = 0, t = 0 already discussed in greater generality (<= 0.7) */
+  ....
+    /* y = 0, z = 0 already discussed in greater generality (<= 1.887) */
+  ....
+    /* y = 0, b = 1: 2*(1+a)*(1+(a*t)^2)*(1-a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z) maximized for z = 0
+                     2*(1+a)*(1+(a*t)^2)*(1-a)*(1+(a*t)^2) maximized for t = 1
+                     2*(1+a)*(1+a^2)*(1-a)*(1+a^2) <= 1.887 (recall that a in [81/100,1])  */
+  ....
+    /* y = 0, a = 1: the function is zero */
+  ....
+    /* y = 0, t = 1: (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-a)*(1+a^2)*(1+a*z) <= 1.887 (see "25Gbis_Pari.gp")  */
+  ....
+    /* y = 0, z = 1: (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t) <= 1.887 (see "25Gbis_Pari.gp") */
+
+
+
+/* right-boundaries */
+
+/* b = 1: 2*(1+a)*(1+(a*t)^2)*(1-a*t*z)*(1-a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y) maximized for y = 0
+          2*(1+a)*(1+(a*t)^2)*(1-a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z) maximized for z = 0
+          2*(1+a)*(1+(a*t)^2)*(1-a)*(1+(a*t)^2) maximized for t = 1
+          2*(1+a)*(1+a^2)*(1-a)*(1+a^2) <= 1.887 (recall that a in [81/100,1]) */
+....
+
+/* a = 1: the function is zero */
+....
+
+/* t = 1: (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-a)*(1+a^2)*(1+a*z)*(1+a*z*y) */
+
+  L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-a)*(1+a^2)*(1+a*z)*(1+a*z*y);
+
+  Tb:=Factorization(Derivative(L,b));
+  Ta:=Factorization(Derivative(L,a));
+  Tz:=Factorization(Derivative(L,z));
+  Ty:=Factorization(Derivative(L,y));
+  Lb:=Tb[5,1];
+  La:=Ta[2,1];
+  Lz:=Tz[7,1];
+  Ly:=Ty[10,1];
+
+  T1:=Factorization(Resultant(Lb,Ly,b));
+  T2:=Factorization(Resultant(La,Ly,b));
+  T3:=Factorization(Resultant(Lz,Ly,b));
+  res1b:=T1[1,1];
+  res2b:=T2[1,1];
+  res3b:=T3[2,1];
+
+  T11:=Factorization(Resultant(res1b,res3b,y));
+  T12:=Factorization(Resultant(res2b,res3b,y));
+  res1y:=T11[3,1];
+  res2y:=T12[4,1];
+
+  T111:=Factorization(Resultant(res1y,res2y,z));
+  res1z:=T111[4,1];
+
+  PrintFile("BHO.gp","\{res1z=");
+  PrintFile("BHO.gp",res1z);
+  PrintFile("BHO.gp",";}\n\n");
+ /* This has no roots in (0,1) (see "25Gbis_Pari.gp") */
+
+   /* t = 1, b = 0: already discussed in greater generality (<= 1.41) */
+  ....
+   /* t = 1, a = 81/100: already discussed in greater generality (<= 1.887) */
+  ....
+   /* t = 1, z = 0: already discussed in greater generality (<= 1.887) */
+  ....
+   /* t = 1, y = 0: already discussed in greater generality (<= 1.887) */
+  ....
+   /* t = 1, b = 1: already discussed in greater generality (<= 1.887) */
+  ....
+   /* t = 1, a = 1: NULL */
+  ....
+   /* t = 1, z = 1: (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a*y)*(1-a)*(1+a^2)*(1+a)*(1+a*y) <= 1.887 (see "A_Pari,gp") */
+  ....
+   /* t = 1, y = 1: (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-a)*(1+a^2)*(1+a*z)*(1+a*z) <= 1.887 (see "A_Pari,gp") */
+  ....
+....
+
+
+/* z = 1: (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y);
+
+  L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y);
+
+  Tb:=Factorization(Derivative(L,b));
+  Ta:=Factorization(Derivative(L,a));
+  Tt:=Factorization(Derivative(L,t));
+  Ty:=Factorization(Derivative(L,y));
+  Lb:=Tb[5,1];
+  La:=Ta[2,1];
+  Lt:=Tt[5,1];
+  Ly:=Ty[10,1];
+
+  T1:=Factorization(Resultant(Lb,Ly,b));
+  T2:=Factorization(Resultant(La,Ly,b));
+  T3:=Factorization(Resultant(Lt,Ly,b));
+  res1b:=T1[2,1];
+  res2b:=T2[3,1];
+  res3b:=T3[4,1];
+
+  T11:=Factorization(Resultant(res1b,res3b,y));
+  T12:=Factorization(Resultant(res2b,res3b,y));
+  res1y:=T11[5,1];
+  res2y:=T12[5,1];
+
+  T111:=Factorization(Resultant(res1y,res2y,t));
+  res1t:=T111[3,1]*T111[4,1];
+
+  PrintFile("BHO.gp","\{res1t=");
+  PrintFile("BHO.gp",res1t);
+  PrintFile("BHO.gp",";}\n\n");
+
+  PrintFile("BHO.gp","\{res1y=");
+  PrintFile("BHO.gp",res1y);
+  PrintFile("BHO.gp",";}\n\n");
+
+ /* GP computations show that there are no stationary points in the open set (see "25Gbis_Pari.gp") */
+
+
+  /* z = 1, b = 0:  already discussed in greater generality (<= 1.41) */
+  ....
+  /* z = 1, a = 81/100:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* z = 1, t = 0:  already discussed in greater generality (<= 0.7) */
+  ....
+  /* z = 1, y = 0:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* z = 1, b = 1:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* z = 1, a = 1:  NULL */
+  ....
+  /* z = 1, t = 1:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* z = 1, y = 1:  (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t) <= 1.887  (see "25Gbis_Pari.gp") */
+  ....
+....
+
+/* y = 1: (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z) */
+
+  L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z);
+  Tb:=Factorization(Derivative(L,b));
+  Ta:=Factorization(Derivative(L,a));
+  Tt:=Factorization(Derivative(L,t));
+  Tz:=Factorization(Derivative(L,z));
+  Lb:=Tb[5,1];
+  La:=Ta[4,1];
+  Lt:=Tt[7,1];
+  Lz:=Tz[10,1];
+
+  T1:=Factorization(Resultant(Lb,Lz,b));
+  T2:=Factorization(Resultant(La,Lz,b));
+  T3:=Factorization(Resultant(Lt,Lz,b));
+ /* All factors in T3 are strictly positive in the open set */
+
+  /* y = 1, b = 0:  already discussed in greater generality (<= 1.41) */
+  ....
+  /* y = 1, a = 81/100:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* y = 1, t = 0:  already discussed in greater generality (<= 0.7) */
+  ....
+  /* y = 1, z = 0:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* y = 1, b = 1:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* y = 1, a = 1:  NULL */
+  ....
+  /* y = 1, t = 1:  already discussed in greater generality (<= 1.887) */
+  ....
+  /* y = 1, z = 1:  already discussed in greater generality (<= 1.887) */
+  ....
+....
+
+/* Hence our function is <= 1.887 */

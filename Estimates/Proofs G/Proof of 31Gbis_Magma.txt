@@ -1,0 +1,79 @@
+/* Study of Inequality 31Gbis)
+
+   -   + -     <= 8.393     for z in [0,1/18]
+     - - +
+         -
+         -
+
+   (1+x)*(1-x*y*z)*(1+x*y*z*t)*(1+y)*(1+y*z)*(1-y*z*t)*(1+z*t)*(1+t)
+
+*/
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1+x)*(1-x*y*z)*(1+x*y*z*t)*(1+y)*(1+y*z)*(1-y*z*t)*(1+z*t)*(1+t);
+
+/* We begin with the analysis in the interior */
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Lx:= Tx[6,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[4,1];
+  Lt:= Tt[5,1];
+
+  T1:=Factorization(Resultant(Ly,Lx,t));
+  T2:=Factorization(Resultant(Lz,Lx,t));
+  T3:=Factorization(Resultant(Lt,Lx,t));
+  res1t:=T1[5,1];
+  res2t:=T2[5,1];
+  res3t:=T3[5,1];
+
+  T11:=Factorization(Resultant(res2t,res1t,z));
+  T12:=Factorization(Resultant(res3t,res1t,z));
+  res1z:=T11[4,1];
+  res2z:=T12[4,1];
+
+  T111:=Factorization(Resultant(res2z,res1z,y));
+  res1y:=T111[3,1]*T111[4,1];
+
+  PrintFile("BHO.gp","\{res1y=");
+  PrintFile("BHO.gp",res1y);
+  PrintFile("BHO.gp",";}\n\n");
+
+  PrintFile("BHO.gp","\{res1z=");
+  PrintFile("BHO.gp",res1z);
+  PrintFile("BHO.gp",";}\n\n");
+
+  PrintFile("BHO.gp","\{res1t=");
+  PrintFile("BHO.gp",res1t);
+  PrintFile("BHO.gp",";}\n\n");
+
+  PrintFile("BHO.gp","\{Lx=");
+  PrintFile("BHO.gp",Lx);
+  PrintFile("BHO.gp",";}\n\n");
+  /* GP computations show that there are no stationary points in the open set */
+
+  /* BORDER */
+
+  /* x = 0: (1+y)*(1+y*z)*(1-y*z*t)*(1+z*t)*(1+t) <= 128/27 (by 4G) */
+
+  /* y = 0: (1+x)*(1+z*t)*(1+t) <= 2*(1+z)*2 <= 2*(1+1/18)*2 <= 4.3 */
+
+  /* z = 0: (1+x)*(1+y)*(1+t) <= 8 */
+
+  /* t = 0: (1+x)*(1-x*y*z)*(1+y)*(1+y*z) = (1+x)*(1-x*y*z)*(1+y*z)       *(1+y) <= 2(by 9A)*2 = 4 */
+
+  /* x = 1: 2*(1-y*z)*(1+y*z*t)*(1+y)*(1+y*z)*(1-y*z*t)*(1+z*t)*(1+t)                                      <= 8.393 (see "31Gbis_Pari.gp") */
+
+  /* y = 1: (1+x)*(1-x*z)*(1+x*z*t)*2*(1+z)*(1-z*t)*(1+z*t)*(1+t)                                          <= 8.393 (see "31Gbis_Pari.gp") */
+
+  /* z = 1/18: (1+x)*(1-x*y*(1/18))*(1+x*y*(1/18)*t)*(1+y)*(1+y*(1/18))*(1-y*(1/18)*t)*(1+(1/18)*t)*(1+t)  <= 8.393 (see "31Gbis_Pari.gp") */
+
+  /* t = 1: (1+x)*(1-x*y*z)*(1+x*y*z)*(1+y)*(1+y*z)*(1-y*z)*(1+z)*2                                        <= 8.393 (see "31Gbis_Pari.gp") */
+
+
+/* Thus our function is <= 8.393 */

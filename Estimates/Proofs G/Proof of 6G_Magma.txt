@@ -1,0 +1,430 @@
+/* Study of inequality 6G */
+
+/*
+      - -' +                <= 16
+        +'
+           -' +'
+                2R^(1/2)
+*/
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1+x)*(1+2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-2*y*g+y^2)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2);  /* times 2*sqrt(1-g^2)  */
+
+/* The maximum is achieved at either t = 0 or t = 1 */
+
+/* t = 0:
+   2*(1+x)*(1+2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-2*y*g+y^2)*(1+2*z*g+z^2)*sqrt(1-g^2) */
+
+/* INNER */
+  L:=2*(1+x)*(1+2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-2*y*g+y^2)*(1+2*z*g+z^2); /* times sqrt(1-g^2) */
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g)*(1-g^2)-g*L);
+  Lx:= Tx[3,1];
+  Ly:= Ty[3,1];
+  Lz:= Tz[3,1];
+  Lg:= Tg[3,1];
+
+  T1:= Factorization(Resultant(Lx,Lz,g));
+  T2:= Factorization(Resultant(Ly,Lz,g));
+  T3:= Factorization(Resultant(Lg,Lz,g));
+  res1g:= T1[2,1];
+  res2g:= T2[2,1];
+  res3g:= T3[4,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,z));
+  T12:= Factorization(Resultant(res2g,res3g,z));
+  res1za:= T11[6,1]; /* A */ /* x*y - 1/2 */
+  res1zb:= T11[8,1];
+  res2za:= T12[8,1]; /* A */ /* x*y - 1/2 */
+  res2zb:= T12[11,1];
+
+  /* CASE 1: res1za = res2za */
+  PrintFile("6G_Pari.gp","\{Lx=");
+  PrintFile("6G_Pari.gp",Lx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Ly=");
+  PrintFile("6G_Pari.gp",Ly);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lz=");
+  PrintFile("6G_Pari.gp",Lz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lg=");
+  PrintFile("6G_Pari.gp",Lg);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1za=");
+  PrintFile("6G_Pari.gp",res1za);
+  PrintFile("6G_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see "6G_Pari") */
+
+
+  /* CASE 2: res1zb, res2zb */
+  T111:= Factorization(Resultant(res1zb,res2zb,x));
+  res1x:= T111[4,1]*T111[5,1];
+
+  PrintFile("6G_Pari.gp","\{res1x=");
+  PrintFile("6G_Pari.gp",res1x);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1zb=");
+  PrintFile("6G_Pari.gp",res1zb);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res3g=");
+  PrintFile("6G_Pari.gp",res3g);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lz=");
+  PrintFile("6G_Pari.gp",Lz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+  /* GP computations show that there are 6 stationary points with value <= 7.2 (see "6G_Pari.gp") */
+
+/* BORDER */
+
+/* t = 0, x = 0:
+   2*(1-2*y*g+y^2)*(1+2*z*g+z^2)*sqrt(1-g^2). This is maximized at z = 1 giving
+   4*(1-2*y*g+y^2)*(1+g)*sqrt(1-g^2). This is maximized at either y = 0 or y = 1 */
+
+
+/* t = 0, x = 0, y = 0:
+   4*(1+g)*sqrt(1-g^2) <= 3*sqrt(3)  */
+
+/* t = 0, x = 0, y = 1:
+   8*(1-g^2)*sqrt(1-g^2) <= 8 */
+
+
+/* t = 0, y = 0:
+    2*(1+x)*(1+2*z*g+z^2)*sqrt(1-g^2). Maximized at x=z=1 giving
+    8*(1+g)*sqrt(1-g^2). Maximized at g=1/2 giving 6*sqrt(3) == 10.40  */
+
+
+/* t = 0, z = 0:
+   2*(1+x)*(1+2*x*y*g+(x*y)^2)*(1-2*y*g+y^2)*sqrt(1-g^2). Maximized at x = y = 1 and g = 0 giving the value 16 */
+
+
+/* t = 0, g = 0:
+   2*(1+x)*(1+(x*y)^2)*(1-x*y*z)*(1+y^2)*(1+z^2)  */
+
+  L:=2*(1+x)*(1+(x*y)^2)*(1-x*y*z)*(1+y^2)*(1+z^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Lx:=Tx[3,1];
+  Ly:=Ty[3,1];
+  Lz:=Tz[3,1];
+
+  T:=Factorization(Resultant(Lx,Lz,x));
+  res1x:=T[3,1];
+  T:=Factorization(Resultant(Ly,Lz,x));
+  res2x:=T[3,1];
+
+  T:=Factorization(Resultant(res1x,res2x,y));
+  resy:=T[3,1];
+
+  PrintFile("6G_Pari.gp","\{resy=");
+  PrintFile("6G_Pari.gp",resy);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1x=");
+  PrintFile("6G_Pari.gp",res1x);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lz=");
+  PrintFile("6G_Pari.gp",Lz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+/* GP computations find 1 stationary point: the value of the function at the point is < 6.2 */
+/* t = 0, g = 0, x = 1:
+   2*2*(1+y^2)*(1-y*z)*(1+y^2)*(1+z^2) <=
+   2*2*2      *(1-y*z)*(1+y^2)*(1+z^2) <=
+   2*2*2 * (2/3)*(1+1/3)*(1+1/3) <= 9.5 */
+
+/* t = 0, g = 0, y = 1:
+   2*2*(1+x)*(1+x^2)*(1-x*z)*(1+z^2) <=
+   2*2*2    *(1+x^2)*(1-x*z)*(1+z^2) <=
+   2*2*2    *(1+1/3)*(2/3)  *(1+1/3) <= 9.5 */
+
+/* t = 0, g = 0, z = 0:
+   2*(1+x)*(1+(x*y)^2)*(1+y^2) <= 2*2*2*2 = 16  */
+
+/* t = 0, g = 0, z = 1:
+   2*2*(1+x)*(1+(x*y)^2)*(1-x*y)*(1+y^2) <=
+   2*2*2    *(1+x^2)    *(1-x*y)*(1+y^2) <=
+   2*2*2    *(1+1/3)*(2/3)  *(1+1/3) <= 9.5 */
+
+
+/* t = 0, x = 1:
+    4*(1+2*y*g+y^2)*(1-y*z)*(1-2*y*g+y^2)*(1+2*z*g+z^2)*sqrt(1-g^2)  */
+
+  L:= 4*(1+2*y*g+y^2)*(1-y*z)*(1-2*y*g+y^2)*(1+2*z*g+z^2);  /* times sqrt(1-g^2)  */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[2,1];
+  Lz:=Tz[1,1];
+  Lg:=Tg[2,1];
+
+  T:=Factorization(Resultant(Ly,Lz,g));
+  res1g:=T[2,1];
+  T:=Factorization(Resultant(Lz,Lg,g));
+  res2g:=T[4,1];
+
+  T:=Factorization(Resultant(res1g,res2g,z));
+  resz:=T[4,1]*T[7,1];
+
+  PrintFile("6G_Pari.gp","\{resz=");
+  PrintFile("6G_Pari.gp",resz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1g=");
+  PrintFile("6G_Pari.gp",res1g);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lz=");
+  PrintFile("6G_Pari.gp",Lz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+/* GP computations show there are no stationary points */
+
+
+/* t = 0, x = 1, y = 1:
+   16*(1-z)*(1-g^2)*(1+2*z*g+z^2)*sqrt(1-g^2).
+   This case is exactly like the case x = 0, t = 1, z = 1 for the 3G. So we know that this is <= 16.  */
+
+/* t = 0, x = 1, z = 1:
+   8*(1+2*y*g+y^2)*(1-y)*(1-2*y*g+y^2)*(1+g)*sqrt(1-g^2)  */
+
+  L:=8*(1+2*y*g+y^2)*(1-y)*(1-2*y*g+y^2)*(1+g);  /* sqrt(1-g^2) */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[2,1];
+  Lg:=Tg[3,1];
+
+  T:=Factorization(Resultant(Ly,Lg,g));
+  resg:=T[5,1];
+  /* This has no roots between 0 and 1 */
+
+
+/* t = 0, x = 1, z = 1, g = 1: the function is zero. */
+
+/* t = 0, x = 1, g = 1: the function is zero. This concludes the case t = 0, x = 1. */
+
+
+/* t = 0, y = 1:
+   4*(1+x)*(1+2*x*g+x^2)*(1-x*z)*(1-g)*(1+2*z*g+z^2)*sqrt(1-g^2)  */
+
+  L:=4*(1+x)*(1+2*x*g+x^2)*(1-x*z)*(1-g)*(1+2*z*g+z^2);  /* times sqrt(1-g^2) */
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lx:=Tx[3,1];
+  Lz:=Tz[3,1];
+  Lg:=Tg[4,1];
+
+  T:=Factorization(Resultant(Lx,Lz,g));
+  res1g:=T[2,1];
+  T:=Factorization(Resultant(Lz,Lg,g));
+  res2g:=T[4,1];
+
+  T:=Factorization(Resultant(res1g,res2g,z));
+  resz:=T[4,1]*T[6,1];
+
+  PrintFile("6G_Pari.gp","\{resz=");
+  PrintFile("6G_Pari.gp",resz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1g=");
+  PrintFile("6G_Pari.gp",res1g);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lz=");
+  PrintFile("6G_Pari.gp",Lz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+/* GP computations find one stationary point. The function at this point is < 1.35 */
+
+
+/* t = 0, y = 1, z = 1:
+   8*(1+2*x*g+x^2)*(1-x^2)*(1-g^2)*sqrt(1-g^2)
+   This is the function for n = 5 with coefficients 8 instead of 16, and is maximized at x = 1/sqrt(7) and g = 1/2/sqrt(7)  giving the value 8*M */
+
+/* t = 0, y = 1, z = 1, g = 1: the function is zero */
+
+/* t = 0, y = 1, g = 1: the function is zero. This concludes the case t = 0, y = 1 */
+
+
+/* t = 0, z = 1:
+   4*(1+x)*(1+2*x*y*g+(x*y)^2)*(1-x*y)*(1-2*y*g+y^2)*(1+g)*sqrt(1-g^2)   */
+
+  L:=4*(1+x)*(1+2*x*y*g+(x*y)^2)*(1-x*y)*(1-2*y*g+y^2)*(1+g); /* times sqrt(1-g^2) */
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lx:=Tx[3,1];
+  Ly:=Ty[3,1];
+  Lg:=Tg[4,1];
+
+  T:=Factorization(Resultant(Lx,Ly,g));
+  res1g:=T[5,1];
+  T:=Factorization(Resultant(Lx,Lg,g));
+  res2g:=T[5,1];
+
+  T:=Factorization(Resultant(res1g,res2g,x));
+  resx:=T[5,1];
+
+  PrintFile("6G_Pari.gp","\{resx=");
+  PrintFile("6G_Pari.gp",resx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1g=");
+  PrintFile("6G_Pari.gp",res1g);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lx=");
+  PrintFile("6G_Pari.gp",Lx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+/* GP computations find a unique stationary point: the value of the function at this point is < 7.1 */
+
+/* t = 0, z = 1, g = 1: the function is zero */
+
+/* t = 0, g = 1: the function is zero. This concludes the case t = 0 */
+
+
+/* t = 1:
+   (1+x)*(1+2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-2*y*g+y^2)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2).
+   Thanks to RMK 1 this is maximized at g = 0, giving
+   2*(1+x)*(1+(x*y)^2)*(1-x*y*z)*(1+y^2)*(1+z^2)*(1+z^2)   */
+
+/* INNER */
+
+  L:=2*(1+x)*(1+(x*y)^2)*(1-x*y*z)*(1+y^2)*(1+z^2)*(1+z^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Lx:=Tx[3,1];
+  Ly:=Ty[3,1];
+  Lz:=Tz[4,1];
+
+  T1:=Factorization(Resultant(Lx,Lz,x));
+  T2:=Factorization(Resultant(Ly,Lz,x));
+  res1x:=T1[3,1];
+  res2x:=T2[3,1];
+
+  T:=Factorization(Resultant(res1x,res2x,y));
+  res1y:=T[3,1];
+
+  PrintFile("6G_Pari.gp","\{res1y=");
+  PrintFile("6G_Pari.gp",res1y);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{res1x=");
+  PrintFile("6G_Pari.gp",res1x);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lz=");
+  PrintFile("6G_Pari.gp",Lz);
+  PrintFile("6G_Pari.gp",";}\n\n");
+/* GP computations show there are no stationary points at the interior */
+
+/* BORDER */
+
+/* t = 1, x = 0:
+   2*(1+y^2)*(1+z^2)*(1+z^2). Maximized at y=z=1 giving 16 */
+
+/* t = 1, y = 0:
+   2*(1+x)*(1+z^2)*(1+z^2). Maximized at x=z=1 giving 16 */
+
+/* t = 1, z = 0:
+   2*(1+x)*(1+(x*y)^2)*(1+y^2). Maximized at x=y=1 giving 16 */
+
+
+/* t = 1, x = 1:
+   4*(1+y^2)*(1-y*z)*(1+y^2)*(1+z^2)*(1+z^2) =
+   4*(1+y^2)^2*(1-y*z)*(1+z^2)^2  */
+
+  L:=4*(1+y^2)^2*(1-y*z)*(1+z^2)^2;
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Ly:=Ty[3,1];
+  Lz:=Tz[2,1];
+
+  T:=Factorization(Resultant(Lz,Ly,z));
+  /* This is maximized at (y0,z0) with y0=z0=sqrt(3/5)  giving the value 10.5 */
+
+  /* t = 1, x = 1, y = 0:
+       4*(1+z^2)^2  <= 16  */
+
+  /* t = 1, x = 1, y = 1:
+       16*(1-z)*(1+z^2)^2 <= 16*(1-z^4)  <=  16 */
+
+  /* t = 1, x = 1, z = 0:
+       4*(1+y^2)^2 <= 16 */
+
+  /* t = 1, x = 1, z = 1:
+       16*(1+y^2)^2*(1-y) <= 16*(1-y^4)  <=  16 */
+
+
+/* t = 1, y = 1:
+   4*(1+x)*(1+x^2)*(1-x*z)*(1+z^2)*(1+z^2)  */
+
+  L:=4*(1+x)*(1+x^2)*(1-x*z)*(1+z^2)*(1+z^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Lx:=Tx[2,1];
+  Lz:=Tz[3,1];
+
+  T:=Factorization(Resultant(Lx,Lz,x));
+  resx:=T[2,1];
+
+  PrintFile("6G_Pari.gp","\{resx=");
+  PrintFile("6G_Pari.gp",resx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lx=");
+  PrintFile("6G_Pari.gp",Lx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+  /* GP computations find a stationary point: the value of the function at it is < 11.52 */
+
+
+/* t = 1, y = 1, z = 1:
+   16*(1-x^4) <= 16 */
+
+
+/* t = 1. z = 1:
+   8*(1+x)*(1+(x*y)^2)*(1-x*y)*(1+y^2)  */
+
+
+  L:=8*(1+x)*(1+(x*y)^2)*(1-x*y)*(1+y^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Lx:=Tx[2,1];
+  Ly:=Ty[2,1];
+
+  T:=Factorization(Resultant(Lx,Ly,x));
+  resx:=T[3,1];
+
+  PrintFile("6G_Pari.gp","\{resx=");
+  PrintFile("6G_Pari.gp",resx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+
+  PrintFile("6G_Pari.gp","\{Lx=");
+  PrintFile("6G_Pari.gp",Lx);
+  PrintFile("6G_Pari.gp",";}\n\n");
+/* GP computations find a stationary point: the function at this point is < 12.43 */
+
+/* This concludes the case t = 1 and hence concludes the study */
+
+/* The function is then <= 16 */

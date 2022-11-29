@@ -1,0 +1,17 @@
+/* Study of inequality 4G
+
+      - - +                 <= 128/27
+          -
+          -
+
+*/
+
+
+  Q:=RationalField();
+  R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+  L:=(1+x)*(1+x*y)*(1-x*y*z)*(1+y*z)*(1+z);
+
+/* Notice that this function is symmetrical, in the sense that L(x,y,z) = L(z,y,x) */
+
+/* Computations are made in PARI; see "4G_Pari.gp" */

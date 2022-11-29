@@ -1,0 +1,308 @@
+/* Study of inequality 13G */
+
+
+Q:=RationalField();
+R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+L:=(1-x)*(1+x*y)*(1+2*x*y*z*g+(x*y*z)^2)*(1+x*y*z*t)*(1-x*y*z*t*a)*(1-x*y*z*t*a*b)*(1-y*z*t*a*b)*(1+z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a*b)*(1-b);
+
+/* This is maximized at g=1, so we have
+
+   (1-x)*(1+x*y)*(1+x*y*z)^2*(1+x*y*z*t)*(1-x*y*z*t*a)*(1-x*y*z*t*a*b)*(1-y*z*t*a*b)*(1+z*t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b)
+
+   The function is symmetric: L(x,y,z,t,a,b) = L(b,a,t,z,y,x) */
+
+
+/* x = 0:
+   (1-y*z*t*a*b)*(1+z*t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b). Maximized at y = 0 and z=t=a=1, gives
+   (1-b)*(1+b)^4. This is <= 8192/3125 */
+
+
+/* y = 0:
+   (1-x)*(1+z*t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b). Maximized at x = 0, so we know is <= 8192/3125 */
+
+
+/* z = 0:
+   (1-x)*(1+x*y)*(1+t*a*b)^2*(1+a*b)*(1-b). Maximized at y=t=a=1 giving
+   (1-x^2)*(1+b)^3*(1-b) <=  1.69   */
+
+/* 0-boundaries are done thanks to symmetry  */
+
+
+
+/* x = 1: the function is zero */
+
+/* y = 1:
+   (1-x)*(1+x)*(1+x*z)^2*(1+x*z*t)*(1-x*z*t*a)*(1-x*z*t*a*b)*(1-z*t*a*b)*(1+z*t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b)  */
+
+  L:= (1-x)*(1+x)*(1+x*z)^2*(1+x*z*t)*(1-x*z*t*a)*(1-x*z*t*a*b)*(1-z*t*a*b)*(1+z*t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[7,1];
+  Lz:=Tz[7,1];
+  Lt:=Tt[7,1];
+  La:=Ta[7,1];
+  Lb:=Tb[7,1];
+
+  T:=Factorization(Resultant(Lx,Lz,b));
+  res1b:=T[9,1]*T[10,1];
+  T:=Factorization(Resultant(Lx,Lt,b));
+  res2b:=T[9,1];
+  T:=Factorization(Resultant(Lx,La,b));
+  res3b:=T[9,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res4b:=T[9,1];
+
+  T:=Factorization(Resultant(res1b,res2b,a));
+  /* All factors have no zeros in the open set */
+
+
+/* y = 1, z = 1:
+   (1-x)*(1+x)*(1+x)^2*(1+x*t)*(1-x*t*a)*(1-x*t*a*b)*(1-t*a*b)*(1+t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b)  */
+
+  L:=(1-x)*(1+x)*(1+x)^2*(1+x*t)*(1-x*t*a)*(1-x*t*a*b)*(1-t*a*b)*(1+t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[6,1];
+  Lt:=Tt[6,1];
+  La:=Ta[6,1];
+  Lb:=Tb[6,1];
+
+  T:=Factorization(Resultant(Lx,Lt,b));
+  res1b:=T[7,1]*T[8,1];
+  T:=Factorization(Resultant(Lx,La,b));
+  res2b:=T[7,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res3b:=T[7,1];
+
+  T:=Factorization(Resultant(res1b,res2b,a));
+  res1a:=T[8,1];
+  T:=Factorization(Resultant(res1b,res3b,a));
+  res2a:=T[7,1]*T[8,1];
+
+  T:=Factorization(Resultant(res1a,res2a,x));
+  /* No roots in (0,1) */
+
+
+/* y = 1, z = 1, t = 1:
+     (1-x)*(1+x)*(1+x)^2*(1+x)*(1-x*a)*(1-x*a*b)*(1-a*b)*(1+a*b)*(1+a*b)^2*(1+a*b)*(1-b)  */
+
+  L:=(1-x)*(1+x)*(1+x)^2*(1+x)*(1-x*a)*(1-x*a*b)*(1-a*b)*(1+a*b)*(1+a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[5,1];
+  La:=Ta[5,1];
+  Lb:=Tb[5,1];
+
+  T:=Factorization(Resultant(Lx,La,b));
+  res1ba:=T[5,1];
+  res1bb:=T[6,1];
+
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res2b:=T[5,1];
+
+  T:=Factorization(Resultant(res1ba,res2b,a));
+
+  /* This has two rational roots in x: 2/7 and 4/7. Substitution in res1ba gives no roots in a between 0 and 1 */
+
+  T:=Factorization(Resultant(res1bb,res2b,a));
+  resa:=T[3,1];
+
+  /* This has no roots between 0 and 1 */
+
+
+/* y = 1, z = 1, t = 1, a = 1:
+   (1-x)*(1+x)*(1+x)^2*(1+x)*(1-x)*(1-x*b)*(1-b)*(1+b)*(1+b)^2*(1+b)*(1-b) */
+
+  L:=(1-x)*(1+x)*(1+x)^2*(1+x)*(1-x)*(1-x*b)*(1-b)*(1+b)*(1+b)^2*(1+b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[5,1];
+  Lb:=Tb[5,1];
+
+  T:=Factorization(Resultant(Lx,Lb,b));
+
+  /* There is only one root in x, which is x0=2/7. Substitution in Lx gives a unique root b0=2/7: the point (x0,b0) gives a value < 1.79 for the function */
+
+  /* No need to examine the case with b = 1 thanks to the symmetry */
+
+
+  /* y = 1, z = 1, a = 1:
+    (1-x)*(1+x)*(1+x)^2*(1+x*t)*(1-x*t)*(1-x*t*b)*(1-t*b)*(1+t*b)*(1+t*b)^2*(1+b)*(1-b)  */
+
+  L:=(1-x)*(1+x)*(1+x)^2*(1+x*t)*(1-x*t)*(1-x*t*b)*(1-t*b)*(1+t*b)*(1+t*b)^2*(1+b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tt:=Factorization(Derivative(L,t));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[6,1];
+  Lt:=Tt[6,1];
+  Lb:=Tb[6,1];
+
+  T:=Factorization(Resultant(Lx,Lt,b));
+  res1b:=T[6,1]*T[7,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res2b:=T[6,1];
+
+  T:=Factorization(Resultant(res1b,res2b,t));
+
+/* There are the roots 1/2, 2/7 and 0.51947586544192059925227001053005859499 (which is the unique zero in [0,1] of x^3 - 2/7*x^2 + 3/7*x - 2/7).
+     In all cases the substitution in res1b gives a quartic polynomial in t with no roots in (0,1).*/
+
+
+/* y = 1, t = 1:
+     (1-x)*(1+x)*(1+x*z)^2*(1+x*z)*(1-x*z*a)*(1-x*z*a*b)*(1-z*a*b)*(1+z*a*b)*(1+a*b)^2*(1+a*b)*(1-b)  */
+
+  L:=(1-x)*(1+x)*(1+x*z)^2*(1+x*z)*(1-x*z*a)*(1-x*z*a*b)*(1-z*a*b)*(1+z*a*b)*(1+a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[6,1];
+  Lz:=Tz[6,1];
+  La:=Ta[6,1];
+  Lb:=Tb[6,1];
+
+  T:=Factorization(Resultant(Lx,Lz,b));
+  res1b:=T[7,1]*T[8,1];
+  T:=Factorization(Resultant(Lx,La,b));
+  res2b:=T[7,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res3b:=T[7,1];
+
+  T:=Factorization(Resultant(res1b,res2b,a));
+  /* This has no roots for variables in the open set */
+  /* Hence no critical points */
+
+/* y = 1, t = 1, a = 1
+     The symmetry  (x,y,z,t,a,b) <==>  (b,a,t,z,y,x) allows to reduce this case to the case
+     a = 1, z = 1, y = 1
+     which has already been discussed */
+
+
+/* y = 1, a = 1:
+   (1-x)*(1+x)*(1+x*z)^2*(1+x*z*t)*(1-x*z*t)*(1-x*z*t*b)*(1-z*t*b)*(1+z*t*b)*(1+t*b)^2*(1+b)*(1-b)  */
+
+  L:=(1-x)*(1+x)*(1+x*z)^2*(1+x*z*t)*(1-x*z*t)*(1-x*z*t*b)*(1-z*t*b)*(1+z*t*b)*(1+t*b)^2*(1+b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[7,1];
+  Lz:=Tz[7,1];
+  Lt:=Tt[7,1];
+  Lb:=Tb[7,1];
+
+  T:=Factorization(Resultant(Lx,Lz,b));
+  res1b:=T[8,1]*T[9,1];
+  T:=Factorization(Resultant(Lx,Lt,b));
+  res2b:=T[8,1];
+
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res3b:=T[8,1];
+
+
+  T:=Factorization(Resultant(res1b,res2b,t));
+  /* This has no roots on the open set */
+  /* This concludes the case y = 1 */
+
+
+/* z = 1:
+     (1-x)*(1+x*y)*(1+x*y)^2*(1+x*y*t)*(1-x*y*t*a)*(1-x*y*t*a*b)*(1-y*t*a*b)*(1+t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b)  */
+
+  L:=(1-x)*(1+x*y)*(1+x*y)^2*(1+x*y*t)*(1-x*y*t*a)*(1-x*y*t*a*b)*(1-y*t*a*b)*(1+t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[6,1];
+  Ly:=Ty[6,1];
+  Lt:=Tt[6,1];
+  La:=Ta[6,1];
+  Lb:=Tb[6,1];
+
+  T:=Factorization(Resultant(Lx,Ly,b));
+  res1b:=T[8,1];
+  T:=Factorization(Resultant(Lx,Lt,b));
+  res2b:=T[8,1];
+  T:=Factorization(Resultant(Lx,La,b));
+  res3b:=T[8,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res4b:=T[8,1];
+
+  T:=Factorization(Resultant(res1b,res2b,a));
+  /* All factors have no roots in the open set */
+
+
+/* z = 1, t = 1:
+     (1-x)*(1+x*y)*(1+x*y)^2*(1+x*y)*(1-x*y*a)*(1-x*y*a*b)*(1-y*a*b)*(1+a*b)*(1+a*b)^2*(1+a*b)*(1-b)  */
+
+  L:=(1-x)*(1+x*y)*(1+x*y)^2*(1+x*y)*(1-x*y*a)*(1-x*y*a*b)*(1-y*a*b)*(1+a*b)*(1+a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[5,1];
+  Ly:=Ty[5,1];
+  La:=Ta[5,1];
+  Lb:=Tb[5,1];
+
+  T:=Factorization(Resultant(Lx,Ly,b));
+  res1b:=T[6,1];
+  T:=Factorization(Resultant(Lx,La,b));
+  res2b:=T[6,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res3b:=T[6,1];
+
+  T:=Factorization(Resultant(res1b,res2b,a));
+/* This has no roots in the open set */
+/* This concludes the case z = 1 */
+
+
+
+/* We are left with the study of the interior */
+
+  L:=(1-x)*(1+x*y)*(1+x*y*z)^2*(1+x*y*z*t)*(1-x*y*z*t*a)*(1-x*y*z*t*a*b)*(1-y*z*t*a*b)*(1+z*t*a*b)*(1+t*a*b)^2*(1+a*b)*(1-b);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[7,1];
+  Ly:=Ty[7,1];
+  Lz:=Tz[7,1];
+  Lt:=Tt[7,1];
+  La:=Ta[7,1];
+  Lb:=Tb[7,1];
+
+  T:=Factorization(Resultant(Lx,Ly,b));
+  res1b:=T[10,1];
+  T:=Factorization(Resultant(Lx,Lz,b));
+  res2b:=T[10,1]*T[11,1];
+  T:=Factorization(Resultant(Lx,Lt,b));
+  res3b:=T[10,1];
+  T:=Factorization(Resultant(Lx,La,b));
+  res4b:=T[10,1];
+  T:=Factorization(Resultant(Lx,Lb,b));
+  res5b:=T[10,1];
+
+  T:=Factorization(Resultant(res1b,res2b,a));
+  /* All factors have no roots in the open set */
+  /* Hence the function is <= 8192/3125 */

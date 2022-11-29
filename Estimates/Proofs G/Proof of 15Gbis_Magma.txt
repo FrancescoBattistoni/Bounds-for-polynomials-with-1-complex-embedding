@@ -1,0 +1,40 @@
+/* Study of inequality 15Gbis)
+
+      +'                    <= 7.603   for y*z in [1/18,1]
+      -' +
+         -' +'
+            2R^(1/4)
+
+*/
+
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+   L:=(1-2*x*y*g+(x*y)^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2);  /* times 2*(1-g^2)^(1/4)  */
+
+/* Notice that the function is maximized at either x = 0 or x = 1. */
+
+/* ASSUME x = 0 */
+
+  /* x = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*(1-g^2)^(1/4).
+     This is maximized at either t = 0 or t = 1 */
+
+     /* x = 0, t = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*(1-g^2)^(1/4): in the full range for y and z it is <= 5.2 by 3E, hence the same is true now.  */
+
+     /* x = 0, t = 1: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*(1-g^2)^(1/4)               <= 7.6   (see "15Gbis_Pari.gp") */
+
+
+
+/* ASSUME x = 1 */
+
+  /* x = 1: (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*(1-g^2)^(1/4).
+     This is maximized at either t = 0 or t = 1  */
+
+     /* x = 1, t = 0: (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*(1-g^2)^(1/4)               <= 7.6   (see "15Gbis_Pari.gp") */
+
+     /* x = 1, t = 1: (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*(1-g^2)^(1/4) <= 7.603 (see "15Gbis_Pari.gp") */
+
+
+
+/* The function is <= 7.603 */

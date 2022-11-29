@@ -1,0 +1,213 @@
+/* Study of inequality 3G */
+
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+   L:=(1-2*x*y*g+(x*y)^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2);  /* times 2*sqrt(1-g^2)  */
+
+/* Notice that this function is symmetrical, in the sense that L(x,y,z,t,g) = L(t,z,y,x,g) */
+
+/* Notice that the function is maximized at either x = 0 or x = 1. */
+
+/* 0-boundary */
+
+  /* x = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*sqrt(1-g^2).
+     This is maximized at either t = 0 or t = 1 */
+
+     /* x = 0, t = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*sqrt(1-g^2). This is < 5.2 (apply 3E).  */
+
+     /* x = 0, t = 1: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2)  */
+        L:=(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2);  /* times 2*sqrt(1-g^2)  */
+
+        Ty:=Factorization(Derivative(L,y));
+        Tz:=Factorization(Derivative(L,z));
+        Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+        Ly:=Ty[3,1];
+        Lz:=Tz[1,1];
+        Lg:=Tg[2,1];
+
+        T:=Factorization(Resultant(Ly,Lz,g));
+        res1g:=T[2,1];
+        T:=Factorization(Resultant(Ly,Lg,g));
+        res2g:=T[4,1];
+
+        T:=Factorization(Resultant(res1g,res2g,z));
+        resz:=T[4,1]*T[8,1];
+
+        PrintFile("3G_Pari.gp","\{resz=");
+        PrintFile("3G_Pari.gp",resz);
+        PrintFile("3G_Pari.gp",";}\n\n");
+
+        PrintFile("3G_Pari.gp","\{res1g=");
+        PrintFile("3G_Pari.gp",res1g);
+        PrintFile("3G_Pari.gp",";}\n\n");
+
+        PrintFile("3G_Pari.gp","\{Ly=");
+        PrintFile("3G_Pari.gp",Ly);
+        PrintFile("3G_Pari.gp",";}\n\n");
+
+        /* There are at most 3 stationary points, giving a value for the function <= 3.8 */
+
+        /* x = 0, t = 1, y = 0:
+          (1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2). This is maximized at g = 0 giving
+          (1+z^2)*(1+z^2)*2. Maximized at z = 1 giving the value 8 */
+
+        /* x = 0, t = 1, z = 0:
+           (1+2*y*g+y^2)*2*sqrt(1-g^2). Maximized at y = 1 and g = 1/2 giving 3*sqrt(3)  */
+
+        /* x = 0, t = 1, y = 1:
+           (1+g)*(1-z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*4*sqrt(1-g^2)  */
+        L:=4*(1+g)*(1-z)*(1+2*z*g+z^2)*(1-2*z*g+z^2);  /* times sqrt(1-g^2)  */
+
+        Tz:=Factorization(Derivative(L,z));
+        Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+        Lz:=Tz[2,1];
+        Lg:=Tg[3,1];
+
+        T:=Factorization(Resultant(Lg,Lz,g));
+        resg:=T[5,1];
+
+        /* This has no roots in the interior */
+           /* x = 0, t = 1, y = 1, z = 0: (1+g)*4*sqrt(1-g^2)  <=   3*sqrt(3)   */
+           /* x = 0, t = 1, y = 1, z = 1: the function is zero   */
+           /* x = 0, t = 1, y = 1, g = 0: (1-z)*(1+z^2)*(1+z^2)*4 <=  4*(1-z^4) <= 4. */
+           /* x = 0, t = 1, y = 1, g = 1: the function is zero */
+
+        /* x = 0, t = 1, z = 1:
+           (1+2*y*g+y^2)*(1-y)*(1-g^2)*8*sqrt(1-g^2)  */
+        L:=8*(1+2*y*g+y^2)*(1-y)*(1-g^2);   /* times sqrt(1-g^2) */
+
+        Ty:=Factorization(Derivative(L,y));
+        Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+        Ly:=Ty[3,1];
+        Lg:=Tg[4,1];
+
+        T:=Factorization(Resultant(Lg,Ly,g));
+
+        /* This has no roots in the interior */
+          /* x = 0, t = 1, z = 1, g = 0: (1+y^2)*(1-y)*8 <=  8 */
+          /* x = 0, t = 1, z = 1, g = 1: the function is zero  */
+
+
+        /* x = 0, t = 1, g = 0:
+           2*(1+y^2)*(1-y*z)*(1+z^2)*(1+z^2)  <=  2*(1+y)*(1-y*z)*(1+z)*(1+z^2)  <=  2 * 2(by 9A) * 2  <=  8  */
+
+        /* x = 0, t = 1, g = 1: the function is zero */
+/* This concludes the case x = 0 */
+
+
+
+/* We study now the case x = 1 */
+
+  /* x = 1: (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*sqrt(1-g^2).
+     This is maximized at either t = 0 or t = 1  */
+
+     /* x = 1, t = 0:
+        (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*sqrt(1-g^2)  */
+     L:=(1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2);  /* Times 2*sqrt(1-g^2)  */
+     Ty:=Factorization(Derivative(L,y));
+     Tz:=Factorization(Derivative(L,z));
+     Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+     Ly:=Ty[2,1];
+     Lz:=Tz[1,1];
+     Lg:=Tg[2,1];
+
+     T:=Factorization(Resultant(Ly,Lz,g));
+     res1g:=T[2,1];
+     T:=Factorization(Resultant(Lz,Lg,g));
+     res2g:=T[4,1];
+
+     T:=Factorization(Resultant(res1g,res2g,z));
+     resz:=T[4,1]*T[7,1];
+
+     PrintFile("3G_Pari.gp","\{resz=");
+     PrintFile("3G_Pari.gp",resz);
+     PrintFile("3G_Pari.gp",";}\n\n");
+
+     PrintFile("3G_Pari.gp","\{res1g=");
+     PrintFile("3G_Pari.gp",res1g);
+     PrintFile("3G_Pari.gp",";}\n\n");
+
+     PrintFile("3G_Pari.gp","\{Lz=");
+     PrintFile("3G_Pari.gp",Lz);
+     PrintFile("3G_Pari.gp",";}\n\n");
+
+     /* There is at most one stationary point giving a value for the function of 3.61 */
+
+
+       /* x = 1, t = 0, y = 0:
+          (1+2*z*g+z^2)*2*sqrt(1-g^2) <= 3*sqrt(3)  */
+
+       /* x = 1, t = 0, y = 1:
+          (1-g)*(1+g)*(1-z)*(1+2*z*g+z^2)*8*sqrt(1-g^2)  */
+       L:=8*(1-g)*(1+g)*(1-z)*(1+2*z*g+z^2);  /* times sqrt(1-g^2) */
+       Tz:=Factorization(Derivative(L,z));
+       Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+       Lz:=Tz[3,1];
+       Lg:=Tg[4,1];
+
+       T:=Factorization(Resultant(Lg,Lz,g));
+
+       /* This has no roots in the interior */
+
+         /* x = 1, t = 0, y = 1, z = 0: (1-g)*(1+g)*8*sqrt(1-g^2)  <=  8  */
+         /* x = 1, t = 0, y = 1, z = 1: the function is zero  */
+         /* x = 1, t = 0, y = 1, g = 0: (1-z)*(1+z^2)*8  <=   8 */
+         /* x = 1, t = 0, y = 1, g = 1: the function is zero */
+
+       /* x = 1, t = 0, z = 0:
+          (1-2*y*g+y^2)*(1+2*y*g+y^2)*2*sqrt(1-g^2). This is maximized at g = 0 giving
+          (1+y^2)*(1+y^2)*2  <=  8  */
+
+       /* x = 1, t = 0, z = 1:
+          (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y)*(1+g)*4*sqrt(1-g^2)    */
+       L:=4*(1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y)*(1+g);  /* times sqrt(1-g^2)  */
+       Ty:=Factorization(Derivative(L,y));
+       Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+       Ly:=Ty[2,1];
+       Lg:=Tg[3,1];
+
+       T:=Factorization(Resultant(Lg,Ly,g));
+       resg:=T[5,1];
+
+       /* No roots in the interior */
+
+         /* x = 1, t = 0, z = 1, g = 0: (1-y^2)*(1+y^2)*(1-y)*4    <=  4*(1-y^4)  <=  4 */
+         /* x = 1, t = 0, z = 1, g = 1: the function is zero */
+
+       /* x = 1, t = 0, g = 0:
+          (1+y^2)*(1+y^2)*(1-y*z)*(1+z^2)*2   <=  2*(1+y)*(1-y*z)*(1+z)*(1+y^2)   <=  2 * 2(by 9A) * 2   <=  8   */
+
+       /* x = 1, t = 0, g = 1: the function is zero */
+
+     /* x = 1, t = 1:
+       (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2). This is maximized at g = 0 giving
+       2*(1+y^2)^2*(1-y*z)*(1+z^2)^2  */
+     L:=2*(1+y^2)^2*(1-y*z)*(1+z^2)^2;
+     Ty:=Factorization(Derivative(L,y));
+     Tz:=Factorization(Derivative(L,z));
+     Ly:=Ty[3,1];
+     Lz:=Tz[2,1];
+
+     T:=Factorization(Resultant(Lz,Ly,z));
+
+     /* This is maximized at (y0,z0) with y0=z0=sqrt(3/5)  giving the value 5.25 */
+
+       /* x = 1, t = 1, y = 0:
+           2*(1+z^2)^2  <= 8  */
+
+       /* x = 1, t = 1, y = 1:
+           8*(1-z)*(1+z^2)^2 <= 8*(1-z^4)  <=  8 */
+
+       /* x = 1, t = 1, z = 0:
+           2*(1+y^2)^2 <= 8 */
+
+       /* x = 1, t = 1, z = 1:
+           8*(1+y^2)^2*(1-y) <= 8*(1-y^4)  <=  8 */
+
+/* This concludes the case x = 1 */
+
+
+/* We don't need to study the interior thanks to the considerations about x.
+So our function is <= 8 */

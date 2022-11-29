@@ -1,0 +1,130 @@
+/* g = 0 */
+
+  (1+x*y*z*t)*(1-x*y*z*t*a)*(1+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+z^2)*(1+z*t)*(1-z*t*a)*(1+t^2)*(1+(t*a)^2)*(1+a) =
+  (1+z^2)*(1+z*t)*(1-z*t*a)*(1+(t*a)^2)*(1+a)  *           (1+t^2)*(1+x*y*z*t)*(1-x*y*z*t*a)*(1+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)  =    A * B
+
+  A <= 4.(by RMK4)
+
+  B <= 2  (proved in the lines below)
+
+
+  Hence the function 19G at g = 0 is <= 8
+
+  /* Study of B */
+
+  /* Since y and z only appear together as y*z, we replace y*z with y. Moreover, the function we obtain is unchanged if we exchange y and t
+  (so no need to check boundary conditions on t if they are already proved for y) */
+
+   B: (1+t^2)*(1+x*y*t)*(1-x*y*t*a)*(1+y^2)*(1-y*t)*(1+y*t*a)
+.......................................................
+
+   x = 0:  (1+t^2)*(1+y^2)*(1-y*t)*(1+y*t*a). Maximized at a = 1, so <=
+
+	   (1+t^2)*(1+y^2)*(1-y*t)*(1+y*t)=
+
+           (1+t^2)*(1+y^2)*(1-(y*t)^2)  <=  2 (by 9A applied to t^2 and y^2)
+.......................................................
+   y = 0:  (1+t^2)  <=   2
+
+.......................................................
+   a = 0:  (1+t^2)*(1+x*y*t)(1+y^2)*(1-y*t). Maximized at x = 1, so <=
+
+           (1+t^2)*(1+y*t)(1+y^2)*(1-y*t) =
+
+           (1+t^2)*(1-(y*t)^2)*(1+y^2)  <=  2  (by 9A applied to t^2 and y^2)
+
+.......................................................
+   x = 1:  (1+t^2)*(1+y*t)*(1-y*t*a)*(1+y^2)*(1-y*t)*(1+y*t*a) =
+
+           (1+t^2)*(1-(y*t)^2)*(1-(y*t*a)^2)*(1+y^2) <=
+
+           (1+t^2)*(1-(y*t)^2)*(1+y^2)  <=  2  (by 9A applied to t^2 and y^2)
+
+.......................................................
+   y = 1:  2*(1+t^2)*(1+x*t)*(1-x*t*a)*(1-t)*(1+t*a)
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= 2*(1+t^2)*(1+x*t)*(1-x*t*a)*(1-t)*(1+t*a);
+
+  Tx:= Factorization(Derivative(L,x));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+
+  Lx:= Tx[5,1];
+  Lt:= Tt[1,1];
+  La:= Ta[5,1];
+
+  T1:= Factorization(Resultant(Lt,Lx,a));
+  T2:= Factorization(Resultant(La,Lx,a));
+  res1a:= T1[3,1];
+  res2a:= T2[1,1];
+
+  T11:= Factorization(Resultant(res1a,res2a,t));
+  res1t:=T11[2,1];
+  /* This has no roots in the open set */
+
+.......................................................
+  y = 1, t = 1: the function is zero
+
+.......................................................
+  y = 1, a = 1: 2*(1+t^2)*(1+x*t)*(1-x*t)*(1-t)*(1+t)  =  2*(1-(x*t)^2)*(1-t^4)  <= 2
+
+.......................................................
+  a = 1:  (1+t^2)*(1+x*y*t)*(1-x*y*t)*(1+y^2)*(1-y*t)*(1+y*t)   =
+
+           (1+t^2)*(1-(x*y*t)^2)*(1+y^2)*(1-(y*t)^2)  <=
+
+           (1+t^2)*(1+y^2)*(1-(y*t)^2)  <=  2 (by 9A applied to t^2 and y^2)
+
+.......................................................
+  INTERIOR
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= (1+t^2)*(1+x*y*t)*(1-x*y*t*a)*(1+y^2)*(1-y*t)*(1+y*t*a);
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+
+  Lx:= Tx[7,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[2,1];
+  La:= Ta[7,1];
+
+  T1:= Factorization(Resultant(Ly,Lx,a));
+  T2:= Factorization(Resultant(Lt,Lx,a));
+  T3:= Factorization(Resultant(La,Lx,a));
+  res1a:= T1[3,1];
+  res2a:= T2[3,1];
+  res3a:= T3[1,1];
+
+  T11:= Factorization(Resultant(res1a,res3a,t));
+  T12:= Factorization(Resultant(res2a,res3a,t));
+  res1t:= T11[2,1];
+  res2t:= T12[3,1];
+
+  T111:= Factorization(Resultant(res1t,res2t,y));
+  res1y:=T111[3,1]*T111[4,1];
+
+  PrintFile("19G_g=0_Pari.gp","\{res1y=");
+  PrintFile("19G_g=0_Pari.gp",res1y);
+  PrintFile("19G_g=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_g=0_Pari.gp","\{res1t=");
+  PrintFile("19G_g=0_Pari.gp",res1t);
+  PrintFile("19G_g=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_g=0_Pari.gp","\{res11=");
+  PrintFile("19G_g=0_Pari.gp",res1a);
+  PrintFile("19G_g=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_g=0_Pari.gp","\{Lx=");
+  PrintFile("19G_g=0_Pari.gp",Lx);
+  PrintFile("19G_g=0_Pari.gp",";}\n\n");
+
+  /* GP computations find only one stationary point, where the function takes a value  <= 1.6 */

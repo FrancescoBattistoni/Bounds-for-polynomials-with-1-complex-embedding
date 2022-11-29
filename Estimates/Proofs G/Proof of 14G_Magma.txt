@@ -1,0 +1,98 @@
+/* Study of inequality 14G */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+  L:=2*(1+2*x*y*g+(x*y)^2)*(1+x*y*z)*(1-x*y*z*t)*(1-2*y*g+y^2)*(1-y*z)*(1+y*z*t)*(1-2*z*g+z^2)*(1+2*z*t*g+(z*t)^2); /* times sqrt(1-g^2) */
+
+/* This is maximized at g=0 thanks to RMK 1, so we have
+   2*(1+(x*y)^2)*(1+x*y*z)*(1-x*y*z*t)*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*(1+(z*t)^2)
+
+   The function is symmetric: L(x,y,z,t) = L(t,z,y,x)
+   */
+
+
+/* x = 0:
+   2*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*(1+(z*t)^2). Maximized at t = 1, gives
+   2*(1+y^2)*(1-y*z)*(1+y*z)*(1+z^2)*(1+z^2) =
+   2*(1+y^2)*(1-(y*z)^2)*(1+z^2)*(1+z^2) =
+   2     *     (1+y^2)*(1-(y*z)^2)*(1+z^2)     *     (1+z^2)  <=    2 * 2 * 2 = 8   */
+
+
+/* y = 0:
+   2*(1+z^2)*(1+(z*t)^2)  <=  8 (attained at z=t=1) */
+/* 0-boundaries are concluded thanks to symmetry */
+
+
+/* x = 1:
+   2*(1+y^2)*(1+y*z)*(1-y*z*t)*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*(1+(z*t)^2) =
+   2*(1+y^2)*(1-(y*z)^2)*(1-(y*z*t)^2)*(1+y^2)*(1+z^2)*(1+(z*t)^2)  =
+   2    *    (1+y^2)*(1-(y*z)^2)*(1+z^2)    *    (1-(y*z*t)^2)*(1+y^2)*(1+(z*t)^2)   <=  2 * 2 * 2  = 8   */
+
+
+/* y = 1:
+   4*(1+x^2)*(1+x*z)*(1-x*z*t)*(1-z)*(1+z*t)*(1+z^2)*(1+(z*t)^2)  */
+
+  L:=4*(1+x^2)*(1+x*z)*(1-x*z*t)*(1-z)*(1+z*t)*(1+z^2)*(1+(z*t)^2);
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Lx:=Tx[5,1];
+  Lz:=Tz[2,1];
+  Lt:=Tt[5,1];
+
+  T:=Factorization(Resultant(Lx,Lt,x));
+  res1x:=T[2,1];
+  T:=Factorization(Resultant(Lz,Lt,x));
+  res2x:=T[5,1];
+
+  T:=Factorization(Resultant(res1x,res2x,z));
+  resz:=T[2,1]*T[3,1];
+
+  PrintFile("14G_Pari.gp","\{resz=");
+  PrintFile("14G_Pari.gp",resz);
+  PrintFile("14G_Pari.gp",";}\n\n");
+  /* GP computation show that there are no stationary points (see 14G_Pari.gp) */
+
+
+/* y = 1, z = 1: the function is zero. */
+/* The study of the boundaries is concluded thanks to symmetry */
+
+
+/* INTERIOR */
+
+  L:=2*(1+(x*y)^2)*(1+x*y*z)*(1-x*y*z*t)*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*(1+(z*t)^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Lx:=Tx[7,1];
+  Ly:=Ty[3,1];
+  Lz:=Tz[3,1];
+  Lt:=Tt[6,1];
+
+  T:=Factorization(Resultant(Lx,Lt,x));
+  res1x:=T[3,1];
+  T:=Factorization(Resultant(Ly,Lt,x));
+  res2x:=T[4,1];
+  T:=Factorization(Resultant(Lz,Lt,x));
+  res3x:=T[6,1];
+
+  T:=Factorization(Resultant(res1x,res3x,y));
+  res1y:=T[3,1];
+  T:=Factorization(Resultant(res2x,res3x,y));
+  res2y:=T[4,1];
+
+  T:=Factorization(Resultant(res1y,res2y,t));
+  rest:=T[3,1]*T[8,1]*T[9,1];
+
+  PrintFile("14G_Pari.gp","\{rest=");
+  PrintFile("14G_Pari.gp",rest);
+  PrintFile("14G_Pari.gp",";}\n\n");
+
+  PrintFile("14G_Pari.gp","\{res2y=");
+  PrintFile("14G_Pari.gp",res2y);
+  PrintFile("14G_Pari.gp",";}\n\n");
+  /* GP computation show that there are no stationary points (see 14G_Pari.gp) */
+/* This concludes the study of the function, which is <= 8 */

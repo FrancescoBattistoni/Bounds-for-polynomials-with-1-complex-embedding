@@ -1,0 +1,542 @@
+/*
+  PROVE 19G IN CASE x = 0, I.E. THAT
+
+  (1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8.58
+
+  for y,z,t,a,g, in [0,1].
+*/
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+/* x = 0:
+  (1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) */
+
+/* INNER */
+  L:= (1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Ly:= Ty[8,1];
+  Lz:= Tz[4,1];
+  Lt:= Tt[4,1];
+  La:= Ta[5,1];
+  Lg:= Tg[6,1];
+
+  T1:= Factorization(Resultant(Lz,Ly,a));
+  T2:= Factorization(Resultant(Lt,Ly,a));
+  T3:= Factorization(Resultant(La,Ly,a));
+  T4:= Factorization(Resultant(Lg,Ly,a));
+  res1a:= T1[6,1];
+  res2a:= T2[4,1];
+  res3a:= T3[4,1];
+  res4a:= T4[3,1];
+
+  T11:= Factorization(Resultant(res2a,res1a,g));
+  T12:= Factorization(Resultant(res3a,res1a,g));
+  T13:= Factorization(Resultant(res4a,res1a,g));
+  res1ga:= T11[6,1]; /*A*/
+  res1gb:= T11[5,1]*T11[7,1];
+
+  res2ga:= T12[5,1]; /*A*/
+  res2gb:= T12[6,1];
+
+  res3ga:= T13[5,1]; /*A*/
+  res3gb:= T13[6,1];
+
+/* CASE 1: res1ga = res2ga = res3ga */
+  res1aa forces t = (3/4*y*z^2 + 1/4*z^2 + 1/2)/(y^2*z^3 + 1/2*y*z^3 + 3/4*y*z + 1/4*z)
+  In this formula, numerator and denominator have not any common root in the open set. */
+
+  A:= -Coefficient(res1ga,t,0);
+  B:= Coefficient(res1ga,t,1);
+
+  S:=0;
+  N:=res1a;
+  for j1 in [0 .. Degree(N,t)] do
+      S:=S+Coefficient(N,t,j1)*A^j1*B^(Degree(N,t)-j1);
+  end for;
+  T:=Factorization(S);
+  res1aSt:= T[2,1];
+
+  S:=0;
+  N:=res2a;
+  for j1 in [0 .. Degree(N,t)] do
+      S:=S+Coefficient(N,t,j1)*A^j1*B^(Degree(N,t)-j1);
+  end for;
+  T:=Factorization(S);
+  res2aSt:= T[4,1];
+
+  S:=0;
+  N:=res3a;
+  for j1 in [0 .. Degree(N,t)] do
+      S:=S+Coefficient(N,t,j1)*A^j1*B^(Degree(N,t)-j1);
+  end for;
+  T:=Factorization(S);
+  res3aSt:= T[4,1];
+
+  T111:= Factorization(Resultant(res1aSt,res3aSt,g));
+  T112:= Factorization(Resultant(res2aSt,res3aSt,g));
+  res1aStg:= T111[6,1];
+  res2aStg:= T112[7,1]*T112[11,1]*T112[12,1]*T112[13,1];
+
+  T1111:= Factorization(Resultant(res1aStg,res2aStg,y));
+  res1aSty:= T1111[4,1]*T1111[5,1]*T1111[6,1]*T1111[7,1]*T1111[8,1]*T1111[9,1];
+
+  PrintFile("30G_x=0_Pari.gp","\{res1aSty=");
+  PrintFile("30G_x=0_Pari.gp",res1aSty);
+  PrintFile("30G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("30G_x=0_Pari.gp","\{res1aSg=");
+  PrintFile("30G_x=0_Pari.gp",res1aStg);
+  PrintFile("30G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("30G_x=0_Pari.gp","\{res3ga=");
+  PrintFile("30G_x=0_Pari.gp",res3ga);
+  PrintFile("30G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("30G_x=0_Pari.gp","\{res1a=");
+  PrintFile("30G_x=0_Pari.gp",res1a);
+  PrintFile("30G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("30G_x=0_Pari.gp","\{Ly=");
+  PrintFile("30G_x=0_Pari.gp",Ly);
+  PrintFile("30G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+
+/* CASE 2: res1gb, res2gb, res3gb */
+  T111:= Factorization(Resultant(res2gb,res1gb,y));
+  T112:= Factorization(Resultant(res3gb,res1gb,y));
+  /* T111 and T112 share the factor z*t-t/4+3/4. Setting z*t-t/4+3/4=0 gets z = (t-3)/(4*t) which is always negative: we discard this factor */
+  res1ya:= T111[11,1]* T111[12,1]* T111[13,1];
+  res1yb:= T111[14,1];
+
+  res2ya:= T112[15,1]*T112[16,1];
+  res2yb:= T112[17,1];
+
+/* CASE 2.1: res1ya, res2ya */
+  T1111:= Factorization(Resultant(res1ya,res2ya,t));
+  /* we collect the factors to reduce the number of cases */
+  res1t:=T1111[6,1]*T1111[7,1]*T1111[8,1]*T1111[9,1]*T1111[10,1]*T1111[11,1]*T1111[12,1]*T1111[13,1]*T1111[14,1];
+
+  PrintFile("x=0_Q1.gp","\{res1t=");
+  PrintFile("x=0_Q1.gp",res1t);
+  PrintFile("x=0_Q1.gp",";}\n\n");
+
+  PrintFile("x=0_Q1.gp","\{res1ya=");
+  PrintFile("x=0_Q1.gp",res1ya);
+  PrintFile("x=0_Q1.gp",";}\n\n");
+
+  PrintFile("x=0_Q1.gp","\{res1gb=");
+  PrintFile("x=0_Q1.gp",res1gb);
+  PrintFile("x=0_Q1.gp",";}\n\n");
+
+  PrintFile("x=0_Q1.gp","\{res1a=");
+  PrintFile("x=0_Q1.gp",res1a);
+  PrintFile("x=0_Q1.gp",";}\n\n");
+
+  PrintFile("x=0_Q1.gp","\{Ly=");
+  PrintFile("x=0_Q1.gp",Ly);
+  PrintFile("x=0_Q1.gp",";}\n\n");
+  /* GP computations show that there are 42 stationary points where the function is <= 5.8*/
+
+
+/* CASE 2.2: res1ya, res2yb */
+  T1111:= Factorization(Resultant(res1ya,res2yb,t));
+  /* we collect the factors to reduce the number of cases */
+  res1t:=T1111[6,1]*T1111[7,1]*T1111[8,1]*T1111[9,1];
+
+  PrintFile("x=0_Q2.gp","\{res1t=");
+  PrintFile("x=0_Q2.gp",res1t);
+  PrintFile("x=0_Q2.gp",";}\n\n");
+
+  PrintFile("x=0_Q2.gp","\{res1ya=");
+  PrintFile("x=0_Q2.gp",res1ya);
+  PrintFile("x=0_Q2.gp",";}\n\n");
+
+  PrintFile("x=0_Q2.gp","\{res1gb=");
+  PrintFile("x=0_Q2.gp",res1gb);
+  PrintFile("x=0_Q2.gp",";}\n\n");
+
+  PrintFile("x=0_Q2.gp","\{res1a=");
+  PrintFile("x=0_Q2.gp",res1a);
+  PrintFile("x=0_Q2.gp",";}\n\n");
+
+  PrintFile("x=0_Q2.gp","\{Ly=");
+  PrintFile("x=0_Q2.gp",Ly);
+  PrintFile("x=0_Q2.gp",";}\n\n");
+  /* GP computations show that there are 122 stationary points where the function is <= 5.8*/
+
+
+/* CASE 2.3: res1yb, res2ya */
+  T1111:= Factorization(Resultant(res1yb,res2ya,t));
+  /* we collect the factors to reduce the number of cases */
+  res1t:=T1111[4,1]*T1111[5,1]*T1111[6,1];
+
+  PrintFile("x=0_Q3.gp","\{res1t=");
+  PrintFile("x=0_Q3.gp",res1t);
+  PrintFile("x=0_Q3.gp",";}\n\n");
+
+  PrintFile("x=0_Q3.gp","\{res1yb=");
+  PrintFile("x=0_Q3.gp",res1yb);
+  PrintFile("x=0_Q3.gp",";}\n\n");
+
+  PrintFile("x=0_Q3.gp","\{res1gb=");
+  PrintFile("x=0_Q3.gp",res1gb);
+  PrintFile("x=0_Q3.gp",";}\n\n");
+
+  PrintFile("x=0_Q3.gp","\{res1a=");
+  PrintFile("x=0_Q3.gp",res1a);
+  PrintFile("x=0_Q3.gp",";}\n\n");
+
+  PrintFile("x=0_Q3.gp","\{Ly=");
+  PrintFile("x=0_Q3.gp",Ly);
+  PrintFile("x=0_Q3.gp",";}\n\n");
+  /* GP computations show that there are 204 stationary points where the function is <= 5.8*/
+
+
+/* CASE 2.4: res1yb, res2yb */
+  T1111:= Factorization(Resultant(res1yb,res2yb,t));
+  /* T1111[10,1] has degree 2824, but fortunately the degree of all other factors are quite small
+  (112 the greatest one). Thus, we can collect the factors to reduce the number of cases */
+  res1t:=T1111[5,1]*T1111[6,1]*T1111[7,1]*T1111[8,1]*T1111[9,1]*T1111[10,1];
+
+  PrintFile("x=0_Q4.gp","\{res1t=");
+  PrintFile("x=0_Q4.gp",res1t);
+  PrintFile("x=0_Q4.gp",";}\n\n");
+
+  PrintFile("x=0_Q4.gp","\{res1yb=");
+  PrintFile("x=0_Q4.gp",res1yb);
+  PrintFile("x=0_Q4.gp",";}\n\n");
+
+  PrintFile("x=0_Q4.gp","\{res1gb=");
+  PrintFile("x=0_Q4.gp",res1gb);
+  PrintFile("x=0_Q4.gp",";}\n\n");
+
+  PrintFile("x=0_Q4.gp","\{res1a=");
+  PrintFile("x=0_Q4.gp",res1a);
+  PrintFile("x=0_Q4.gp",";}\n\n");
+
+  PrintFile("x=0_Q4.gp","\{Ly=");
+  PrintFile("x=0_Q4.gp",Ly);
+  PrintFile("x=0_Q4.gp",";}\n\n");
+  /* GP computations show that there are 341 stationary points where the function is <= 5.8*/
+  /* This ends the discussion of the INNER part */
+
+/* BORDER */
+
+/* x = 0, y = 0:
+  (1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8.58
+  This is a subcase of the general case "y = 0" that we have already discussed. */
+
+
+/* x = 0, y = 1:
+  (1-2*z*g+z^2)*(1-z*t)*(1+z*t*a)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8
+  This is a subcase of the general case "y = 0" that we have already discussed. */
+
+
+/* x = 0, z = 0:
+  (1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) <= 8
+  This is a subcase of the general case "z = 0" that we have already discussed. */
+
+
+/* x = 0, z = 1:
+  2*(1-2*y*g+y^2)*(1-y*t)*(1+y*t*a)*(1+g)*(1+t)*(1-t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a) */
+
+  L:= 2*(1-2*y*g+y^2)*(1-y*t)*(1+y*t*a)*(1+g)*(1+t)*(1-t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Ly:= Ty[7,1];
+  Lt:= Tt[4,1];
+  La:= Ta[5,1];
+  Lg:= Tg[6,1];
+
+  T1:= Factorization(Resultant(Lt,Ly,a));
+  T2:= Factorization(Resultant(La,Ly,a));
+  T3:= Factorization(Resultant(Lg,Ly,a));
+  res1a:= T1[4,1];
+  res2a:= T2[4,1];
+  res3a:= T3[3,1];
+
+  T11:= Factorization(Resultant(res1a,res3a,g));
+  T12:= Factorization(Resultant(res2a,res3a,g));
+  /* T11 has also the no trivial factor y*t-1/2*t^2-1/2. It is zero when y = (t+1/t)/2, so it produces y >= 1 for every t: we discard it */
+  res1ga:= T11[10,1];   /* y*t - 2/3           */ /* A */
+  res1gb:= T11[11,1];   /* y*t + 1/4*t - 3/4   */ /* B */
+  res1gc:= T11[12,1];   /* y*t - 3/4*t^2 - 1/4 */ /* C */
+  res1gd:= T11[6,1]*T11[8,1]*T11[13,1];
+
+  res2ga:= T12[5,1];    /* y*t - 2/3           */ /* A */
+  res2gb:= T12[6,1];    /* y*t + 1/4*t - 3/4   */ /* B */
+  res2gc:= T12[7,1];    /* y*t - 3/4*t^2 - 1/4 */ /* C */
+  res2gd:= T12[8,1];
+
+  PrintFile("19G_x=0_Pari.gp","\{Ly=");
+  PrintFile("19G_x=0_Pari.gp",Ly);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res1a=");
+  PrintFile("19G_x=0_Pari.gp",res1a);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res2a=");
+  PrintFile("19G_x=0_Pari.gp",res2a);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+/* CASE 1: res1ga=res1ga */
+   /* we use Pari to reduce res1a and res2a modulo res1ga */
+
+  PrintFile("19G_x=0_Pari.gp","\{res1ga=");
+  PrintFile("19G_x=0_Pari.gp",res1ga);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+/* CASE 2: res1gb=res1gb */
+  PrintFile("19G_x=0_Pari.gp","\{res1gb=");
+  PrintFile("19G_x=0_Pari.gp",res1gb);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+/* CASE 3: res1gc=res1gc */
+  PrintFile("19G_x=0_Pari.gp","\{res1gc=");
+  PrintFile("19G_x=0_Pari.gp",res1gc);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+/* CASE 4: res1gd, res1gd */
+  T111:= Factorization(Resultant(res1gd,res2gd,t));
+  res1t:= T111[4,1]*T111[5,1]*T111[6,1]*T111[7,1]*T111[8,1];
+
+  PrintFile("19G_x=0_Pari.gp","\{res1gd=");
+  PrintFile("19G_x=0_Pari.gp",res1gd);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res1t=");
+  PrintFile("19G_x=0_Pari.gp",res1t);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are 11 stationary points where the function is <= 5.8 */
+
+
+/* x = 0, z = 1, t = 0:
+  2*(1-2*y*g+y^2)*(1+g)*(1+a) maximized for a = 1
+  4*(1-2*y*g+y^2)*(1+g) maximized for y = 0 or y = 1
+  <= MAX (4*(1+g),8*(1-g)*(1+g)) <= 8 */
+
+
+/* x = 0, z = 1, t = 1:
+  8*(1-2*y*g+y^2)*(1-y)*(1+y*a)*(1+g)*(1-a)*(1-g)*(1+2*a*g+a^2)*(1+a) <=
+  8*(1+y^2)      *(1-y)*(1+y  )*(1+g)*(1-a)*(1-g)*(1+2*a*g+a^2)*(1+a) <=
+  8*(1-y^4)                    *(1+g)*(1-a)*(1-g)*(1+2*a*g+a^2)*(1+a) <=
+  8                            *(1+g)*(1-a)*(1-g)*(1+2*a*g+a^2)*(1+a) <= 8.58
+  (see "19G_x=1_auxiliary_function_F_Pari.gp", case "y = 0, z = 1, t = 1") */
+
+/* x = 0, z = 1, a = 0:
+  2*(1-2*y*g+y^2)*(1-y*t)*(1+g)*(1+t)*(1-2*t*g+t^2)
+  This is a subcase of the general case "a = 0" that we have already discussed. */
+
+
+/* x = 0, z = 1, a = 1:
+  4*(1-2*y*g+y^2)*(1-y*t)*(1+y*t)*(1+g)*(1+t)*(1-t)*(1-2*t*g+t^2)*(1+2*t*g+t^2) <= 8.58
+  (see "19Gx=0_Pari.gp") */
+
+
+/* x = 0, z = 1, g = 0:
+  2*(1-y*t)*(1+y*t*a)*(1+t)*(1-t*a)*(1+t^2)*(1+(t*a)^2)*(1+a)
+  This is a subcase of the general case "g = 0" that we have already discussed. */
+/* x = 0, z = 1, g = 1:
+  4*(1-2*y+y^2)*(1-y*t)*(1+y*t*a)*(1+t)*(1-t*a)*(1-2*t+t^2)*(1+2*t*a+(t*a)^2)*(1+a) */
+  This is a subcase of the general case "g = 1" that we have already discussed. */
+
+
+/* x = 0, t = 0:
+  (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1+a) <= 8
+  This is a subcase of the general case "t = 0" that we have already discussed. */
+
+
+/* x = 0, t = 1:
+  2*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z*a)*(1+2*z*g+z^2)*(1+z)*(1-z*a)*(1-g)*(1+2*a*g+a^2)*(1+a) */
+
+  L := 2*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z*a)*(1+2*z*g+z^2)*(1+z)*(1-z*a)*(1-g)*(1+2*a*g+a^2)*(1+a);
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Ta:=Factorization(Derivative(L,a));
+  Tg:=Factorization(Derivative(L,g));
+  Ly:=Ty[8,1];
+  Lz:=Tz[4,1];
+  La:=Ta[5,1];
+  Lg:=Tg[6,1];
+
+  T1:=Factorization(Resultant(Lz,Ly,g));
+  T2:=Factorization(Resultant(La,Ly,g));
+  T3:=Factorization(Resultant(Lg,Ly,g));
+  res1g:=T1[6,1];
+  res2g:=T2[2,1];
+  res3g:=T3[3,1];
+
+  T11:=Factorization(Resultant(res2g,res1g,a));
+  T12:=Factorization(Resultant(res3g,res1g,a));
+  res1aa:=T11[5,1]; /* y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2 */ /* A */
+  res1ab:=T11[6,1];
+  res2aa:=T12[5,1]; /* y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2 */ /* A */
+  res2ab:=T12[6,1];
+
+  /* CASE 1: res1aa = res2aa */
+ /* We use condition res1aa = 0 together Ly=0, La=0, Lg=0
+    (the resulting system is easier since res1aa is simpler than Lz: the points produced by the new system are
+    not necessarily stationary, but for sure every stationary point coming form CASE 1 must appear among the
+    roots of this new system)
+    res1aa:=y^2*z^3 + 1/2*y*z^3 - 3/4*y*z^2 + 3/4*y*z - 1/4*z^2 + 1/4*z - 1/2;   */
+
+  T1:=Factorization(Resultant(res1aa,Ly,g)); /* NOTE: res1aa is independent on g, thus T1 coincides with res1aa: anyway, we keep this operation for uniformity */
+  T2:=Factorization(Resultant(La,Ly,g));     /* we have already computed it, yielding res2g: we keep this operation for uniformity */
+  T3:=Factorization(Resultant(Lg,Ly,g));     /* we have already computed it, yielding res3g: we keep this operation for uniformity */
+  res1Ng:=T1[1,1];
+  res2Ng:=T2[2,1];
+  res3Ng:=T3[3,1];
+
+  T11:=Factorization(Resultant(res2Ng,res1Ng,y));
+  T12:=Factorization(Resultant(res3Ng,res1Ng,y));
+  res1Ny:=T11[3,1];
+  res2Ny:=T12[5,1];
+
+  T111:=Factorization(Resultant(res1Ny,res2Ny,a));
+  res1Na:=T111[7,1]*T111[8,1];
+
+  PrintFile("B.gp","\{res1Na=");
+  PrintFile("B.gp",res1Na);
+  PrintFile("B.gp",";}\n\n");
+
+  PrintFile("B.gp","\{res1Ny=");
+  PrintFile("B.gp",res1Ny);
+  PrintFile("B.gp",";}\n\n");
+
+  PrintFile("B.gp","\{res1Ng=");
+  PrintFile("B.gp",res1Ng);
+  PrintFile("B.gp",";}\n\n");
+
+  PrintFile("B.gp","\{Ly=");
+  PrintFile("B.gp",Ly);
+  PrintFile("B.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+  /* This concludes CASE 1 */
+
+
+  /* CASE 2: res1ab, res2ab */
+  T111:=Factorization(Resultant(res1ab,res2ab,y));
+  res1y:=T111[6,1]*T111[7,1];
+
+  PrintFile("19G_x=0_Pari.gp","\{res1y =");
+  PrintFile("19G_x=0_Pari.gp",res1y);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res1ab =");
+  PrintFile("19G_x=0_Pari.gp",res1ab);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res1g =");
+  PrintFile("19G_x=0_Pari.gp",res1g);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{Ly =");
+  PrintFile("19G_x=0_Pari.gp",Ly);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+  /* This concludes CASE 2 */
+
+/* x = 0, t = 1, a = 0:
+    This is a subcase of the general case "a = 0" that we have already discussed. */
+
+/* x = 0, t = 1, a = 1:
+  8*(1-2*y*z*g+(y*z)^2)*(1-y*z)*(1+y*z)*(1+2*z*g+z^2)*(1+z)*(1-z)*(1-g)*(1+g) <=
+  8*(1+(y*z)^2)        *(1-(y*z)^2)    *(1+2*z*g+z^2)*(1-z^2)    *(1-g^2)     <=
+  8*(1-(y*z)^4)                        *(1+2*z*g+z^2)*(1-z^2)    *(1-g^2)     <=
+  8*(1+2*z*g+z^2)*(1-z^2)*(1-g^2) <= 8.58
+  (see "19G_x=1_auxiliary_function_F_Pari.gp", case "y = 0, z = 1, t = 1") */
+
+/* x = 0, t = 1, g = 0:
+  This is a subcase of the general case "g = 0" that we have already discussed. */
+
+/* x = 0, t = 1, g = 1:
+  This is a subcase of the general case "g = 1" that we have already discussed. */
+
+
+/* x = 0, a = 0:
+  (1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+2*z*g+z^2)*(1+z*t)*(1-2*t*g+t^2) <= 8
+  This is a subcase of the general case "a = 0" we have already discussed. */
+
+
+/* x = 0, a = 1:
+  2*(1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t)*(1-2*t*g+t^2)*(1+2*t*g+t^2) */
+
+  L:= 2*(1-2*y*z*g+(y*z)^2)*(1-y*z*t)*(1+y*z*t)*(1+2*z*g+z^2)*(1+z*t)*(1-z*t)*(1-2*t*g+t^2)*(1+2*t*g+t^2);
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tg:=Factorization(Derivative(L,g));
+  Ly:=Ty[7,1];
+  Lz:=Tz[3,1];
+  Lt:=Tt[4,1];
+  Lg:=Tg[5,1];
+
+  T1:=Factorization(Resultant(Lz,Ly,g));
+  T2:=Factorization(Resultant(Lt,Ly,g));
+  T3:=Factorization(Resultant(Lg,Ly,g));
+  res1g:=T1[7,1];
+  res2g:=T2[3,1];
+  res3g:=T3[4,1];
+
+  T11:=Factorization(Resultant(res2g,res1g,y));
+  T12:=Factorization(Resultant(res3g,res1g,y));
+  res1ya:=T11[2,1]; /* t^2 - 1/3 */ /* A */
+  res1yb:=T11[6,1]*T11[7,1];
+  res2ya:=T12[2,1]; /* t^2 - 1/3 */ /* A */
+  res2yb:=T12[6,1]*T12[7,1];
+
+/* CASE 1: res1ya = res2ya = t^2 - 1/3 */
+  /* substituting t^2 - 1/3 = 0 into res1g we get (1/9*z^4 - 1/9*z^2)*y^2 + (-1/9*z^2 + 1/9) = (z^2-1)*(y^2*z^2-1)/9 which is not zero in the open set */
+
+
+/* CASE 2: res1yb, res2yb */
+  T111:=Factorization(Resultant(res1yb,res2yb,t));
+  res1t:=T111[4,1]*T111[7,1]*T111[8,1]*T111[9,1];
+
+  PrintFile("19G_x=0_Pari.gp","\{res1t =");
+  PrintFile("19G_x=0_Pari.gp",res1t);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res1yb =");
+  PrintFile("19G_x=0_Pari.gp",res1yb);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{res1g =");
+  PrintFile("19G_x=0_Pari.gp",res1g);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+
+  PrintFile("19G_x=0_Pari.gp","\{Ly =");
+  PrintFile("19G_x=0_Pari.gp",Ly);
+  PrintFile("19G_x=0_Pari.gp",";}\n\n");
+  /* GP computations show that there are 4 stationary points here where the function is <= 5.9 */
+  /* This concludes CASE 2 */
+
+/* x = 0, a = 1, g = 0:
+  This is a subcase of the general case "g = 0" we have already discussed. */
+
+/* x = 0, a = 1, g = 1:
+  This is a subcase of the general case "g = 1" we have already discussed. */
+
+
+
+/* x = 0, g = 0:
+  This is a subcase of the general case "g = 0" that we have already discussed. */
+
+
+/* x = 0, g = 1:
+  This is a subcase of the general case "g = 1" that we have already discussed. */

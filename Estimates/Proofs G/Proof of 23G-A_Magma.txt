@@ -1,0 +1,1135 @@
+/* Study of inequality 23G-A)
+
+(1-x^2) times
+      x x x x x -           <= 8.641
+        - x - +
+              - +
+                -'
+              - +
+                -
+
+i.e. of (1-x^2)*(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b)
+
+ */
+
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+  L:=(1-x^2)*(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+/* We can maximize this at g = 1
+   (1-x^2)*(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b)
+   to simplify computations we further estimate the factor
+   (1+x*y*z*t*a*b) with (1+x*a)
+*/
+
+  L:=(1-x^2)*(1+x*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+/* Interior */
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Tb:=Factorization(Derivative(L,b));
+  Lx:=Tx[10,1];
+  Ly:=Ty[7,1];
+  Lz:=Tz[7,1];
+  Lt:=Tt[6,1];
+  La:=Ta[7,1];
+  Lb:=Tb[4,1];
+
+  T1:=Factorization(Resultant(Ly,Lx,a));
+  T2:=Factorization(Resultant(Lz,Lx,a));
+  T3:=Factorization(Resultant(Lt,Lx,a));
+  T4:=Factorization(Resultant(La,Lx,a));
+  T5:=Factorization(Resultant(Lb,Lx,a));
+  res1a:=T1[1,1];
+  res2a:=T2[1,1];
+  res3a:=T3[1,1];
+  res4a:=T4[2,1];
+  res5a:=T5[1,1];
+
+  T11:=Factorization(Resultant(res1a,res2a,b));
+  T12:=Factorization(Resultant(res3a,res2a,b));
+  T13:=Factorization(Resultant(res4a,res2a,b));
+  T14:=Factorization(Resultant(res5a,res2a,b));
+  res1b:=T11[1,1];
+  res2ba:=T12[3,1]; /* A */ /* x^2 - 1/3 */
+  res2bb:=T12[4,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+  res2bc:=T12[5,1]; /* C */ /* x^2 + 2/3*x*y*z*t - 1/3 */
+  res2bd:=T12[6,1];
+  res3ba:=T13[2,1]; /* A */ /* x^2 - 1/3 */
+  res3bb:=T13[3,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+  res3bc:=T13[4,1]; /* C */ /* x^2 + 2/3*x*y*z*t - 1/3 */
+  res3bd:=T13[5,1];
+  res4ba:=T14[2,1]; /* A */ /* x^2 - 1/3 */
+  res4bb:=T14[3,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+  res4bc:=T14[4,1];
+
+/* CASE 1: res1b, res2ba=res3ba=res4ba:
+   the common equation states: x^2 - 1/3, and forces x^2 = 1/3.
+   Lx is  x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*x which is positive.
+   as a consequence there are no stationary points in this case. */
+
+/* CASE 2: res1b, res2bb=res3bb=res4bb */
+   the common equation states: x^2 - 2/3*x*z*t - 1/3, and forces x^2 = 2/3*x*z*t + 1/3.
+   Lx is  x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*z*t + 1/3 becomes 2/3*x*z*t*a + 2/3*x  which is positive.
+   as a consequence there are no stationary points in this case. */
+
+/* CASE 3: res1b, res2bc=res3bc, res4bc
+   the common equation states: x^2 + 2/3*x*z*t - 1/3, and forces x^2 = - 2/3*x*z*t + 1/3.
+   Lx is  x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*z*t + 1/3 becomes - 2/3*x*z*t*a + 2/3*x = 2/3*x*(1-z*t*a) which is positive.
+   as a consequence there are no stationary points in this case. */
+
+/* CASE 4: res1b, res2bd, res3bd, res4bc */
+
+  T111:=Factorization(Resultant(res2bd,res1b,t));
+  T112:=Factorization(Resultant(res3bd,res1b,t));
+  T113:=Factorization(Resultant(res4bc,res1b,t));
+  /* There is also the factor x^2-1/3 which is common to all of them, but we can discard it since we have already discussed this case */
+  res1t:=T111[8,1];
+  res2t:=T112[8,1];
+  res3t:=T113[8,1];
+
+  T1111:=Factorization(Resultant(res2t,res1t,y));
+  T1112:=Factorization(Resultant(res3t,res1t,y));
+  /* There is also the factor x^2-1/3 which is common to all of them, but we can discard it since we have already discussed this case */
+  res1y:=T1111[6,1]*T1111[7,1];
+  res2y:=T1112[4,1]*T1112[5,1];
+
+  T11111:=Factorization(Resultant(res1y,res2y,z));
+  res1z:=T11111[5,1]*T11111[6,1]*T11111[7,1]*T11111[8,1]*T11111[9,1]*T11111[10,1]*T11111[11,1]*T11111[12,1];
+
+  PrintFile("23G-A_Pari.gp","\{res1z=");
+  PrintFile("23G-A_Pari.gp",res1z);
+  PrintFile("23G-A_Pari.gp",";}\n\n");
+
+  PrintFile("23G-A_Pari.gp","\{res2y=");
+  PrintFile("23G-A_Pari.gp",res2y);
+  PrintFile("23G-A_Pari.gp",";}\n\n");
+
+  PrintFile("23G-A_Pari.gp","\{res1t=");
+  PrintFile("23G-A_Pari.gp",res1t);
+  PrintFile("23G-A_Pari.gp",";}\n\n");
+
+  PrintFile("23G-A_Pari.gp","\{res1b=");
+  PrintFile("23G-A_Pari.gp",res1b);
+  PrintFile("23G-A_Pari.gp",";}\n\n");
+
+  PrintFile("23G-A_Pari.gp","\{res2a=");
+  PrintFile("23G-A_Pari.gp",res2a);
+  PrintFile("23G-A_Pari.gp",";}\n\n");
+
+  PrintFile("23G-A_Pari.gp","\{Lx=");
+  PrintFile("23G-A_Pari.gp",Lx);
+  PrintFile("23G-A_Pari.gp",";}\n\n");
+
+/* GP computations find no critical points in the interior */
+
+/* BORDER */
+
+  /* x = 0: (1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+    L:=(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+  /* Interior */
+
+    Ty:=Factorization(Derivative(L,y));
+    Tz:=Factorization(Derivative(L,z));
+    Tt:=Factorization(Derivative(L,t));
+    Ta:=Factorization(Derivative(L,a));
+    Tb:=Factorization(Derivative(L,b));
+    Ly:=Ty[7,1];
+    Lz:=Tz[7,1];
+    Lt:=Tt[6,1];
+    La:=Ta[5,1];
+    Lb:=Tb[4,1];
+
+    T1:=Factorization(Resultant(Lz,Ly,a));
+    T2:=Factorization(Resultant(Lt,Ly,a));
+    T3:=Factorization(Resultant(La,Ly,a));
+    T4:=Factorization(Resultant(Lb,Ly,a));
+    res1a:=T1[5,1];
+    res2a:=T2[5,1];
+    res3a:=T3[5,1];
+    res4a:=T4[3,1];
+
+    T11:=Factorization(Resultant(res2a,res1a,b));
+    T12:=Factorization(Resultant(res3a,res1a,b));
+    T13:=Factorization(Resultant(res4a,res1a,b));
+    res1b:=T11[4,1];
+    res2b:=T12[5,1];
+    res3b:=T13[5,1];
+
+    T111:=Factorization(Resultant(res2b,res1b,t));
+    T112:=Factorization(Resultant(res3b,res1b,t));
+    res1t:=T111[4,1]*T111[5,1];
+    res2t:=T112[3,1];
+
+    T1111:=Factorization(Resultant(res1t,res2t,y));
+    /* All factors in T1111 are strictly positive in the open set */
+
+    /* BORDER */
+      /* y = 0: (1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+      ....
+      /* z = 0: (1+y)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) maximized for y = t = 1
+                 2*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b)
+                 2*          (1+2*a*b+(a*b)^2)*         (1+a)*(1-a*b)*(1+b) <= 2*4*2(bu 9A) = 8 */
+      ....
+      /* t = 0: (1+y)*(1+a)*(1-a*b)*(1+b) <= 2*2 (by 9A) = 4 */
+      ....
+      /* a = 0: (1+y)*(1+y*z*t)*(1+b) <= 8 */
+      ....
+      /* b = 0: (1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1+a) =
+                (1+y)*(1-y*z*t*a)*(1+z*t*a)  *(1+y*z*t)      *(1+a)  <= 2(by 9A)*2*2 = 8 */
+      ....
+      /* y = 1: 2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+        L := 2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+        Tz:=Factorization(Derivative(L,z));
+        Tt:=Factorization(Derivative(L,t));
+        Ta:=Factorization(Derivative(L,a));
+        Tb:=Factorization(Derivative(L,b));
+        Lz:=Tz[6,1];
+        Lt:=Tt[5,1];
+        La:=Ta[4,1];
+        Lb:=Tb[6,1];
+
+        T1:=Factorization(Resultant(Lt,Lz,b));
+        T2:=Factorization(Resultant(La,Lz,b));
+        T3:=Factorization(Resultant(Lb,Lz,b));
+        res1b:=T1[5,1];
+        res2b:=T2[4,1];
+        res3b:=T3[3,1];
+
+        T11:=Factorization(Resultant(res2b,res1b,a));
+        T12:=Factorization(Resultant(res3b,res1b,a));
+        res1a:=T11[4,1];
+        res2a:=T12[4,1];
+
+        T111:=Factorization(Resultant(res2a,res1a,t));
+        res1t:=T111[1,1]*T111[2,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1t=");
+        PrintFile("23G-A_Pari.gp",res1t);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1a=");
+        PrintFile("23G-A_Pari.gp",res1a);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1b=");
+        PrintFile("23G-A_Pari.gp",res1b);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Lz=");
+        PrintFile("23G-A_Pari.gp",Lz);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find no critical points in the interior */
+
+      /* BORDER */
+        /* z = 0: 2*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) maximized for t = 1
+                  2*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 6.75 (see "23G-A_Pari.gp") */
+        ....
+        /* t = 0: 2*(1+a)*(1-a*b)*(1+b) <= 2*2 (by 9A) = 4  */
+        ....
+        /* a = 0: 2*(1+z*t)*(1+b) <= 8 */
+        ....
+        /* b = 0: 2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1+a) = 2*(1+z*t)*(1-(z*t*a)^2)*(1+a) <= 2*2*1*2 = 8 */
+        ....
+        /* z = 1: 2*(1+t)*(1-t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* t = 1: 2*(1+z)*(1-z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* a = 1: 2*(1+z*t)*(1-z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 6.75 (see "23G-A_Pari.gp") */
+        ....
+        /* b = 1: 2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+
+      ....
+      /* z = 1: (1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+        L := (1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+        Ty:=Factorization(Derivative(L,y));
+        Tt:=Factorization(Derivative(L,t));
+        Ta:=Factorization(Derivative(L,a));
+        Tb:=Factorization(Derivative(L,b));
+        Ly:=Ty[7,1];
+        Lt:=Tt[6,1];
+        La:=Ta[5,1];
+        Lb:=Tb[4,1];
+
+        T1:=Factorization(Resultant(Lt,Ly,a));
+        T2:=Factorization(Resultant(La,Ly,a));
+        T3:=Factorization(Resultant(Lb,Ly,a));
+        res1a:=T1[4,1];
+        res2a:=T2[4,1];
+        res3a:=T3[2,1];
+
+        T11:=Factorization(Resultant(res2a,res1a,b));
+        T12:=Factorization(Resultant(res3a,res1a,b));
+        res1b:=T11[5,1];
+        res2b:=T12[5,1];
+
+        T111:=Factorization(Resultant(res2b,res1b,t));
+        res1t:=T111[5,1]*T111[6,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1t=");
+        PrintFile("23G-A_Pari.gp",res1t);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1b=");
+        PrintFile("23G-A_Pari.gp",res1b);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1a=");
+        PrintFile("23G-A_Pari.gp",res1a);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Ly=");
+        PrintFile("23G-A_Pari.gp",Ly);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find 2 critical points in the interior with value <= 4.8 */
+
+      /* BORDER */
+        /* y = 0: (1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b)
+                  (1+t*a)*          (1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)             *(1+a)*(1-a*b)*(1+b) <= 2*(32/27)*2(by 9A) <= 4.75 */
+        ....
+        /* t = 0: (1+y)*(1+a)*(1-a*b)*(1+b) <= 2*2(by 9A) = 4 */
+        ....
+        /* a = 0: (1+y)*(1+y*t)*(1+b) <= 2*2*2 = 8 */
+        ....
+        /* b = 0: (1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1+a) <= 4.48 (by 4G) */
+        ....
+        /* y = 1: 2*(1+t)*(1-t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* t = 1: (1+y)*(1+y)*(1-y*a)*(1+a)*(1-a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* a = 1: (1+y)*(1+y*t)*(1-y*t)*(1+t)*(1-t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+        ....
+        /* b = 1: (1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+
+      ....
+      /* t = 1: (1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+        L := (1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b);
+        Ty:=Factorization(Derivative(L,y));
+        Tz:=Factorization(Derivative(L,z));
+        Ta:=Factorization(Derivative(L,a));
+        Tb:=Factorization(Derivative(L,b));
+        Ly:=Ty[7,1];
+        Lz:=Tz[6,1];
+        La:=Ta[5,1];
+        Lb:=Tb[4,1];
+
+        T1:=Factorization(Resultant(Lz,Ly,a));
+        T2:=Factorization(Resultant(La,Ly,a));
+        T3:=Factorization(Resultant(Lb,Ly,a));
+        res1a:=T1[4,1];
+        res2a:=T2[4,1];
+        res3a:=T3[2,1];
+
+        T11:=Factorization(Resultant(res2a,res1a,b));
+        T12:=Factorization(Resultant(res3a,res1a,b));
+        res1b:=T11[5,1];
+        res2b:=T12[5,1];
+
+        T111:=Factorization(Resultant(res2b,res1b,z));
+        res1z:=T111[3,1]*T111[4,1]*T111[6,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1z=");
+        PrintFile("23G-A_Pari.gp",res1z);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1b=");
+        PrintFile("23G-A_Pari.gp",res1b);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1a=");
+        PrintFile("23G-A_Pari.gp",res1a);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Ly=");
+        PrintFile("23G-A_Pari.gp",Ly);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find no critical points */
+
+      /* BORDER */
+        /* y = 0: (1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+        ....
+        /* z = 0: (1+y)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) maximized for y = 1
+                  2*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 6.75 (see "23G-A_Pari.gp") */
+        ....
+        /* a = 0: (1+y)*(1+y*z)*(1+b) <= 8 */
+        ....
+        /* b = 0: (1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1+a) <= 4.48 (by 4G) */
+        ....
+        /* y = 1: 2*(1+z)*(1-z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* z = 1: (1+y)*(1+y)*(1-y*a)*(1+a)*(1-a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* a = 1: (1+y)*(1+y*z)*(1-y*z)*(1+z)*(1-z*b)*(1+2*b+b^2)*2*(1-b)*(1+b) <= 7.1 (see "23G-A_Pari.gp") */
+        ....
+        /* b = 1: (1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a)*(1+2*a+a^2)*(1+a)*(1-a)*2 <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+
+      ....
+      /* a = 1: (1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) */
+        L := (1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b);
+        Ty:=Factorization(Derivative(L,y));
+        Tz:=Factorization(Derivative(L,z));
+        Tt:=Factorization(Derivative(L,t));
+        Tb:=Factorization(Derivative(L,b));
+        Ly:=Ty[6,1]; /* y^2*z^2*t^2 + 2/3*y*z^2*t^2 - 1/3 */
+        Lz:=Tz[6,1];
+        Lt:=Tt[5,1];
+        Lb:=Tb[3,1];
+
+        T1:=Factorization(Resultant(Lz,Ly,t));
+        T2:=Factorization(Resultant(Lt,Ly,t));
+        T3:=Factorization(Resultant(Lb,Ly,t));
+        res1t:=T1[4,1];
+        res2t:=T2[4,1];
+        res3t:=T3[2,1];
+
+        T11:=Factorization(Resultant(res2t,res1t,b));
+        T12:=Factorization(Resultant(res3t,res1t,b));
+        res1b:=T11[5,1]*T11[6,1];
+        res2b:=T12[5,1]*T12[6,1];
+        /* There is also the factor y - 1/3 which is common to T11 and T12. It forces y=1/3. Ly is y^2*z^2*t^2 + 2/3*y*z^2*t^2 - 1/3 which for
+        y=1/3 becomes 1/3*z^2*t^2 - 1/3 which forces z^2*t^2 = 1 this is not in the open part of the set so we can discard it */
+
+        T111:=Factorization(Resultant(res1b,res2b,z));
+        res1z:=T111[3,1]*T111[4,1]*T111[5,1]*T111[6,1]*T111[7,1]*T111[8,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1z=");
+        PrintFile("23G-A_Pari.gp",res1z);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res2b=");
+        PrintFile("23G-A_Pari.gp",res2b);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1t=");
+        PrintFile("23G-A_Pari.gp",res1t);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Ly=");
+        PrintFile("23G-A_Pari.gp",Ly);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find 2 critical points in the interior with value <= 4.8 */
+
+      /* BORDER */
+        /* y = 0: (1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 4.75 (see "23G-A_Pari.gp") */
+        ....
+        /* z = 0: (1+y)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) maximized for y= t = 1
+                  2*(1+2*b+b^2)*2*(1-b)*(1+b) <= 6.75 */
+        ....
+        /* t = 0: (1+y)*2*(1-b)*(1+b) <= 2*2*1 = 4 */
+        ....
+        /* b = 0: (1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*2 <= 2*1*2*2 <= 8 */
+        ....
+        /* y = 1: 2*(1+z*t)*(1-z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 7.1 (see "23G-A_Pari.gp") */
+        ....
+        /* z = 1: (1+y)*(1+y*t)*(1-y*t)*(1+t)*(1-t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+        ....
+        /* t = 1: (1+y)*(1+y*z)*(1-y*z)*(1+z)*(1-z*b)*(1+2*b+b^2)*2*(1-b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+        ....
+        /* b = 1: NULL */
+        ....
+
+      ....
+      /* b = 1: (1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 */
+
+        L := (1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2;
+        Ty:=Factorization(Derivative(L,y));
+        Tz:=Factorization(Derivative(L,z));
+        Tt:=Factorization(Derivative(L,t));
+        Ta:=Factorization(Derivative(L,a));
+        Ly:=Ty[6,1];
+        Lz:=Tz[6,1];
+        Lt:=Tt[5,1];
+        La:=Ta[4,1];
+
+        T1:=Factorization(Resultant(Lz,Ly,t));
+        T2:=Factorization(Resultant(Lt,Ly,t));
+        T3:=Factorization(Resultant(La,Ly,t));
+        res1t:=T1[6,1];
+        res2t:=T2[6,1];
+        res3t:=T3[6,1];
+
+        T11:=Factorization(Resultant(res2t,res1t,a));
+        T12:=Factorization(Resultant(res3t,res1t,a));
+        res1a:=T11[3,1];
+        res2a:=T12[2,1]*T12[2,1];
+
+        T111:=Factorization(Resultant(res1a,res2a,z));
+        res1z:=T111[3,1]*T111[4,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1z=");
+        PrintFile("23G-A_Pari.gp",res1z);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res2a=");
+        PrintFile("23G-A_Pari.gp",res2a);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1t=");
+        PrintFile("23G-A_Pari.gp",res1t);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Ly=");
+        PrintFile("23G-A_Pari.gp",Ly);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find no critical points */
+
+      /* BORDER */
+        /* y = 0: (1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 maximized for z = 0
+                  (1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 maximized for t = 1
+                  (1+2*a+a^2)*(1+a)*(1-a)*2 <= 3.4 */
+        ....
+        /* z = 0: (1+y)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 maximized for y = t = 1
+                  2*(1+2*a+a^2)*(1+a)*(1-a)*2 <= 6.75 */
+        ....
+        /* t = 0: (1+y)*(1+a)*(1-a)*2 <= 4 */
+        ....
+        /* a = 0: (1+y)*(1+y*z*t)*2 <= 8 */
+        ....
+        /* y = 1: 2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* z = 1: (1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* t = 1: (1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a)*(1+2*a+a^2)*(1+a)*(1-a)*2 <= 8.6 (see "23G-A_Pari.gp") */
+        ....
+        /* a = 1: NULL */
+        ....
+      ....
+/* This completes the border x = 0: in this case it is <= 8.6 */
+
+....
+  /* y = 0: (1-x^2)*(1+x*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+    L:=(1-x^2)*(1+x*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+  /* Interior */
+
+    Tx:=Factorization(Derivative(L,x));
+    Tz:=Factorization(Derivative(L,z));
+    Tt:=Factorization(Derivative(L,t));
+    Ta:=Factorization(Derivative(L,a));
+    Tb:=Factorization(Derivative(L,b));
+    Lx:=Tx[7,1]; /* x^2*a + 2/3*x - 1/3*a */
+    Lz:=Tz[7,1];
+    Lt:=Tt[6,1];
+    La:=Ta[5,1];
+    Lb:=Tb[4,1];
+
+    T1:=Factorization(Resultant(Lz,Lx,a));
+    T2:=Factorization(Resultant(Lt,Lx,a));
+    T3:=Factorization(Resultant(La,Lx,a));
+    T4:=Factorization(Resultant(Lb,Lx,a));
+    res1a:=T1[1,1];
+    res2a:=T2[1,1];
+    res3a:=T3[2,1];
+    res4a:=T4[1,1];
+
+    T11:=Factorization(Resultant(res2a,res1a,b));
+    T12:=Factorization(Resultant(res3a,res1a,b));
+    T13:=Factorization(Resultant(res4a,res1a,b));
+    /* The unique factors in T11 are A:= x^2-1/3  and B:= x^2 - 2/3*x*z*t - 1/3, which are also common to T12 and T13.
+    Case A = 0 forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set.
+    Case B = 0 forces x^2 = 2/3*x*z*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*z*t + 1/3 becomes 2/3*x*z*t*a + 2/3*a which is strictly positive in the open set.
+    We can discard these factors. They are the unique factors for T11, thus the are no stationary points
+    */
+
+    /* BORDER */
+      /* x = 0: already discussed in greater generality ( <= 8.6) */
+      ....
+      /* z = 0: (1-x^2)*(1+x*a)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 6.75 (see "23G-A_Pari.gp") */
+      ....
+      /* t = 0: (1-x^2)*(1+x*a)*(1+a)*(1-a*b)*(1+b) <= 1* 2*2(by 9A) = 4 */
+      ....
+      /* a = 0: (1-x^2)*(1+b) <= 4 */
+      ....
+      /* b = 0: (1-x^2)*(1+x*a)*(1+z*t*a)*(1+a) <= 8 */
+      ....
+      /* x = 1: NULL */
+      ....
+      /* z = 1: (1-x^2)*(1+x*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+        L := (1-x^2)*(1+x*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+        Tx:=Factorization(Derivative(L,x));
+        Tt:=Factorization(Derivative(L,t));
+        Ta:=Factorization(Derivative(L,a));
+        Tb:=Factorization(Derivative(L,b));
+        Lx:=Tx[7,1]; /* x^2*a + 2/3*x - 1/3*a */
+        Lt:=Tt[6,1];
+        La:=Ta[5,1];
+        Lb:=Tb[4,1];
+
+        T1:=Factorization(Resultant(Lt,Lx,a));
+        T2:=Factorization(Resultant(La,Lx,a));
+        T3:=Factorization(Resultant(Lb,Lx,a));
+        res1a:=T1[1,1];
+        res2a:=T2[2,1];
+        res3a:=T3[1,1];
+
+        T11:=Factorization(Resultant(res2a,res1a,b));
+        T12:=Factorization(Resultant(res3a,res1a,b));
+        res1b:=T11[5,1];
+        res2b:=T12[5,1];
+        /* there are also the factors A:= x^2-1/3  and B:= x^2 - 2/3*x*t - 1/3 which are common to T11 and T 12.
+        Case A = 0 forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set.
+        Case B = 0 forces x^2 = 2/3*x*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*t + 1/3 becomes 2/3*x*t*a + 2/3*a which is strictly positive in the open set.
+        We can discard these factors.
+        */
+
+        T111:=Factorization(Resultant(res1b,res2b,t));
+        res1t:=T111[5,1]*T111[6,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1t=");
+        PrintFile("23G-A_Pari.gp",res1t);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res2b=");
+        PrintFile("23G-A_Pari.gp",res2b);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1a=");
+        PrintFile("23G-A_Pari.gp",res1a);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Lx=");
+        PrintFile("23G-A_Pari.gp",Lx);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find no critical points */
+
+      /* BORDER */
+        /* x = 0: already discussed in greater generality (it is <= 8.6) */
+
+        /* t = 0: (1-x^2)*(1+x*a)*(1+a)*(1-a*b)*(1+b) <= 1*2*2(by 9A) <= 4 */
+
+        /* a = 0: (1-x^2)*(1+b) <= 2 */
+
+        /* b = 0: (1-x^2)*(1+x*a)*(1+t*a)*(1+a) <= 8 */
+
+        /* x = 1: NULL */
+
+        /* t = 1: (1-x^2)*(1+x*a)*(1+a)*(1-a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 5.7 (see "23G-A_Pari.gp") */
+
+        /* a = 1: (1-x^2)*(1+x)*(1+t)*(1-t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 5.3 (see "23G-A_Pari.gp")*/
+
+        /* b = 1: (1-x^2)*(1+x*a)*(1+t*a)*(1-t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 3.4 (see "23G-A_Pari.gp") */
+      ....
+      /* t = 1: (1-x^2)*(1+x*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+        L := (1-x^2)*(1+x*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b);
+        Tx:=Factorization(Derivative(L,x));
+        Tz:=Factorization(Derivative(L,z));
+        Ta:=Factorization(Derivative(L,a));
+        Tb:=Factorization(Derivative(L,b));
+        Lx:=Tx[7,1]; /* x^2*a + 2/3*x - 1/3*a */
+        Lz:=Tz[6,1];
+        La:=Ta[5,1];
+        Lb:=Tb[4,1];
+
+        T1:=Factorization(Resultant(Lz,Lx,a));
+        T2:=Factorization(Resultant(La,Lx,a));
+        T3:=Factorization(Resultant(Lb,Lx,a));
+        res1a:=T1[1,1];
+        res2a:=T2[2,1];
+        res3a:=T3[1,1];
+
+        T11:=Factorization(Resultant(res2a,res1a,b));
+        T12:=Factorization(Resultant(res3a,res1a,b));
+        res1b:=T11[3,1];
+        res2b:=T12[3,1];
+        /* there are also the factors A:= x^2-1/3  and B:= x^2 - 2/3*x*t - 1/3 which are common to T11 and T 12.
+        Case A = 0 forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set.
+        Case B = 0 forces x^2 = 2/3*x*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*t + 1/3 becomes 2/3*x*t*a + 2/3*a which is strictly positive in the open set.
+        We can discard these factors.
+        */
+
+        T111:=Factorization(Resultant(res1b,res2b,z));
+        res1z:=T111[5,1];
+
+        PrintFile("23G-A_Pari.gp","\{res1z=");
+        PrintFile("23G-A_Pari.gp",res1z);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res2b=");
+        PrintFile("23G-A_Pari.gp",res2b);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{res1a=");
+        PrintFile("23G-A_Pari.gp",res1a);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+        PrintFile("23G-A_Pari.gp","\{Lx=");
+        PrintFile("23G-A_Pari.gp",Lx);
+        PrintFile("23G-A_Pari.gp",";}\n\n");
+
+      /* GP computations find 1 critical point with value <= 3.6 */
+
+      /* BORDER */
+        /* x = 0: already discussed in greater generality (it is <= 8.6) */
+
+        /* z = 0: (1-x^2)*(1+x*a)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b)  <= 5.7 (see "23G-A_Pari.gp") */
+
+        /* a = 0: (1-x^2)*(1+b) <= 2 */
+
+        /* b = 0: (1-x^2)*(1+x*a)*(1+z*a)*(1+a) <= 1*2*2*2 = 8 */
+
+        /* x = 1: NULL */
+
+        /* z = 1: (1-x^2)*(1+x*a)*(1+a)*(1-a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 5.7 (see "23G-A_Pari.gp") */
+
+        /* a = 1: (1-x^2)*(1+x)*(1+z)*(1-z*b)*(1+2*b+b^2)*2*(1-b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+
+        /* b = 1: (1-x^2)*(1+x*a)*(1+z*a)*(1-z*a)*(1+2*a+a^2)*(1+a)*(1-a)*2 <= 4 (see "23G-A_Pari.gp") */
+
+      ....
+      /* a = 1: (1-x^2)*(1+x)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) =
+                (1-x^2)*(1+x)      *(1+z*t)*(1-z*t*b)*(1+b)         *(1+2*t*b+(t*b)^2)*(1-b)*2 <=
+                (32/27)            *2(by 9A)                        *(32/27)                *2 <= 4096/729 <= 5.7 */
+      ....
+      /* b = 1: (1-x^2)*(1+x*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 =
+                (1-x^2)*(1+x*a)         *(1+z*t*a)*(1-z*t*a)         *(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <=
+                (1-x^2)*(1+x)           *1                           *(27/16)*2 <=
+                (32/27)                 *1                           *(27/16)*2 <= 4 */
+      ....
+/* This completes the border y = 0: in this case it is <= 8.6 */
+....
+  /* z = 0: (1-x^2)*(1+x*a)*(1+y)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) maximized for y = t = 1
+            (1-x^2)*(1+x*a)*2*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+/* This completes the border z = 0: in this case it is <= 8 */
+....
+
+  /* t = 0: (1-x^2)*(1+x*a)*(1+y)*(1+a)*(1-a*b)*(1+b) <= 1*2*2*2 (by 9A) <= 8 */
+/* This completes the border t = 0: in this case it is <= 8 */
+....
+
+  /* a = 0: (1-x^2)*(1+y)*(1+y*z*t)*(1+b) <= 1*2*2*2 <= 8 */
+/* This completes the border a = 0: in this case it is <= 8 */
+
+....
+  /* b = 0: (1-x^2)*(1+x*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1+a) <= 8.6 (see "23G-A_Pari.gp") */
+/* This completes the border b = 0: in this case it is <= 8.6 */
+
+....
+  /* x = 1: NULL */
+/* This completes the border x = 1: in this case it is <= 0 */
+
+....
+  /* y = 1: (1-x^2)*(1+x*a)*2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+
+  L:= (1-x^2)*(1+x*a)*2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+  /* Interior */
+
+    Tx:=Factorization(Derivative(L,x));
+    Tz:=Factorization(Derivative(L,z));
+    Tt:=Factorization(Derivative(L,t));
+    Ta:=Factorization(Derivative(L,a));
+    Tb:=Factorization(Derivative(L,b));
+    Lx:=Tx[9,1]; /* x^2*a + 2/3*x - 1/3*a */
+    Lz:=Tz[6,1];
+    Lt:=Tt[5,1];
+    La:=Ta[6,1];
+    Lb:=Tb[6,1];
+
+    T1:=Factorization(Resultant(Lz,Lx,a));
+    T2:=Factorization(Resultant(Lt,Lx,a));
+    T3:=Factorization(Resultant(La,Lx,a));
+    T4:=Factorization(Resultant(Lb,Lx,a));
+    res1a:=T1[1,1];
+    res2a:=T2[1,1];
+    res3a:=T3[2,1];
+    res4a:=T4[1,1];
+
+    T11:=Factorization(Resultant(res2a,res1a,b));
+    T12:=Factorization(Resultant(res3a,res1a,b));
+    T13:=Factorization(Resultant(res4a,res1a,b));
+    res1ba:=T11[3,1]; /* A */ /* x^2 - 1/3 */
+    res1bb:=T11[4,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res1bc:=T11[5,1]; /* C */ /* x^2 + 2/3*x*z*t - 1/3 */
+    res1bd:=T11[6,1];
+    res2ba:=T12[2,1]; /* A */ /* x^2 - 1/3 */
+    res2bb:=T12[3,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res2bc:=T12[4,1]; /* C */ /* x^2 + 2/3*x*z*t - 1/3 */
+    res2bd:=T12[5,1];
+    res3ba:=T13[2,1]; /* A */ /* x^2 - 1/3 */
+    res3bb:=T13[3,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res3bc:=T13[4,1];
+
+    /* CASE 1: res1ba = res2ba = res3ba:
+       A = 0 forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set. */
+
+    /* CASE 2: res1bb = res2bb = res3bb:
+       B = 0 forces x^2 = 2/3*x*z*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*z*t + 1/3 becomes 2/3*x*z*t*a + 2/3*a which is strictly positive in the open set. */
+
+    /* CASE 3: res1bc = res2bc, res3bc:
+       C = 0 forces x^2 = -2/3*x*z*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = -2/3*x*z*t + 1/3 becomes -2/3*x*z*t*a + 2/3*a = 2/3*a(1-x*z*t) which is strictly positive in the open set. */
+
+    /* CASE 4: res1bd, res2bd, res3bc  */
+
+    T111:=Factorization(Resultant(res2bd,res1bd,t));
+    T112:=Factorization(Resultant(res3bc,res1bd,t));
+    /* There is also the factor x - 1/3 and x^2-1/3. Both can be discarded since with Lx = 0 (i.e, x^2*a + 2/3*x - 1/3*a) produce functions which have not zeros in the open set. */
+    res1t:=T111[8,1];
+    res2t:=T112[8,1];
+
+    T1111:=Factorization(Resultant(res1t,res2t,z));
+    res1z:=T1111[1,1];
+
+    PrintFile("23G-A_Pari.gp","\{res1z=");
+    PrintFile("23G-A_Pari.gp",res1z);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res2t=");
+    PrintFile("23G-A_Pari.gp",res2t);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1bd=");
+    PrintFile("23G-A_Pari.gp",res1bd);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1a=");
+    PrintFile("23G-A_Pari.gp",res1a);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{Lx=");
+    PrintFile("23G-A_Pari.gp",Lx);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    /* GP computations show that there are no stationary points */
+
+    /* BORDER */
+      /* 0- borders are already known (it is <= 8.6) */
+      /* x = 1: NULL */
+      /* z = 1: (1-x^2)*(1+x*a)*2*(1+t)*(1-t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.641 (see "23G-A_Pari.gp") */
+
+      /* t = 1: (1-x^2)*(1+x*a)*2*(1+z)*(1-z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.641 (see "23G-A_Pari.gp") */
+
+      /* a = 1: (1-x^2)*(1+x)*2*(1+z*t)*(1-z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 8.35 (see "23G-A_Pari.gp") */
+
+      /* b = 1: (1-x^2)*(1+x*a)*2*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 8.641 (see "23G-A_Pari.gp") */
+/* This completes the border y = 1: in this case it is <= 8.641 */
+....
+  /* z = 1: (1-x^2)*(1+x*a)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+  L:= (1-x^2)*(1+x*a)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a*b)*(1+2*t*a*b+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+  /* Interior */
+
+    Tx:=Factorization(Derivative(L,x));
+    Ty:=Factorization(Derivative(L,y));
+    Tt:=Factorization(Derivative(L,t));
+    Ta:=Factorization(Derivative(L,a));
+    Tb:=Factorization(Derivative(L,b));
+    Lx:=Tx[10,1]; /* x^2*a + 2/3*x - 1/3*a */
+    Ly:=Ty[7,1];
+    Lt:=Tt[6,1];
+    La:=Ta[7,1];
+    Lb:=Tb[4,1];
+
+    T1:=Factorization(Resultant(Ly,Lx,a));
+    T2:=Factorization(Resultant(Lt,Lx,a));
+    T3:=Factorization(Resultant(La,Lx,a));
+    T4:=Factorization(Resultant(Lb,Lx,a));
+    res1a:=T1[1,1];
+    res2a:=T2[1,1];
+    res3a:=T3[2,1];
+    res4a:=T4[1,1];
+
+    T11:=Factorization(Resultant(res1a,res4a,b));
+    T12:=Factorization(Resultant(res2a,res4a,b));
+    T13:=Factorization(Resultant(res3a,res4a,b));
+    res1b:=T11[1,1];
+    res2ba:=T12[3,1]; /* A */ /* x^2 - 1/3 */
+    res2bb:=T12[4,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res2bc:=T12[5,1];
+    res3ba:=T13[7,1]; /* A */ /* x^2 - 1/3 */
+    res3bb:=T13[8,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res3bc:=T13[9,1];
+
+    /* CASE 1: res1b, res2ba = res3ba:
+       A = 0 forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set. */
+
+    /* CASE 2: res1b, res2bb = res3bb:
+       B = 0 forces x^2 = 2/3*x*z*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*z*t + 1/3 becomes 2/3*x*z*t*a + 2/3*a which is strictly positive in the open set. */
+
+    /* CASE 3: res1b, res2bc, res3bc  */
+
+    T111:=Factorization(Resultant(res2bc,res1b,t));
+    T112:=Factorization(Resultant(res3bc,res1b,t));
+    /* There is also the factor x^2-1/3. Both can be discarded since with Lx = 0 (i.e, x^2*a + 2/3*x - 1/3*a) produce functions which have not zeros in the open set. */
+    res1t:=T111[7,1];
+    res2t:=T112[7,1];
+
+    T1111:=Factorization(Resultant(res1t,res2t,y));
+    /* there is also the factor <x^2 - 1/3 that we know we can discard */
+    res1y:=T1111[5,1]*T1111[6,1]*T1111[7,1];
+
+    PrintFile("23G-A_Pari.gp","\{res1y=");
+    PrintFile("23G-A_Pari.gp",res1y);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1t=");
+    PrintFile("23G-A_Pari.gp",res1t);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1b=");
+    PrintFile("23G-A_Pari.gp",res1b);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res4a=");
+    PrintFile("23G-A_Pari.gp",res4a);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{Lx=");
+    PrintFile("23G-A_Pari.gp",Lx);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    /* GP computations show that there is 1 stationary point with value <= 5.6 */
+
+    /* BORDER */
+      /* 0- borders are already known (it is <= 8.6) */
+      /* x = 1: NULL */
+      /* y = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* t = 1: (1-x^2)*(1+x*a)*(1+y)*(1+y)*(1-y*a)*(1+a)*(1-a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) <= 8.641 (see "23G-A_Pari.gp") */
+
+      /* a = 1: (1-x^2)*(1+x)*(1+y)*(1+y*t)*(1-y*t)*(1+t)*(1-t)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= 8 (see "23G-A_Pari.gp") */
+
+      /* b = 1: (1-x^2)*(1+x*a)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 <= 8.641 (see "23G-A_Pari.gp") */
+
+/* This completes the border z = 1: in this case it is <= 8.641 */
+....
+  /* t = 1: (1-x^2)*(1+x*a)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b) */
+  L:= (1-x^2)*(1+x*a)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a*b)*(1+2*a*b+(a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+  /* Interior */
+
+    Tx:=Factorization(Derivative(L,x));
+    Ty:=Factorization(Derivative(L,y));
+    Tz:=Factorization(Derivative(L,z));
+    Ta:=Factorization(Derivative(L,a));
+    Tb:=Factorization(Derivative(L,b));
+    Lx:=Tx[10,1]; /* x^2*a + 2/3*x - 1/3*a */
+    Ly:=Ty[7,1];
+    Lz:=Tz[6,1];
+    La:=Ta[7,1];
+    Lb:=Tb[4,1];
+
+    T1:=Factorization(Resultant(Ly,Lx,a));
+    T2:=Factorization(Resultant(Lz,Lx,a));
+    T3:=Factorization(Resultant(La,Lx,a));
+    T4:=Factorization(Resultant(Lb,Lx,a));
+    res1a:=T1[1,1];
+    res2a:=T2[1,1];
+    res3a:=T3[2,1];
+    res4a:=T4[1,1];
+
+    T11:=Factorization(Resultant(res1a,res4a,b));
+    T12:=Factorization(Resultant(res2a,res4a,b));
+    T13:=Factorization(Resultant(res3a,res4a,b));
+    res1b:=T11[1,1];
+    res2ba:=T12[2,1]; /* A */ /* x^2 - 1/3 */
+    res2bb:=T12[3,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res2bc:=T12[4,1];
+    res3ba:=T13[8,1]; /* A */ /* x^2 - 1/3 */
+    res3bb:=T13[9,1]; /* B */ /* x^2 - 2/3*x*z*t - 1/3 */
+    res3bc:=T13[10,1];
+
+    /* CASE 1: res1b, res2ba = res3ba:
+       A = 0 forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set. */
+
+    /* CASE 2: res1b, res2bb = res3bb:
+       B = 0 forces x^2 = 2/3*x*z*t + 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 2/3*x*z*t + 1/3 becomes 2/3*x*z*t*a + 2/3*a which is strictly positive in the open set. */
+
+    /* CASE 3: res1b, res2bc, res3bc  */
+
+    T111:=Factorization(Resultant(res2bc,res1b,z));
+    T112:=Factorization(Resultant(res3bc,res1b,z));
+    /* There is also the factor x^2-1/3. It can be discarded since with Lx = 0 (i.e, x^2*a + 2/3*x - 1/3*a) produce functions which have not zeros in the open set. */
+    res1z:=T111[7,1];
+    res2z:=T112[7,1];
+
+    T1111:=Factorization(Resultant(res1z,res2z,y));
+    /* there is also the factor x^2 - 1/3 that we know we can discard */
+    res1y:=T1111[6,1]*T1111[7,1]*T1111[8,1];
+
+    PrintFile("23G-A_Pari.gp","\{res1y=");
+    PrintFile("23G-A_Pari.gp",res1y);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1z=");
+    PrintFile("23G-A_Pari.gp",res1z);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1b=");
+    PrintFile("23G-A_Pari.gp",res1b);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res4a=");
+    PrintFile("23G-A_Pari.gp",res4a);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{Lx=");
+    PrintFile("23G-A_Pari.gp",Lx);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    /* GP computations show that there are no stationary points */
+
+    /* BORDER */
+      /* 0- borders are already known (it is <= 8.6) */
+      /* x = 1: NULL */
+      /* y = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* z = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* a = 1: (1-x^2)*(1+x)*(1+y)*(1+y*z)*(1-y*z)*(1+z)*(1-z*b)*(1+2*b+b^2)*2*(1-b)*(1+b) <= 8.641 (see "23G-A_Pari.gp") */
+
+      /* b = 1: (1-x^2)*(1+x*a)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a)*(1+2*a+a^2)*(1+a)*(1-a)*2 <= 8.641 (see "23G-A_Pari.gp") */
+/* This completes the border t = 1: in this case it is <= 8.641 */
+....
+  /* a = 1: (1-x^2)*(1+x)*(1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) <= (because (1-x^2)*(1+x) is maximized for x=1/3 with value (32/27))
+            (32/27)      *(1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b) */
+  L:= (32/27)*(1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+2*t*b+(t*b)^2)*2*(1-b)*(1+b);
+
+  /* Interior */
+
+    Ty:=Factorization(Derivative(L,y));
+    Tz:=Factorization(Derivative(L,z));
+    Tt:=Factorization(Derivative(L,t));
+    Tb:=Factorization(Derivative(L,b));
+    Ly:=Ty[6,1];
+    Lz:=Tz[6,1];
+    Lt:=Tt[5,1];
+    Lb:=Tb[3,1];
+
+    T1:=Factorization(Resultant(Ly,Lb,b));
+    T2:=Factorization(Resultant(Lz,Lb,b));
+    T3:=Factorization(Resultant(Lt,Lb,b));
+    res1b:=T1[1,1];
+    res2b:=T2[2,1];
+    res3b:=T3[5,1];
+
+    T11:=Factorization(Resultant(res2b,res1b,t));
+    T12:=Factorization(Resultant(res3b,res1b,t));
+    res1t:=T11[4,1];
+    res2t:=T12[4,1];
+
+    T111:=Factorization(Resultant(res1t,res2t,z));
+    res1z:=T111[2,1]*T111[3,1]*T111[4,1]*T111[5,1]*T111[6,1]*T111[7,1];
+
+    PrintFile("23G-A_Pari.gp","\{res1z=");
+    PrintFile("23G-A_Pari.gp",res1z);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1t=");
+    PrintFile("23G-A_Pari.gp",res1t);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1b=");
+    PrintFile("23G-A_Pari.gp",res1b);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{Lb=");
+    PrintFile("23G-A_Pari.gp",Lb);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    /* GP computations show that there are no stationary points */
+
+    /* BORDER */
+      /* 0- borders are already known (it is <= 8.6) */
+      /* y = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* z = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* t = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* b = 1: NULL */
+/* This completes the border a = 1: in this case it is <= 8.641 */
+....
+  /* b = 1: (1-x^2)*(1+x*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2 */
+  L:= (1-x^2)*(1+x*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+2*t*a+(t*a)^2)*(1+a)*(1-a)*2;
+
+  /* Interior */
+
+    Tx:=Factorization(Derivative(L,x));
+    Ty:=Factorization(Derivative(L,y));
+    Tz:=Factorization(Derivative(L,z));
+    Tt:=Factorization(Derivative(L,t));
+    Ta:=Factorization(Derivative(L,a));
+    Lx:=Tx[9,1]; /* x^2*a + 2/3*x - 1/3*a */
+    Ly:=Ty[6,1];
+    Lz:=Tz[6,1];
+    Lt:=Tt[5,1];
+    La:=Ta[6,1];
+
+    T1:=Factorization(Resultant(Ly,Lx,a));
+    T2:=Factorization(Resultant(Lz,Lx,a));
+    T3:=Factorization(Resultant(Lt,Lx,a));
+    T4:=Factorization(Resultant(La,Lx,a));
+    res1a:=T1[1,1];
+    res2a:=T2[1,1];
+    res3a:=T3[1,1];
+    res4a:=T4[3,1];
+
+    T11:=Factorization(Resultant(res2a,res1a,t));
+    T12:=Factorization(Resultant(res3a,res1a,t));
+    T13:=Factorization(Resultant(res4a,res1a,t));
+    res1t:=T11[8,1];
+    res2t:=T12[8,1];
+    res3t:=T13[8,1];
+    /* The is also the factor x^2 - 1/3 which is common to all of them, but it forces x^2 = 1/3. Lx is x^2*a + 2/3*x - 1/3*a which for x^2 = 1/3 becomes 2/3*a which is strictly positive in the open set. */
+
+    T111:=Factorization(Resultant(res1t,res2t,z));
+    T112:=Factorization(Resultant(res3t,res2t,z));
+    /* T112 has also the factor x^2 - 1/3. It can be discarded since with Lx = 0 (i.e, x^2*a + 2/3*x - 1/3*a) produce functions which have not zeros in the open set. */
+    res1z:=T111[1,1];
+    res2z:=T112[5,1]*T112[6,1]*T112[7,1]*T112[8,1];
+
+    T1111:=Factorization(Resultant(res1z,res2z,y));
+    /* there are also the factors x - 1/3 and x^2 - 1/3 that we know we can discard */
+    res1y:=T1111[7,1]*T1111[8,1]*T1111[9,1]*T1111[10,1]*T1111[11,1]*T1111[12,1]*T1111[13,1];
+
+    PrintFile("23G-A_Pari.gp","\{res1y=");
+    PrintFile("23G-A_Pari.gp",res1y);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1z=");
+    PrintFile("23G-A_Pari.gp",res1z);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res2t=");
+    PrintFile("23G-A_Pari.gp",res2t);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{res1a=");
+    PrintFile("23G-A_Pari.gp",res1a);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    PrintFile("23G-A_Pari.gp","\{Lx=");
+    PrintFile("23G-A_Pari.gp",Lx);
+    PrintFile("23G-A_Pari.gp",";}\n\n");
+
+    /* GP computations show that there are no stationary points */
+
+    /* BORDER */
+      /* 0- borders are already known (it is <= 8.6) */
+      /* x = 1: NULL */
+
+      /* y = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* z = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* t = 1: already discussed in greater generality (it is <= 8.641) */
+
+      /* a = 1: already discussed in greater generality (it is <= 8.641) */
+/* This completes the border b = 1: in this case it is <= 8.641 */
+....
+
+/* Hence this function is <= 8.641 */

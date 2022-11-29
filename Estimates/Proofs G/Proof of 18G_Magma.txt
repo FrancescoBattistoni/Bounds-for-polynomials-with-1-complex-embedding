@@ -1,0 +1,48 @@
+/* Study of inequality 18G */
+
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+  L:=(1+x)*(1-x*y)*(1+2*x*y*z*g+(x*y*z)^2)*(1+y);  /* times 2*(1-g^2)^(1/2) */
+
+  /* This is maximized at z = 1, giving
+     (1+x)*(1-x*y)*(1+2*x*y*g+(x*y)^2)*(1+y)*2*(1-g^2)^(1/2).
+     The function is symmetrical in x and y.   */
+
+
+/* x = 0:
+   (1+y)*2*(1-g^2)^(1/2)  <=  4 */
+
+
+/* g = 0:
+   (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*2 */
+
+  L:=(1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*2;
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Lx:=Tx[2,1];
+  Ly:=Ty[2,1];
+
+  T:=Factorization(Resultant(Lx,Ly,x));
+  resx:=T[3,1];
+/* GP computations find a critical point where the function is <= 3.8 (see 18G_Pari.gp) */
+
+
+/* g = 0, x = 1:
+   4*(1-y)*(1+(y)^2)*(1+y) = 4*(1-y^4) <= 4 */
+
+
+/* x = 1:
+   2*(1-y)*(1+2*y*g+y^2)*(1+y)*2*(1-g^2)^(1/2) */
+
+  L:=4*(1-y)*(1+2*y*g+y^2)*(1+y);  /* times (1-g^2)^(1/2) */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[1,1];
+  Lg:=Tg[3,1];
+
+  T:=Factorization(Resultant(Lg,Ly,g));
+  resg:=T[4,1];
+/* GP computations find a critical point where the function is 4.5795. (see 18G_Pari.gp) */

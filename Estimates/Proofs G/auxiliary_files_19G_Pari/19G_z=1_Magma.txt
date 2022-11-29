@@ -1,0 +1,343 @@
+/* We study the function 19G at z = 1 */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= 2*(1+x*y*t)*(1-x*y*t*a)*(1-2*y*g+y^2)*(1-y*t)*(1+y*t*a)*(1+g)*(1+t)*(1-t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+
+/* INTERIOR */
+
+  L:= 2*(1+x*y*t)*(1-x*y*t*a)*(1-2*y*g+y^2)*(1-y*t)*(1+y*t*a)*(1+g)*(1+t)*(1-t*a)*(1-2*t*g+t^2)*(1+2*t*a*g+(t*a)^2)*(1+a);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Tg:=Factorization(Derivative(L,g));
+  Lx:=Tx[12,1];
+  Ly:=Ty[7,1];
+  Lt:=Tt[4,1];
+  La:=Ta[7,1];
+  Lg:=Tg[6,1];
+
+  T1:= Factorization(Resultant(Ly,Lx,a));
+  T2:= Factorization(Resultant(Lt,Lx,a));
+  T3:= Factorization(Resultant(La,Lx,a));
+  T4:= Factorization(Resultant(Lg,Lx,a));
+  res1a:= T1[2,1];
+  res2a:= T2[3,1];
+  res3a:= T3[2,1];
+  res4a:= T4[1,1];
+
+  T11:= Factorization(Resultant(res2a,res1a,g));
+  T12:= Factorization(Resultant(res3a,res1a,g));
+  T13:= Factorization(Resultant(res4a,res1a,g));
+  res1g:=T11[3,1];
+  res2g:=T12[2,1];
+  res3g:=T13[4,1];
+
+  T111:= Factorization(Resultant(res1g,res2g,x));
+  T112:= Factorization(Resultant(res3g,res2g,x));
+  res1xa:=T111[7,1];  /* y*t - 1/2 */           /* A */
+  res1xb:=T111[8,1];  /* y*t - 2/3 */           /* B */
+  res1xc:=T111[10,1]; /* y*t + 1/4*t - 3/4 */   /* C */
+  res1xd:=T111[11,1]; /* y*t - 3/4*t^2 - 1/4 */ /* D */
+  res1xe:=T111[9,1]*T111[12,1];
+
+  res2xa:=T112[6,1];  /* y*t - 1/2 */           /* A */
+  res2xb:=T112[7,1];  /* y*t - 2/3 */           /* B */
+  res2xc:=T112[8,1];  /* y*t + 1/4*t - 3/4*/    /* C */
+  res2xd:=T112[9,1];  /* y*t - 3/4*t^2 - 1/4 */ /* D */
+  res2xe:=T112[10,1];
+
+
+/* CASE 1: We have res1xa = res2xa. So we study the situation y*t - 1/2 = 0 */
+
+  At:=-Coefficient(res1xa,t,0);
+  Bt:=Coefficient(res1xa,t,1);
+
+  S:=0;
+  N:=res1g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+  res1gSt:=T[2,1];
+
+
+  S:=0;
+  N:=res2g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+  res2gSt:=T[2,1];
+
+
+  T111:= Factorization(Resultant(res1gSt,res2gSt,x));
+  res1xSt:=T111[4,1]*T111[6,1]*T111[7,1];
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xSt=");
+  PrintFile("19G_z=1_Pari.gp",res1xSt);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xa=");
+  PrintFile("19G_z=1_Pari.gp",res1xa);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res2gSt=");
+  PrintFile("19G_z=1_Pari.gp",res2gSt);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1a=");
+  PrintFile("19G_z=1_Pari.gp",res1a);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{Lx=");
+  PrintFile("19G_z=1_Pari.gp",Lx);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+
+
+/* CASE 2: We have res1xb = res2xb. So we study the situation y*t - 2/3 = 0*/
+
+  At:=-Coefficient(res1xb,t,0);
+  Bt:=Coefficient(res1xb,t,1);
+
+  S:=0;
+  N:=res1g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+  res1gSt:=T[3,1];
+
+  S:=0;
+  N:=res2g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+  res2gSt:=T[3,1];
+
+  T111:= Factorization(Resultant(res1gSt,res2gSt,x));
+  res1xSt:=T111[7,1]*T111[8,1];
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xSt=");
+  PrintFile("19G_z=1_Pari.gp",res1xSt);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xb=");
+  PrintFile("19G_z=1_Pari.gp",res1xb);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res2gSt=");
+  PrintFile("19G_z=1_Pari.gp",res2gSt);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1a=");
+  PrintFile("19G_z=1_Pari.gp",res1a);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{Lx=");
+  PrintFile("19G_z=1_Pari.gp",Lx);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+
+
+/* CASE 3:  We have res1xc = res2xc. So we study the situation y*t + 1/4*t - 3/4 = 0 */
+
+  At:=-Coefficient(res1xc,t,0);
+  Bt:=Coefficient(res1xc,t,1);
+
+  S:=0;
+  N:=res1g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+  res1gSta:=T[2,1]; /* x*y + 2/3*y - 1/3 */ /* A */
+  res1gStb:=T[3,1];
+
+
+  S:=0;
+  N:=res2g;
+  for j in [0 .. Degree(N,t)] do
+     S:=S+Coefficient(N,t,j)*At^j*Bt^(Degree(N,t)-j);
+  end for;
+  T:=Factorization(S);
+  res2gSta:=T[1,1]; /* x*y + 2/3*y - 1/3 */ /* A */
+  res2gStb:=T[2,1];
+
+
+/* CASE 3.1: we have res1gSta = res2gSta = x*y + 2/3*y - 1/3 = 0
+
+   But res1xc = 0 forces t = 3/(4*y+1) while res1gSta = 0 forces y = 1/(3*x+2) and so t = 3/(4*(1/(3*x+2))+1) = (9*x+6)/(3*x+6) > 1, so t > 1 which is not acceptable */
+
+
+/* CASE 3.2: res1gStb, res2gStb */
+
+  T111:= Factorization(Resultant(res1gStb,res2gStb,x));
+  res1xSt:=T111[5,1]*T111[6,1]*T111[7,1];
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xSt=");
+  PrintFile("19G_z=1_Pari.gp",res1xSt);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xc=");
+  PrintFile("19G_z=1_Pari.gp",res1xc);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res2gSt=");
+  PrintFile("19G_z=1_Pari.gp",res2gSt);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1a=");
+  PrintFile("19G_z=1_Pari.gp",res1a);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{Lx=");
+  PrintFile("19G_z=1_Pari.gp",Lx);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+
+/* CASE 4: We have res1xc = res2xc. So we study the situation y*t - 3/4*t^2 - 1/4 = 0 */
+
+  Ay:=-Coefficient(res1xd,y,0);
+  By:=Coefficient(res1xd,y,1);
+
+  S:=0;
+  N:=res1g;
+  for j in [0 .. Degree(N,y)] do
+     S:=S+Coefficient(N,y,j)*Ay^j*By^(Degree(N,y)-j);
+  end for;
+  T:=Factorization(S);
+
+  res1gSy:=T[5,1];
+
+  S:=0;
+  N:=res2g;
+  for j in [0 .. Degree(N,y)] do
+     S:=S+Coefficient(N,y,j)*Ay^j*By^(Degree(N,y)-j);
+  end for;
+  T:=Factorization(S);
+
+  res2gSy:=T[3,1];
+
+  T111:= Factorization(Resultant(res1gSy,res2gSy,x));
+  res1xSy:=T111[4,1]*T111[5,1]*T111[8,1]*T111[10,1]*T111[11,1];
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xSy=");
+  PrintFile("19G_z=1_Pari.gp",res1xSy);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xd=");
+  PrintFile("19G_z=1_Pari.gp",res1xd);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res2gSy=");
+  PrintFile("19G_z=1_Pari.gp",res2gSy);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1a=");
+  PrintFile("19G_z=1_Pari.gp",res1a);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{Lx=");
+  PrintFile("19G_z=1_Pari.gp",Lx);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+
+
+/* CASE 5: res1xe, res2xe */
+
+  T1111:= Factorization(Resultant(res1xe,res2xe,t));
+  res1t:= T1111[4,1]*T1111[7,1]*T1111[8,1]*T1111[9,1]*T1111[10,1];
+
+  PrintFile("19G_z=1_Pari.gp","\{res1t=");
+  PrintFile("19G_z=1_Pari.gp",res1t);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1xe=");
+  PrintFile("19G_z=1_Pari.gp",res1xe);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res2g=");
+  PrintFile("19G_z=1_Pari.gp",res2g);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{res1a=");
+  PrintFile("19G_z=1_Pari.gp",res1a);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+  PrintFile("19G_z=1_Pari.gp","\{Lx=");
+  PrintFile("19G_z=1_Pari.gp",Lx);
+  PrintFile("19G_z=1_Pari.gp",";}\n\n");
+
+/* We found 18 stationary points here (none producing a value > 5.8) */
+...........................................
+
+/* BOUNDARY */
+
+/* t = 1:
+
+   8*(1+x*y)*(1-x*y*a)*(1-2*y*g+y^2)*(1-y)*(1+y*a)*(1-a^2)*(1-g^2)*(1+2*a*g+a^2) =
+   8*(1-a^2)*(1-g^2)*(1+2*a*g+a^2) *    (1+x*y)*(1-x*y*a)*(1-2*y*g+y^2)*(1-y)*(1+y*a) =  A * B
+
+   We already know that A <= 8.58 (see, as an example, the auxiliary function for x = 1 at y = 0, z = 1, t = 1).
+   We now prove that B <= 1. Notice that
+
+  (1+x*y)*(1-x*y*a)*(1-2*y*g+y^2)*(1-y)*(1+y*a)  <=  (1+x*y)*(1-x*y*a)*(1+y^2)*(1-y)*(1+y*a)
+
+   and this is the function we study   */
+
+   BOUNDARIES
+
+   x = 0:  (1+y^2)*(1-y)*(1+y*a) <= (1+y^2)*(1-y)*(1+y) = (1-y^4)     <= 1
+
+   y = 0:  1
+
+   a = 0:  (1+x*y)*(1+y^2)*(1-y)  <= (1-y^4) <=  1
+
+   x = 1:  (1+y)*(1-y*a)*(1+y^2)*(1-y)*(1+y*a) = (1-(y*a)^2)*(1-y^4)  <= 1
+
+   y = 1:  NULL
+
+   a = 1:  (1+x*y)*(1-x*y)*(1+y^2)*(1-y)*(1+y) = (1-y^4)*(1-(x*y)^2)  <= 1
+
+   INTERIOR
+
+   L = (1+x*y)*(1-x*y*a)*(1+y^2)*(1-y)*(1+y*a);
+
+   Tx = factor(deriv(L,x));
+   Ty = factor(deriv(L,y));
+   Ta = factor(deriv(L,a));
+
+   Lx = Tx[5,1];
+   Ly = Ty[1,1];
+   La = Ta[5,1];
+
+   T1 = factor(polresultant(Ly,Lx,a));
+   T2 = factor(polresultant(La,Lx,a));
+   res1a = T1[3,1];
+   res2a = T2[1,1];
+
+   T11 = factor(polresultant(res1a,res2a,y));
+   res1t = T11[2,1];
+   /* This has no roots in the open set */
+.......................................
+
+/* t = 1, a = 1:
+   the function is NULL */
+........................................
+
+/* a = 1:
+
+   4*(1+x*y*t)*(1-x*y*t)*(1-2*y*g+y^2)*(1-y*t)*(1+y*t)*(1+g)*(1+t)*(1-t)*(1-2*t*g+t^2)*(1+2*t*g+t^2) =
+   4*(1-(x*y*t)^2)*(1-2*y*g+y^2)*(1-(y*t)^2)*(1+g)*(1-t^2)*(1-2*t*g+t^2)*(1+2*t*g+t^2)   */
+
+  L:= 4*(1-(x*y*t)^2)*(1-2*y*g+y^2)*(1-(y*t)^2)*(1+g)*(1-t^2)*(1-2*t*g+t^2)*(1+2*t*g+t^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  /* This has no roots in the open set */
+........................................

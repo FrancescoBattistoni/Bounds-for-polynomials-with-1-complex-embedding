@@ -1,0 +1,595 @@
+/* Study of inequality 11G */
+
+
+Q:=RationalField();
+R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+L:=(1+b)*(1+b*a)*(1+2*b*a*t*g+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-b*a*t*z*y*x)*(1-a)*(1-2*a*t*g+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y*x);
+
+/* This is maximized at g=0 thanks to RMK 1, so we have
+
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-b*a*t*z*y*x)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y*x)  */
+
+
+/* We begin with the 0-boundaries */
+
+/* b = 0:
+   (1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y*x). Maximized at x=y=z=t=1 giving  (1-a)*(1+a^2)*(1+a)^3 =
+   (1-a^4)*(1+a)^2 which is <= 2.24 (look at proof of 17B)   */
+
+/* a = 0:
+   (1+b) <= 2  */
+
+
+/* t = 0:
+   (1+b)*(1+b*a)*(1-a) <= 2 (apply 9A)  */
+
+
+/* z = 0:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-a)*(1+(a*t)^2). Maximized at b=t=1 giving
+   2*(1-a^4)*(1+a^2) <= 64/27  */
+
+
+/* y = 0:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)   */
+
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z);
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Tz:=Factorization(Derivative(L,z));
+Lb:=Tb[4,1];
+La:=Ta[2,1];
+Lt:=Tt[5,1];
+Lz:=Tz[8,1];
+
+T:=Factorization(Resultant(Lz,Lt,b));
+/* This has no zeros in the interior */
+
+/* y = 0, b = 1:
+   2*(1+a)*(1+(a*t)^2)*(1-a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z). Maximized at z=0, giving 64/27 */
+
+/* y = 0, a = 1: the function is zero */
+
+/* y = 0, t = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-a)*(1+a^2)*(1+a*z)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-a)*(1+a^2)*(1+a*z);
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tz:=Factorization(Derivative(L,z));
+Lb:=Tb[4,1];
+La:=Ta[2,1];
+Lz:=Tz[7,1];
+
+T:=Factorization(Resultant(Lz,Lb,b));
+res1b:=T[2,1];
+T:=Factorization(Resultant(Lz,La,b));
+res2b:=T[3,1];
+
+T:=Factorization(Resultant(res1b,res2b,z));
+/* This has no roots between 0 and 1 */
+
+/* y = 0, t = 1, z = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-a)*(1+a^2)*(1+a) =
+   (1+b)*(1-(b*a)^4)*(1-a^4) <= 2   */
+
+/* No need to check x if y = 0 */
+
+/* y = 0, z = 1:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Lb:=Tb[4,1];
+La:=Ta[2,1];
+Lt:=Tt[5,1];
+
+T:=Factorization(Resultant(Lb,La,t));
+res1t:=T[5,1];
+T:=Factorization(Resultant(Lb,Lt,t));
+res2t:=T[4,1];
+T:=Factorization(Resultant(res1t,res2t,a));
+resa:=T[4,1];
+
+PrintFile("11G_Pari.gp","\{resa=");
+PrintFile("11G_Pari.gp",resa);
+PrintFile("11G_Pari.gp",";}\n\n");
+/* The polynomial resa has no roots between 0 and 1. This concludes the case y = 0 */
+
+
+/* x = 0:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Tz:=Factorization(Derivative(L,z));
+Ty:=Factorization(Derivative(L,y));
+Lb:=Tb[5,1];
+La:=Ta[2,1];
+Lt:=Tt[5,1];
+Lz:=Tz[8,1];
+Ly:=Ty[11,1];
+
+T:=Factorization(Resultant(Lz,Ly,b));
+/* This has no roots */
+
+/* x = 0, b = 1:
+   2*(1+a)*(1+(a*t)^2)*(1-a*t*z)*(1-a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y). Maximized at z = y = 0, so we know is <= 64/27 */
+
+
+/* x = 0, a = 1: the function is zero */
+
+/* x = 0, t = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z*y)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z*y);
+
+Tz:=Factorization(Derivative(L,z));
+Ty:=Factorization(Derivative(L,y));
+
+Lz:=Tz[7,1];
+Ly:=Ty[10,1];
+
+T:=Factorization(Resultant(Lz,Ly,b));
+/* This has no zeros in the interior */
+
+/* x = 0, t = 1, z = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a*y)*(1-a)*(1+(a)^2)*(1+a)*(1+a*y) =
+   (1+b)*(1-b*a*y)*(1+a*y)   *   (1+b*a)*(1+(b*a)^2)*(1-b*a)   *   (1-a)*(1+(a)^2)*(1+a)  <=  2 * 1 * 1 = 2   */
+
+/* x = 0, t = 1, y = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z)   */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tz:=Factorization(Derivative(L,z));
+Lb:=Tb[5,1];
+La:=Ta[4,1];
+Lz:=Tz[9,1];
+
+T:=Factorization(Resultant(Lz,Lb,b));
+res1b:=T[2,1];
+T:=Factorization(Resultant(Lz,La,b));
+res2b:=T[3,1];
+
+T:=Factorization(Resultant(res1b,res2b,z));  /* No roots between 0 and 1 */
+/* This concludes x = 0, t = 1 */
+
+/* x = 0, z = 1
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y)
+*/
+
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Ty:=Factorization(Derivative(L,y));
+
+Lb:=Tb[5,1];
+La:=Ta[2,1];
+Lt:=Tt[5,1];
+Ly:=Ty[10,1];
+
+T:=Factorization(Resultant(Ly,Lb,b));
+res1b:=T[2,1];
+T:=Factorization(Resultant(Ly,La,b));
+res2b:=T[3,1];
+T:=Factorization(Resultant(Ly,Lt,b));
+res3b:=T[4,1];
+
+T:=Factorization(Resultant(res1b,res3b,y));
+res1y:=T[5,1];
+T:=Factorization(Resultant(res2b,res3b,y));
+res2y:=T[5,1];
+
+T:=Factorization(Resultant(res1y,res2y,a));
+resa:=T[5,1];  /* The last non-trivial factor has non-negative coefficients */
+/* This has no roots between 0 and 1 */
+
+
+/* x = 0, z = 1, y = 1:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Lb:=Tb[5,1];
+La:=Ta[4,1];
+Lt:=Tt[7,1];
+
+T:=Factorization(Resultant(La,Lb,t));
+res1t:=T[5,1];
+T:=Factorization(Resultant(Lb,Lt,t));
+res2t:=T[4,1];
+
+T:=Factorization(Resultant(res1t,res2t,a));
+resa:=T[2,1]*T[3,1]*T[4,1];
+
+PrintFile("11G_Pari.gp","\{resa=");
+PrintFile("11G_Pari.gp",resa);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+PrintFile("11G_Pari.gp","\{res2t=");
+PrintFile("11G_Pari.gp",res2t);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+PrintFile("11G_Pari.gp","\{Lb=");
+PrintFile("11G_Pari.gp",Lb);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+/* GP computations show there are no critical points */
+
+
+/* x = 0, y = 1:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z)   */
+
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z);
+
+Tt:=Factorization(Derivative(L,t));
+Tz:=Factorization(Derivative(L,z));
+Lt:=Tt[7,1];
+Lz:=Tz[10,1];
+
+T:=Factorization(Resultant(Lz,Lt,b));
+/* This has no roots between 0 and 1 */
+
+/* This concludes the case x = 0. We have characterized the 0-boundaries */
+
+
+
+/* b = 1:
+   2*(1+a)*(1+(a*t)^2)*(1-a*t*z)*(1-a*t*z*y)*(1-a*t*z*y*x)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y*x).
+   This is maximized at x = 0, so we know the function is <= 64/27  */
+
+
+/* a = 1: the function is zero */
+
+
+/* t = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-b*a*z*y*x)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z*y)*(1+a*z*y*x)   */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-b*a*z*y*x)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z*y)*(1+a*z*y*x);
+
+Ty:=Factorization(Derivative(L,y));
+Tx:=Factorization(Derivative(L,x));
+Ly:=Ty[10,1];
+Lx:=Tx[13,1];
+
+T:=Factorization(Resultant(Lx,Ly,b));
+/* This has no roots between 0 and 1 */
+
+
+/* t = 1, z = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a*y)*(1-b*a*y*x)*(1-a)*(1+(a)^2)*(1+a)*(1+a*y)*(1+a*y*x)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a*y)*(1-b*a*y*x)*(1-a)*(1+(a)^2)*(1+a)*(1+a*y)*(1+a*y*x);
+
+Ty:=Factorization(Derivative(L,y));
+Tx:=Factorization(Derivative(L,x));
+Ly:=Ty[9,1];
+Lx:=Tx[12,1];
+
+T:=Factorization(Resultant(Lx,Ly,b));
+/* This has no roots between 0 and 1 */
+
+
+/* t = 1, z = 1, y = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a)*(1-b*a*x)*(1-a)*(1+(a)^2)*(1+a)*(1+a)*(1+a*x)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a)*(1-b*a*x)*(1-a)*(1+(a)^2)*(1+a)*(1+a)*(1+a*x);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tx:=Factorization(Derivative(L,x));
+Lb:=Tb[6,1];
+La:=Ta[4,1];
+Lx:=Tx[9,1];
+
+T:=Factorization(Resultant(Lx,Lb,b));
+res1b:=T[2,1];
+
+T:=Factorization(Resultant(Lx,La,b));
+res2b:=T[3,1];
+
+
+T:=Factorization(Resultant(res1b,res2b,x));
+resx:=T[5,1];
+
+PrintFile("11G_Pari.gp","\{resx=");
+PrintFile("11G_Pari.gp",resx);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+PrintFile("11G_Pari.gp","\{res1b=");
+PrintFile("11G_Pari.gp",res1b);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+PrintFile("11G_Pari.gp","\{Lx=");
+PrintFile("11G_Pari.gp",Lx);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+/* GP computations show there are no critical points */
+
+
+/* t = 1, z = 1, y = 1, x = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a)*(1-b*a)*(1-a)*(1+(a)^2)*(1+a)*(1+a)*(1+a)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a)*(1-b*a)*(1-a)*(1+(a)^2)*(1+a)*(1+a)*(1+a);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Lb:=Tb[5,1];
+La:=Ta[4,1];
+
+T:=Factorization(Resultant(Lb,La,b));
+resb:=T[5,1];
+
+PrintFile("11G_Pari.gp","\{resb=");
+PrintFile("11G_Pari.gp",resb);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+PrintFile("11G_Pari.gp","\{Lb=");
+PrintFile("11G_Pari.gp",Lb);
+PrintFile("11G_Pari.gp",";}\n\n");
+
+/* GP computations show the only critical point gives a value < 1.8 for the function */
+
+
+/* t = 1, z = 1, x = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a*y)*(1-b*a*y)*(1-a)*(1+(a)^2)*(1+a)*(1+a*y)*(1+a*y) */
+
+L:= (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a)*(1-b*a*y)*(1-b*a*y)*(1-a)*(1+(a)^2)*(1+a)*(1+a*y)*(1+a*y);
+
+Ta:=Factorization(Derivative(L,a));
+Ty:=Factorization(Derivative(L,y));
+La:=Ta[4,1];
+Ly:=Ty[11,1];
+
+T:=Factorization(Resultant(Ly,La,b));
+resb:=T[3,1];
+
+/* This polynomial has non-negative coefficient excluding -1/8*a^4: but there is 1/8, and 1/8-1/8*a^4 >= 0. So there are no roots between 0 and 1 */
+
+
+/* This concludes t = 1, z = 1 */
+
+
+/* t = 1, y = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-b*a*z*x)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z)*(1+a*z*x)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-b*a*z*x)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z)*(1+a*z*x);
+
+Tz:=Factorization(Derivative(L,z));
+Tx:=Factorization(Derivative(L,x));
+Lz:=Tz[9,1];
+Lx:=Tx[10,1];
+
+T:=Factorization(Resultant(Lx,Lz,b));
+/* This has no roots between 0 and 1 */
+
+
+/* t = 1, y = 1, x = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-b*a*z)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z)*(1+a*z)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z)*(1-b*a*z)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z)*(1+a*z);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tz:=Factorization(Derivative(L,z));
+Lb:=Tb[5,1];
+La:=Ta[4,1];
+Lz:=Tz[9,1];
+
+T:=Factorization(Resultant(Lz,Lb,b));
+res1b:=T[2,1];
+T:=Factorization(Resultant(Lz,La,b));
+res2b:=T[3,1];
+
+T:=Factorization(Resultant(res1b,res2b,z));
+resz:=T[4,1];
+
+/* This has no roots between 0 and 1 */
+
+
+/* This concludes t = 1, y = 1 */
+
+/* t = 1, x = 1:
+   (1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-b*a*z*y)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z*y)*(1+a*z*y)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a)^2)*(1-b*a*z)*(1-b*a*z*y)*(1-b*a*z*y)*(1-a)*(1+(a)^2)*(1+a*z)*(1+a*z*y)*(1+a*z*y);
+
+Tz:=Factorization(Derivative(L,z));
+Ty:=Factorization(Derivative(L,y));
+Lz:=Tz[9,1];
+Ly:=Ty[12,1];
+
+T:=Factorization(Resultant(Ly,Lz,b));
+
+/* This has no roots between 0 and 1 */
+
+/* This concludes the case t = 1 */
+
+
+
+/* z = 1:
+
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-b*a*t*y*x)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y)*(1+a*t*y*x)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-b*a*t*y*x)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y)*(1+a*t*y*x);
+
+Ty:=Factorization(Derivative(L,y));
+Tx:=Factorization(Derivative(L,x));
+Ly:=Ty[10,1];
+Lx:=Tx[13,1];
+
+T:=Factorization(Resultant(Ly,Lx,b));
+/* This has no roots between 0 and 1 */
+
+
+/* z = 1, y = 1:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-b*a*t*x)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t)*(1+a*t*x)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-b*a*t*x)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t)*(1+a*t*x);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Tx:=Factorization(Derivative(L,x));
+Lb:=Tb[6,1];
+La:=Ta[4,1];
+Lt:=Tt[7,1];
+Lx:=Tx[10,1];
+
+T:=Factorization(Resultant(Lb,Lx,b));
+res1b:=T[2,1];
+T:=Factorization(Resultant(La,Lx,b));
+res2b:=T[3,1];
+
+T:=Factorization(Resultant(Lt,Lx,b));
+res3b:=T[4,1];
+
+T:=Factorization(Resultant(res1b,res3b,x));
+res1x:=T[5,1];
+T:=Factorization(Resultant(res2b,res3b,x));
+res2x:=T[5,1];
+
+T:=Factorization(Resultant(res1x,res2x,a));
+resa:=T[5,1];  /* The last non-trivial factor has non-negative coefficients */
+
+/* This has no roots between 0 and 1 */
+
+
+/* z = 1, y = 1, x = 1:
+
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t)*(1+a*t)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t)*(1-b*a*t)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t)*(1+a*t);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Lb:=Tb[5,1];
+La:=Ta[4,1];
+Lt:=Tt[7,1];
+
+T:=Factorization(Resultant(Lb,Lt,b));
+res1b:=T[5,1];
+T:=Factorization(Resultant(La,Lt,b));
+res2b:=T[5,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+resa:=T[5,1]*T[6,1];
+
+/* This has no roots between 0 and 1 */
+
+
+/* z = 1, x = 1:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-b*a*t*y)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y)*(1+a*t*y)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t)*(1-b*a*t*y)*(1-b*a*t*y)*(1-a)*(1+(a*t)^2)*(1+a*t)*(1+a*t*y)*(1+a*t*y);
+
+Tb:=Factorization(Derivative(L,b));
+Ta:=Factorization(Derivative(L,a));
+Tt:=Factorization(Derivative(L,t));
+Ty:=Factorization(Derivative(L,y));
+Lb:=Tb[6,1];
+La:=Ta[4,1];
+Lt:=Tt[7,1];
+Ly:=Ty[12,1];
+
+T:=Factorization(Resultant(Lb,Ly,b));
+res1b:=T[2,1];
+T:=Factorization(Resultant(La,Ly,b));
+res2b:=T[3,1];
+
+T:=Factorization(Resultant(Lt,Ly,b));
+res3b:=T[4,1];
+
+T:=Factorization(Resultant(res1b,res3b,y));
+res1y:=T[5,1];
+T:=Factorization(Resultant(res2b,res3b,y));
+res2y:=T[5,1];
+
+T:=Factorization(Resultant(res1y,res2y,a));
+resa:=T[5,1];  /* The last non-trivial factor has non-negative coefficients */
+
+/* This has no roots between 0 and 1 */
+
+/* This concludes the case z = 1 */
+
+
+/* y = 1:
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-b*a*t*z*x)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z)*(1+a*t*z*x)   */
+
+
+L:= (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-b*a*t*z*x)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z)*(1+a*t*z*x);
+
+Tz:=Factorization(Derivative(L,z));
+Tx:=Factorization(Derivative(L,x));
+Lz:=Tz[10,1];
+Lx:=Tx[11,1];
+
+T:=Factorization(Resultant(Lx,Lz,b));
+/* This has no roots between 0 and 1 */
+
+
+/* y = 1, x = 1:
+
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z)*(1+a*t*z)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z)*(1-b*a*t*z)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z)*(1+a*t*z);
+
+Tt:=Factorization(Derivative(L,t));
+Tz:=Factorization(Derivative(L,z));
+Lt:=Tt[7,1];
+Lz:=Tz[10,1];
+
+T:=Factorization(Resultant(Lt,Lz,b));
+
+/* This has no roots in the interior */
+
+
+/* This concludes the case y = 1 */
+
+
+/* x = 1:
+
+   (1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-b*a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y)  */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-b*a*t*z*y)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Ly:=Ty[13,1];
+Lz:=Tz[10,1];
+
+T:=Factorization(Resultant(Ly,Lz,b));
+/* This has no roots in the interior */
+
+/* The 1-boundaries are concluded. We are left with the study of the interior */
+
+L:=(1+b)*(1+b*a)*(1+(b*a*t)^2)*(1-b*a*t*z)*(1-b*a*t*z*y)*(1-b*a*t*z*y*x)*(1-a)*(1+(a*t)^2)*(1+a*t*z)*(1+a*t*z*y)*(1+a*t*z*y*x);
+
+Ty:=Factorization(Derivative(L,y));
+Tx:=Factorization(Derivative(L,x));
+Ly:=Ty[11,1];
+Lx:=Tx[14,1];
+
+T:=Factorization(Resultant(Ly,Lx,b));
+/* This has no roots between 0 and 1 */
+
+/* Hence our function is <= 64/27 */

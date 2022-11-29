@@ -1,0 +1,112 @@
+/* Study of inequality 27G
+
+   - + + -' -             <=  2.81
+     -
+
+*/
+
+/* (1+x)*(1-x*y)*(1-x*y*z)*(1+2*g*x*y*z+(x*y*z)^2)*(1+x*y*z*t)*(1+y)  maximized for g = 1
+ (1+x)*(1-x*y)*(1-x*y*z)*(1+x*y*z)^2 *(1+x*y*z*t)*(1+y)   maximized for t = 1
+ (1+x)*(1-x*y)*(1-x*y*z)*(1+x*y*z)^3*(1+y) */
+
+  Q:=RationalField();
+  R<x,y,z>:=PolynomialRing(Q,4);
+
+/* INNER */
+  L := (1+x)*(1-x*y)*(1-x*y*z)*(1+x*y*z)^3*(1+y);
+
+  Tx := Factorization(Derivative(L,x));
+  Ty := Factorization(Derivative(L,y));
+  Tz := Factorization(Derivative(L,z));
+  Lx := Tx[3,1];
+  Ly := Ty[3,1];
+  Lz := Tz[7,1];
+
+  T1 := Factorization(Resultant(Lx,Lz,z));
+  T2 := Factorization(Resultant(Ly,Lz,z));
+  res1z := T1[3,1];
+  res2z := T2[3,1];
+
+  T11 := Factorization(Resultant(res1z,res2z,y));
+  res1y := T11[2,1];
+
+  PrintFile("27G_Pari.gp","\{res1y=");
+  PrintFile("27G_Pari.gp",res1y);
+  PrintFile("27G_Pari.gp",";}\n\n");
+
+  PrintFile("27G_Pari.gp","\{res1z=");
+  PrintFile("27G_Pari.gp",res1z);
+  PrintFile("27G_Pari.gp",";}\n\n");
+
+  PrintFile("27G_Pari.gp","\{Lz=");
+  PrintFile("27G_Pari.gp",Lz);
+  PrintFile("27G_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+
+  /* root: x0=1/2.  */
+  subst(res1z,x,1/2)
+  /* root: y0=1/2.  */
+  subst(subst(Lz,x,1/2),y,1/2)
+  /* GP computations show that there are no stationary points */
+
+
+/* BORDER */
+/* x= 0: (1+y) <= 2 */
+
+/* x= 1: 2*(1-y)*(1-y*z)*(1+y*z)^3*(1+y) */
+  L:= 2*(1-y)*(1-y*z)*(1+y*z)^3*(1+y);
+
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+
+  T1:= Factorization(Resultant(Ly,Lz,z));
+  /* All factors are strictly positive in the open set */
+/* x= 1, y = 0: 2 */
+/* x= 1, y = 1: NULL */
+/* x= 1, z = 0: 2*(1-y)*(1+y)<=2 */
+/* x= 1, z = 1: 2*(1-y)*(1-y)*(1+y)^3*(1+y) <= 2.81   <---- MAXIMUM ASSUMED HERE */
+
+
+/* y= 0: (1+x) <= 2 */
+
+
+/* y= 1: 2*(1+x)*(1-x)*(1-x*z)*(1+x*z)^3 */
+  L:= 2*(1+x)*(1-x)*(1-x*z)*(1+x*z)^3;
+
+  Tx:= Factorization(Derivative(L,x));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[2,1];
+  Lz:= Tz[5,1];
+
+  T1:= Factorization(Resultant(Lx,Lz,z));
+  /* All factors are strictly positive in the open set */
+/* y= 1, z = 0: 2*(1+x)*(1-x) <= 2 */
+/* y= 1, z = 1: 2*(1+x)*(1-x)*(1-x)*(1+x)^3 <= 2.81   <---- MAXIMUM ASSUMED HERE  */
+
+
+/* z= 0: (1+x)*(1-x*y)*(1+y) <= 2 */
+
+
+/* z= 1: (1+x)*(1-x*y)*(1-x*y)*(1+x*y)^3*(1+y) */
+  L:= (1+x)*(1-x*y)*(1-x*y)*(1+x*y)^3*(1+y);
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Lx:= Tx[4,1];
+  Ly:= Ty[4,1];
+
+  T1:= Factorization(Resultant(Lx,Ly,y));
+  res1y:= T1[3,1];
+
+  PrintFile("27G_Pari.gp","\{res1y=");
+  PrintFile("27G_Pari.gp",res1y);
+  PrintFile("27G_Pari.gp",";}\n\n");
+
+  PrintFile("27G_Pari.gp","\{Ly=");
+  PrintFile("27G_Pari.gp",Ly);
+  PrintFile("27G_Pari.gp",";}\n\n");
+  /* GP computations show that there is one stationary point where the function is <= 2.64 */
+............................
