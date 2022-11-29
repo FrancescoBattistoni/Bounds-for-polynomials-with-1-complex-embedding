@@ -1,0 +1,238 @@
+/* Study of inequality 5I */
+
+  Q:=RationalField();
+  R<x,y,z,t,a>:=PolynomialRing(Q,5);
+
+  L:=(1+x*y*z)*(1-x*y*z*t)*(1+x*y*z*t*a)*(1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1-z)*(1+z*t)*(1-z*t*a);
+
+/* BORDER */
+/* x = 0:
+   (1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1-z)*(1+z*t)*(1-z*t*a).  We have
+   (1+y*z)*(1-y*z*t)*(1-z)*(1+z*t) <= 1  (7A) and the remaining is <= 1 too (5A).
+   For x = 0, the function is <= 1    */
+
+
+/* y = 0:
+   (1-z)*(1+z*t)*(1-z*t*a)  <=  1  */
+
+
+/*  z = 0:
+    the function reduces to 1 */
+
+
+/* t = 0:
+   (1+x*y*z)*(1+y*z)*(1-z) <=  (1-z^2)*(1+z)   <=  32/27  */
+
+
+/* a = 0:
+   (1+x*y*z)*(1-x*y*z*t)*(1+y*z)*(1-y*z*t)*(1-z)*(1+z*t)  */
+
+  L:=(1+x*y*z)*(1-x*y*z*t)*(1+y*z)*(1-y*z*t)*(1-z)*(1+z*t);
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Lx:=Tx[7,1];
+  Ly:=Ty[4,1];
+  Lz:=Tz[1,1];
+  Lt:=Tt[5,1];
+
+  T:=Factorization(Resultant(Lx,Ly,t));
+  /* This has no roots in the interior */
+
+
+/* a = 0, x = 1:
+   (1+y*z)*(1-y*z*t)*(1+y*z)*(1-y*z*t)*(1-z)*(1+z*t)  */
+
+  L:=(1+y*z)*(1-y*z*t)*(1+y*z)*(1-y*z*t)*(1-z)*(1+z*t);
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Ly:=Ty[6,1];
+  Lz:=Tz[3,1];
+
+  T:=Factorization(Resultant(Ly,Lz,t));
+  /* No roots in the interior */
+
+
+/* a = 0, x = 1, y = 1:
+   (1+z)*(1-z*t)*(1+z)*(1-z*t)*(1-z)*(1+z*t)   */
+
+  L:=(1+z)*(1-z*t)*(1+z)*(1-z*t)*(1-z)*(1+z*t);
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  /* The derivative in t has no solutions in the interior */
+
+
+/* a = 0, x = 1, y = 1, z = 1: the function is zero */
+
+
+/* a = 0, x = 1, y = 1, t = 1:
+   (1+z)*(1-z)*(1+z)*(1-z)*(1-z)*(1+z)  <=  1   */
+
+
+/* a = 0, x = 1, z = 1: the function is zero */
+
+
+/* a = 0, x = 1, t = 1:
+    (1+y*z)*(1-y*z)*(1+y*z)*(1-y*z)*(1-z)*(1+z)  <=  1  */
+
+
+/* a = 0, y = 1:
+   (1+x*y*z)*(1-x*z*t)*(1+z)*(1-z*t)*(1-z)*(1+z*t) =
+   (1+x*y*z)*(1-x*z*t)*(1+z)*(1-(z*t)^2)*(1-z). This is maximized at t = 0, so we know is <= 32/27  */
+
+
+/* a = 0, z = 1:  the function is zero */
+
+
+/* a = 0, t = 1:
+   (1+x*y*z)*(1-x*y*z)*(1+y*z)*(1-y*z)*(1-z)*(1+z)  <=  1   */
+
+/* This concludes the zero-boundaries */
+
+
+/* x = 1:
+   (1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1-z)*(1+z*t)*(1-z*t*a)   */
+
+  L:=(1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1-z)*(1+z*t)*(1-z*t*a);
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Ly:=Ty[8,1];
+  Lz:=Tz[4,1];
+  Lt:=Tt[6,1];
+  La:=Ta[8,1];
+
+  T:=Factorization(Resultant(Ly,La,y));
+  res1y:=T[1,1];
+  T:=Factorization(Resultant(Lz,La,y));
+  res2y:=T[1,1];
+  T:=Factorization(Resultant(Lt,La,y));
+  /* This has no roots in the interior */
+
+
+/* x = 1, y = 1:
+   (1+z)*(1-z*t)*(1+z*t*a)*(1+z)*(1-z*t)*(1+z*t*a)*(1-z)*(1+z*t)*(1-z*t*a)  */
+
+  L:= (1+z)*(1-z*t)*(1+z*t*a)*(1+z)*(1-z*t)*(1+z*t*a)*(1-z)*(1+z*t)*(1-z*t*a);
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lz:=Tz[4,1];
+  Lt:=Tt[6,1];
+  La:=Ta[8,1];
+
+  T:=Factorization(Resultant(Lz,La,a));
+  res1a:=T[3,1];
+  T:=Factorization(Resultant(Lt,La,a));
+  /* This has no roots in the interior */
+
+
+/* x = 1, y = 1, z = 1: the function is zero */
+
+/* x = 1, y = 1, t = 1:
+   (1+z)*(1-z)*(1+z*a)*(1+z)*(1-z)*(1+z*a)*(1-z)*(1+z)*(1-z*a)  <=  (1-z*a)*(1+z*a)^2 <= 32/27 */
+
+/* x = 1, y = 1, a = 1:
+   (1+z)*(1-z*t)*(1+z*t)*(1+z)*(1-z*t)*(1+z*t)*(1-z)*(1+z*t)*(1-z*t)  <=  (1-z)*(1+z)^2 <=  32/27  */
+
+
+/* x = 1, z = 1: the function is zero */
+
+
+/* x = 1, t = 1:
+   (1+y*z)*(1-y*z)*(1+y*z*a)*(1+y*z)*(1-y*z)*(1+y*z*a)*(1-z)*(1+z)*(1-z*a)  <=  (1-z*a)*(1+z*a)^2  <= 32/27  */
+
+
+/* x = 1, a = 1:
+   (1+y*z)*(1-y*z*t)*(1+y*z*t)*(1+y*z)*(1-y*z*t)*(1+y*z*t)*(1-z)*(1+z*t)*(1-z*t)  <=  (1-z)*(1+z)^2  <=  32/27  */
+
+
+/* y = 1:
+   (1+x*z)*(1-x*z*t)*(1+x*z*t*a)*(1+z)*(1-z*t)*(1+z*t*a)*(1-z)*(1+z*t)*(1-z*t*a)  */
+
+  L:=(1+x*z)*(1-x*z*t)*(1+x*z*t*a)*(1+z)*(1-z*t)*(1+z*t*a)*(1-z)*(1+z*t)*(1-z*t*a);
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lx:=Tx[8,1];
+  Lz:=Tz[1,1];
+  Lt:=Tt[5,1];
+  La:=Ta[9,1];
+
+  T:=Factorization(Resultant(Lx,La,x));
+  res1x:=T[1,1];
+  T:=Factorization(Resultant(Lz,La,x));
+  res2x:=T[4,1];
+  T:=Factorization(Resultant(Lt,La,x));
+  res3x:=T[6,1];
+
+  T:=Factorization(Resultant(res1x,res3x,a));
+  res1a:=T[3,1];
+  T:=Factorization(Resultant(res2x,res3x,a));
+  res2a:=T[6,1];
+
+  T:=Factorization(Resultant(res1a,res2a,t));
+  /* This has no roots in the interior */
+
+
+/* y = 1, z = 1: the function is zero */
+
+
+/* y = 1, t = 1:
+   (1+x*z)*(1-x*z)*(1+x*z*a)*(1+z)*(1-z)*(1+z*a)*(1-z)*(1+z)*(1-z*a)  <=  (1-z*a)*(1+z*a)^2  <=  32/27  */
+
+/* y = 1, a = 1:
+   (1+x*z)*(1-x*z*t)*(1+x*z*t)*(1+z)*(1-z*t)*(1+z*t)*(1-z)*(1+z*t)*(1-z*t)  <=  (1-z)*(1+z)^2  <=  32/27  */
+
+
+/* z = 1: the function is zero */
+
+
+/* t = 1:
+   (1+x*y*z)*(1-x*y*z)*(1+x*y*z*a)*(1+y*z)*(1-y*z)*(1+y*z*a)*(1-z)*(1+z)*(1-z*a)  <=  (1-z*a)*(1+z*a)^2  <=  32/27  */
+
+
+/* a = 1:
+   (1+x*y*z)*(1-x*y*z*t)*(1+x*y*z*t)*(1+y*z)*(1-y*z*t)*(1+y*z*t)*(1-z)*(1+z*t)*(1-z*t)  <=  (1-z)*(1+z)^2  <= 32/27  */
+
+
+/* INTERIOR */
+
+  L:=(1+x*y*z)*(1-x*y*z*t)*(1+x*y*z*t*a)*(1+y*z)*(1-y*z*t)*(1+y*z*t*a)*(1-z)*(1+z*t)*(1-z*t*a);
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lx:=Tx[9,1];
+  Ly:=Ty[5,1];
+  Lz:=Tz[1,1];
+  Lt:=Tt[5,1];
+  La:=Ta[9,1];
+
+  T:=Factorization(Resultant(Lx,Ly,a));
+  res1a:=T[7,1];
+  T:=Factorization(Resultant(Lx,Lz,a));
+  res2a:=T[5,1];
+  T:=Factorization(Resultant(Lx,Lt,a));
+  res3a:=T[3,1];
+  T:=Factorization(Resultant(Lx,La,a));
+  res4a:=T[2,1];
+
+  T:=Factorization(Resultant(res1a,res2a,x));
+  res1x:=T[8,1];
+  T:=Factorization(Resultant(res1a,res3a,x));
+  res2x:=T[6,1];
+  T:=Factorization(Resultant(res1a,res4a,x));
+  res3x:=T[5,1];
+
+  T:=Factorization(Resultant(res1x,res2x,y));
+  res1y:=T[6,1];
+  T:=Factorization(Resultant(res1x,res3x,y));
+  res2y:=T[6,1];
+
+  T:=Factorization(Resultant(res1y,res2y,z));
+  /* This has no roots in the interior */

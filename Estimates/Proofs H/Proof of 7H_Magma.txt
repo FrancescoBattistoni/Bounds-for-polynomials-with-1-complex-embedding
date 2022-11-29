@@ -1,0 +1,45 @@
+/* Study of inequality 7H
+
+      + + - - - - -'        < = 2.85
+
+*/
+
+/*
+  (1-x)*(1-x*y)*(1+x*y*z)*(1+x*y*z*t)*(1+x*y*z*t*u)*(1+x*y*z*t*u*v)*(1+2*g*x*y*z*t*u*v*a+(x*y*z*t*u*v*a)^2)
+  is maximized for g = 1, a = 1, v = 1, u = 1, t = 1, z = 1.
+  (1-x)*(1-x*y)*(1+x*y)^6
+*/
+
+  Q:=RationalField();
+  R<x,y>:=PolynomialRing(Q,2);
+
+  L := (1-x)*(1-x*y)*(1+x*y)^6;
+
+/* INNER */
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Lx:= Tx[2,1];
+  Ly:= Ty[4,1];
+
+  T1:= Factorization(Resultant(Lx,Ly,y));
+  /* all factors in  T1 are positive in the open set */
+
+
+/* BORDER */
+/* x = 0: function is 1 */
+
+/* x = 1: function is NULL */
+ TO DO
+
+/* y = 0:
+  (1-x) <= 1 */
+
+/* y = 1: (1-x)*(1-x)*(1+x)^6 */
+  L:= (1-x)*(1-x)*(1+x)^6;
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1]; /* 2*x - 1 */
+  /* The unique stationary point is x=1/2, where the function assumes the value 729/256 <= 2.85 */
+
+  /* no need to consider borders since they have already been considered */
+
+/* Hence the function is <= 2.85 */

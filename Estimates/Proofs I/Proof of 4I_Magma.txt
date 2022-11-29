@@ -1,0 +1,35 @@
+/* Study of inequality 4I */
+
+
+  Q:=RationalField();
+  R<x,y,g>:=PolynomialRing(Q,3);
+
+  L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2); /* times 2*(1-g^2)^(1/4) */
+
+  /* The function is symmetrical in x and y */
+
+/* x = 0: maximizes at y=1 giving
+  4*(1+g)*(1-g^2)^(1/6);
+  Maximized at g=3/4 giving 6.1 */
+
+
+/* g = 0:
+   2*(1+x^2)*(1-x*y)*(1+y^2)  <= 2*(1+x)*(1-x*y)*(1+y)  <= 4  (apply 9A) */
+
+/* x = 1:
+   4*(1-y)*(1+2*y*g+y^2)*(1+g)*(1-g^2)^(1/4)  */
+
+  L:=4*(1-y)*(1+2*y*g+y^2)*(1+g);  /* times (1-g^2)^(1/6)  */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tg:=Factorization(3*Derivative(L,g)-L*g);
+  Ly:=Ty[2,1];
+  Lg:=Tg[2,1];
+
+  T:=Factorization(Resultant(Ly,Lg,g));
+
+/* There are two roots in y between 0 and 1, but substitution gives in Ly no solutions in res1g, so no critical points */
+
+/* We are then reduced to check on previous boundaries, since it is useless to check g = 1 */
+
+/* The function is < 6.1 */

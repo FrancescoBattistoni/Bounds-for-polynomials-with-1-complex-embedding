@@ -1,0 +1,1120 @@
+/* Study of inequality 13H
+
+   - - + +' +    < = 2.622
+     + - -' -
+
+*/
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2)*(1+y*z*t*a);
+
+/* INNER */
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[8,1];
+  La:= Ta[10,1];
+  Lg:= Tg[11,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  T4:= Factorization(Resultant(Lt,Lg,g));
+  T5:= Factorization(Resultant(La,Lg,g));
+  res1g:= T1[5,1];
+  res2g:= T2[7,1];
+  res3g:= T3[7,1];
+  res4g:= T4[7,1];
+  res5g:= T5[1,1];
+
+  T11:= Factorization(Resultant(res1g,res5g,a));
+  T12:= Factorization(Resultant(res2g,res5g,a));
+  T13:= Factorization(Resultant(res3g,res5g,a));
+  T14:= Factorization(Resultant(res4g,res5g,a));
+  /* all factors in  T14 are strictly positive in the inside */
+
+
+/* BORDER */
+/* x = 0:
+  (1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2)*(1+y*z*t*a) maximized at a = t = z = g = 1
+  (1-y)*(1+y)^4 <= 2.622  <---------- MAXIMUM HERE */
+
+
+/* x = 1:
+  2*(1+y)*(1-y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1-y*z*t*a)*(1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2)*(1+y*z*t*a)  maximized for g=0
+  2*(1+y)*(1-y*z)*(1+(y*z*t)^2)*(1-y*z*t*a)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a) maximized for a=0
+  2*(1+y)*(1-y*z)*(1+(y*z*t)^2)^2*(1-y)*(1+y*z) maximized for t=1
+  2*(1-y^2)*(1-(y*z)^4)*(1+(y*z)^2)  <= 2 (see 13H_Pari.gp) */
+
+
+/* y = 0:
+  (1+x) <= 2  */
+
+
+/* y = 1:
+   function is 0 */
+
+
+/* z = 0:
+  (1+x)*(1+x*y)*(1-y) <= 2 */
+
+
+/* z = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y*t+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+2*g*y*t+(y*t)^2)*(1+y*t*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y*t+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+2*g*y*t+(y*t)^2)*(1+y*t*a);
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[7,1];
+  La:= Ta[9,1];
+  Lg:= Tg[10,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lt,Lg,g));
+  T4:= Factorization(Resultant(La,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+  res4g:= T4[1,1];
+
+  T11:= Factorization(Resultant(res1g,res4g,a));
+  T12:= Factorization(Resultant(res2g,res4g,a));
+  T13:= Factorization(Resultant(res3g,res4g,a));
+  /* All factors of T13 are strictly positive in the open set */
+
+
+/* z = 1, t = 0:
+  (1+x)*(1-(x*y)^2)*(1-y^2) <= 2 (see 13H_Pari.gp) */
+
+/* z = 1, t = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+2*g*y+y^2)*(1+y*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+2*g*y+y^2)*(1+y*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  La:= Ta[8,1];
+  Lg:= Tg[9,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(La,Lg,g));
+  res1g:= T1[3,1];
+  res2g:= T2[5,1];
+  res3g:= T3[1,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,a));
+  T12:= Factorization(Resultant(res2g,res3g,a));
+  res1a:= T11[4,1];
+  res2a:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1a,res2a,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1a=");
+  PrintFile("13H_Pari.gp",res1a);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /*GP computation show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, a = 0:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y+(x*y)^2)*(1-y)*(1+y)*(1+2*g*y+y^2) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y+(x*y)^2)*(1-y)*(1+y)*(1+2*g*y+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lg:= Tg[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  res1g:= T1[3,1]*T1[4,1];
+  res2g:= T2[5,1];
+
+  T11:= Factorization(Resultant(res1g,res2g,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /*GP computations shows that there is only one stationary point where the function is <= 0.4 (see 13H_Pari.gp) */
+
+/* z = 1, t = 1, a = 0, g = 0:
+  (1+x)*(1+x*y)*(1-x*y)*(1+(x*y)^2)*(1-y)*(1+y)*(1+y^2) */
+  /*GP computations shows that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, a = 0, g = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y+(x*y)^2)*(1-y)*(1+y)*(1+2*y+y^2) */
+  /*GP computations shows that there is only one stationary point where the function is <= 1.65 (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, a = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y)*(1-y)*(1+y)*(1+2*g*y+y^2)*(1+y) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y+(x*y)^2)*(1-x*y)*(1-y)*(1+y)*(1+2*g*y+y^2)*(1+y);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lg:= Tg[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  res1g:= T1[3,1];
+  res2g:= T2[5,1];
+
+  T11:= Factorization(Resultant(res1g,res2g,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /*GP computations shows that there is only one stationary point where the function is <= 1.79 (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, a = 1, g = 0:
+  (1+x)*(1+x*y)*(1-x*y)*(1+(x*y)^2)*(1-x*y)*(1-y)*(1+y)*(1+y^2)*(1+y) */
+  /*GP computations shows that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, a = 1, g = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y+(x*y)^2)*(1-x*y)*(1-y)*(1+y)*(1+2*y+y^2)*(1+y) */
+  /*GP computations shows that there is only one stationary point where the function is <= 1.79 (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, g = 0:
+  (1+x)*(1+x*y)*(1-x*y)*(1+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+y^2)*(1+y*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+y^2)*(1+y*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Ta:= Factorization(Derivative(L,a));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  La:= Ta[8,1];
+
+  T1:= Factorization(Resultant(Lx,La,a));
+  T2:= Factorization(Resultant(Ly,La,a));
+  res1a:= T1[3,1];
+  res2a:= T2[4,1];
+
+  T11:= Factorization(Resultant(res1a,res2a,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1a=");
+  PrintFile("13H_Pari.gp",res1a);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{La=");
+  PrintFile("13H_Pari.gp",La);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /*GP computations shows that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, t = 1, g = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+2*y+y^2)*(1+y*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+2*y+y^2)*(1+y*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Ta:= Factorization(Derivative(L,a));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  La:= Ta[7,1];
+
+  T1:= Factorization(Resultant(Lx,La,a));
+  T2:= Factorization(Resultant(Ly,La,a));
+  res1a:= T1[3,1];
+  res2a:= T2[4,1];
+
+  T11:= Factorization(Resultant(res1a,res2a,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1a=");
+  PrintFile("13H_Pari.gp",res1a);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{La=");
+  PrintFile("13H_Pari.gp",La);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /*GP computations shows that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, a = 0
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y*t+(x*y*t)^2)*(1-y)*(1+y)*(1+2*g*y*t+(y*t)^2) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y*t+(x*y*t)^2)*(1-y)*(1+y)*(1+2*g*y*t+(y*t)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[7,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lt,Lg,g));
+  /* All factors of T3 are strictly positive in the open set*/
+
+
+/* z = 1, a = 0, g = 0:
+  (1+x)*(1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-y)*(1+y)*(1+(y*t)^2) maximized for t=1
+  (1+x)*(1+x*y)*(1-x*y)*(1+(x*y)^2)*(1-y)*(1+y)*(1+y^2) */
+  /*GP computations shows that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, a = 0, g = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y*t+(x*y*t)^2)*(1-y)*(1+y)*(1+2*y*t+(y*t)^2)  */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y*t+(x*y*t)^2)*(1-y)*(1+y)*(1+2*y*t+(y*t)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lt:= Tt[9,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  res1t:= T1[3,1];
+  res2t:= T2[4,1];
+
+  T11:= Factorization(Resultant(res1t,res2t,y));
+  /* All factors of T11 are strictly positive in the open set */
+
+
+/* z = 1, a = 1:
+   (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y*t+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+2*g*y*t+(y*t)^2)*(1+y*t) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*g*x*y*t+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+2*g*y*t+(y*t)^2)*(1+y*t);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[7,1];
+  Lg:= Tg[10,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lt,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,t));
+  T12:= Factorization(Resultant(res2g,res3g,t));
+  res1t:= T11[4,1];
+  res2t:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1t,res2t,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1t=");
+  PrintFile("13H_Pari.gp",res1t);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, a = 1, g = 0:
+   (1+x)*(1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  res1t:= T1[4,1];
+  res2t:= T2[6,1];
+
+  T11:= Factorization(Resultant(res1t,res2t,y));
+  res1y:= T11[4,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1t=");
+  PrintFile("13H_Pari.gp",res1t);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lt=");
+  PrintFile("13H_Pari.gp",Lt);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* z = 1, a = 1, g = 1:
+   (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y*t+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+2*y*t+(y*t)^2)*(1+y*t) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y*t+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+2*y*t+(y*t)^2)*(1+y*t);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lt:= Tt[9,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  res1t:= T1[3,1];
+  res2t:= T2[4,1];
+
+  T11:= Factorization(Resultant(res1t,res2t,y));
+  /* All factors of T11 are strictly positive in the open set */
+
+
+/* z = 1, g = 0:
+  (1+x)*(1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lt:= Tt[7,1];
+  La:= Ta[9,1];
+
+  T1:= Factorization(Resultant(Lx,La,a));
+  T2:= Factorization(Resultant(Ly,La,a));
+  T3:= Factorization(Resultant(Lt,La,a));
+  res1a:= T1[4,1];
+  res2a:= T2[5,1];
+  res3a:= T3[5,1];
+
+  T11:= Factorization(Resultant(res1a,res3a,t));
+  T12:= Factorization(Resultant(res2a,res3a,t));
+  res1t:= T11[4,1];
+  res2t:= T12[5,1];
+
+  T111:= Factorization(Resultant(res1t,res2t,y));
+  /*All factors of T111 are strictly positive in the open set */
+
+
+/* z = 1, g = 1:
+  (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y*t+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+2*y*t+(y*t)^2)*(1+y*t*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y)*(1-2*x*y*t+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+2*y*t+(y*t)^2)*(1+y*t*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Lx:= Tx[6,1];
+  Ly:= Ty[4,1];
+  Lt:= Tt[9,1];
+  La:= Ta[10,1];
+
+  T1:= Factorization(Resultant(Lx,La,a));
+  T2:= Factorization(Resultant(Ly,La,a));
+  T3:= Factorization(Resultant(Lt,La,a));
+  res1a:= T1[4,1];
+  res2a:= T2[5,1];
+  res3a:= T3[5,1];
+
+  T11:= Factorization(Resultant(res1a,res3a,t));
+  T12:= Factorization(Resultant(res2a,res3a,t));
+  res1t:= T11[4,1];
+  res2t:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1t,res2t,y));
+  /* All factors of T111 are strictly positive in the open set */
+
+/* case z = 1 ends here */
+
+
+/* t = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-y)*(1+y*z) */
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+/* case t = 0 ends here */
+
+
+/* t = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*a)*(1-y)*(1+y*z)*(1+2*g*y*z+(y*z)^2)*(1+y*z*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*a)*(1-y)*(1+y*z)*(1+2*g*y*z+(y*z)^2)*(1+y*z*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Ta:= Factorization(Derivative(L,a));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  La:= Ta[9,1];
+  Lg:= Tg[10,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  T4:= Factorization(Resultant(La,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+  res4g:= T4[1,1];
+
+  T11:= Factorization(Resultant(res1g,res4g,a));
+  T12:= Factorization(Resultant(res2g,res4g,a));
+  T13:= Factorization(Resultant(res3g,res4g,a));
+  res1a:= T11[5,1];
+  res2a:= T12[5,1];
+  res3a:= T13[5,1];
+
+  T111:= Factorization(Resultant(res1a,res3a,z));
+  T112:= Factorization(Resultant(res2a,res3a,z));
+  res1z:= T111[4,1];
+  res2z:= T112[4,1];
+
+  T1111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T1111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1a=");
+  PrintFile("13H_Pari.gp",res1a);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* t = 1, a = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z+(x*y*z)^2)*(1-y)*(1+y*z)*(1+2*g*y*z+(y*z)^2) */
+
+  L:=(1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z+(x*y*z)^2)*(1-y)*(1+y*z)*(1+2*g*y*z+(y*z)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,z));
+  T12:= Factorization(Resultant(res2g,res3g,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* t = 1, a = 0, g = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-y)*(1+y*z)*(1+(y*z)^2) */
+
+  L:=(1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-y)*(1+y*z)*(1+(y*z)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+
+  T1:= Factorization(Resultant(Lx,Lz,z));
+  T2:= Factorization(Resultant(Ly,Lz,z));
+  res1z:= T1[4,1];
+  res2z:= T2[5,1];
+
+  T11:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lz=");
+  PrintFile("13H_Pari.gp",Lz);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* t = 1, a = 0, g = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z+(x*y*z)^2)*(1-y)*(1+y*z)*(1+2*y*z+(y*z)^2) */
+
+  L:=(1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z+(x*y*z)^2)*(1-y)*(1+y*z)*(1+2*y*z+(y*z)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[4,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lz,z));
+  T2:= Factorization(Resultant(Ly,Lz,z));
+  res1z:= T1[3,1];
+  res2z:= T2[4,1];
+
+  T11:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lz=");
+  PrintFile("13H_Pari.gp",Lz);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* t = 1, a = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+2*g*y*z+(y*z)^2)*(1+y*z) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+2*g*y*z+(y*z)^2)*(1+y*z);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  res1g:= T1[4,1];
+  res2g:= T2[6,1];
+  res3g:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1g,res3g,z));
+  T12:= Factorization(Resultant(res2g,res3g,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* t = 1, a = 1, g = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+(y*z)^2)*(1+y*z) */
+
+  L:=(1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+(y*z)^2)*(1+y*z);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lz,z));
+  T2:= Factorization(Resultant(Ly,Lz,z));
+  res1z:= T1[4,1];
+  res2z:= T2[5,1];
+
+  T11:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lz=");
+  PrintFile("13H_Pari.gp",Lz);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* t = 1, a = 1, g = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+2*y*z+(y*z)^2)*(1+y*z) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+2*y*z+(y*z)^2)*(1+y*z);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[4,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+
+  T1:= Factorization(Resultant(Lx,Lz,z));
+  T2:= Factorization(Resultant(Ly,Lz,z));
+  res1z:= T1[3,1];
+  res2z:= T2[4,1];
+
+  T11:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T11[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lz=");
+  PrintFile("13H_Pari.gp",Lz);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+/* case t = 1 ends here */
+
+
+/* a = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[8,1];
+  Lg:= Tg[9,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  T4:= Factorization(Resultant(Lt,Lg,g));
+  /* All factors of T4 are strictly positive in the open set */
+
+
+/* a = 0, g = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+(y*z*t)^2) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+(y*z*t)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[4,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[9,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  T3:= Factorization(Resultant(Lz,Lt,t));
+  res1t:= T1[5,1];
+  res2t:= T2[6,1];
+  res3t:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1t,res3t,z));
+  T12:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  /* All factors of T111 are strictly positive in the open set */
+
+
+/* a = 0, g = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z*t+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+2*y*z*t+(y*z*t)^2) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z*t+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+2*y*z*t+(y*z*t)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+  Lt:= Tt[10,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  T3:= Factorization(Resultant(Lz,Lt,t));
+  res1t:= T1[4,1];
+  res2t:= T2[5,1];
+  res3t:= T3[5,1];
+
+  T11:= Factorization(Resultant(res1t,res3t,z));
+  T12:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1t=");
+  PrintFile("13H_Pari.gp",res1t);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lt=");
+  PrintFile("13H_Pari.gp",Lt);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* a = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2)*(1+y*z*t) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*g*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2)*(1+y*z*t);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[8,1];
+  Lg:= Tg[11,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  T4:= Factorization(Resultant(Lt,Lg,g));
+  res1g:= T1[5,1];
+  res2g:= T2[7,1];
+  res3g:= T3[7,1];
+  res4g:= T4[7,1];
+
+  T11:= Factorization(Resultant(res1g,res4g,t));
+  T12:= Factorization(Resultant(res2g,res4g,t));
+  T13:= Factorization(Resultant(res3g,res4g,t));
+  res1t:= T11[5,1];
+  res2t:= T12[5,1];
+  res3t:= T13[5,1];
+
+  T111:= Factorization(Resultant(res1t,res3t,z));
+  T112:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T111[4,1];
+  res2z:= T112[4,1];
+
+  T1111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T1111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1t=");
+  PrintFile("13H_Pari.gp",res1t);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1g=");
+  PrintFile("13H_Pari.gp",res1g);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lg=");
+  PrintFile("13H_Pari.gp",Lg);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* a = 1, g = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  T3:= Factorization(Resultant(Lz,Lt,t));
+  res1t:= T1[5,1];
+  res2t:= T2[7,1];
+  res3t:= T3[6,1];
+
+  T11:= Factorization(Resultant(res1t,res3t,z));
+  T12:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1t=");
+  PrintFile("13H_Pari.gp",res1t);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lt=");
+  PrintFile("13H_Pari.gp",Lt);
+  PrintFile("13H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+
+
+/* a = 1, g = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+2*y*z*t+(y*z*t)^2)*(1+y*z*t) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+2*y*z*t+(y*z*t)^2)*(1+y*z*t);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Lx:= Tx[5,1];
+  Ly:= Ty[4,1];
+  Lz:= Tz[7,1];
+  Lt:= Tt[10,1];
+
+  T1:= Factorization(Resultant(Lx,Lt,t));
+  T2:= Factorization(Resultant(Ly,Lt,t));
+  T3:= Factorization(Resultant(Lz,Lt,t));
+  res1t:= T1[4,1];
+  res2t:= T2[5,1];
+  res3t:= T3[5,1];
+
+  T11:= Factorization(Resultant(res1t,res3t,z));
+  T12:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T11[4,1];
+  res2z:= T12[4,1];
+
+  T111:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T111[3,1];
+
+  PrintFile("13H_Pari.gp","\{res1y=");
+  PrintFile("13H_Pari.gp",res1y);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1z=");
+  PrintFile("13H_Pari.gp",res1z);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{res1t=");
+  PrintFile("13H_Pari.gp",res1t);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  PrintFile("13H_Pari.gp","\{Lt=");
+  PrintFile("13H_Pari.gp",Lt);
+  PrintFile("13H_Pari.gp",";}\n\n");
+
+  /* GP computations show that there are no stationary points (see 13H_Pari.gp) */
+/* case a = 1 ends here */
+
+
+/* g = 0:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a) */
+
+  L:= (1+x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[8,1];
+  La:= Ta[10,1];
+
+  T1:= Factorization(Resultant(Lx,La,a));
+  T2:= Factorization(Resultant(Ly,La,a));
+  T3:= Factorization(Resultant(Lz,La,a));
+  T4:= Factorization(Resultant(Lt,La,a));
+  res1a:= T1[5,1];
+  res2a:= T2[6,1];
+  res3a:= T3[6,1];
+  res4a:= T4[6,1];
+
+  T11:= Factorization(Resultant(res1a,res4a,t));
+  T12:= Factorization(Resultant(res2a,res4a,t));
+  T13:= Factorization(Resultant(res3a,res4a,t));
+  res1t:= T11[5,1];
+  res2t:= T12[6,1];
+  res3t:= T13[6,1];
+
+  T111:= Factorization(Resultant(res1t,res3t,z));
+  T112:= Factorization(Resultant(res2t,res3t,z));
+  res1z:= T111[4,1];
+  res2z:= T112[4,1];
+
+  T1111:= Factorization(Resultant(res1z,res2z,y));
+  /* All factors of T1111 are strictly positive in the open set*/
+/* case g = 0 ends here */
+
+
+/* g = 1:
+  (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+2*y*z*t+(y*z*t)^2)*(1+y*z*t*a) */
+
+  Lx:= (1+x)*(1+x*y)*(1-x*y*z)*(1-2*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+2*y*z*t+(y*z*t)^2)*(1+y*z*t*a);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Ta:= Factorization(Derivative(L,a));
+  Lx:= Tx[5,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lt:= Tt[8,1];
+  La:= Ta[10,1];
+
+  T1:= Factorization(Resultant(Lx,La,a));
+  T2:= Factorization(Resultant(Ly,La,a));
+  T3:= Factorization(Resultant(Lz,La,a));
+  T4:= Factorization(Resultant(Lt,La,a));
+  /* All factors of T4 are strictly positive in the open set*/
+/* case g = 1 ends here */
+
+/* Hence the function is <= 2.622 */

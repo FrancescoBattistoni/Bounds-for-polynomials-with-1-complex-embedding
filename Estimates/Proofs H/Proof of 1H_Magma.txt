@@ -1,0 +1,276 @@
+/* Study of inequality 1H */
+
+  Q:=RationalField();
+  R<x,y,z,g>:=PolynomialRing(Q,4);
+
+  L:= (1+x)*(1-x*y)*(1+2*g*x*y+(x*y)^2)*(1+y)*(1-2*g*y*z+(y*z)^2);
+
+/* INNER */
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[2,1];
+  Tz:= Factorization(Derivative(L,z));
+  Lz:= Tz[3,1];
+  Tg:= Factorization(Derivative(L,g));
+  Lg:= Tg[5,1];
+
+  T:= Factorization(Resultant(Lx,Lz,g));
+  res1g:= T[1,1];
+  T:= Factorization(Resultant(Ly,Lz,g));
+  res2g:= T[3,1];
+  T:= Factorization(Resultant(Lg,Lz,g));
+  res3g:= T[1,1];
+
+  T:= Factorization(Resultant(res1g,res2g,y));
+  res1y:= T[4,1];
+  T:= Factorization(Resultant(res1g,res3g,y));
+  res2y:= T[3,1];
+
+  T:= Factorization(Resultant(res1y,res2y,z));
+  resz:= T[2,1]*T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resz=");
+  PrintFile("1H_Pari.gp",resz);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{res1y=");
+  PrintFile("1H_Pari.gp",res1y);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{res1g=");
+  PrintFile("1H_Pari.gp",res1g);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{Lg=");
+  PrintFile("1H_Pari.gp",Lg);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show a unique stationary point where the function assumes a value <= 2.1 */
+
+
+/* BORDER */
+/* x = 0:
+  (1+y)*(1-2*g*y*z+(y*z)^2);
+  maximized for g = 0, y = 1, z = 1,   <= 4 */    /* <-------- maximum   */
+
+/* x = 1
+  2*(1-y)*(1+2*g*y+y^2)*(1+y)*(1-2*g*y*z+(y*z)^2)
+  = 2*(1-y^2)*(1+2*g*y+y^2)*(1-2*g*y*z+(y*z)^2)
+  maximized at z=1
+  2*(1-y^2)*(1+2*g*y+y^2)*(1-2*g*y+y^2)
+  maximized at g=0
+  2*(1-y^2)*(1+y^2)*(1+y^2)
+  = 2*(1-y^4)*(1+y^2)   <= 2.4   */
+
+/* y = 0:
+  (1+x) <= 2  */
+
+/* y = 1:
+  (1+x)*(1-x)*(1+2*g*x+x^2)*2*(1-2*g*z+z^2);  */
+
+  L:= (1+x)*(1-x)*(1+2*g*x+x^2)*2*(1-2*g*z+z^2);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[2,1];
+  Tz:= Factorization(Derivative(L,z));
+  Lz:= Tz[1,1];
+  Tg:= Factorization(Derivative(L,g));
+  Lg:= Tg[3,1];
+
+  T:= Factorization(Resultant(Lx,Lz,g));
+  res1g:= T[1,1];
+  T:= Factorization(Resultant(Lg,Lz,g));
+  res2g:= T[1,1];
+
+  T:= Factorization(Resultant(res1g,res2g,z));
+  resz:= T[4,1];
+
+  PrintFile("1H_Pari.gp","\{resz=");
+  PrintFile("1H_Pari.gp",resz);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{res1g=");
+  PrintFile("1H_Pari.gp",res1g);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{Lx=");
+  PrintFile("1H_Pari.gp",Lx);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show a unique stationary point where the function assumes a value <= 2.2 */
+
+
+
+/* y = 1, z = 0:
+  (1+x)*(1-x)*(1+2*g*x+x^2)*2;
+  maximized at g=1
+  (1-x^2)*(1+x)^2*2;   <= 3.38   */
+
+
+/* y = 1, z = 1:
+  (1+x)*(1-x)*(1+2*g*x+x^2)*4*(1-g);  */
+  L:= (1+x)*(1-x)*(1+2*g*x+x^2)*4*(1-g);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[2,1];
+  Tg:= Factorization(Derivative(L,g));
+  Lg:= Tg[3,1];
+
+  T:= Factorization(Resultant(Lx,Lg,g));
+  /* No roots in (0,1) */
+
+
+/* y = 1, z = 1, g = 0:
+  (1+x)*(1-x)*(1+x^2)*4   <= 4  */
+
+
+/* y = 1, z = 1, g = 1:
+  The function is zero */
+
+
+/* y = 1, g = 0:
+  (1+x)*(1-x)*(1+x^2)*2*(1+z^2)  <= 4  */
+
+
+/* y = 1, g = 1:
+  (1+x)*(1-x)*(1+x)^2*2*(1-z)^2
+  <= (1+x)*(1-x)*(1+x)^2*2
+  <= 3.8  */
+
+
+/* z = 0:
+  (1+x)*(1-x*y)*(1+2*g*x*y+(x*y)^2)*(1+y);
+  maximized for g=1
+  (1+x)*(1-x*y)*(1+x*y)^2*(1+y);  */
+
+  L:= (1+x)*(1-x*y)*(1+x*y)^2*(1+y);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[3,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resy=");
+  PrintFile("1H_Pari.gp",resy);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{Lx=");
+  PrintFile("1H_Pari.gp",Lx);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show a unique stationary point where the function assumes a value <= 3.3 */
+
+
+
+/* z = 1:
+  (1+x)*(1-x*y)*(1+2*g*x*y+(x*y)^2)*(1+y)*(1-2*g*y+y^2);  */
+
+  L:= (1+x)*(1-x*y)*(1+2*g*x*y+(x*y)^2)*(1+y)*(1-2*g*y+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[2,1];
+  Tg:= Factorization(Derivative(L,g));
+  Lg:= Tg[5,1];
+
+  T:= Factorization(Resultant(Lx,Lg,g));
+  res1g:= T[3,1];
+  T:= Factorization(Resultant(Ly,Lg,g));
+  res2g:= T[5,1];
+
+  T:= Factorization(Resultant(res1g,res2g,y));
+  resy:= T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resy=");
+  PrintFile("1H_Pari.gp",resy);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show that resy has no roots in (0,1) */
+
+
+
+/* z = 1, g = 0:
+  (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*(1+y^2); */
+  L:= (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*(1+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[2,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resy=");
+  PrintFile("1H_Pari.gp",resy);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show that resy has no roots in (0,1) */
+
+
+
+/* z = 1, g = 1:
+  (1+x)*(1-x*y)*(1+x*y)^2*(1+y)*(1-y)^2; */
+  L:=(1+x)*(1-x*y)*(1+x*y)^2*(1+y)*(1-y)^2;
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[4,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[4,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resy=");
+  PrintFile("1H_Pari.gp",resy);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show that resy has no roots in (0,1) */
+
+
+
+
+/* g = 0:
+  (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*(1+(y*z)^2);
+  maximized for z=1
+  <= (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*(1+y^2); */
+  L:= (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)*(1+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[2,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resy=");
+  PrintFile("1H_Pari.gp",resy);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show that resy has no roots in (0,1) */
+
+
+
+/* g = 1:
+  (1+x)*(1-x*y)*(1+x*y)^2*(1+y)*(1-y*z)^2;
+  maximized for z=0
+  (1+x)*(1-x*y)*(1+x*y)^2*(1+y); */
+  L:= (1+x)*(1-x*y)*(1+x*y)^2*(1+y);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[3,1];
+  Ty:= Factorization(Derivative(L,y));
+  Ly:= Ty[3,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1H_Pari.gp","\{resy=");
+  PrintFile("1H_Pari.gp",resy);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+  PrintFile("1H_Pari.gp","\{Lx=");
+  PrintFile("1H_Pari.gp",Lx);
+  PrintFile("1H_Pari.gp",";}\n\n");
+
+/* GP computations show a unique stationary point where the function assumes a value <= 3.3 */
+
+/* This ends our study: the function is <= 4 */

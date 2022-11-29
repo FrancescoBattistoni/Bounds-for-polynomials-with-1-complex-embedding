@@ -1,0 +1,141 @@
+/* Study of inequality 18H
+
+   - + - + -'   <= 2.22
+
+*/
+
+/* (1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+2*g*x*y*z*t*u+(x*y*z*t*u)^2) maximized for u = 1, g = 1
+ (1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+x*y*z*t)^2 */
+
+  Q:=RationalField();
+  R<x,y,z,t>:=PolynomialRing(Q,4);
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+x*y*z*t)^2;
+  Tx := Factorization(Derivative(L,x));
+  Ty := Factorization(Derivative(L,y));
+  Tz := Factorization(Derivative(L,z));
+  Tt := Factorization(Derivative(L,t));
+  Lx := Tx[2,1];
+  Ly := Ty[4,1];
+  Lz := Tz[6,1];
+  Lt := Tt[8,1];
+
+  T1 := Factorization(Resultant(Lx,Lt,t));
+  T2 := Factorization(Resultant(Ly,Lt,t));
+  T3 := Factorization(Resultant(Lz,Lt,t));
+  /* All factors in T2 are not zero in the open set */
+  /* x = 0: function is 1 */
+  /* x = 1: 2*(1-y)*(1+y*z)*(1-y*z*t)*(1+y*z*t)^2 */
+  L:=2*(1-y)*(1+y*z)*(1-y*z*t)*(1+y*z*t)^2;
+  Ty := Factorization(Derivative(L,y));
+  Tz := Factorization(Derivative(L,z));
+  Tt := Factorization(Derivative(L,t));
+  Ly := Ty[2,1];
+  Lz := Tz[4,1];
+  Lt := Tt[6,1];
+
+  T1 := Factorization(Resultant(Ly,Lt,t));
+  T2 := Factorization(Resultant(Lz,Lt,t));
+  /* All factors in T1 are not zero in the open set */
+
+  /* x = 1, y = 0: 2 */
+  /* x = 1, y = 1: NULL */
+  /* x = 1, z = 0: 2*(1-y) <= 2 */
+  /* x = 1, z = 1: 2*(1-y)*(1+y)*(1-y*t)*(1+y*t)^2 */
+  L:=2*(1-y)*(1+y)*(1-y*t)*(1+y*t)^2;
+  Ty := Factorization(Derivative(L,y));
+  Tt := Factorization(Derivative(L,t));
+  Ly := Ty[2,1];
+  Lt := Tt[5,1];
+
+  T1 := Factorization(Resultant(Ly,Lt,t));
+  /* All factors in T1 are not zero in the open set */
+  /* x = 1, z = 1, y = 0: 2 */
+  /* x = 1, z = 1, y = 1: NULL */
+  /* x = 1, z = 1, t = 0: 2*(1-y)*(1+y) <= 2 */
+  /* x = 1, z = 1, t = 1: 2*(1-y)*(1+y)*(1-y)*(1+y)^2 <= 6912/3125 (value at y0=1/5). */
+
+  /* x = 1, t = 0: 2*(1-y)*(1+y*z) <= 2*(1-y)*(1+y) <= 2 */
+  /* x = 1, t = 1: 2*(1-y)*(1+y*z)*(1-y*z)*(1+y*z)^2 */
+  L:=2*(1-y)*(1+y*z)*(1-y*z)*(1+y*z)^2;
+  Ty := Factorization(Derivative(L,y));
+  Tz := Factorization(Derivative(L,z));
+  Ly := Ty[2,1];
+  Lz := Tz[4,1];
+
+  T1 := Factorization(Resultant(Ly,Lz,z));
+  /* All factors in T1 are not zero in the open set */
+  /* x = 1, t = 1, y = 0: 2 */
+  /* x = 1, t = 1, y = 1: NULL */
+  /* x = 1, t = 1, z = 0: 2*(1-y) <= 2 */
+  /* x = 1, t = 1, z = 1: 2*(1-y)*(1+y)*(1-y)*(1+y)^2 <= 6912/3125 (value at y0=1/5). */
+
+
+  /* y = 0: (1+x) <= 2 */
+  /* y = 1: (1+x)*(1-x)*(1+x*z)*(1-x*z*t)*(1+x*z*t)^2 */
+  L:=(1+x)*(1-x)*(1+x*z)*(1-x*z*t)*(1+x*z*t)^2;
+  Tx := Factorization(Derivative(L,x));
+  Tz := Factorization(Derivative(L,z));
+  Tt := Factorization(Derivative(L,t));
+  Lx := Tx[2,1];
+  Lz := Tz[5,1];
+  Lt := Tt[7,1];
+
+  T1 := Factorization(Resultant(Lx,Lt,t));
+  T2 := Factorization(Resultant(Lz,Lt,t));
+  /* All factors in T1 are not zero in the open set */
+
+  /* y = 1, z = 0: (1+x)*(1-x) <= 1 */
+  /* y = 1, z = 1: (1+x)*(1-x)*(1+x)*(1-x*t)*(1+x*t)^2 */
+  L:=(1+x)*(1-x)*(1+x)*(1-x*t)*(1+x*t)^2;
+  Tx := Factorization(Derivative(L,x));
+  Tt := Factorization(Derivative(L,t));
+  Lx := Tx[3,1];
+  Lt := Tt[2,1];
+
+  T1 := Factorization(Resultant(Lx,Lt,t));
+  /* All factors in T1 are not zero in the open set */
+  /* y = 1, z = 1, t = 0: (1+x)*(1-x)*(1+x) <= 2 */
+  /* y = 1, z = 1, t = 1: (1+x)*(1-x)*(1+x)*(1-x)*(1+x)^2 <= 1024/729 */
+
+  /* y = 1, t = 0: (1+x)*(1-x)*(1+x*z) <= 2 */
+  /* y = 1, t = 1: (1+x)*(1-x)*(1+x*z)*(1-x*z)*(1+x*z)^2 <= *(1+x*z)*(1-x*z)*(1+x*z)^2 <= 2 */
+
+  /* z = 0: (1+x)*(1-x*y) <= 2 */
+  /* z = 1: (1+x)*(1-x*y)*(1+x*y)*(1-x*y*t)*(1+x*y*t)^2 */
+  L:=(1+x)*(1-x*y)*(1+x*y)*(1-x*y*t)*(1+x*y*t)^2;
+  Tx := Factorization(Derivative(L,x));
+  Ty := Factorization(Derivative(L,y));
+  Tt := Factorization(Derivative(L,t));
+  Lx := Tx[2,1];
+  Ly := Ty[4,1];
+  Lt := Tt[7,1];
+
+  T1 := Factorization(Resultant(Lx,Lt,t));
+  T2 := Factorization(Resultant(Ly,Lt,t));
+  /* All factors in T1 are not zero in the open set */
+  /* z = 1, t = 0: (1+x)*(1-x*y)*(1+x*y) <= (1+x) <= 2 */
+  /* z = 1, t = 1: (1+x)*(1-x*y)*(1+x*y)*(1-x*y)*(1+x*y)^2 */
+  L:=(1+x)*(1-x*y)*(1+x*y)*(1-x*y)*(1+x*y)^2;
+  Tx := Factorization(Derivative(L,x));
+  Ty := Factorization(Derivative(L,y));
+  Lx := Tx[3,1];
+  Ly := Ty[5,1];
+
+  T1 := Factorization(Resultant(Lx,Ly,y));
+  /* All factors in T1 are not zero in the open set */
+
+  /* t = 0: (1+x)*(1-x*y)*(1+x*y*z) maximized for z = 1. it is <= 2 */
+  /* t = 1: (1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z)*(1+x*y*z)^2 */
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z)*(1+x*y*z)^2;
+  Tx := Factorization(Derivative(L,x));
+  Ty := Factorization(Derivative(L,y));
+  Tz := Factorization(Derivative(L,z));
+  Lx := Tx[2,1];
+  Ly := Ty[4,1];
+  Lz := Tz[6,1];
+
+  T1 := Factorization(Resultant(Lx,Lz,z));
+  T2 := Factorization(Resultant(Ly,Lz,z));
+  /* All factors in T1 are not zero in the open set */
+............................

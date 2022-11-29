@@ -1,0 +1,38 @@
+/* Study of Inequality 2I */
+
+  Q:=RationalField();
+  R<x,y,g>:=PolynomialRing(Q,3);
+
+  L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*(1-g^2)^(1/4) */
+
+/* We begin with the boundaries. Notice that, since this function is symmetrical in x and y, we do not have to
+check all the boundaries to obtain all the results. */
+
+/* x = 0:
+  (1+2*y*g+y^2)*2*(1-g^2)^(1/4). This is maximized at y = 1 giving
+  4*(1+g)*(1-g^2)^(1/4). This is maximized at g = 2/3 giving 5.76 */
+
+/* g = 0:
+   (1+x^2)*(1-x*y)*(1+y^2)*2 <= (1+x)*(1-x*y)*(1+y)*2 <= 4 by 9A */
+
+/* x = 1:
+   (1+g)*(1-y)*(1+2*y*g+y^2)*4*(1-g^2)^(1/4)  */
+
+  L:=4*(1+g)*(1-y)*(1+2*y*g+y^2);   /* times (1-g^2)^(1/4)  */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[2,1];
+  Lg:=Tg[3,1];
+
+  T:=Factorization(Resultant(Ly,Lg,g));
+
+/* We find a unique critical point of the form (y0,g0) = (0.28028756899370451563405449255253887113, 0.76817254139622270938043269553152332268).
+   The function evaluated at this point assumes a value <= 6.15  */
+
+/* Hence x = 1 requires further boundaries. Additional 0-boundaries give the previous estimates. Additional 1-boundaries force the function to be zero.
+   x = 1 is concluded, and same result for y = 1 */
+
+/* g = 1 annihilates the function */
+
+/* Hence the function is < 6.15 */

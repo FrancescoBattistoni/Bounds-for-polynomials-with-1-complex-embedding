@@ -1,0 +1,121 @@
+/* Study of inequality 5H
+
+   - + -'        < = 1
+   + - +'
+
+*/
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1+2*g*x*y*z*t+(x*y*z*t)^2);
+
+/* INNER */
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tt:= Factorization(Derivative(L,t));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[5,1];
+  Ly:= Ty[1,1];
+  Lz:= Tz[4,1];
+  Lt:= Tt[7,1];
+  Lg:= Tg[8,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  T4:= Factorization(Resultant(Lt,Lg,g));
+  /* all factors in  T4 are strictly positive in the open set */
+
+
+/* BORDER */
+/* x = 0:
+  (1-y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2) this is the function in 11B and it <= 1 */
+
+/* x = 1:
+  (1-y)*(1+y)*(1+y*z)*(1-y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1+2*g*y*z*t+(y*z*t)^2) it is maximized for g = 0 <=
+  (1-y)*(1+y)*(1+y*z)*(1-y*z)*(1+(y*z*t)^2)*(1+(y*z*t)^2) it is maximized for t = 1 <=
+  (1-y)*(1+y)*(1+y*z)*(1-y*z)*(1+(y*z)^2)*(1+(y*z)^2)
+   */
+
+  L:=(1-y)*(1+y)*(1+y*z)*(1-y*z)*(1+(y*z)^2)*(1+(y*z)^2);
+
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Ly:= Ty[3,1];
+  Lz:= Tz[6,1];
+
+  T1:= Factorization(Resultant(Ly,Lz,z));
+  /* all factors in  T14 are strictly positive in the open set */
+
+  /* x = 1, y = 0: function is 1    */
+  /* x = 1, y = 1: function is NULL */
+  /* x = 1, z = 0: (1-y)*(1+y) <= 1 */
+  /* x = 1, z = 1: (1-y)*(1+y)*(1+y)*(1-y)*(1+y^2)*(1+y^2) = (1-y^4)^2 <= 1 */
+
+
+/* y = 0: function is 1 */
+
+/* y = 1: function is NULL */
+
+/* z = 0:
+  (1-y)*(1+x*y) <= 1 */
+
+/* z = 1:
+  (1-y)*(1+x*y)*(1+y)*(1-x*y)*(1-2*g*y*t+(y*t)^2)*(1+2*g*x*y*t+(x*y*t)^2) <= by RMK1
+  (1-y)*(1+x*y)*(1+y)*(1-x*y)*(1+(y*t)^2)*(1+(x*y*t)^2) <= maximized for t=1 */
+  (1-y)*(1+x*y)*(1+y)*(1-x*y)*(1+y^2)*(1+(x*y)^2) =  */
+  (1-y^4)*(1-(x*y)^4) <= 1 */
+
+/* t = 0:
+  (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z) */
+  L:=(1-y)*(1+x*y)*(1+y*z)*(1-x*y*z);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[4,1];
+  Ly:= Ty[1,1];
+  Lz:= Tz[4,1];
+
+  T1:= Factorization(Resultant(Lx,Ly,y));
+  /* all factors in  T14 are strictly positive in the open set */
+/* borders of (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z) contains x,y,z and have already been studied. */
+
+/* t = 1:
+  (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1-2*g*y*z+(y*z)^2)*(1+2*g*x*y*z+(x*y*z)^2) <= by RMK1
+  (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1+(y*z)^2)*(1+(x*y*z)^2) */
+  L:=(1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1+(y*z)^2)*(1+(x*y*z)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[5,1];
+  Ly:= Ty[1,1];
+  Lz:= Tz[4,1];
+
+  T1:= Factorization(Resultant(Ly,Lx,z));
+  T2:= Factorization(Resultant(Lz,Lx,z));
+  res1z:= T1[5,1];
+  res2z:= T2[3,1];
+
+  T11:= Factorization(Resultant(res1z,res2z,y));
+  res1y:= T11[1,1]*T11[2,1]*T11[3,1];
+
+  PrintFile("5H_Pari.gp","\{res1y=");
+  PrintFile("5H_Pari.gp",res1y);
+  PrintFile("5H_Pari.gp",";}\n\n");
+  /* GP computations show that there are no stationary points */
+
+  /* border of t = 1 involve condition only on x,y,z (because we have remarked that the maximum for t=1
+  is realized when g=0), and these cases have already been analyzed in previous steps in greater generality. */
+
+/* g = 0:
+  (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1+(y*z*t)^2)*(1+(x*y*z*t)^2) maximized for t = 1.
+  It becomes a subcase of t = 1 */
+
+/* g = 1:
+  (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1-2*y*z*t+(y*z*t)^2)*(1+2*x*y*z*t+(x*y*z*t)^2) =
+  (1-y)*(1+x*y)*(1+y*z)*(1-x*y*z)*(1-y*z*t)^2*(1+x*y*z*t)^2 maximized for t = 0.
+  (it is decreasing in t). This becomes a subcase of t = 0 case that we have already
+  studied. */
+/* Hence the function is <= 1 */

@@ -1,0 +1,727 @@
+/* Study of inequality 9I
+
+      x x x x x -           <= 10.3
+        - x - +
+              - +
+                -'
+              - +
+                -
+
+*/
+
+Q:=RationalField();
+R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+L:=(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+/* We can maximize this at x = g = 1 */
+
+L:=(1+y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+/* Interior */
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[7,1];
+Lz:=Tz[7,1];
+Lt:=Tt[6,1];
+La:=Ta[5,1];
+Lb:=Tb[7,1];
+
+T:=Factorization(Resultant(Ly,Lz,b));
+res1b:=T[7,1];
+T:=Factorization(Resultant(Ly,Lt,b));
+res2b:=T[7,1];
+T:=Factorization(Resultant(Ly,La,b));
+res3b:=T[7,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res4b:=T[7,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+res1a:=T[6,1];
+T:=Factorization(Resultant(res1b,res3b,a));
+res2a:=T[6,1];
+T:=Factorization(Resultant(res1b,res4b,a));
+res3a:=T[6,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+res1t:=T[5,1]*T[6,1]*T[7,1];
+T:=Factorization(Resultant(res1a,res3a,t));
+res2t:=T[4,1]*T[5,1];
+
+T:=Factorization(Resultant(res1t,res2t,z));
+resz:=T[3,1]*T[4,1]*T[5,1]*T[6,1];
+
+PrintFile("9I_Pari.gp","\{resz=");
+PrintFile("9I_Pari.gp",resz);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res2t=");
+PrintFile("9I_Pari.gp",res2t);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1a=");
+PrintFile("9I_Pari.gp",res1a);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* GP computations find no critical points in the interior */
+
+/* y = 0:
+
+   (1+z*t*a)*(1-z*t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b)  <=
+
+   (1+z)*(1-z*t*a*b)*(1+t*a*b)   *   (1+t*a*b)   *   (1+a)*(1-a*b)*(1+b)   <=   8  */
+
+
+/* z = 0:
+
+   (1+y)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b). Maximized at y = t = 1 giving
+
+   2*(1+a*b)^2*(1+a)*(1-a*b)*(1+b)   */
+
+L:=  2*(1+a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+La:=Ta[3,1];
+Lb:=Tb[3,1];
+
+T:=Factorization(Resultant(La,Lb,a));
+resa:=T[3,1];
+
+/* This gives a unique critical point (a0,b0) with a0 = b0 = 0.7252700850720346492286420678622454402039480874071238267583740706932004532555285680176734570055982706..
+
+   The function at this point is < 6.58 */
+
+
+/* z = 0, a = 0:
+
+   2*(1+b) <=  4. No need to check b = 0 thanks to symmetry */
+
+/* z = 0, a = 1:
+
+   4*(1+b)^2*(1-b^2)  <=  4 * 27/16 = 27/4 < 7 */
+
+
+/* t = 0:
+
+   (1+y)*(1+a)*(1-a*b)*(1+b)  <=   4   */
+
+
+/* a = 0:
+
+   (1+y)*(1+y*z*t)*(1+b) <= 8 (maximized at y = z = t = b = 1)  */
+
+
+/* b = 0:
+
+   (1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1+a)  =
+
+   (1+y)*(1-y*z*t*a)*(1+z*t*a)   *   (1+y*z*t)    *   (1+a)    <=   2 * 2 * 2 = 8 */
+
+
+
+/* y = 1:
+
+   2*(1+z*t*a*b)*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b)  */
+
+L:=2*(1+z*t*a*b)*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Lz:=Tz[6,1];
+Lt:=Tt[5,1];
+La:=Ta[4,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Lz,Lt,b));
+res1b:=T[7,1];
+T:=Factorization(Resultant(Lz,La,b));
+res2b:=T[7,1];
+T:=Factorization(Resultant(Lz,Lb,b));
+res3b:=T[7,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+res1a:=T[4,1];
+T:=Factorization(Resultant(res1b,res3b,a));
+res2a:=T[4,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+rest:=T[2,1];  /* The other non-trivial factor has no roots between 0 and 1 */
+
+PrintFile("9I_Pari.gp","\{rest=");
+PrintFile("9I_Pari.gp",rest);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1a=");
+PrintFile("9I_Pari.gp",res1a);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* GP computations find no critical points */
+
+/* y = 1, z = 1:
+
+   2*(1+t*a*b)*(1+t)*(1-t*a)*(1+t*a)*(1-t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b)  */
+
+L:=2*(1+t*a*b)*(1+t)*(1-t*a)*(1+t*a)*(1-t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Lt:=Tt[5,1];
+La:=Ta[4,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Lt,La,b));
+res1b:=T[6,1];
+T:=Factorization(Resultant(Lt,Lb,b));
+res2b:=T[6,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+resa:=T[4,1]*T[5,1]*T[6,1];
+
+PrintFile("9I_Pari.gp","\{resa=");
+PrintFile("9I_Pari.gp",resa);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Lt=");
+PrintFile("9I_Pari.gp",Lt);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* GP computations find only one critical point. The value at this point is < 5.2 */
+
+
+/* y = 1, z = 1, t = 1:
+
+   4*(1+a*b)*(1-a)*(1+a)*(1-a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b)  */
+
+L:=4*(1+a*b)*(1-a)*(1+a)*(1-a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+La:=Ta[5,1];
+Lb:=Tb[5,1];
+
+T:=Factorization(Resultant(Lb,La,b));
+resb:=T[4,1];  /* This has no roots in the interior */
+
+
+/* y = 1, z = 1, t = 1, a = 1: the function is zero  */
+
+
+/* y = 1, z = 1, t = 1, b = 1:
+
+   8*(1+a)*(1-a)*(1+a)*(1-a)*(1+a)^2*(1+a)*(1-a) =
+
+   8*(1+a)^2*(1-a^2)^3.
+
+   This is maximized at a = 1/4 giving 10.3    */
+
+
+
+/* y = 1, z = 1, a = 1:
+
+   4*(1+t*b)*(1+t)*(1-t)*(1+t)*(1-t*b)*(1+t*b)^2*(1-b)*(1+b)  */
+
+L:=4*(1+t*b)*(1+t)*(1-t)*(1+t)*(1-t*b)*(1+t*b)^2*(1-b)*(1+b);
+
+Tt:=Factorization(Derivative(L,t));
+Tb:=Factorization(Derivative(L,b));
+Lt:=Tt[5,1];
+Lb:=Tb[4,1];
+
+T:=Factorization(Resultant(Lb,Lt,b));
+resb:=T[4,1];
+
+/* We find two critical points: (t0,b0) and (t1,b1) with  t0=t1=0.4523443811563751013144007563909123358983096834123555583251346946388830116242601438521955785328243444
+
+   b0=0.3035905318044547490797085449089171117563670153915708677111580135320987440140305038308372214072126111
+
+   b1=0.8608727215701124128873883997455484468782557493490586603292562171792418979560817302950523345990874038
+
+   The function at these points assumes a value < 5.4 */
+
+
+/* y = 1, z = 1, a = 1, b = 1: the function is zero   */
+
+/* y = 1, z = 1, b = 1:
+
+   4*(1+t*a)*(1+t)*(1-t*a)*(1+t*a)*(1-t*a)*(1+t*a)^2*(1+a)*(1-a)  */
+
+L:=4*(1+t*a)*(1+t)*(1-t*a)*(1+t*a)*(1-t*a)*(1+t*a)^2*(1+a)*(1-a);
+
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Lt:=Tt[5,1];
+La:=Ta[4,1];
+
+T:=Factorization(Resultant(La,Lt,a)); /* This has no roots in the interior */
+
+
+/* y = 1, t = 1:
+
+    2*(1+z*a*b)*(1+z)*(1-z*a)*(1+z*a)*(1-z*a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b)  */
+
+L:= 2*(1+z*a*b)*(1+z)*(1-z*a)*(1+z*a)*(1-z*a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Lz:=Tz[5,1];
+La:=Ta[4,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Lz,La,b));
+res1b:=T[6,1];
+T:=Factorization(Resultant(Lz,Lb,b));
+res2b:=T[6,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+resa:=T[4,1]*T[5,1]*T[6,1];
+
+PrintFile("9I_Pari.gp","\{resa=");
+PrintFile("9I_Pari.gp",resa);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Lz=");
+PrintFile("9I_Pari.gp",Lz);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* GP computations find no critical points */
+
+
+/* y = 1, t = 1, a = 1:
+
+   4*(1+z*b)*(1+z)*(1-z)*(1+z)*(1-z*b)*(1+b)^2*(1-b)*(1+b) =
+
+   4 *  (1-(z*b)^2)   *   (1+z)*(1-z^2)   *  (1-b^2)*(1+b)^2    <=   4 * 1 * 32/27 * 27/16  = 4 * 2 = 8 */
+
+
+/* y = 1, t = 1, b = 1:
+
+   4*(1+z*a)*(1+z)*(1-z*a)*(1+z*a)*(1-z*a)*(1+a)^2*(1+a)*(1-a)  */
+
+L:= 4*(1+z*a)*(1+z)*(1-z*a)*(1+z*a)*(1-z*a)*(1+a)^2*(1+a)*(1-a);
+
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Lz:=Tz[5,1];
+La:=Ta[5,1];
+
+T:=Factorization(Resultant(La,Lz,a));
+resa:=T[3,1];  /* No roots in the interior */
+
+
+/* y = 1, a = 1:
+
+   4*(1+z*t*b)*(1+z*t)*(1-z*t)*(1+z*t)*(1-z*t*b)*(1+t*b)^2*(1-b)*(1+b)  <=
+
+   4 *  (1-(z*t*b)^2)  *  (1+z*t)*(1-(z*t)^2)   *    (1-b^2)*(1+b)^2  <=   4  * 1 * 32/27  * 27/16  = 8  */
+
+/* y = 1, b = 1:
+
+    4*(1+z*t*a)*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+t*a)^2*(1+a)*(1-a)   */
+
+L:= 4*(1+z*t*a)*(1+z*t)*(1-z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+t*a)^2*(1+a)*(1-a);
+
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Lz:=Tz[7,1];
+Lt:=Tt[6,1];
+La:=Ta[5,1];
+
+T:=Factorization(Resultant(Lz,Lt,a));
+/* No roots in the interior */
+
+
+/* z = 1:
+
+   (1+y*t*a*b)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b)  */
+
+L:=(1+y*t*a*b)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a*b)*(1+t*a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[7,1];
+Lt:=Tt[6,1];
+La:=Ta[5,1];
+Lb:=Tb[7,1];
+
+T:=Factorization(Resultant(Ly,Lt,b));
+res1b:=T[6,1];
+T:=Factorization(Resultant(Ly,La,b));
+res2b:=T[6,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res3b:=T[6,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+res1aa:=T[5,1];
+res1ab:=T[6,1];
+res1a:=res1aa*res1ab;
+T:=Factorization(Resultant(res1b,res3b,a));
+res2a:=T[5,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+rest:=T[7,1]*T[8,1]*T[9,1];
+
+PrintFile("9I_Pari.gp","\{rest=");
+PrintFile("9I_Pari.gp",rest);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1a=");
+PrintFile("9I_Pari.gp",res1a);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* GP computations find few critical points, the value of the function is < 5.14 */
+
+/* z = 1, t = 1:
+
+   (1+y*a*b)*(1+y)*(1+y)*(1-y*a)*(1+a)*(1-a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b)   */
+
+L:=(1+y*a*b)*(1+y)*(1+y)*(1-y*a)*(1+a)*(1-a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Ty:=Factorization(Derivative(L,y));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[6,1];
+La:=Ta[6,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Ly,La,b));
+res1b:=T[4,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res2b:=T[4,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+resa:=T[2,1];
+
+PrintFile("9I_Pari.gp","\{resa=");
+PrintFile("9I_Pari.gp",resa);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* Only one critical point, function is < 5.68 */
+
+
+/* z = 1, t = 1, a = 1:
+
+   4*(1+y*b)*(1+y)*(1+y)*(1-y)*(1-b)*(1+b)^2*(1-b)*(1+b)   <=
+
+   4  *  (1+y)^2*(1-y^2)  *  (1-b^2)  * (1-b^2)*(1+b)   <=  4 * 27/16 * 1 * 32/27  = 8  */
+
+
+
+/* z = 1, t = 1, b = 1:
+
+   2*(1+y*a)*(1+y)*(1+y)*(1-y*a)*(1+a)*(1-a)*(1+a)^2*(1+a)*(1-a)   */
+
+L:=2*(1+y*a)*(1+y)*(1+y)*(1-y*a)*(1+a)*(1-a)*(1+a)^2*(1+a)*(1-a);
+
+Ty:=Factorization(Derivative(L,y));
+Ta:=Factorization(Derivative(L,a));
+Ly:=Ty[4,1];
+La:=Ta[4,1];
+
+T:=Factorization(Resultant(La,Ly,a)); /* This has no roots in the interior */
+
+
+/* z = 1, a = 1:
+
+   2*(1+y*t*b)*(1+y)*(1+y*t)*(1-y*t)*(1+t)*(1-t*b)*(1+t*b)^2*(1-b)*(1+b)  */
+
+L:=2*(1+y*t*b)*(1+y)*(1+y*t)*(1-y*t)*(1+t)*(1-t*b)*(1+t*b)^2*(1-b)*(1+b);
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[6,1];
+Lt:=Tt[5,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Ly,Lt,b));
+res1b:=T[5,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res2b:=T[5,1];
+
+T:=Factorization(Resultant(res1b,res2b,t));
+rest:=T[4,1]*T[5,1];
+
+PrintFile("9I_Pari.gp","\{rest=");
+PrintFile("9I_Pari.gp",rest);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* Values at critical points are < 5.3 */
+
+/* z = 1, a = 1, b = 1: the function is zero   */
+
+
+/* z = 1, b = 1:
+
+   2*(1+y*t*a)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a)*(1+t*a)^2*(1+a)*(1-a)  */
+
+L:=2*(1+y*t*a)*(1+y)*(1+y*t)*(1-y*t*a)*(1+t*a)*(1-t*a)*(1+t*a)^2*(1+a)*(1-a);
+
+Ty:=Factorization(Derivative(L,y));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Ly:=Ty[5,1];
+Lt:=Tt[5,1];
+La:=Ta[4,1];
+
+T:=Factorization(Resultant(Ly,Lt,a));
+res1a:=T[5,1];
+T:=Factorization(Resultant(Ly,La,a));
+res2a:=T[5,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+rest:=T[3,1]*T[4,1];
+
+PrintFile("9I_Pari.gp","\{rest=");
+PrintFile("9I_Pari.gp",rest);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1a=");
+PrintFile("9I_Pari.gp",res1a);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* No critical points in the interior */
+
+/* t = 1:
+
+   (1+y*z*a*b)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b)  */
+
+L:=(1+y*z*a*b)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a*b)*(1+a*b)^2*(1+a)*(1-a*b)*(1+b);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[7,1];
+Lz:=Tz[6,1];
+La:=Ta[5,1];
+Lb:=Tb[7,1];
+
+T:=Factorization(Resultant(Ly,Lz,b));
+res1b:=T[6,1];
+T:=Factorization(Resultant(Ly,La,b));
+res2b:=T[6,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res3b:=T[6,1];
+
+T:=Factorization(Resultant(res1b,res2b,a));
+res1a:=T[5,1];
+T:=Factorization(Resultant(res1b,res3b,a));
+res2a:=T[5,1];
+
+T:=Factorization(Resultant(res1a,res2a,z));
+resz:=T[4,1]*T[6,1]*T[7,1];
+
+PrintFile("9I_Pari.gp","\{resz=");
+PrintFile("9I_Pari.gp",resz);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1a=");
+PrintFile("9I_Pari.gp",res1a);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* We find no critical points */
+
+
+/* t = 1, a = 1:
+
+   2*(1+y*z*b)*(1+y)*(1+y*z)*(1-y*z)*(1+z)*(1-z*b)*(1+b)^2*(1-b)*(1+b)  */
+
+L:= 2*(1+y*z*b)*(1+y)*(1+y*z)*(1-y*z)*(1+z)*(1-z*b)*(1+b)^2*(1-b)*(1+b);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[5,1];
+Lz:=Tz[4,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Ly,Lz,b));
+res1b:=T[5,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res2b:=T[5,1];
+
+T:=Factorization(Resultant(res1b,res2b,z));
+resz:=T[3,1]*T[4,1];
+
+PrintFile("9I_Pari.gp","\{resz=");
+PrintFile("9I_Pari.gp",resz);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* No critical points */
+
+
+/* t = 1, a = 1, b = 1: the function is zero  */
+
+
+/* t = 1, b = 1:
+
+   2*(1+y*z*a)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a)*(1+a)^2*(1+a)*(1-a)  */
+
+L:=2*(1+y*z*a)*(1+y)*(1+y*z)*(1-y*z*a)*(1+z*a)*(1-z*a)*(1+a)^2*(1+a)*(1-a);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Ta:=Factorization(Derivative(L,a));
+Ly:=Ty[5,1];
+Lz:=Tz[4,1];
+La:=Ta[4,1];
+
+T:=Factorization(Resultant(Ly,Lz,a));
+res1a:=T[5,1];
+T:=Factorization(Resultant(Ly,La,a));
+res2a:=T[5,1];
+
+T:=Factorization(Resultant(res1a,res2a,z));
+rest:=T[3,1];
+
+/* This has no roots in the interior */
+
+
+/* a = 1:
+
+   2*(1+y*z*t*b)*(1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+t*b)^2*(1-b)*(1+b)   */
+
+L:=2*(1+y*z*t*b)*(1+y)*(1+y*z*t)*(1-y*z*t)*(1+z*t)*(1-z*t*b)*(1+t*b)^2*(1-b)*(1+b);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Tb:=Factorization(Derivative(L,b));
+Ly:=Ty[6,1];
+Lz:=Tz[6,1];
+Lt:=Tt[5,1];
+Lb:=Tb[6,1];
+
+T:=Factorization(Resultant(Ly,Lz,b));
+res1b:=T[6,1];
+T:=Factorization(Resultant(Ly,Lt,b));
+res2b:=T[6,1];
+T:=Factorization(Resultant(Ly,Lb,b));
+res3b:=T[6,1];
+
+T:=Factorization(Resultant(res1b,res2b,t));
+res1t:=T[5,1];
+T:=Factorization(Resultant(res1b,res3b,t));
+res2t:=T[4,1]*T[5,1];
+
+T:=Factorization(Resultant(res1t,res2t,y));
+resy:=T[1,1]*T[2,1];
+
+PrintFile("9I_Pari.gp","\{resy=");
+PrintFile("9I_Pari.gp",resy);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1t=");
+PrintFile("9I_Pari.gp",res1t);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{res1b=");
+PrintFile("9I_Pari.gp",res1b);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+PrintFile("9I_Pari.gp","\{Ly=");
+PrintFile("9I_Pari.gp",Ly);
+PrintFile("9I_Pari.gp",";}\n\n");
+
+/* GP computations find no critical points */
+
+/* a = 1, b = 1: the function is zero */
+
+
+/* b = 1:
+
+   2*(1+y*z*t*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+t*a)^2*(1+a)*(1-a)   */
+
+L:=2*(1+y*z*t*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a)*(1+t*a)^2*(1+a)*(1-a);
+
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tt:=Factorization(Derivative(L,t));
+Ta:=Factorization(Derivative(L,a));
+Ly:=Ty[6,1];
+Lz:=Tz[6,1];
+Lt:=Tt[5,1];
+La:=Ta[4,1];
+
+T:=Factorization(Resultant(Ly,Lz,a));
+res1a:=T[6,1];
+T:=Factorization(Resultant(Ly,Lt,a));
+res2a:=T[6,1];
+T:=Factorization(Resultant(Ly,La,a));
+res3a:=T[6,1];
+
+T:=Factorization(Resultant(res1a,res2a,t));
+
+/* This has no roots in the interior */

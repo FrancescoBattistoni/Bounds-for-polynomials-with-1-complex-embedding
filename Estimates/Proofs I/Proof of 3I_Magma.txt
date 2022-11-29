@@ -1,0 +1,49 @@
+/* Study of inequality 3I */
+
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+  L:=(1+x)*(1-x*y)*(1+2*x*y*z*g+(x*y*z)^2)*(1+y);  /* times (1-g^2)^(1/8)  */
+
+/* This is maximized at z = 1, giving
+   (1+x)*(1-x*y)*(1+2*x*y*g+(x*y)^2)*(1+y)*(1-g^2)^(1/8).
+   The function is symmetrical in x and y.   */
+
+
+/* x = 0:
+   (1+y)*(1-g^2)^(1/8)  <=  2  */
+
+/* g = 0:
+   (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)  */
+
+  L:=(1+x)*(1-x*y)*(1+(x*y)^2)*(1+y);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Lx:=Tx[2,1];
+  Ly:=Ty[2,1];
+
+  T:=Factorization(Resultant(Lx,Ly,x));
+  resx:=T[3,1];
+
+/* We find a critical point (x0,y0) with x0=y0=0.6303665769486805691285995357440152335268196603108419233056723393523730936164330035539185884610976876..
+   The function assumes a value < 1.9 */
+
+/* g = 0, x = 1:
+   2*(1-y)*(1+(y)^2)*(1+y) = 2*(1-y^4) <= 2  */
+
+
+/* x = 1:
+   2*(1-y)*(1+2*y*g+y^2)*(1+y)*(1-g^2)^(1/8)  */
+
+  L:=2*(1-y)*(1+2*y*g+y^2)*(1+y);  /* times (1-g^2)^(1/8)  */
+  Ty:=Factorization(Derivative(L,y));
+  Tg:=Factorization(4*Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[1,1];
+  Lg:=Tg[3,1];
+  T:=Factorization(Resultant(Lg,Ly,g));
+  resg:=T[4,1];
+
+
+/* GP computations find a critical point: the maximum value is 2.71.. (see 3I_Pari.gp)*/
