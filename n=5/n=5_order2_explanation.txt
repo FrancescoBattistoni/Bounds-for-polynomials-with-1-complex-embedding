@@ -1,0 +1,104 @@
+N=5, 2nd ORDERING
+
+The function is (1-x)*(1-2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-2*y*g+y^2)*(1-y*z)*(1-2*z*g+z^2)*2*sqrt(1-g^2). We have (x,y,z,g) in [-1,1]^4.
+
+THE UPPER BOUND IS 16*M, WHERE M = 3^(15/2)/4/7^(7/2)
+it is attained at the points (x,y,z,g) = (\pm 1/sqrt(7),-1,1,\pm 1/(2*sqrt(7))) and (x,y,z,g) = (-1,1,\pm 1/sqrt(7),\pm 1/2/sqrt(7))
+
+
+PROOF
+* To simplify the other computations we firstly study the cases where x*y*z*g=0. We prove that in these cases the function is <= 16.
+  PROOF
+  * At x=0, the function is the corresponding function for N=4, which is <= 16.
+   (1-2*y*g+y^2)*(1-y*z)*(1-2*z*g+z^2)*2*sqrt(1-g^2)
+
+  * At y=0 it becomes (1-x)*(1-2*z*g+z^2)*2*sqrt(1-g^2).
+    As a function of z the maximum is for z=-1 or z=+1 according to the sign of g, with value 2*(1+abs(g))
+   (1-x)*(1+abs(g))*4*sqrt(1-g^2)  <=   2*3*sqrt(3) < 12.
+
+  * At z=0 it becomes (1-x)*(1-2*x*y*g+(x*y)^2)*(1-2*y*g+y^2)*2*sqrt(1-g^2), which is the case for N=4, which is <= 16.
+
+  * At g=0 it becomes 2*(1-x)*(1+(x*y)^2)*(1-x*y*z)*(1+y^2)*(1-y*z)*(1+z^2), which is <= 16
+    PROOF
+    * At the interior it is <= 16.
+      PROOF (in PARI code)
+      L=2*(1-x)*(1+(x*y)^2)*(1-x*y*z)*(1+y^2)*(1-y*z)*(1+z^2)
+      T=factor(deriv(L,x))
+      Lx=T[4,1];
+      T=factor(deriv(L,y))
+      Ly=T[3,1];
+      T=factor(deriv(L,z))
+      Lz=T[3,1];
+      T=factor(polresultant(Lx,Ly,z))
+      res1z=T[4,1];                        \\ there is also the factor y but we already know that in this case the value is <= 12
+      T=factor(polresultant(Lz,Ly,z))
+      res2z=T[6,1]*T[7,1];                 \\ there are also factors x and y but we already know that in these cases the value is <= 16
+      T=factor(polresultant(res1z,res2z,y))
+      res1y=T[3,1]*T[4,1]*T[5,1]*T[6,1]    \\ there is also the factor x but we already know that in this case the value is <= 16
+      polrootsreal(res1y,[-1,1])                        /* only one root in the interval */
+      x0 = -0.18364272871556894545465525341381099127
+      subst(res2z,x,x0)
+      \\ = 0.0027616899526038584087579014531918093978*y^10 + 0.099517527390935055195526663162825591568*y^8 + 0.86994088105748461364362798878506802993*y^6 - 0.83668809479550085404741340286449631154*y^4 - 8.9678106557604965306219569109354326848*y^2 + 3.4684594128614380437376838001435455182
+      polrootsreal(subst(res2z,x,x0),[-1,1])            /* only two roots in the interval */
+      y0 = [-0.61553366030165446906573662446676870126, 0.61553366030165446906573662446676870126]
+      subst(subst(Ly,x,x0),y,y0[1])
+      polrootsreal(subst(subst(Ly,x,x0),y,y0[1]),[-1,1])/* only one root in the interval */
+      z0 = -0.63505449596861675325637888748447102327
+      subst(subst(subst(L,x,x0),y,y0[1]),z,z0)          /* the value */
+      \\ = 3.0285781367715637764190538835010833902
+
+      polrootsreal(subst(subst(Ly,x,x0),y,y0[2]),[-1,1])/* only one root in the interval */
+      z0 = 0.63505449596861675325637888748447102327
+      subst(subst(subst(L,x,x0),y,y0[2]),z,z0)          /* the value */
+      \\ = 3.0285781367715637764190538835010833902
+      END PROOF
+
+    * at the boundary it is <= 16
+      PROOF
+      At x= 1 becomes 0
+      At x=-1 becomes 4*(1+y^2)*(1+y^2)*(1-(y*z)^2)*(1+z^2) <= 4*2*(1+y^2)*(1-y^2*z^2)*(1+z^2) <= 4*2*2 = 16.
+
+      At y=1 becomes 4*(1-x)*(1+x^2)*(1-x*z)*(1-z)*(1+z^2).
+      Partial derivatives give the point
+      (-0.7252700850720346492286420678622454402039480874071238267583740706932004532555285680176734570055982706 ,-0.7252700850720346492286420678622454402039480874071238267583740706932004532555285680176734570055982706)
+      with value 13.14182832828740765964018357905602062539839681475613522446601062621419432860436392638680704687632534.
+      y=1, z=-1 gives 16*(1-x^2)  <=  16.
+
+      At y=-1 becomes 4*(1-x)*(1+x^2)*(1+x*z)*(1+z)*(1+z^2), it's the same as above by taking -z.
+      At z=1 becomes 4*(1-x)*(1+(x*y)^2)*(1-x*y)*(1+y^2)*(1-y)  <=   16 (as done in the first ordering)
+      At z=-1 becomes 4*(1-x)*(1+(x*y)^2)*(1+x*y)*(1+y^2)*(1+y) (is the same as above)
+      END PROOF
+  END PROOF
+
+* There are no points in the interior where the function assumes values greater than 16*M = 16.6965..
+  PROOF
+   see file n=5_order2_Magma, PART A
+  END PROOF
+
+* At x = 1 or g = 1 or g = -1 the function is zero.
+
+* At z = 1 the function becomes the same as the one for z = 1 in the 1st ORDERING: here we find the value 16M
+
+* At y = 1 the function becomes (1-x)*(1-2*x*g+x^2)*(1-x*z)*(1-g)*(1-z)*(1-2*z*g+z^2)*4*sqrt(1-g^2), which is symmetrical in x and z. There are no critical points in its interior
+  PROOF
+   see file n=5_order2_Magma, PART B.
+  END PROOF
+
+  At y = 1, x = -1 the function becomes (1-z^2)*(1-2*z*g+z^2)*(1-g^2)*16*sqrt(1-g^2): from the analogous computation in order 1 we know that this is maximized at z = \pm 1/sqrt(7) and g = \pm 1/(2*sqrt(7)), giving the value 16*M.
+
+* At y = -1 the function becomes  (1-x)*(1+2*x*g+y^2)*(1+x*z)*(1+g)*(1+z)*(1-2*z*g+z^2)*4*sqrt(1-g^2).
+
+  Replacing (x,z,g) with (x,-z,-g) we reduce to the case y = 1.
+
+* At z = -1 the function becomes (1-x)*(1-2*x*y*g+(x*y)^2)*(1+x*y)*(1-2*y*g+y^2)*(1+y)*(1+g)*4*sqrt(1-g^2).
+
+  Replacing (x,y,g) with (x,-y,-g) we reduce to the case z = 1.
+
+* At x = -1 the function becomes (1+2*y*g+y^2)*(1+y*z)*(1-2*y*g+y^2)*(1-y*z)*(1-2*z*g+z^2)*4*sqrt(1-g^2).
+
+  We find no critical points in the interior (but two critical points at the border, giving a value for the function < 10.96)
+  PROOF
+   see file n=5_order2_Magma, PART C.
+  END PROOF
+
+END PROOF

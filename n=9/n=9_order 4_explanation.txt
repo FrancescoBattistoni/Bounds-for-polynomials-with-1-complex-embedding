@@ -1,0 +1,1176 @@
+N=9, FOURTH ORDER
+
+The function is  .
+
+We assume g >= 0 and we examine the 64 cases depending on the possible signs of the variables (b, a, x, y, z, t).
+
+We represent the function as a graphical scheme. In every graphical scheme, the variables are positive and the sign information is seen in the sign in front of the variables, Rules are the following:
+
+ + : it represents the factor (1-x_1 * ... * x_n )
+
+ - : it represents the factor (1+x_1 * ... * x_n )
+
+ +': it represents the factor (1 - 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ -': it represents the factor (1 + 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ R = (1-g^2)
+
+ M = 3^(15/2)/4/7^(7/2)
+
+
+THE UPPER BOUND WE FOUND IS 233.1
+==========================================================================
+[1a-b]
+[+ - - - - - -]/[- - - - - - -]
+
++ - + -' +  -  +                            - + - +' -  +  -
+  - + -' +  -  +         <=  92.1             - + -' +  -  +         <=  158.9
+    - +' -  +  -                                - +' -  +  -
+      -' +  -  +                                  -' +  -  +
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[1a]Apply 16E to [(1,1),(1,2),(1,3),(1,4)], 3A to [(1,5),(1,6)] and 1A to [(1,7)].
+All terms we have mentioned together are <= 3456/3125. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - - -] [1] which is <= 83.2.
+
+[1b] Apply 5C to [(1,1),(1,2),(1,3),(1,4),(2,2),(2,3),(2,4)]. Apply 7A to [(1,5),(1,6),(2,5),(2,6)]. Apply 5A to [(1,7),(2,7)].
+All terms we have mentioned together are <= 64/27. The remaining part of the scheme is the case N=7, ord=4 chamber [- - - - -] (coinciding with the revers of N=7, ord=3 chamber [- - - - -] [1]) which is <= 65.81.
+....................................................
+
+[2a-b]
+[+ + + + + + +]/[- + + + + + +]
+
++ + + +' +  +  +                            - - - -' -  -  -
+  + + +' +  +  +         <=  8                + + +' +  +  +         <=  9.49
+    + +' +  +  +                                + +' +  +  +
+      +' +  +  +                                  +' +  +  +
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[2a] Apply 1A to [(1,2)], [(1,3)], [(1,5)], [(1,6)] and [(1,7)]. Apply 3B to [(1,3),(1,4)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + + + +] [2] which is <= 8.
+
+[2b] Apply 5A to [(1,2),(2,2)]. Apply 3B to [(2,3),(2,4)]. Apply 1A to [(2,5)], [(2,6)] and [(2,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + + + +] [34] which is <= 9.49.
+....................................................
+
+[3a-b]
+[+ + + + + + -]/[- + + + + + -]
+
++ + + +' +  +  -                            - - - -' -  -  +
+  + + +' +  +  -         <=  9.49             + + +' +  +  -         <=  22.5
+    + +' +  +  -                                + +' +  +  -
+      +' +  +  -                                  +' +  +  -
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[3a] Apply 1A to [(1,2)], [(1,3)] and [(1,5)]. Apply 3B to [(1,3),(1,4)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + + + -] [3] which is <= 9.49.
+
+[3b] Apply 18E to [(1,1),(1,2),(1,4),(2,2),(2,4)]. Apply then 5A to [(1,3),(2,3)] and [(1,5),(2,5)] and 7A to [(1,6),(1,7),(2,6),(2,7)].
+All terms we have mentioned together are <= 64/27. The remaining is the symmetrical of case N=7, ord=3 chamber [18] which is <= 9.49
+....................................................
+
+[4a-b]
+[+ + + + + - +]/[- + + + + - +]
+
++ + + +' +  -  -                            - - - -' -  +  +
+  + + +' +  -  -         <=  32.48            + + +' +  -  -         <=  79.16
+    + +' +  -  -                                + +' +  -  -
+      +' +  -  -                                  +' +  -  -
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[4a] Apply 3A to [(1,1),(1,6)] and [(1,2),(1,7)]. Apply 3B to [(1,3),(1,4)]. Apply 1A to [(1,5)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + + - +] [4] which is <= 32.48.
+
+[4b] Apply 4E to [(1,2),(2,2),(2,4)]. Apply 3A to [(2,3),(2,6)] and [(2,5),(2,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + + - +] [36] which is <= 79.16.
+....................................................
+
+[5a-b]
+[+ + + + + - -]/[- + + + + - -]
+
++ + + +' +  -  +                            - - - -' -  +  -
+  + + +' +  -  +         <=  32M              + + +' +  -  +         <=  64M
+    + +' +  -  +                                + +' +  -  +
+      +' +  -  +                                  +' +  -  +
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[5a] Apply 1A to [(1,2)], [(1,3)] and [(1,7)]. Apply 3B to [(1,3),(1,4)]. Apply 3A to [(1,5),(1,6)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + + - -] [5] which is <= 32M.
+
+[5b] Apply 5A to [(1,2),(2,2)]. Apply 3B to [(2,3),(2,4)]. Apply 3A to [(2,5),(2,6)]. Apply 1A to [(2,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + + - -] [37] which is <= 64M.
+....................................................
+
+[6a-b]
+[+ + + + - + +]/[- + + + - + +]
+
++ + + +' -  -  -                            - - - -' +  +  +
+  + + +' -  -  -         <=  39.3            + + +' -  -  -         <=  78.5
+    + +' -  -  -                                + +' -  -  -
+      +' -  -  -                                  +' -  -  -
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[6a] Apply 4E to [(1,3),(1,4),(1,5)] and 3A to [(1,2),(1,6)] and [(1,1),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + - + +] [6] which is <= 39.21.
+
+[6b] Apply 5A to [(1,2),(2,2)] and 12G to the remaining of the first two lines.
+All terms we have mentioned together are <= 64/27. The remaining part of the scheme is the symmetrical of case N=7, ord=3 chamber [6] which is <= 33.08
+....................................................
+
+[7a-b]
+[+ + + + - + -]/[- + + + - + -]
+
++ + + +' -  -  +                            - - - -' +  +  -
+  + + +' -  -  +         <=  53.48            + + +' -  -  +         <=  92.6
+    + +' -  -  +                                + +' -  -  +
+      +' -  -  +                                  +' -  -  +
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[7a] Apply 3A to [(1,1),(1,5)] and [(1,2),(1,6)]. Apply 3B to [(1,3),(1,4)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + - + -] [17] which is <= 53.48.
+
+[7b] Apply 4E to [(1,2),(2,2),(2,4)]. Apply 1D to [(2,3),(2,5),(2,6)]. Apply 1A to [(2,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + - + -] [39] which is <= 78.13.
+....................................................
+
+[8a-b]
+[+ + + + - - +]/[- + + + - - +]
+
++ + + +' -  +  +                            - - - -' +  -  -
+  + + +' -  +  +         <=  16M              + + +' -  +  +         <=  39.6
+    + +' -  +  +                                + +' -  +  +
+      +' -  +  +                                  +' -  +  +
+         -' +  +'                                    -' +  +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[8a] Apply 3A to [(1,1),(1,5)]. Apply 1A to [(1,2)]. Apply 3B to [(1,3),(1,4)]. Apply 1A to [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=?, ord=4 chamber [+ + + - - +] [8] which is <= 16M.
+
+[8b] Apply 18E to [(1,1),(1,2),(1,4),(2,2),(2,4)]. Apply then 7A to [(1,3),(1,5),(2,3),(2,5)] and 5A to [(1,6),(2,6)] and [(1,7),(2,7)].
+All terms we have mentioned together are <= 64/27. The remaining part of the scheme is the case N=7, ord=3 chamber [14] which is <= 16M.
+....................................................
+
+[9a-b]
+[+ + + + - - -]/[- + + + - - -]
+
++ + + +' -  +  -                            - - - -' +  -  +
+  + + +' -  +  -         <=  32.48            + + +' -  +  -         <=  77
+    + +' -  +  -                                + +' -  +  -
+      +' -  +  -                                  +' -  +  -
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[9a] Apply 3A to [(1,1),(1,5)]. Apply 1A to [(1,2)]. Apply 3B to [(1,3),(1,4)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + + - - -] [9] which is <= 32.48.
+
+[9b] Apply 4E to [(1,2),(2,2),(2,4)]. Apply 3A to [(2,3),(2,5)] and [(2,6),(2,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + - - -] [41] which is <= 77.
+....................................................
+
+[10a-b]
+[+ + + - + + +]/[- + + - + + +]
+
++ + + -' -  -  -                            - - - +' +  +  +
+  + + -' -  -  -         <=  66.2             + + -' -  -  -         <=  78.8
+    + -' -  -  -                                + -' -  -  -
+      -' -  -  -                                  -' -  -  -
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[10a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 2D to [(1,3),(1,5),(1,6),(1,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - + + +] [10] which is <= 39.21.
+
+[10b]  Apply 16G to [(3,7),(4,7),(5,7),(6,7)]. Apply then 1A to [(1,7)] and 3A to [(2,7),(7,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=3 chamber [38] which is <= 55.83.
+....................................................
+
+[11a-b]
+[+ + + - + + -]/[- + + - + + -]
+
++ + + -' -  -  +                            - - - +' +  +  -
+  + + -' -  -  +         <=  83.9             + + -' -  -  +         <=  132
+    + -' -  -  +                                + -' -  -  +
+      -' -  -  +                                  -' -  -  +
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[11a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 1D to [(1,3),(1,5),(1,6)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - + + -] [11] which is <= 70.78.
+
+[11b] Apply 2D to [(1,2),(2,2),(2,5),(2,6)]. Apply 5B [(2,3),(2,4)]. Apply 1A to [(2,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - + + -] [43] which is <= 78.13.
+....................................................
+
+[12a-b]
+[+ + + - + - +]/[- + + - + - +]
+
++ + + -' -  +  +                            - - - +' +  -  -
+  + + -' -  +  +         <=  52.59            + + -' -  +  +         <=  93.9
+    + -' -  +  +                                + -' -  +  +
+      -' -  +  +                                  -' -  +  +
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[12a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 3A to [(1,3),(1,5)]. Apply 1A to [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - + - +] [12] which is <= 52.59.
+
+[12b] Apply 1D to [(1,2),(2,2),(2,5)]. Apply 5B [(2,3),(2,4)]. Apply 1A to [(2,6)] and [(2,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [- + - + - +] [44] which is <= 66.8.
+....................................................
+
+[13a-b]
+[+ + + - + - -]/[- + + - + - -]
+
++ + + -' -  +  -                            - - - +' +  -  +
+  + + -' -  +  -         <=  62.32            + + -' -  +  -         <=  111.2
+    + -' -  +  -                                + -' -  +  -
+      -' -  +  -                                  -' -  +  -
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[13a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 3A to [(1,3),(1,5)] and [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - + - -] [13] which is <= 62.32.
+
+[13b] Apply 1D to [(1,2),(2,2),(2,5)]. Apply 5B [(2,3),(2,4)]. Apply 3A to [(2,6),(2,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [- + - + - -] [45] which is <= 79.16.
+....................................................
+
+[14a-b]
+[+ + + - - + +]/[- + + - - + +]
+
++ + + -' +  +  +                            - - - +' -  -  -
+  + + -' +  +  +         <=  19.79            + + -' +  +  +         <=  46.91
+    + -' +  +  +                                + -' +  +  +
+      -' +  +  +                                  -' +  +  +
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[14a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 1A to [(1,3)], [(1,5)], [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - - + +] [14] which is <= 19.79.
+
+[14b] Apply 5A to [(1,2),(2,2)]. Apply 5B [(2,3),(2,4)]. Apply 1A to [(2,5)], [(2,6)] and [(2,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - + +] [46] which is <= 39.58.
+....................................................
+
+[15a-b]
+[+ + + - - + -]/[- + + - - + -]
+
++ + + -' +  +  -                            - - - +' -  -  +
+  + + -' +  +  -         <=  39.58            + + -' +  +  -         <=  34.7
+    + -' +  +  -                                + -' +  +  -
+      -' +  +  -                                  -' +  +  -
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[15a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 1A to [(1,3)] and [(1,5)]. Apply 1A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - - + -] [15] which is <= 39.58.
+
+[15b] Apply 5A to [(1,2),(2,2)]. Apply 5B [(2,3),(2,4)]. Apply 1A to [(2,5)]. Apply 3A to [(2,6),(2,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - + -] [47] which is <= 29.23.
+....................................................
+
+[16a-b]
+[+ + + - - - +]/[- + + - - - +]
+
++ + + -' +  -  -                            - - - +' -  +  +
+  + + -' +  -  -         <=  39.21            + + -' +  -  -         <=  78.5
+    + -' +  -  -                                + -' +  -  -
+      -' +  -  -                                  -' +  -  -
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[16a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 3A to [(1,3),(1,6)] and [(1,5),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - - - +] [16] which is <= 39.21.
+
+[16b] Apply 5A to [(1,2),(2,2)]. Apply 5B [(2,3),(2,4)]. Apply 1D to [(2,5),(2,6),(2,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - - +] [48] which is <= 55.83.
+....................................................
+
+[17a-b]
+[+ + + - - - -]/[- + + - - - -]
+
++ + + -' +  -  +                            - - - +' -  +  -
+  + + -' +  -  +         <=  32M              + + -' +  -  +         <=  79.2
+    + -' +  -  +                                + -' +  -  +
+      -' +  -  +                                  -' +  -  +
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+              - 2R^(1/2)                                  - 2R^(1/2)
+
+[17a] Apply 4B to [(1,1),(1,2),(1,4)]. Apply 3A to [(1,3),(1,6)]. Apply 1A to [(1,5)} and [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ + - - - -] [17] which is <= 32M.
+
+[17b] Apply 5A to [(1,2),(2,2)]. Apply 5B [(2,3),(2,4)]. Apply 3A to [(2,5),(2,6)}. Apply 1A to [(2,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - - -] [49] which is <= 64M.
+....................................................
+
+[18a-b]
+[+ + - + + + +]/[- + - + + + +]
+
++ + - -' -  -  -                            - - + +' +  +  +
+  + - -' -  -  -         <=  63.4             + - -' -  -  -         <=  54M
+    - -' -  -  -                                - -' -  -  -
+      +' +  +  +                                  +' +  +  +
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[18a] Apply 5A to [(1,7),(4,7)] and [(2,7),(6,7)], and apply 7G to [(3,7),(5,7),(7,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [10] which is <= 63.34.
+
+[18b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(4,6)]. Apply 7E to [(3,6),(5,6),(6,6)]. Apply 1A to [(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- + - + + +] [42] which is <= 54M.
+....................................................
+
+[19a-b]
+[+ + - + + + -]/[- + - + + + -]
+
++ + - -' -  -  +                            - - + +' +  +  -
+  + - -' -  -  +         <=  131.8            + - -' -  -  +         <=  158
+    - -' -  -  +                                - -' -  -  +
+      +' +  +  -                                  +' +  +  -
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[19a] Apply 1D to [(1,6),(2,6),(4,6)]. Apply 7E to [(3,6),(5,6),(6,6)]. [(6,7)] is <= 2.
+All terms we have mentioned together are <= (32/27)*2. The remaining part of the scheme is the case N=8, ord=3 chamber [+ + - + + -] [11] which is <= 55.60.
+
+[19b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(4,6)]. Apply 7E to [(3,6),(5,6),(6,6)]. [(6,7)] is <= 2.
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=3 chamber [- + - + + -] [43] which is <= 79.
+....................................................
+
+[20a-b]
+[+ + - + + - +]/[- + - + + - +]
+
++ + - -' -  +  +                            - - + +' +  -  -
+  + - -' -  +  +         <=  117.9            + - -' -  +  +         <=  104.1
+    - -' -  +  +                                - -' -  +  +
+      +' +  -  -                                  +' +  -  -
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[20a] Apply 1D to [(1,1),(1,3),(1,5)]. Apply 5B to [(1,2),(1,4)]. Apply 1A to [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + + - +] [20] which is <= 83.90.
+
+[20b] Apply 13H to [(1,1),(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5)]. Apply 5A to [(1,6),(2,6)] and [(1,7),(2,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=7, ord=4 chamber [- + + - +] (coinciding with N=7, ord 3, chamber [+ - + + -] [11]) which is <= 39.58.
+....................................................
+
+[21a-b]
+[+ + - + + - -]/[- + - + + - -]
+
++ + - -' -  +  -                            - - + +' +  -  +
+  + - -' -  +  -         <=  69.1             + - -' -  +  -         <=  168.4
+    - -' -  +  -                                - -' -  +  -
+      +' +  -  +                                  +' +  -  +
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[21a] Apply 1D to [(1,1),(1,3),(1,5)]. Apply 5B to [(1,2),(1,4)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + + - -] [21] which is <= 49.14.
+
+[21b] Apply 13H to [(1,1),(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5)]. Apply 7A to [(1,6),(2,6),(1,7),(2,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=7, ord=4 chamber [- + + - -] (coinciding with N=7, ord=3, chamber [- - + + -] [29]) which is <= 64.
+....................................................
+
+[22a-b]
+[+ + - + - + +]/[- + - + - + +]
+
++ + - -' +  +  +                            - - + +' -  -  -
+  + - -' +  +  +         <=  58.2             + - -' +  +  +         <=  62.3
+    - -' +  +  +                                - -' +  +  +
+      +' -  -  -                                  +' -  -  -
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[22a] Apply 14E to [(1,1),(1,2),(1,3),(1,4)] and 1A to the remaining signs in the first line.
+All terms we have mentioned together are <= 3456/3125. The remaining is the case N=8, ord=4 chamber [22] which is <= 52.59.
+
+[22b] Apply 5A to [(1,5),(2,5)], [(1,6),(2,6)] and [(1,7),(2,7)]. Apply 7H to [(1,1),(1,2),(1,3),(1,4),(2,2),(2,3),(2,4)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=3 chamber [7] which is <= 31.16
+....................................................
+
+[23a-b]
+[+ + - + - + -]/[- + - + - + -]
+
++ + - -' +  +  -                            - - + +' -  -  +
+  + - -' +  +  -         <=  79.2             + - -' +  +  -         <=  79.2
+    - -' +  +  -                                - -' +  +  -
+      +' -  -  +                                  +' -  -  +
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[23a] Apply 3A to [(1,1),(1,3)]. Apply 5B to [(1,2),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + - + -] [23] which is <= 66.8.
+
+[23b] Apply 5A to [(1,5),(2,5)] and 7A to [(1,6),(2,6),(1,7),(2,7)]. Apply 7H to [(1,1),(1,2),(1,3),(1,4),(2,2),(2,3),(2,4)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=3 chamber [23] which is <= 39.58
+....................................................
+
+[24a-b]
+[+ + - + - - +]/[- + - + - - +]
+
++ + - -' +  -  -                            - - + +' -  +  +
+  + - -' +  -  -         <=  98               + - -' +  -  -         <=  91.7
+    - -' +  -  -                                - -' +  -  -
+      +' -  +  +                                  +' -  +  +
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[24a] Apply 3A to [(1,1),(1,3)]. Apply 5B to [(1,2),(1,4)]. Apply 1D to [(1,5),(1,6),(1,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + - - +] [24] which is <= 69.71.
+
+[24b] Apply 13H to [(1,1),(1,2),(1,3),(1,4),(1,7),(2,2),(2,3),(2,4),(2,7)]. Apply 7A to [(1,5),(2,5),(1,6),(2,6)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=7, ord=4 chamber [- + - - +] (coinciding with N=7, ord=3, chamber [+ - - + -] [15]) which is <= 34.848.
+....................................................
+
+[25a-b]
+[+ + - + - - -]/[- + - + - - -]
+
++ + - -' +  -  +                            - - + +' -  +  -
+  + - -' +  -  +         <=  79.1             + - -' +  -  +         <=  79
+    - -' +  -  +                                - -' +  -  +
+      +' -  +  -                                  +' -  +  -
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[25a] Apply 3A to [(1,1),(1,3)]. Apply 5B to [(1,2),(1,4)]. Apply 3A to [(1,5),(1,6)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + - - -] [25] which is <= 66.7.
+
+[25b] Apply 5A to [(1,7),(2,7)] and 7A to [(1,5),(2,5),(1,6),(2,6)]. Apply 7H to [(1,1),(1,2),(1,3),(1,4),(2,2),(2,3),(2,4)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=3 chamber [31] which is <= 39.5
+....................................................
+
+[26a-b]
+[+ + - - + + +]/[- + - - + + +]
+
++ + - +' +  +  +                            - - + -' -  -  -
+  + - +' +  +  +         <=  16M              + - +' +  +  +         <=  32M
+    - +' +  +  +                                - +' +  +  +
+      -' -  -  -                                  -' -  -  -
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[26a] Apply 3A to [(1,1),(1,3)]. Apply 3B to [(1,2),(1,4)]. Apply 1A to [(1,5)], [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - + + +] [26] which is <= 16M.
+
+[26b] Apply 5A to [(1,6),(2,6)]. Apply 1A to [(3,6)]. Apply 7E to [(4,6),(5,6),(6,6)]. Apply 1A to [(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- + - - + +] [46] which is <= 32M.
+....................................................
+
+[27a-b]
+[+ + - - + + -]/[- + - - + + -]
+
++ + - +' +  +  -                            - - + -' -  -  +
+  + - +' +  +  -         <=  49.14            + - +' +  +  -         <=  139.4
+    - +' +  +  -                                - +' +  +  -
+      -' -  -  +                                  -' -  -  +
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[27a] Apply 3A to [(1,1),(1,3)]. Apply 3B to [(1,2),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - + + -] [27] which is <= 49.14.
+
+[27b] Apply 5A to [(1,6),(2,6)]. Apply 1A to [(3,6)]. Apply 7E to [(4,6),(5,6),(6,6)]. [(6,7)] is <= 2.
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=3 chamber [- + - - + -] [47] which is <= 69.696.
+....................................................
+
+[28a-b]
+[+ + - - + - +]/[- + - - + - +]
+
++ + - +' +  -  -                            - - + -' -  +  +
+  + - +' +  -  -         <=  69.8             + - +' +  -  -         <=  93.7
+    - +' +  -  -                                - +' +  -  -
+      -' -  +  +                                  -' -  +  +
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[28a] Apply 11B to [(1,2),(1,3),(1,4)] and 3A to [(1,1),(1,6)] and [(1,5),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - + - +] [28] which is <= 69.71.
+
+[28b] Apply 1D to [(1,2),(2,2),(2,3)]. [(2,4)] is <= 2. Apply 1D to [(2,5),(2,6),(2,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + - +] [60] which is <= 66.7.
+....................................................
+
+[29a-b]
+[+ + - - + - -]/[- + - - + - -]
+
++ + - +' +  -  +                            - - + -' -  +  -
+  + - +' +  -  +         <=  64               + - +' +  -  +         <=  93.7
+    - +' +  -  +                                - +' +  -  +
+      -' -  +  -                                  -' -  +  -
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[29a] Apply 3A to [(1,1),(1,3)]. Apply 3B to [(1,2),(1,4)]. Apply 3A to [(1,5),(1,6)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - + - -] [29] which is <= 64.
+
+[29b] Apply 1D to [(1,2),(2,2),(2,3)]. [(2,4)] is <= 2. Apply 3A to [(2,5),(2,6)}. Apply 1A to [(2,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + - -] [61] which is <= 79.
+....................................................
+
+[30a-b]
+[+ + - - - + +]/[- + - - - + +]
+
++ + - +' -  -  -                            - - + -' +  +  +
+  + - +' -  -  -         <=  65.6             + - +' -  -  -         <=  133.6
+    - +' -  -  -                                - +' -  -  -
+      -' +  +  +                                  -' +  +  +
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[30a] Apply 16B to [(1,2),(1,3),(1,4),(1,5)] and 1D to [(1,1),(1,6),(1,7)].
+All terms we have mentioned together are <= 1.41*32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - - + +] [30] which is <= 39.21.
+
+[30b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(4,6)]. Apply 5E to [(3,6),(5,6),(6,6)]. Apply 1A to [(6,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=3 chamber [- + - - - +] [48] which is <= 79.16.
+....................................................
+
+[31a-b]
+[+ + - - - + -]/[- + - - - + -]
+
++ + - +' -  -  +                            - - + -' +  +  -
+  + - +' -  -  +         <=  66.2             + - +' -  -  +         <=  183.6
+    - +' -  -  +                                - +' -  -  +
+      -' +  +  -                                  -' +  +  -
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[31a] Apply 11B to [(1,2),(1,3),(1,4)], 1D to [(1,1),(1,5),(1,6)] and 1A to [(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - - + -] [31] which is <= 55.83.
+
+[31b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(4,6)]. Apply 17E to [(3,6),(5,6),(6,6),(6,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=8, ord=3 chamber [- + - - - -] [49] which is <= 69.78.
+....................................................
+
+[32a-b]
+[+ + - - - - +]/[- + - - - - +]
+
++ + - +' -  +  +                            - - + -' +  -  -
+  + - +' -  +  +         <=  82.3             + - +' -  +  +         <=  133
+    - +' -  +  +                                - +' -  +  +
+      -' +  -  -                                  -' +  -  -
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[32a] Apply 1D to [(1,1),(1,3),(1,5)]. Apply 3B to [(1,2),(1,4)]. Apply 1A to [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - - - +] [32] which is <= 69.38.
+
+[32b] Apply 5A to [(1,6),(2,6)] and to [(1,7),(2,7)]. These are <= 1.
+Apply 6B to [(1,4),(2,4)] and then apply 8H to the first two lines excluding [(1,6),(2,6)] and to [(1,7),(2,7)]. Lines 1 and 2 together are <= 2.63.
+The remaining part of the scheme is the case N=7, ord=3 chamber [17] which is <= 50.54
+....................................................
+
+[33a-b]
+[+ + - - - - -]/[- + - - - - -]
+
++ + - +' -  +  -                            - - + -' +  -  +
+  + - +' -  +  -         <=  82               + - +' -  +  -         <=  186.4
+    - +' -  +  -                                - +' -  +  -
+      -' +  -  +                                  -' +  -  +
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[33a] Apply 11B to [(1,2),(1,3),(1,4)]. Apply 3A to [(1,1),(1,5)] and [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - - - -] [33] which is <= 82.
+
+[33b] Apply 16H to [(1,2),(2,2),(2,3),(2,4),(2,5)]. Apply 3A to [(2,6),(2,7)].
+All terms we have mentioned together are <= 2.24. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - - -] [1] which is <= 83.2.
+....................................................
+
+[34a-b]
+[+ - + + + + +]/[- - + + + + +]
+
++ - - -' -  -  -                            - + + +' +  +  +
+  - - -' -  -  -         <=  39.58            - - -' -  -  -         <=  18.98
+    + +' +  +  +                                + +' +  +  +
+      +' +  +  +                                  +' +  +  +
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[34a] Apply 5A to [(1,6),(3,6)]. Apply 7E to [(2,6),(4,6),(5,6)]. Apply 1A to [(6,6)] and [(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [+ - + + + +] [18] which is <= 39.58.
+
+[34b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(3,6)]. Apply 1A to [(4,6)]. Apply 1G to [(5,6),(6,6)]. Apply 1A to [(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- - + + + +] [50] which is <= 18.98.
+....................................................
+
+[35a-b]
+[+ - + + + + -]/[- - + + + + -]
+
++ - - -' -  -  +                            - + + +' +  +  -
+  - - -' -  -  +         <=  84.96            - - -' -  -  +         <=  158.4
+    + +' +  +  -                                + +' +  +  -
+      +' +  +  -                                  +' +  +  -
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[35a] Apply 5A to [(1,6),(3,6)]. Apply 7E to [(2,6),(4,6),(5,6)]. Apply 3A to [(6,6),(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [+ - + + + -] [19] which is <= 84.96.
+
+[35b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(3,6)]. Apply 1A to [(4,6)]. Apply 1G to [(5,6),(6,6)]. [(6,7)] is <= 2.
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=3 chamber [- - + + + -] [51] which is <= 79.16.
+....................................................
+
+[36a-b]
+[+ - + + + - +]/[- - + + + - +]
+
++ - - -' -  +  +                            - + + +' +  -  -
+  - - -' -  +  +         <=  140.3            - - -' -  +  +         <=  93.9
+    + +' +  -  -                                + +' +  -  -
+      +' +  -  -                                  +' +  -  -
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[36a] Apply 16B to [(1,3),(2,3),(3,3),(3,4)]. Apply 1D to [(3,5),(3,6),(3,7)].
+All terms we have mentioned together are <= 1.41*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + + - +] [20] which is <= 83.90.
+
+[36b] Apply 1A to [(1,3)]. Apply 4E to [(2,3),(3,3),(3,4)]. Apply 1D to [(3,5),(3,6),(3,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + + - +] [52] which is <= 79.16.
+....................................................
+
+[37a-b]
+[+ - + + + - -]/[- - + + + - -]
+
++ - - -' -  +  -                            - + + +' +  -  +
+  - - -' -  +  -         <=  69.3             - - -' -  +  -         <=  79
+    + +' +  -  +                                + +' +  -  +
+      +' +  -  +                                  +' +  -  +
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[37a] Apply 16B to [(1,3),(2,3),(3,3),(3,4)]. Apply 3A to [(3,5),(3,6)]. Apply 1A to [(3,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + + - -] [21] which is <= 49.14.
+
+[37b] Apply 1A to [(1,3)]. Apply 4E to [(2,3),(3,3),(3,4)]. Apply 3A to [(3,5),(3,6)]. Apply 1A to [(3,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + + - -] [53] which is <= 79.
+....................................................
+
+[38a-b]
+[+ - + + - + +]/[- - + + - + +]
+
++ - - -' +  +  +                            - + + +' -  -  -
+  - - -' +  +  +         <=  186.2            - - -' +  +  +         <=  233.1
+    + +' -  -  -                                + +' -  -  -
+      +' -  -  -                                  +' -  -  -
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[38a] Apply 17E to [(1,1),(1,2),(1,3),(1,4)]. Apply 1A to [(1,5)], [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + - + +] [38] which is <= 70.78.
+
+[38b] Apply 1A to [(1,3)]. Apply 19H to [(2,3),(3,3),(3,4),(3,5),(3,6),(3,7)].
+All terms we have mentioned together are <= 3.74. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + - + +] [54] which is <= 62.32.
+....................................................
+
+[39a-b]
+[+ - + + - + -]/[- - + + - + -]
+
++ - - -' +  +  -                            - + + +' -  -  +
+  - - -' +  +  -         <=   205.5           - - -' +  +  -         <=  177.4
+    + +' -  -  +                                + +' -  -  +
+      +' -  -  +                                  +' -  -  +
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[39a] Apply 17E to [(1,1),(1,2),(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=8, ord=4 chamber [- + + - + -] [39] which is <= 78.13.
+
+[39b] Apply 1A to [(1,3)]. Apply 13B to [(2,3),(3,3),(3,4),(3,5),(3,6)]. Apply 1A to [(3,7)].
+All terms we have mentioned together are <= 2.24. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + - + -] [55] which is <= 79.16.
+....................................................
+
+[40a-b]
+[+ - + + - - +]/[- - + + - - +]
+
++ - - -' +  -  -                            - + + +' -  +  +
+  - - -' +  -  -         <=  69.7             - - -' +  -  -         <=  69.7
+    + +' -  +  +                                + +' -  +  +
+      +' -  +  +                                  +' -  +  +
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[40a] Apply 5A to [(1,7),(3,7)] and [(2,7),(4,7)], and apply 9G to [(5,7),(6,7),(7,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [21] which is <= 69.696.
+
+[40b] Apply 5A to [(2,7),(3,7)], 1A to [(1,7)] and [(4,7)], and apply 9G to [(5,7),(6,7),(7,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [53] which is <= 69.696.
+....................................................
+
+[41a-b]
+[+ - + + - - -]/[- - + + - - -]
+
++ - - -' +  -  +                            - + + +' -  +  -
+  - - -' +  -  +         <=  149.5            - - -' +  -  +         <=  111.4
+    + +' -  +  -                                + +' -  +  -
+      +' -  +  -                                  +' -  +  -
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[41a] Apply 13B to [(1,3),(2,3),(3,3),(3,4),(3,5)]. Apply 3A to [(3,6),(3,7)].
+All terms we have mentioned together are <= 2.24. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - + - - -] [25] which is <= 66.7.
+
+[41b] Apply 1A to [(1,3)]. Apply 16B to [(2,3),(3,3),(3,4),(3,5)]. Apply 3A to [(3,6),(3,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + - - -] [57] which is <= 79.
+....................................................
+
+[42a-b]
+[+ - + - + + +]/[- - + - + + +]
+
++ - - +' +  +  +                            - + + -' -  -  -
+  - - +' +  +  +         <=  65.54            - - +' +  +  +         <=  90.2
+    + -' -  -  -                                + -' -  -  -
+      -' -  -  -                                  -' -  -  -
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[42a] Apply 1A to [(1,7)] and [(2,7)]. Apply 5A to [(3,7),(7,7)]. Apply 7E to [(4,7),(5,7),(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [+ - + - + +] [22] which is <= 65.54.
+
+[42b] Apply 5A to [(1,7),(2,7)]. Apply 5A to [(3,7),(7,7)]. Apply 7E to [(4,7),(5,7),(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- - + - + +] [54] which is <= 90.20.
+....................................................
+
+[43a-b]
+[+ - + - + + -]/[- - + - + + -]
+
++ - - +' +  +  -                            - + + -' -  -  +
+  - - +' +  +  -         <=  110.2            - - +' +  +  -         <=  126.4
+    + -' -  -  +                                + -' -  -  +
+      -' -  -  +                                  -' -  -  +
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[43a] Apply 16B to [(1,1),(1,2),(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - + + -] [43] which is <= 79.13.
+
+[43b] Apply 3A to [(2,6),(2,7)] and apply 11G to the remaining of the last two columns.
+Columns 6 and 7 together are <= 64/27. The remaining part of the scheme is the case N=7, ord=2 chamber [28] which is <= 53.3
+....................................................
+
+[44a-b]
+[+ - + - + - +]/[- - + - + - +]
+
++ - - +' +  -  -                            - + + -' -  +  +
+  - - +' +  -  -         <=  111.7            - - +' +  -  -         <=  147.8
+    + -' -  +  +                                + -' -  +  +
+      -' -  +  +                                  -' -  +  +
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[44a] Apply 16B to [(1,1),(1,2),(1,3),(1,4)]. Apply 1D to [(1,5),(1,6),(1,7)].
+All terms we have mentioned together are <= 1.41*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [- + - + - +] [44] which is <= 66.8.
+
+[44b] Apply 5D to [(1,1)], 6E to [(1,2),(1,3),(1,4),(1,5)] and 1A to [(1,6)]and [(1,7)].
+All terms we have mentioned together are <= 2*3456/3125. The remaining part of the scheme is the case N=8, ord=4 chamber [44] which is <= 66.8.
+....................................................
+
+[45a-b]
+[+ - + - + - -]/[- - + - + - -]
+
++ - - +' +  -  +                            - + + -' -  +  -
+  - - +' +  -  +         <=  111.7            - - +' +  -  +         <=  111.4
+    + -' -  +  -                                + -' -  +  -
+      -' -  +  -                                  -' -  +  -
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[45a] Apply 16B to [(1,1),(1,2),(1,3),(1,4)]. Apply 3A to [(1,5),(1,6)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - + - -] [45] which is <= 79.16.
+
+[45b] Apply 1A to [(1,3)]. Apply 17E to [(2,3),(3,3),(3,4),(3,5)]. Apply 3A to [(3,6),(3,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + - -] [61] which is <= 79.
+....................................................
+
+[46a-b]
+[+ - + - - + +]/[- - + - - + +]
+
++ - - +' -  -  -                            - + + -' +  +  +
+  - - +' -  -  -         <=  104.1            - - +' -  -  -         <=  54M
+    + -' +  +  +                                + -' +  +  +
+      -' +  +  +                                  -' +  +  +
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[46a] Apply 17E to [(1,3),(2,3),(3,3),(3,4)]. Apply 1A to [(3,5)], [(3,6)] and [(3,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - + +] [46] which is <= 39.58.
+
+[46b] Apply 1A to [(1,3)]. Apply 5E to [(2,3),(3,3),(3,4)]. Apply 1A to [(3,5)], [(3,6)] and [(3,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - + +] [62] which is <= 32M.
+....................................................
+
+[47a-b]
+[+ - + - - + -]/[- - + - - + -]
+
++ - - +' -  -  +                            - + + -' +  +  -
+  - - +' -  -  +         <=  146.9            - - +' -  -  +         <=  58.5
+    + -' +  +  -                                + -' +  +  -
+      -' +  +  -                                  -' +  +  -
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[47a] Apply 17E to [(1,3),(2,3),(3,3),(3,4)]. Apply 1A to [(3,5)]. Apply 3A to [(3,6),(3,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the case N=8, ord=4 chamber [+ - - - + -] [31] which is <= 55.83.
+
+[47b] [(1,1)] is <= 2. Apply 4B to [(1,2),(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + -] [47] which is <= 29.23.
+....................................................
+
+[48a-b]
+[+ - + - - - +]/[- - + - - - +]
+
++ - - +' -  +  +                            - + + -' +  -  -
+  - - +' -  +  +         <=  125.1            - - +' -  +  +         <=  132.4
+    + -' +  -  -                                + -' +  -  -
+      -' +  -  -                                  -' +  -  -
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[48a] Apply 17B to [(1,1),(1,2),(1,3),(1,4),(1,5)]. Apply 1A to [(1,6)], [(1,7)].
+All terms we have mentioned together are <= 2.24. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - - +] [48] which is <= 55.83.
+
+[48b] Apply 5D to [(1,1)], 4B to [(1,2),(1,3),(1,4)] and 1D to [(1,5),(1,6),(1,7)].
+All terms we have mentioned together are <= 64/27. The remaining part of the scheme is the case N=8, ord=4 chamber [48] which is <= 55.83.
+....................................................
+
+[49a-b]
+[+ - + - - - -]/[- - + - - - -]
+
++ - - +' -  +  -                            - + + -' +  -  +
+  - - +' -  +  -         <=  149.7            - - +' -  +  -         <=  140.4
+    + -' +  -  +                                + -' +  -  +
+      -' +  -  +                                  -' +  -  +
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[49a] Apply 17B to [(1,1),(1,2),(1,3),(1,4),(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 2.24. The remaining part of the scheme is the case N=8, ord=4 chamber [- + - - - -] [49] which is <= 64M.
+
+[49b] Apply 1A to [(1,3)]. Apply 5E to [(2,3),(3,3),(3,4)]. Apply 3A to [(3,5),(3,6)]. Apply 1A to [(3,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - - -] [1] which is <= 83.2.
+....................................................
+
+[50a-b]
+[+ - - + + + +]/[- - - + + + +]
+
++ - + +' +  +  +                            - + - -' -  -  -
+  - + +' +  +  +         <=  32M              - + +' +  +  +         <=  32M
+    - -' -  -  -                                - -' -  -  -
+      +' +  +  +                                  +' +  +  +
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[50a] Apply 3A to [(1,1),(1,2)]. Apply 3B to [(1,3),(1,4)]. Apply 1A to [(1,5)], [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + + + +] [50] which is <= 32M.
+
+[50b] Apply 5A to [(1,7),(2,7)] and [(3,7),(4,7)]. Apply 1G [(5,7),(6,7)]. Apply 1A to [(7,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - + + +] [58] which is <= 32M.
+....................................................
+
+[51a-b]
+[+ - - + + + -]/[- - - + + + -]
+
++ - + +' +  +  -                            - + - -' -  -  +
+  - + +' +  +  -         <=  64M              - + +' +  +  -         <=  79.2
+    - -' -  -  +                                - -' -  -  +
+      +' +  +  -                                  +' +  +  -
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[51a] Apply 3A to [(1,1),(1,2)]. Apply 3B to [(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + + + -] [51] which is <= 64M.
+
+[51b] Apply 5A to [(1,5),(2,5)] and [(1,6),(2,6)]. These are <= 1. Apply then 5F to the first two lines excluding [(1,5),(1,6),(2,5),(2,6)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=3 chamber [19] which is <= 39.58.
+....................................................
+
+[52a-b]
+[+ - - + + - +]/[- - - + + - +]
+
++ - + +' +  -  -                            - + - -' -  +  +
+  - + +' +  -  -         <=  93.9             - + +' +  -  -         <=  79.2
+    - -' -  +  +                                - -' -  +  +
+      +' +  -  -                                  +' +  -  -
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[52a] Apply 3A to [(1,1),(1,2)]. Apply 3B to [(1,3),(1,4)]. Apply 1D to [(1,5),(1,6),(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + + - +] [52] which is <= 79.16.
+
+[52b] Apply 5F to [(1,1),(1,2),(1,3),(1,4),(1,6),(2,2),(2,3),(2,4),(2,6)]. Apply 7A to [(1,5),(2,5),(1,7),(2,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=4 chamber [- + + - +] (coinciding with N=7, ord=3, chamber [+ - + + -] [11]) which is <= 39.58.
+....................................................
+
+[53a-b]
+[+ - - + + - -]/[- - - + + - -]
+
++ - + +' +  -  +                            - + - -' -  +  -
+  - + +' +  -  +         <=  79               - + +' +  -  +         <=  128
+    - -' -  +  -                                - -' -  +  -
+      +' +  -  +                                  +' +  -  +
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[53a] Apply 3A to [(1,1),(1,2)]. Apply 3B to [(1,3),(1,4)]. Apply 3A to [(1,5),(1,6)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + + - -] [53] which is <= 79.
+
+[53b] Apply 5F to [(1,1),(1,2),(1,3),(1,4),(1,6),(2,2),(2,3),(2,4),(2,6)]. Apply 5A to [(1,5),(2,5)] and [(1,7),(2,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=4 chamber [- + + - -] (coinciding with N=7, ord=3  chamber [- - + + -] [27]) which is <= 64.
+....................................................
+
+[54a-b]
+[+ - - + - + +]/[- - - + - + +]
+
++ - + +' -  -  -                            - + - -' +  +  +
+  - + +' -  -  -         <=  104.2            - + +' -  -  -         <=  66.8
+    - -' +  +  +                                - -' +  +  +
+      +' -  -  -                                  +' -  -  -
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+
+[54a] Apply 1D to [(1,1),(1,2),(1,7)] and 2G to the remaining signs in the first line.
+All terms we have mentioned together are <= 1.41*32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [54] which is <= 62.32
+
+[54b] Apply 1A to [(1,7)], 5A to [(2,7),(3,7)] and [(4,7),(7,7)], and apply 8G to [(5,7),(6,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=3 chamber [60] which is <= 54M
+....................................................
+
+[55a-b]
+[+ - - + - + -]/[- - - + - + -]
+
++ - + +' -  -  +                            - + - -' +  +  -
+  - + +' -  -  +         <=  111.7            - + +' -  -  +         <=  158.4
+    - -' +  +  -                                - -' +  +  -
+      +' -  -  +                                  +' -  -  +
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/4)                                  - 2R^(1/4)
+
+[55a] Apply 3A to [(1,1),(1,2)], 2G to [(1,3),(1,4),(1,5),(1,6)] and 1A to [(1,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=4 chamber [55] which is <= 79.16
+
+[55b] Apply 5F to [(1,1),(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5)], 3A to [(1,6),(1,7)], 5D to [(2,6)] and 1A to [(2,7)].
+Lines 1 and 2 together are <= 4. The remaining part of the scheme is the symmetrical of the case N=7, ord=3 chamber [23] which is <= 39.58
+....................................................
+
+[56a-b]
+[+ - - + - - +]/[- - - + - - +]
+
++ - + +' -  +  +                            - + - -' +  -  -
+  - + +' -  +  +         <=  82.7             - + +' -  +  +         <=  69.696
+    - -' +  -  -                                - -' +  -  -
+      +' -  +  +                                  +' -  +  +
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[56a] Apply 1D to [(1,1),(1,2),(1,5)]. Apply 3B to [(1,3),(1,4)]. Apply 1A to [(1,6)], [(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- - + - - +] [56] which is <= 69.696.
+
+[56b] Apply 5A to [(1,7),(2,7)]. Apply 7E to [(3,7),(4,7),(5,7)] Apply 5A to [(6,7),(7,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - + - -] [61] which is <= 69.696.
+....................................................
+
+[57a-b]
+[+ - - + - - -]/[- - - + - - -]
+
++ - + +' -  +  -                            - + - -' +  -  +
+  - + +' -  +  -         <=  79               - + +' -  +  -         <=  79
+    - -' +  -  +                                - -' +  -  +
+      +' -  +  -                                  +' -  +  -
+         -' +' -'                                    -' +' -'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[57a] Apply 3A to [(1,1),(1,2)] and [(1,6),(1,7)] and 4E to [(1,3),(1,4),(1,5)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=4 chamber [57] which is <= 79
+
+[57b] Apply 5F to [(1,1),(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5)]. Apply 7A to [(1,6),(2,6),(1,7),(2,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=7, ord=4 chamber [- + - - -] (coinciding with N=7, ord=3, [- - - + -] [31]) which is <= 39.5.
+....................................................
+
+[58a-b]
+[+ - - - + + +]/[- - - - + + +]
+
++ - + -' -  -  -                            - + - +' +  +  +
+  - + -' -  -  -         <=  64.96            - + -' -  -  -         <=  64.96
+    - +' +  +  +                                - +' +  +  +
+      -' -  -  -                                  -' -  -  -
+         +' +' +'                                    +' +' +'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[58a] Apply 5A to [(1,7),(3,7)] and [(2,7),(7,7)]. Apply 7E to [(4,7),(5,7),(6,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [+ - - - + +] [30] which is <= 64.96.
+
+[58b] Apply 1A to [(1,7)]. Apply 5A to [(1,7),(3,7)]. Apply 7E to [(4,7),(5,7),(6,7)]. Apply 1A tp [(7,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - - + +] [62] which is <= 64.96.
+....................................................
+
+[59a-b]
+[+ - - - + + -]/[- - - - + + -]
+
++ - + -' -  -  +                            - + - +' +  +  -
+  - + -' -  -  +         <=  154              - + -' -  -  +         <=  111.4
+    - +' +  +  -                                - +' +  +  -
+      -' -  -  +                                  -' -  -  +
+         +' +' -'                                    +' +' -'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[59a] Apply 1D to [(1,1),(1,2),(1,6)]. Apply 5E to [(1,3),(1,4),(1,5)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= (32/27)*(27/16)=2. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + + -] [59] which is <= 77.
+
+[59b] Apply 1A to [(1,6)]. Apply 5A to [(2,6),(3,6)]. Apply 17E to [(4,6),(5,6),(6,6),(6,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - - + -] [63] which is <= 79.
+....................................................
+
+[60a-b]
+[+ - - - + - +]/[- - - - + - +]
+
++ - + -' -  +  +                            - + - +' +  -  -
+  - + -' -  +  +         <=  112.6            - + -' -  +  +         <=  133.4
+    - +' +  -  -                                - +' +  -  -
+      -' -  +  +                                  -' -  +  +
+         +' -' -'                                    +' -' -'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[60a] Apply 3A to [(1,2),(1,3)]. Apply 5E to [(1,3),(1,4),(1,5)]. Apply 1A to [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + - +] [60] which is <= 66.7.
+
+[60b] Apply 5A to [(1,7),(2,7)] and [(3,7),(4,7)]. Apply 5E to [(5,7),(6,7),(7,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - - + -] [63] which is <= 79.
+....................................................
+
+[61a-b]
+[+ - - - + - -]/[- - - - + - -]
+
++ - + -' -  +  -                            - + - +' +  -  +
+  - + -' -  +  -         <=  133.4            - + -' -  +  -         <=  158
+    - +' +  -  +                                - +' +  -  +
+      -' -  +  -                                  -' -  +  -
+         +' -' +'                                    +' -' +'
+            -  +                                        -  +
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[61a] Apply 3A to [(1,1),(1,2)]. Apply 5E to [(1,3),(1,4),(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + - -] [61] which is <= 79.
+
+[61b] [(1,1)] is <= 2. Apply 11B to [(1,2),(1,3),(1,4)]. Apply 3A to [(1,5),(1,6)]. Apply 1A to [(1,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - + - -] [61] which is <= 79.
+....................................................
+
+[62a-b]
+[+ - - - - + +]/[- - - - - + +]
+
++ - + -' +  +  +                            - + - +' -  -  -
+  - + -' +  +  +         <=  39.6             - + -' +  +  +         <=  55.6
+    - +' -  -  -                                - +' -  -  -
+      -' +  +  +                                  -' +  +  +
+         -' -' -'                                    -' -' -'
+            +  +                                        +  +
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[62a] Apply 3A to [(1,1),(1,2)]. Apply 5B to [(1,3),(1,4)]. Apply 1A to [(1,5)], [(1,6)] and [(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - + +] [62] which is <= 32M.
+
+[62b] Apply 5A to [(1,7),(2,7)] and [(3,7),(4,7)]. Apply 8G to [(5,7),(6,7)]. Apply 1A to [(7,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - - - +] [64] which is <= 46.91.
+....................................................
+
+[63a-b]
+[+ - - - - + -]/[- - - - - + -]
+
++ - + -' +  +  -                            - + - +' -  -  +
+  - + -' +  +  -         <=  79.2             - + -' +  +  -         <=  139.6
+    - +' -  -  +                                - +' -  -  +
+      -' +  +  -                                  -' +  +  -
+         -' -' +'                                    -' -' +'
+            +  -                                        +  -
+               - 2R^(1/2)                                  - 2R^(1/2)
+
+[63a] Apply 3A to [(1,1),(1,2)]. Apply 5B to [(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3A to [(1,6),(1,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - + -] [63] which is <= 64M.
+
+[63b] Apply 5A to [(1,6),(2,6)] and [(3,6),(4,6)]. Apply 5E to [(5,6),(6,6),(6,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - - - -] [1] which is <= 82.71.
+....................................................
+
+[64a-b]
+[+ - - - - - +]/[- - - - - - +]
+
++ - + -' +  -  -                            - + - +' -  +  +
+  - + -' +  -  -         <=  115.2            - + -' +  -  -         <=  116.7
+    - +' -  +  +                                - +' -  +  +
+      -' +  -  -                                  -' +  -  -
+         -' +' +'                                    -' +' +'
+            -  -                                        -  -
+               + 2R^(1/2)                                  + 2R^(1/2)
+
+[64a] Apply 3A to [(1,1),(1,2)]. Apply 5B to [(1,3),(1,4)]. Apply 1D to [(1,5),(1,6),(1,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=4 chamber [- - - - - +] [64] which is <= 82.
+
+[64b] Apply 1A to [(1,7)]. Apply 5A to [(2,7),(3,7)]. Apply 20 to [(4,7),(5,7),(6,7),(7,7)].
+All terms we have mentioned together are <= 1.41. The remaining part of the scheme is the case N=8, ord=3 chamber [- - - - - -] [1] which is <= 82.71.
+....................................................

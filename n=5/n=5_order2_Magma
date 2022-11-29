@@ -1,0 +1,178 @@
+
+/* PART A */
+/* Study of the interior of the function for n=5 second ordering */
+Q:=RationalField();
+R<x,y,z,g>:=PolynomialRing(Q,4);
+
+L:=(1-x)*(1-2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-2*y*g+y^2)*(1-y*z)*(1-2*z*g+z^2);  /* This is the function without the factor 2*sqrt(1-g^2) */
+
+T:=Factorization(Derivative(L,x));  
+Lx:=T[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,y));  
+Ly:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,z));  
+Lz:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,g)*(1-g^2)-L*g);  
+Lg:=T[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Lx,Ly,g));
+res1g:=T[6,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Lx,Lz,g));
+res2g:=T[2,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Lx,Lg,g));
+res3g:=T[6,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(res1g,res2g,z));  /* 2 factors to consider */
+res1za:=T[5,1];
+res1zb:=T[6,1];
+
+T:=Factorization(Resultant(res1g,res3g,z));  /* 2 factors to consider */
+res2za:=T[7,1];
+res2zb:=T[8,1];
+
+/* We have res1za = res2za. We have to consider two cases */
+/* CASE 1: res1za is linear in x: we recover x from it and substitute in res1g and res2g, obtaining expressions only in y and z */
+
+A:=-Coefficient(res1za,x,0);
+B:=Coefficient(res1za,x,1);
+
+/* here we make substitution, first in res1g and then in res2g */
+
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+  
+res1gSa:=T[5,1];   /* unique factors to consider */
+
+
+S:=0;
+N:=res2g;
+for j in [0 .. Degree(N,x)] do
+   S:=S+Coefficient(N,x,j)*A^j*B^(Degree(N,x)-j);
+end for;
+T:=Factorization(S);
+
+res2gSa:=T[3,1];   /* unique factors to consider */
+
+
+T:=Factorization(Resultant(res1gSa,res2gSa,z));
+resz:=y^8 - 4*y^6 - 17/16*y^4 - 45/8*y^2 + 27/16;
+
+/* Subsequent computations are made in PARI */
+/* SEE file n=5_order2_Pari.gp,  CASE 1 */
+
+/* This gives 2 roots in y, one opposite to the other: y0 = +- 0.5220651523902424777453042199992169352575764980120099948122652565216421250492165157655687086720731517
+   Replacing it in res1za we obtain an x bigger than 1 */
+===
+
+
+
+/* CASE 2: We need to check the resultant of res1zb and res2zb */
+
+T:=Factorization(Resultant(res1zb,res2zb,y)); /* We obtain 8 irreducible factors, only 4 give roots in the interior */
+resya:=T[4,1];
+resyb:=T[5,1];
+resyc:=T[6,1];
+resyd:=T[7,1];
+resye:=T[8,1];
+
+/* Here you can print a file useful for the computations in Pari/GP */
+PrintFile("n=5_order2_Pari.gp","\{resy=");
+PrintFile("n=5_order2_Pari.gp",resya*resyb*resyc*resyd*resye);
+PrintFile("n=5_order2_Pari.gp",";}\n\n");
+
+PrintFile("n=5_order2_Pari.gp","\{res1zb=");
+PrintFile("n=5_order2_Pari.gp",res1zb);
+PrintFile("n=5_order2_Pari.gp",";}\n\n");
+
+PrintFile("n=5_order2_Pari.gp","\{res1g=");
+PrintFile("n=5_order2_Pari.gp",res1g);
+PrintFile("n=5_order2_Pari.gp",";}\n\n");
+
+PrintFile("n=5_order2_Pari.gp","\{Lx=");
+PrintFile("n=5_order2_Pari.gp",Lx);
+PrintFile("n=5_order2_Pari.gp",";}\n\n");
+
+/* Subsequent computations are made in PARI */
+/* SEE file n=5_order2_Pari.gp,  CASE 2 */
+
+/* The computations show that we do not have interior points which give a value bigger than 16*M = 16.6965..  */
+/* END PART A */
+
+
+
+/* PART B */
+/* Study of y = 1 of the function for n=5 second ordering */
+Q:=RationalField();
+R<x,y,z,g>:=PolynomialRing(Q,4);
+
+L:=(1-x)*(1-2*x*g+x^2)*(1-x*z)*(1-g)*(1-z)*(1-2*z*g+z^2);  /* This is our function without the factor 4*sqrt(1-g^2) */
+
+T:=Factorization(Derivative(L,x));  
+Lx:=T[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,z));  
+Lz:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,g)*(1-g^2)-L*g);  
+Lg:=T[5,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Lx,Lz,g));
+res1g:=T[3,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,z));
+/* The only possible roots in x are at 1/2, 2/3 and 1/5.  */
+
+Evaluate(res1g,[1/2,y,z,g]);
+Evaluate(res1g,[2/3,y,z,g]);
+Evaluate(res1g,[1/5,y,z,g]);
+
+
+/* Evaluation of res1g at x = 1/2 gives roots in z equal to -1 or 3/2, so they are not acceptable.
+   Evaluation of res1g at x = 2/3 gives a unique root in z equal to 21/17 so is not acceptable.
+   Evaluation of res1g at x = 1/5 gives roots in z equal to 0 or 23/7, so they are not acceptable.  */
+/* So we find no critical points */
+/* END PART B */
+
+
+
+/* PART C */  
+/* Study of x = -1 of the function for n=5 2nd ordering */
+Q:=RationalField();
+R<x,y,z,g>:=PolynomialRing(Q,4);
+
+L:=(1+2*y*g+y^2)*(1+y*z)*(1-2*y*g+y^2)*(1-y*z)*(1-2*z*g+z^2);  /* This is our function without the factor 4*sqrt(1-g^2) */
+
+T:=Factorization(Derivative(L,y));  
+Ly:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,z));  
+Lz:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,g)*(1-g^2)-L*g);  
+Lg:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Ly,Lz,g));
+res1g:=T[3,1];
+
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(res1g,res2g,z));
+resz:=T[5,1]*T[6,1];
+
+/* Subsequent computations are made in PARI */
+/* SEE file n=5_order2_Pari.gp,  PART C */
+/* GP computations do not find any critical point in the interior (but it finds two cirtical points, but they are on the boundary. In any case, the value of the function at these points is below 10.96) */
+/* END PART C */

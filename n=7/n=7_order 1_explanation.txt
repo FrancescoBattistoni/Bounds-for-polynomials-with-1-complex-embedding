@@ -1,0 +1,474 @@
+N=7, FIRST ORDER
+
+The function is (1-a)*(1-a*x)*(1-a*x*y)*(1-a*x*y*z)*(1-2*a*x*y*z*t*g+(a*x*y*z*t)^2)*(1-x*y)*(1-x*y*z)*(1-2*x*y*z*t*g+(x*y*z*t)^2)*(1-y)*(1-y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1-2*z*t*g+(z*t)^2)*(1-2*t*g+t^2)*2*sqrt(1-g^2).
+
+We examine the 32 cases depending on the possible signs of the variables (a, x, y, z, tg).
+
+We represent the function as a graphical scheme. In every graphical scheme, the variables are positive and the sign information is seen in the sign in front of the variables, Rules are the following:
+
+ + : it represents the factor (1-x_1 * ... * x_n )
+
+ - : it represents the factor (1+x_1 * ... * x_n )
+
+ +': it represents the factor (1 - 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ -': it represents the factor (1 + 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ R = (1-g^2)
+
+ M = 3^(15/2)/4/7^(7/2)
+
+
+THE UPPER BOUND WE FOUND IS 32M
+==========================================================================
+[1]
+[- - - - -]
+
+- + - + -'             <=  32M
+  - + - +'
+    - + -'
+      - +'
+        -' 2R^(1/2)
+
+Apply 6C to the first two lines. This is <= 2.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[2]
+[+ + + + +]
+
++ + + + +'             <=  4
+  + + + +'
+    + + +'
+      + +'
+        +' 2R^(1/2)
+
+Apply 3B to [(1,4),(1,5)], [(2,4),(2,5)], [(3,4),(3,5)], [(4,4),(4,5)] and 1A to the remaining + in the first 4 lines. The first 4 lines are <= 1.
+Apply 1B to the line 5.  This is <= 4.
+....................................................
+
+[3]
+[+ + + + -]
+
++ + + + -'             <=  6.16
+  + + + -'
+    + + -'
+      + -'
+        -' 2R^(1/2)
+
+Apply 4B to [(1,3),(1,4),(1,5)], [(2,3),(2,4),(2,5)], [(3,3),(3,4),(3,5)] and 1A to the remaining + in the first three lines. These are <= 1.
+Apply 8B to the remaining two lines. This is <= 6.16
+....................................................
+
+[4]
+[+ + + - +]
+
++ + + - -'             <=  19.79
+  + + - -'
+    + - -'
+      - -'
+        +' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,4)] and 4B to [(1,2),(1,3),(1,5)]. The first line is <= 1.
+Apply 3A to [(2,2),(2,4)] and 5B to [(2,3),(2,5)]. This is <= 32/27.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[5]
+[+ + + - -]
+
++ + + - +'             <=  16
+  + + - +'
+    + - +'
+      - +'
+        -' 2R^(1/2)
+
+Apply 11B to [(1,3),(1,4),(1,5)], [(2,3),(2,4),(2,5)], [(3,3),(3,4),(3,5)] and 1A to the remaining + in the first three lines. These are <= 1.
+Apply 9B to [(4,4),(4,5),(5,5)]. This is <= 8.
+2R^(1/2) <= 2.
+....................................................
+
+[6]
+[+ + - + +]
+
++ + - - -'             <=  32M
+  + - - -'
+    - - -'
+      + +'
+        +' 2R^(1/2)
+
+Apply 4A to [(1,1),(1,4)] and [(2,2),(2,3)].
+Apply 6A to [(3,4),(4,4)].
+Apply 6B to [(2,5),(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[7]
+[+ + - + -]
+
++ + - - +'             <=  23.37
+  + - - +'
+    - - +'
+      + -'
+        -' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,3)] and 11B to [(1,2),(1,4),(1,5)]. The first line is <= 1.
+The remaining part is the chamber [+ - + -] (chamber [7]) for N=6 first ordering, which is <= 23.37.
+....................................................
+
+[8]
+[+ + - - +]
+
++ + - + +'             <=  16M
+  + - + +'
+    - + +'
+      - -'
+        +' 2R^(1/2)
+
+Apply 1A to [(1,1)], 3A to [(1,2),(1,3)] and [(2,2),(2,3)], 3B to [(1,4),(1,5)] and [(2,4),(2,5)]. The first two lines are <= 1.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[9]
+[+ + - - -]
+
++ + - + -'             <=  19.79
+  + - + -'
+    - + -'
+      - +'
+        -' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,3)], 4B to [(1,2),(1,4),(1,5)]. The first line is <= 1.
+Apply 3A to [(2,2),(2,3)], 5B to [(2,4),(2,5)]. The second line is <= 32/27.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[10]
+[+ - + + +]
+
++ - - - -'             <=  32M
+  - - - -'
+    + + +'
+      + +'
+        +' 2R^(1/2)
+
+Apply 4A to [(1,1),(1,2)].
+Apply 6A to [(2,3),(3,3)] and [(1,4),(4,4)].
+Apply 6B to [(2,5),(3,5)].
+Apply 12B to [(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[11]
+[+ - + + -]
+
++ - - - +'             <=  32.7
+  - - - +'
+    + + -'
+      + -'
+        -' 2R^(1/2)
+
+Apply 13B to the first line. This is < 2.239.
+Apply 6A to [(2,3),(3,3)] and then apply 5C to line 2 and 3. These lines together are <= 64/27.
+Apply 8B to lines 4 and 5. These lines together are <= 6.16
+....................................................
+
+[12]
+[+ - + - +]
+
++ - - + +'             <=  32M
+  - - + +'
+    + - -'
+      - -'
+        +' 2R^(1/2)
+
+Apply 4A to [(1,1),(1,2)].
+Apply 8A to [(2,3),(2,4),(3,3),(3,4)].
+Apply 12B to [(1,5)].
+Apply 6B to [(4,5),(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[13]
+[+ - + - -]
+
++ - - + -'             <=  32M
+  - - + -'
+    + - +'
+      - +'
+        -' 2R^(1/2)
+
+Apply 4A to [(1,1),(1,2)].
+Apply 8A to [(2,3),(2,4),(3,3),(3,4)].
+Apply 6B to [(2,5),(3,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[14]
+[+ - - + +]
+
++ - + + +'             <=  32
+  - + + +'
+    - - -'
+      + +'
+        +' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,2)], 1A to [(1,3)] and 3B to [(1,4),(1,5)]. The first line is <= 1.
+The remaining is <= 32 as proved in the file N=6 first ordering for the chamber [- - + +] (chamber [14]).
+....................................................
+
+[15]
+[+ - - + -]
+
++ - + + -'             <=  23.38
+  - + + -'
+    - - +'
+      + -'
+        -' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,2)] and 4B to [(1,3),(1,4),(1,5)]. The first line is <= 1.
+The remaining part is the chamber [- - + -] for N=6 first ordering (chamber [15]), which is <= 23.38.
+....................................................
+
+[16]
+[+ - - - +]
+
++ - + - -'             <=  32M
+  - + - -'
+    - + +'
+      - -'
+        +' 2R^(1/2)
+
+Apply 4A to [(1,1),(1,2)] and [(1,3),(1,4)].
+Apply 6B to [(2,5),(3,5)] and [(4,5),(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[17]
+[+ - - - -]
+
++ - + - +'             <=  32
+  - + - +'
+    - + -'
+      - +'
+        -' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,2)] and 11B to [(1,3),(1,4),(1,5)]. Line 1 is <= 1.
+The remaining is <= 32 as proved in the file N=6 first ordering for the chamber [- - - -] (chamber [1]).
+....................................................
+
+[18]
+[- + + + +]
+
+- - - - -'             <=  8
+  + + + +'
+    + + +'
+      + +'
+        +' 2R^(1/2)
+
+Apply 6A to [(1,2),(2,2)] and [(1,4),(2,4)]. Apply then 6C to the first two lines: these together are <= 2.
+Apply 3B to [(3,4),(3,5)] and [(4,4),(4,5)]. Apply 1A to [(3,3)]. Lines 3 and 4 are <= 1.
+Apply 1B to line 5: this is <= 4.
+....................................................
+
+[19]
+[- + + + -]
+
+- - - - +'             <=  14.61
+  + + + -'
+    + + -'
+      + -'
+        -' 2R^(1/2)
+
+Apply 5A to [(1,2),(2,2)]. This is <= 1.
+Apply 6A to [(1,3),(2,3)]. Apply then 5C to the first two lines except [(1,2),(2,2)]. The first two lines together are <= 64/27.
+Apply 4B to Line 3: this is <= 1.
+Apply 8B to lines 4 and 5: together these are <= 6.16.
+....................................................
+
+[20]
+[- + + - +]
+
+- - - + +'             <=  32M
+  + + - -'
+    + - -'
+      - -'
+        +' 2R^(1/2)
+
+Apply 8C to the first two lines. These together are <= 2.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[21]
+[- + + - -]
+
+- - - + -'             <=  32M
+  + + - +'
+    + - +'
+      - +'
+        -' 2R^(1/2)
+
+Apply 6A to [(1,2),(2,2)].
+Apply 4A to [(3,3),(3,4)].
+Apply 12B to [(3,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[22]
+[- + - + +]
+
+- - + + +'             <=  32M
+  + - - -'
+    - - -'
+      + +'
+        +' 2R^(1/2)
+
+Apply 8A to [(1,2),(1,3),(2,3),(3,3)].
+Apply 6A to [(3,4),(4,4)].
+Apply 12B to [(1,5)].
+Apply 6B to [(2,5),(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[23]
+[- + - + -]
+
+- - + + -'             <=  32M
+  + - - +'
+    - - +'
+      + -'
+        -' 2R^(1/2)
+
+Apply 8A to [(1,2),(1,3),(2,3),(3,3)], then apply 6C to line 1 and 2: these together are <= 2.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[24]
+[- + - - +]
+
+- - + - -'             <=  32M
+  + - + +'
+    - + +'
+      - -'
+        +' 2R^(1/2)
+
+Apply 8A to [(1,2),(1,3),(2,3),(3,3)].
+Apply 6A to [(1,4),(2,4)].
+Apply 12B to [(3,5)].
+Apply 6B to [(4,5),(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[25]
+[- + - - -]
+
+- - + - +'             <=  32M
+  + - + -'
+    - + -'
+      + -'
+        -' 2R^(1/2)
+
+Apply 7C to the first two lines: these together are <= 2.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[26]
+[- - + + +]
+
+- + + + +'             <=  32M
+  - - - -'
+    + + +'
+      + +'
+        +' 2R^(1/2)
+
+Apply 2A to [(1,3)] and [(4,4)].
+Apply 6A to [(2,3),(3,3)].
+Apply 6B to [(2,5),(3,5)].
+Apply 12B to [(1,5)] and [(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[27]
+[- - + + -]
+
+- + + + -'             <=  29.2
+  - - - +'
+    + + -'
+      + -'
+        -' 2R^(1/2)
+
+Apply 5D to [(1,1)], 1A to [(1,2)] and 4B to [(1,3),(1,4),(1,5)]. The first line is <= 2.
+The remaining part is the chamber [- + + -] for N=6 first ordering (chamber [11]), which is <= 14.6.
+....................................................
+
+[28]
+[- - + - +]
+
+- + + - -'             <=  32M
+  - - + +'
+    + - -'
+      - -'
+        +' 2R^(1/2)
+
+Apply 4A to [(1,3),(1,4)].
+Apply 8A to [(2,3),(2,4),(3,3),(3,4)].
+Apply 6B to [(4,5),(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[29]
+[- - + - -]
+
+- + + - +'             <=  32M
+  - - + -'
+    + - +'
+      - +'
+        -' 2R^(1/2)
+
+Apply 4A to [(1,3),(1,4)].
+Apply 8A to [(2,3),(2,4),(3,3),(3,4)].
+Apply 6B to [(2,5),(3,5)].
+Apply 12B to [(1,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[30]
+[- - - + +]
+
+- + - - -'             <=  32M
+  - + + +'
+    - - -'
+      + +'
+        +' 2R^(1/2)
+
+Apply 6A to [(1,4),(2,4)] and [(3,4),(4,4)].
+Apply 12B to [(5,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................
+
+[31]
+[- - - + -]
+
+- + - - +'             <=  32M
+  - + + -'
+    - - +'
+      + -'
+        -' 2R^(1/2)
+
+Apply 9C to lines 1 and 2: these together are <= 2.
+The remaining part is a function in N=5 first ordering. This is <= 16M.
+....................................................
+
+[32]
+[- - - - +]
+
+- + - + +'             <=  32M
+  - + - -'
+    - + +'
+      - -'
+        +' 2R^(1/2)
+
+Apply 6B to [(2,5),(3,5)] and [(4,5),(5,5)].
+Apply 12B to [(1,5)].
+You end up with the case [- - - - -] (chamber [1]), which is <= 32M.
+....................................................

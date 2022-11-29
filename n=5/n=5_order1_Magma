@@ -1,0 +1,161 @@
+/* Study of the interior of the function for n=5 */
+
+/* PART A */
+Q:=RationalField();
+R<x,y,z,g>:=PolynomialRing(Q,4);
+
+L:=(1-x)*(1-x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1-2*y*z*g+(y*z)^2)*(1-2*z*g+z^2);  /* This is our function without the factor 2*sqrt(1-g^2) */
+
+T:=Factorization(Derivative(L,x));  
+Lx:=T[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,y));  
+Ly:=T[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,z));  
+Lz:=T[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Derivative(L,g)*(1-g^2)-L*g);  
+Lg:=T[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+
+T:=Factorization(Resultant(Lx,Ly,g));
+res1g:=T[7,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Lx,Lz,g));
+res2g:=T[7,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+T:=Factorization(Resultant(Lx,Lg,g));
+res3g:=T[7,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+
+T:=Factorization(Resultant(res1g,res2g,z));  /* 3 factors to consider */
+res1za:=T[4,1];
+res1zb:=T[5,1];
+res1zc:=T[6,1];
+
+T:=Factorization(Resultant(res1g,res3g,z));  /* 3 factors to consider */
+res2za:=T[4,1];
+res2zb:=T[5,1];
+res2zc:=T[6,1];
+
+/* We have res1za = res2za and res1zb = res2zb. We have to consider three cases */
+
+
+/* CASE 1: res1za is linear in y: we recover y from it and substitute in res1g and res2g, obtaining expressions only in x and z */
+
+A:=-Coefficient(res1za,y,0);
+B:=Coefficient(res1za,y,1);
+
+/* here we make substitution, first in res1g and then in res2g */
+
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res1gSa:=T[3,1];  
+res1gSb:=T[4,1];   /* unique factors to consider */
+
+
+S:=0;
+N:=res2g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res2gSa:=T[2,1];
+res2gSb:=T[3,1];  
+res2gSc:=T[4,1];   /* unique factors to consider */
+
+
+/* We have res1gSa = res2gSa and res1gSb = res2gSb. These are the only two factors to consider.  */
+
+/* Consider res1gSa = x-3/4*z-1/4.   Putting this equal to 0 we get x = 3/4*z+1/4.
+   But from res1za we have y = 3/4/(x-1/4)  =  3/4/(3/4*z) = 1/z.   Thus y = 1/z, which is possible only if we are on the boundary. */
+
+/* Consider res1gSb = x + 3/4*z -1/4. Putting this equal to 0 we get x = -3/4*z+1/4.
+   But from res1za we have y = 3/4/(x-1/4)  =  3/4/(-3/4*z) = -1/z.   Thus y = -1/z, which is possible only if we are on the boundary  */
+
+
+
+
+/* CASE 2:  res1zb is linear in y: we recover y from it and substitute in res1g and res2g, obtaining expressions only in x and z */
+
+A:=-Coefficient(res1zb,y,0);
+B:=Coefficient(res1zb,y,1);
+
+/* here we make substitution, first in res1g and then in res2g */
+
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res1gSa:=T[3,1];
+res1gSb:=T[4,1];  
+res1gSc:=T[5,1];   /* unique factors to consider */
+
+
+S:=0;
+N:=res2g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res2gSa:=T[3,1];  
+res2gSb:=T[4,1];   /* unique factors to consider */
+
+/* We have res1gSb = res2gSa and res1gSc = res2gSb. These are the only two factors to consider.  */
+
+/* Consider res1gSb = x*z - 3/2*x - 1/2*z + 1.   Putting this equal to 0 we obtain z = (3*x-2)/(2*x-1).
+   But from res1zb we have y = (2*x-1)/(3*x^2-2*x)  and so x*y*z = 1, which is on the boundary. */
+
+/* Consider res1gSc = x*z + 3/2*x - 1/2*z - 1.   Putting this equal to 0 we obtain z = (-3*x+2)/(2*x-1).
+   But from res1zb we have y = (2*x-1)/(3*x^2-2*x)  and so x*y*z = -1, which is on the boundary. */
+
+
+
+
+/* CASE 3: We need to check the resultant of res1zc and res2zc */
+
+T:=Factorization(Resultant(res1zc,res2zc,y));
+
+/* We obtain 8 irreducible factors, only 4 give roots in the interior */
+
+resya:=T[4,1];
+resyb:=T[5,1];
+resyc:=T[7,1];
+resyd:=T[8,1];
+
+
+/* Here you can print a file useful for the computations in Pari/GP */
+
+PrintFile("n=5_order1_Pari.gp","\{resy=");
+PrintFile("n=5_order1_Pari.gp",resya*resyb*resyc*resyd);
+PrintFile("n=5_order1_Pari.gp",";}\n\n");
+
+PrintFile("n=5_order1_Pari.gp","\{res1zc=");
+PrintFile("n=5_order1_Pari.gp",res1zc);
+PrintFile("n=5_order1_Pari.gp",";}\n\n");
+
+PrintFile("n=5_order1_Pari.gp","\{res1g=");
+PrintFile("n=5_order1_Pari.gp",res1g);
+PrintFile("n=5_order1_Pari.gp",";}\n\n");
+
+PrintFile("n=5_order1_Pari.gp","\{Lx=");
+PrintFile("n=5_order1_Pari.gp",Lx);
+PrintFile("n=5_order1_Pari.gp",";}\n\n");
+
+/* Subsequent computations are made in PARI */
+/* SEE file n=5_order1_Pari.gp,  CASE 3 */
+
+
+/* The computations show that we do not have interior points which give a value bigger than 16*M = 16.6965..  */
+/* END PART A */

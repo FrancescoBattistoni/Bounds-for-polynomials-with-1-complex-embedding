@@ -1,0 +1,240 @@
+N=6, THIRD ORDER
+
+The function is (1-x)*(1-2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-x*y*z*t)*(1-2*y*g+y^2)*(1-y*z)*(1-y*z*t)*(1-2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*(1-t)*2*sqrt(1-g^2).
+
+We assume g >= 0 and we examine the 16 cases depending on the possible signs of the variables (x, y, z, t).
+
+We represent the function as a graphical scheme. In every graphical scheme, the variables are positive and the sign information is seen in the sign in front of the variables, Rules are the following:
+
+ + : it represents the factor (1-x_1 * ... * x_n )
+
+ - : it represents the factor (1+x_1 * ... * x_n )
+
+ +': it represents the factor (1 - 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ -': it represents the factor (1 + 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ R = (1-g^2)
+
+ M = 3^(15/2)/4/7^(7/2)
+
+
+THE UPPER BOUND WE FOUND IS 34.89
+
+Notice that there is symmetry in the chambers due to the shape of the function: in fact, if an estimate holds for the chamber [s1 s2 ... s_{n-1} s_n] then it holds also for the chamber [s_n s_{n-1} ... s_2 s_1].
+==========================================================================
+[1]
+[- - - -]
+
+- +' -  +              <=  34.89
+  -' +  -
+     -' +'
+        - 2R^(1/2)
+
+The function we have to estimate is the following:
+F= (1+x)*(1-2*x*y*g+(x*y)^2)*(1+x*y*z)    *(1-x*y*z*t)
+        *(1+2*y*g+y^2)      *(1-y*z)      *(1+y*z*t)
+                            *(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)
+                                          *(1+t)
+                                          * 2*sqrt(1-g^2)
+
+Let P be the polynomial corresponding to positions [(1,2),(2,2),(2,3),(3,3),(3,4)], i.e.,
+P(x,y,z,t,g):=(1-2*x*y*g+(x*y)^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)
+
+and let Q be the polynomial corresponding to positions [(1,1),(1,3),(1,4),(2,4),(4,4)], i.e.,
+Q(x,y,z,t,g):=(1+x)*(1+x*y*z)*(1-x*y*z*t)*(1+y*z*t)*(1+t).
+
+We further notice that Q(x,y,z,t,g) = Q'(x,y*z,t)
+where Q'(u,v,w) := (1+u)*(1+u*v)*(1-u*v*w)*(1+v*w)*(1+w) is the polynomial associated to symbols   - - +
+                                                                                                       -
+                                                                                                       -
+Thus, F = PQ*2*sqrt(1-g^2). We split the domain into two regions:
+
+CASE 1: y*z in [0,1/10]: in this case P*2*sqrt(1-g^2) <= 8     (by 3G)    and Q <= 4.36 (by 4Gbis)
+CASE 2: y*z in [1/10,1]: in this case P*2*sqrt(1-g^2) <= 7.345 (by 3Gbis) and Q <= 4.75 (by 4G)
+
+Therefore
+max(F) <= max(8*4.36, 7.345*4.75) <= max(34.88, 34.88875) <= 34.89
+....................................................
+
+[2]
+[+ + + +]
+
++ +' +  +              <=  8
+  +' +  +
+     +' +'
+        + 2R^(1/2)
+
+Apply 3B to [(1,1),(1,2)] and 1G to [(3,4),(4,4)]. These are <= 1.
+Apply 7B to [(2,2)] and [(3,3)]. These together are <= 4.
+Apply 1A to every remaining + and estimate 2R^(1/2) with 2.
+....................................................
+
+[3]
+[+ + + -]
+
++ +' +  -              <=  16M
+  +' +  -
+     +' -'
+        - 2R^(1/2)
+
+Apply 3B to [(1,1),(1,2)] and 3A to [(1,3),(1,4)]. Line 1 is <= 1.
+The remaining is a function for N=5 3rd ordering, symmetrical to 2nd ordering, which is <= 16M.
+....................................................
+
+[4]
+[+ + - +]
+
++ +' -  -              <=  23.55
+  +' -  -
+     -' -'
+        + 2R^(1/2)
+
+Apply 2G to the first line. Line 1 is <= 1.41.
+The remaining is a function for N=5 3rd ordering, symmetrical to 2nd ordering, which is <= 16M.
+....................................................
+
+[5]
+[+ + - -]
+
++ +' -  +              <=  16M
+  +' -  +
+     -' +'
+        -  2R^(1/2)
+
+Apply 4E to [(1,1),(1,2),(1,3)] and 1A to [(1,4)]. Line 1 is <= 1.
+The remaining is a function for N=5 3rd ordering, symmetrical to 2nd ordering, which is <= 16M.
+....................................................
+
+[6]
+[+ - + +]
+
++ -' -  -              <=  23.55
+  -' -  -
+     +' +'
+        + 2R^(1/2)
+
+This is the symmetrical of [+ + - +] (chamber [4]).
+....................................................
+
+[7]
+[+ - + -]
+
++ -' -  +              <=  27M
+  -' -  +
+     +' -'
+        - 2R^(1/2)
+
+Apply 5E to [(1,1),(1,2),(1,3)] and 1A to [(1,4)]. Line 1 is <= 27/16.
+The remaining is a function for N=5 3rd ordering, symmetrical to 2nd ordering, which is <= 16M.
+....................................................
+
+[8]
+[+ - - +]
+
++ -' +  +              <=  19.79
+  -' +  +
+     -' -'
+        + 2R^(1/2)
+
+Apply 5B to [(1,1),(1,2)] and 1A to [(1,3)] and [(1,4)]. Line 1 is <= 32/27.
+The remaining is a function for N=5 3rd ordering, symmetrical to 2nd ordering, which is <= 16M.
+....................................................
+
+[9]
+[+ - - -]
+
++ -' +  -             <=    19.79
+  -' +  -
+     -' +'
+        - 2R^(1/2)
+
+Apply 5B to [(1,1),(1,2)] and 3A to [(1,3),(1,4)]. Line 1 is <= 32/27.
+The remaining is a function for N=5 3rd ordering, symmetrical to 2nd ordering, which is <= 16M.
+....................................................
+
+[10]
+[- + + +]
+
+- -' -  -              <=  16M
+  +' +  +
+     +' +'
+        + 2R^(1/2)
+
+This is the symmetrical of [+ + + -] (chamber [3]).
+....................................................
+
+[11]
+[- + + -]
+
+- -' -  +              <=  32
+  +' +  -
+     +' -'
+        - 2R^(1/2)
+
+Apply 5D to [(1,1)] and [(4,4)]. These together are <= 4.
+Apply 14G to the remaining. This is <= 8.
+....................................................
+
+[12]
+[- + - +]
+
+- -' +  +              <=  27M
+  +' -  -
+     -' -'
+        + 2R^(1/2)
+
+This is the symmetrical of [+ - + -] (chamber [7]).
+....................................................
+
+[13]
+[- + - -]
+
+- -' +  -              <= 34.848
+  +' -  +
+     -' +'
+        - 2R^(1/2)
+
+Apply 6D to [(1,4),(2,3),(2,4),(4,4)] and 6G or 6Gbis to the remaining.
+The combinations of these inequalities shows that:
+when t in [0,1    ] and y*z in [0   ,1/10]: 6D is <= 2.178 and 6G is <= 16
+when t in [0,1    ] and y*z in [1/10,3/5 ]: 6D is <= 64/27 and 6Gbis is <= 14.6895
+when t in [0,22/25] and y*z in [3/5 ,1   ]: 6D is <= 64/27 and 6Gbis is <= 14.6895
+when t in [22/25,1] and y*z in [3/5 ,1   ]: 6D is <= 2.178 and 6G is <= 16
+(everything independently of the value of all other variables).
+
+Thus, this chamber is estimated by max(2.178*16,64/27*14.6895) <= max(34.848, 34.81956) = 34.848.
+....................................................
+
+[14]
+[- - + +]
+
+- +' +  +              <=  16M
+  -' -  -
+     +' +'
+        + 2R^(1/2)
+
+This is the symmetrical of [+ + - -] (chamber [5]).
+....................................................
+
+[15]
+[- - + -]
+
+- +' +  -              <=  34.848
+  -' -  +
+     +' -'
+        - 2R^(1/2)
+
+This is the symmetrical of [- + - -] (chamber [13]).
+....................................................
+
+[16]
+[- - - +]
+
+- +' -  -              <=  19.79
+  -' +  +
+     -' -'
+        + 2R^(1/2)
+
+This is the symmetrical of [+ - - -] (chamber [9]).
+....................................................

@@ -1,0 +1,142 @@
+N=5, 1st ORDERING
+
+The function is (1-x)*(1-x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1-2*y*z*g+(y*z)^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2). We have (x,y,z,g) in [-1,1]^4.
+
+THE UPPER BOUND WE FOUND IS 16*M, WHERE M = 3^(15/2)/4/7^(7/2)
+it is attained at the points (x,y,z,g) = (\pm 1/sqrt(7),-1,1,\pm 1/(2*sqrt(7))) .
+
+
+PROOF
+* We can assume z=1, as shown in the old paper, so that the function becomes
+  (1-x)*(1-x*y)*(1-2*x*y*g+(x*y)^2)*(1-y)*(1-2*y*g+y^2)*(1-g)*4*sqrt(1-g^2)
+
+
+* To simplify the other computations we firstly study the cases where x*y*g=0. We prove that in these cases the function is <= 16.
+  PROOF
+  * At x=0, the function is the corresponding function for N=4, which is <= 16.
+
+  * At y=0 it becomes (1-x)*(1-g)*4*sqrt(1-g^2)  <=   2*3*sqrt(3) < 12.
+
+  * At g=0 it becomes 4*(1-x)*(1-x*y)*(1+(x*y)^2)*(1-y)*(1+y^2). The function is <= 16.
+    PROOF
+    * there are no stationary points
+      PROOF (in PARI code)
+      Using partial derivatives, it is not difficult to see that this has no stationary points.
+      L=4*(1-x)*(1-x*y)*(1+(x*y)^2)*(1-y)*(1+y^2)
+      T=factor(deriv(L,x))
+      Lx=T[3,1]
+      T=factor(deriv(L,y))
+      Ly=T[2,1]
+      T=factor(polresultant(Lx,Ly,y))   /* T[3,1] is the unique factor whose roots are not on the border or 0 */
+      polrootsreal(T[3,1],[-1,1])       /* no roots in the interval */
+      END PROOF
+    * If x= -1, it becomes 8*(1-y^4)*(1+y^2) <= 8*32/27
+
+    * If y= -1, it becomes  16*(1-x^4) <= 16.
+    END PROOF
+  END PROOF
+
+
+
+
+
+* There are no points in the interior where the function assumes values greater than 16*M = 16.6965..
+  PROOF
+  L = (1-x)*(1-x*y)*(1-2*x*y*g+(x*y)^2)*(1-y)*(1-2*y*g+y^2)*(1-g)  /* times 2*sqrt(1-g^2)  */
+
+  Tx = factor(deriv(L,x))
+  Ty = factor(deriv(L,y))
+  Tg = factor(deriv(L,g)*(1-g^2)-L*g)
+
+  Lx = Tx[4,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+  Ly = Ty[3,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+  Lg = Tg[5,1];  /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+  T1 = factor(polresultant(Ly,Lx,g));
+  T2 = factor(polresultant(Lg,Lx,g));
+
+  res1g = T1[5,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+  res2g = T2[5,1]; /* unique factor which is not on the boundary, annihilates the function or makes one variable equal to 0 */
+
+  T11 = factor(polresultant(res1g,res2g,y));
+
+  resy = T11[3,1]*T11[4,1];  /* We chose the only factors having roots between -1 and 1 and which are different from 0 or \pm 1 */
+
+  v = polrootsreal(resy,[-1,1])  /* length 2 */
+
+  x0 = v[1];
+  w = polrootsreal(subst(res1g,x,x0),[-1,1])  /* This polynomial has roots equal only to -1 or 0, so we discard them */
+
+  x0 = v[2];
+  w = polrootsreal(subst(res1g,x,x0),[-1,1])  /* Length 1 */
+  y0 = w[1];
+  u = polrootsreal(subst(subst(Lx,x,x0),y,y0),[-1,1])  /* This polynomial has no roots */
+
+/* There are no interior points */
+  END PROOF
+
+
+
+
+
+* At x = 1 or y = 1 or g = 1 or g = -1 the function is zero.
+
+
+
+
+* At x = -1 the function becomes 8*(1-y^2)*((1+y^2)^2-4*y^2*g^2)*(1-g)*sqrt(1-g^2).
+  The value at stationary points is < 16M
+
+  PROOF
+    L = 8*(1-y^2)*((1+y^2)^2-4*y^2*g^2)*(1-g)   \\  times sqrt(1-g^2)
+    R(y,g) = 8*(1-y^2)*((1+y^2)^2-4*y^2*g^2)*(1-g)*sqrt(1-g^2)    \\ the function in its totality
+    Ty = factor(deriv(L,y))                 \\ derivative of L*2*sqrt(1-g^2) in y
+    Ly = Ty[3,1]
+    Tg = factor(deriv(L,g)*(1-g^2)-g*L)     \\ derivative of L*2*sqrt(1-g^2) in g
+    Lg = Tg[4,1]
+    T =factor(polresultant(Ly,Lg,g))
+    resg = T[5,1]
+    v = polrootsreal(resg,[-1,1])  \\length 2
+    y0 = v[1]
+    w = polrootsreal(subst(Ly,y,y0),[-1,1]) \\ length 2
+    g0 = w[1] 
+    R(y0,g0)   \\ gives a value of 10.987....
+    g0 = w[2]
+    R(y0,g0)   \\ gives a value of 5.961...
+    y0 = v[2]
+    w = polrootsreal(subst(Ly,y,y0),[-1,1]) \\ length 2
+    g0 = w[1] 
+    R(y0,g0)   \\ gives a value of 10.987....
+    g0 = w[2]
+    R(y0,g0)   \\ gives a value of 5.961....
+  END PROOF
+
+  At x = -1 and y = -1 the function is zero.
+
+
+
+
+
+* At y=-1 the function becomes
+  L = 8*(1-x^2)*(1+2*x*g+x^2)*(1-g^2)   \\ times  2*sqrt(1-g^2)
+  The maximum is the value 16*M which is attained at the point (x,y,g) = (\pm 1/sqrt(7),-1,\pm 1/2/sqrt(7)).
+  PROOF
+  \\ INNER POINTS
+    T = factor(deriv(L,x))                 \\ derivative of L*2*sqrt(1-g^2) in x
+    Lx = T[3,1]
+
+    T = factor(deriv(L,g)*(1-g^2)-g*L)     \\ derivative of L*2*sqrt(1-g^2) in g
+    Lg = T[5,1]
+
+    factor(polresultant(Lx,Lg,g))
+  \\ solution in the inner: x= \pm 1/sqrt(7)
+  \\ substituting in Lx this produces
+  \\ g = \pm 1/2/sqrt(7)
+  \\ Thus we found the points (x,y,g) = (\pm 1/sqrt(7),-1,\pm 1/2/sqrt(7))
+  \\ where the function assumes the value 16M
+
+  \\ BORDERS
+  \\ x= \pm 1 or g= \pm 1:   the function is zero
+     END PROOF
+
+END PROOF

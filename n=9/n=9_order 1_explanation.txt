@@ -1,0 +1,1183 @@
+N=9, FIRST ORDER
+
+The function is .
+
+We examine the 128 cases depending on the possible signs of the variables (b,a, x, y, z, t, u, g).
+
+We represent the function as a graphical scheme. In every graphical scheme, the variables are positive and the sign information is seen in the sign in front of the variables, Rules are the following:
+
+ + : it represents the factor (1-x_1 * ... * x_n )
+
+ - : it represents the factor (1+x_1 * ... * x_n )
+
+ +': it represents the factor (1 - 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ -': it represents the factor (1 + 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ R = (1-g^2)
+
+ M = 3^(15/2)/4/7^(7/2)
+
+
+THE UPPER BOUND WE FOUND IS 155.03
+==========================================================================
+[1a-b]
+[+ - - - - - -]/[- - - - - - -]
+
++ - + - + - +'                              - + - + - + -'
+  - + - + - +'           <=   128             - + - + - +'         <=  151.8
+    - + - + -'                                  - + - + -'
+      - + - +'                                    - + - +'
+        - + -'                                      - + -'
+          - +'                                        - +'
+            -' 2R^(1/2)                                 -' 2R^(1/2)
+
+[1a] Apply 3A to [(1,1),(1,2)], [(1,3),(1,4)], [(1,5),(1,6)]. Apply 7B to [(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 chamber [1] which is <= 64.
+
+[1b] [(1,1)] is <= 2. Apply 3A to [(1,2),(1,3)], [(1,4),(1,5)]. Apply 5B to [(1,6),(1,7)]. First line is <= 64/27.
+The remaining is the case N=8, ord=1 chamber [1] which is <= 64.
+....................................................
+
+[2a-b]
+[+ + + + + + +]/[- + + + + + +]
+
++ + + + + + +'                            - - - - - - -'
+  + + + + + +'           <=  4              + + + + + +'           <=  9.5
+    + + + + +'                                + + + + +'
+      + + + +'                                  + + + +'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[2a] Apply 3B to [(1,6),(1,7)] and 1A to the remaining terms in line 1. First line is <= 1.
+The remaining is the case N=8, ord=1 chamber [2] which is <= 4.
+
+[2b] (1,1) contributes by 2, at most. Apply 5A to [(1,2),(2,2)], [(1,3),(2,3)], [(1,4),(2,4)], [(1,5),(2,5)].
+Apply 4H to [(1,6),(1,7),(2,6),(2,7)]. Lines 1-2 together are <= 2*32/27.
+The remaining is the case N=7, ord=1 chamber [2] which is <= 4.
+....................................................
+
+[3a-b]
+[+ + + + + + -]/[- + + + + + -]
+
++ + + + + + -'                            - - - - - - +'
+  + + + + + -'           <=  6.16           + + + + + -'           <=  29.3
+    + + + + -'                                + + + + -'
+      + + + -'                                  + + + -'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[3a] Apply 4B to [(1,5),(1,6),(1,7)] and 1A to the remaining part of line 1. Line 1 is <= 1.
+The remaining is the case N=8, ord=1 chamber [3] which is <= 6.16.
+
+[3b] [(1,1)] is <= 2. Apply 5A to [(1,2),(2,2)], [(1,3),(2,3)], [(1,4),(2,4)].
+Apply 1A to [(2,5)]. Apply 11E to [(5,1),(6,1),(7,1),(6,2),(7,2)]. Lines 1-2 together are <= 2*64/27.
+The remaining is the case N=7, ord=1 chamber [3] which is <= 6.16.
+....................................................
+
+[4a-b]
+[+ + + + + - +]/[- + + + + - +]
+
++ + + + + - -'                            - - - - - + +'
+  + + + + - -'           <=  33.40          + + + + - -'           <=  79.16
+    + + + - -'                                + + + - -'
+      + + - -'                                  + + - -'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[4a] Apply 5E to [(1,5),(1,6),(1,7)] and 1A to the remaining part of line 1. Line 1 is <= 27/16.
+The remaining is the case N=8, ord=1 chamber [4] which is <= 19.79.
+
+[4b] Apply 9A to [(1,1),(1,2),(2,2)]. Apply 1A to [(2,3)] and 8C to the remaining part of lines 1-2. Lines 1-2 together are <= 2*2.
+The remaining is the case N=7, ord=1 chamber [4] which is <= 19.79.
+....................................................
+
+[5a-b]
+[+ + + + + - -]/[- + + + + - -]
+
++ + + + + - +'                            - - - - - + -'
+  + + + + - +'           <=  16             + + + + - +'           <=  128
+    + + + - +'                                + + + - +'
+      + + - +'                                  + + - +'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[5a] Apply 11B to [(1,5),(1,6),(1,7)] and 1A to the remaining part of line 1. Line 1 is <= 1.
+The remaining is the case N=8, ord=1 chamber [5] which is <= 16.
+
+[5b] Apply 9A to [(1,1),(1,2),(2,2)]. Apply 5A to [(1,3),(2,3)] and [(1,4),(2,4)]. Apply 1A to [(2,5)].
+Apply 1H to the remaining part of lines 1-2. Lines 1-2 together are <= 2*4.
+The remaining is the case N=7, ord=1 chamber [4] which is <= 16.
+....................................................
+
+[6a-b]
+[+ + + + - + +]/[- + + + - + +]
+
++ + + + - - -'                            - - - - + + +'
+  + + + - - -'           <=  39.58          + + + - - -'           <=  133.6
+    + + - - -'                                + + - - -'
+      + - - -'                                  + - - -'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[6a] Apply 3A to [(1,1),(1,5)] and [(1,2),(1,6)]. Apply 4B to [(1,3),(1,4),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 chamber [6] which is <= 39.58.
+
+[6b] Apply 9A to [(1,1),(1,2),(2,2)]. Apply 1A to [(1,5)]. Apply 3A to [(2,3),(2,5)].
+Apply 2H to the remaining parts of lines 1-2. Lines 1-2 together are <= 2*2.
+The remaining is the case N=7, ord=1 chamber [6] which is <= 32M.
+....................................................
+
+[7a-b]
+[+ + + + - + -]/[- + + + - + -]
+
++ + + + - - +'                            - - - - + + -'
+  + + + - - +'           <=  23.38          + + + - - +'           <=  46.74
+    + + - - +'                                + + - - +'
+      + - - +'                                  + - - +'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[7a] Apply 1A to [(1,1)]. Apply 3A to [(1,2),(1,5)] and [(1,3),(1,6)]. Apply 3B to [(1,4),(1,7)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [7] which is <= 23.38.
+
+[7b] Apply 5A to [(1,2),(2,2)]. Apply 3A to [(2,3),(2,5)]. Apply 11B to [(2,4),(2,6),(2,7)].
+These terms together are <= 1. The remaining of the scheme is the case N=8, ord=1 chamber [- + + - + -] (number [39]) which is <= 46.74.
+....................................................
+
+[8a-b]
+[+ + + + - - +]/[- + + + - - +]
+
++ + + + - + +'                            - - - - + - -'
+  + + + - + +'           <=  16             + + + - + +'           <=  37.93
+    + + - + +'                                + + - + +'
+      + - + +'                                  + - + +'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[8a] Apply 1A to [(1,1)], [(1,2)], [(1,3)]. Apply 3A to [(1,4),(1,5)]. Apply 3B to [(1,6),(1,7)]. Line 1 is <=1.
+The remaining is the case N=8, ord=1 chamber [8] which is <= 16.
+
+[8b] Apply 9A to [(1,1),(1,5),(2,5)]. Apply 5A to [(1,2),(2,2)], [(1,3),(2,3)], [(1,4),(2,4)].
+Apply 4H to [(1,6),(1,7),(2,6),(2,7)]. Lines 1-2 together are <= 2*32/27.
+The remaining is the case N=7, ord=1 chamber [8] which is <= 16.
+....................................................
+
+[9a-b]
+[+ + + + - - -]/[- + + + - - -]
+
++ + + + - + -'                            - - - - + - +'
+  + + + - + -'           <=  19.79          + + + - + -'           <=  93.82
+    + + - + -'                                + + - + -'
+      + - + -'                                  + - + -'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[9a] Apply 1A to [(1,1)] and [(1,2)]. Apply 3A to [(1,3),(1,5)]. Apply 4B to [(1,4),(1,6),(1,7)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [9] which is <= 19.79.
+
+[9b] Apply 9A to [(1,1),(1,2),(2,2)]. Apply 5A to [(1,3),(2,3)], [(1,4),(2,4)]. Apply 1A to [(2,4)].
+Apply 5C to the remaining part of lines 1-2. Lines 1-2 together are <= 2*64/27.
+The remaining is the case N=7, ord=1 chamber [9] which is <= 19.79.
+....................................................
+
+[10a-b]
+[+ + + - + + +]/[- + + - + + +]
+
++ + + - - - -'                            - - - + + + +'
+  + + - - - -'           <=  141.56         + + - - - -'           <=  128M
+    + - - - -'                                + - - - -'
+      - - - -'                                  - - - -'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[10a] Apply 5A to [(1,1),(1,4)]. Apply 14E to [(1,2),(1,3),(1,6),(1,7)]. The remaining term [(1,5)] is <=2.
+First line is <= (3456/3125)*2. The remaining is the case N=8, ord=1 chamber [10] which is <= 64.
+
+[10b] Apply 9A to [(1,1),(1,4),(2,4)]. Apply 1A to [(1,5)]. Apply 3A to [(2,2),(2,5)].
+Apply 2H to the remaining part of lines 1-2. Lines 1-2 together are <= 2*2.
+The remaining is the case N=7, ord=1 chamber [10] which is <= 32M.
+....................................................
+
+[11a-b]
+[+ + + - + + -]/[- + + - + + -]
+
++ + + - - - +'                            - - - + + + -'
+  + + - - - +'           <=  77.52          + + - - - +'           <=  65.4
+    + - - - +'                                + - - - +'
+      - - - +'                                  - - - +'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[11a] Apply 3A to [(1,1),(1,4)], [(1,2),(1,5)], and [(1,3),(1,6)]. Apply 7B to [(1,7)]. The first line is <= 2.
+The remaining is the case N=8, ord=1 chamber [11] which is <= 38.76.
+
+[11b] Apply 9A to [(1,1),(1,5),(2,5)]. Apply 7A to [(1,2),(2,2),(1,4),(2,4)]. Apply 5H to the remaining parts of Lines 1-2.
+Lines 1-2 together are <= 2. The remaining is the case N=7, ord=1 chamber [11] which is <= 32.7.
+....................................................
+
+[12a-b]
+[+ + + - + - +]/[- + + - + - +]
+
++ + + - - + +'                            - - - + + - -'
+  + + - - + +'           <=  32M            + + - - + +'           <=  128
+    + - - + +'                                + - - + +'
+      - - + +'                                  - - + +'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[12a] Apply 1A to [(1,1)]. Apply 3A to [(1,2),(1,4)] and [(1,3),(1,5)]. Apply 3B to [(1,6),(1,7)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [12] which is <= 32M.
+
+[12b] [(1,1)] is <= 2. Apply 3A to [(2,2),(2,4)] and [(2,3),(2,5)]. Apply 3B to [(2,6),(2,7)].
+All terms we have mentioned together are <=2. The remaining part of the scheme is the case N=8, ord=1 chamber [- + - + - +] (number [44]) which is <= 64.
+....................................................
+
+[13a-b]
+[+ + + - + - -]/[- + + - + - -]
+
++ + + - - + -'                            - - - + + - +'
+  + + - - + -'           <=  39.58          + + - - + -'           <=  108
+    + - - + -'                                + - - + -'
+      - - + -'                                  - - + -'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[13a] Apply 3A to [(1,1),(1,4)], [(1,2),(1,5)]. Apply 4B to [(1,3),(1,6),(1,7)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [13] which is <= 39.58.
+
+[13b] Apply 2D to [(1,2),(2,2),(2,4),(2,5)]. Apply 4B to [(2,3),(2,6),(2,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=1 chamber [- + - + - -] [45] which is <= 64.
+....................................................
+
+[14a-b]
+[+ + + - - + +]/[- + + - - + +]
+
++ + + - + + +'                            - - - + - - -'
+  + + - + + +'           <=  32             + + - + + +'           <=  75.9
+    + - + + +'                                + - + + +'
+      - + + +'                                  - + + +'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[14a] Apply 1A to [(1,1)], [(1,2)], [(1,5)]. Apply 3A to [(1,3),(1,4)]. Apply 3B to [(1,6),(1,7)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [14] which is <= 32.
+
+[14b] [(1,1)] is <= 2. Apply 5A to [(1,2),(2,2)] and [(1,5),(2,5)]. Apply 7A to [(1,3),(1,4),(2,3),(2,4)]. Apply 4H to [(1,6),(1,7),(2,6),(2,7)].
+Lines 1-2 together are <= 2*1*1*1*32/27. The remaining is the case N=7, ord=1 chamber [14] which is <= 32.
+....................................................
+
+[15a-b]
+[+ + + - - + -]/[- + + - - + -]
+
++ + + - + + -'                            - - - + - - +'
+  + + - + + -'           <=  23.38          + + - + + -'           <=  55.5
+    + - + + -'                                + - + + -'
+      - + + -'                                  - + + -'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[15a] Apply 1A to [(1,1)] and [(1,2)]. Apply 3A to [(1,3),(1,4)].  Apply 4B to [(1,5),(1,6),(1,7)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [15] which is <= 23.38.
+
+[15b] Apply 5A to [(1,2),(2,2)]. Apply 7A to [(1,3),(1,4),(2,3),(2,4)]. Apply 6A to [(1,5),(2,5)]. Apply 5C to [(1,1),(1,5),(1,6),(1,7),(2,5),(2,6),(2,7)].
+Lines 1-2 together are <= 64/27. The remaining is the case N=7, ord=1 chamber [15] which is <= 23.38.
+....................................................
+
+[16a-b]
+[+ + + - - - +]/[- + + - - - +]
+
++ + + - + - -'                            - - - + - + +'
+  + + - + - -'           <=  39.58          + + - + - -'           <=  64M
+    + - + - -'                                + - + - -'
+      - + - -'                                  - + - -'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[16a] Apply 4B to [(1,1),(1,2),(1,7)]. Apply 3A to [(1,3),(1,4)] and [(1,5),(1,6)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [16] which is <= 39.58.
+
+[16b] Apply 7A to [(1,3),(1,4),(2,3),(2,4)]. Apply 8C to the remaining part of lines 1-2. Lines 1-2 together are <= 2.
+The remaining is the case N=7, ord=1 chamber [16] which is <= 32M.
+....................................................
+
+[17a-b]
+[+ + + - - - -]/[- + + - - - -]
+
++ + + - + - +'                            - - - + - + -'
+  + + - + - +'           <=  32             + + - + - +'           <=  128
+    + - + - +'                                + - + - +'
+      - + - +'                                  - + - +'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[17a] Apply 1A to [(1,1)]. Apply 3B to [(1,2),(1,7)]. Apply 3A to [(1,3),(1,4)] and [(1,5),(1,6)]. First line is <=1.
+The remaining is the case N=8, ord=1 chamber [17] which is <= 32.
+
+[17b] [(1,1)] is <= 2. Apply 5A to [(1,2),(2,2)]. Apply 1A to [(2,3)]. Apply 6C to the remaining part of lines 1-2.
+Lines 1-2 together are <= 2*2. The remaining is the case N=7, ord=1 chamber [17] which is <= 32.
+....................................................
+
+[18a-b]
+[+ + - + + + +]/[- + - + + + +]
+
++ + - - - - -'                            - - + + + + +'
+  + - - - - -'           <=  108            + - - - - -'           <=  75.9
+    - - - - -'                                - - - - -'
+      + + + +'                                  + + + +'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[18a] Apply 2D to [(1,4),(2,4),(3,4),(4,4)]. Apply 1A to [(4,5)]. Apply 3B to [(4,6),(4,7)].
+All terms we have mentioned together are <= 27/16. The remaining is the case N=8, ord=1 chamber [+ + - + + +] [10] which is <= 64.
+
+[18b] Apply 1A to [(1,4)]. Apply 1D to [(2,4),(3,4),(4,4)]. Apply 1A to [(4,5)]. Apply 3B to [(4,6),(4,7)].
+All terms we have mentioned together are <= 32/27. The remaining is the case N=8, ord=1 chamber [42] which is <= 64.
+....................................................
+
+[19a-b]
+[+ + - + + + -]/[- + - + + + -]
+
++ + - - - - +'                            - - + + + + -'
+  + - - - - +'           <=  144.4          + - - - - +'           <=  69.3
+    - - - - +'                                - - - - +'
+      + + + -'                                  + + + -'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[19a] Apply 12B to [(1,7)] and then Apply 7H to the first line. First line is <= 2.85.
+The remaining is the case N=8, ord=1 chamber [19] which is <= 50.65.
+
+[19b] Apply 1A to [(1,4)]. Apply 1D to [(2,4),(3,4),(4,4)]. Apply 4B to [(4,5),(4,6),(4,7)].
+All terms we have mentioned together are <= 32/27. The remaining is the case N=8, ord=1 chamber [- + - + + -] [43] which is <= 58.4.
+....................................................
+
+[20a-b]
+[+ + - + + - +]/[- + - + + - +]
+
++ + - - - + +'                            - - + + + - -'
+  + - - - + +'           <=  108M           + - - - + +'           <=  128
+    - - - + +'                                - - - + +'
+      + + - -'                                  + + - -'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[20a] Apply 3A to [(1,1),(1,3)] and [(1,2),(1,4)]. Apply 3B to [(1,6),(1,7)]. [(1.5)] is <=2.
+First line is <= 2. The remaining is the case N=8, ord=1 chamber [20] which is <= 54M.
+
+[20b] Apply1A to [(1,4)]. Apply 1D to [(2,4),(3,4),(4,4)]. Apply 5E to [(4,5),(4,6),(4,7)].
+These terms together are <= (32/27)*(27/16) = 2. The remaining of the scheme is the case N=8, ord=1 chamber [- + - + - +] (number [44]) which is <= 64.
+....................................................
+
+[21a-b]
+[+ + - + + - -]/[- + - + + - -]
+
++ + - - - + -'                            - - + + + - +'
+  + - - - + -'           <=  114.5          + - - - + -'           <=  75.9
+    - - - + -'                                - - - + -'
+      + + - +'                                  + + - +'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[21a] Apply 1D to [(1,2),(1,3),(1,4)] and [(2,2),(2,3),(2,4)]. Apply 10C to the remaining part of lines 1-2.
+Lines 1-2 together is <= (32/27)*(32/27)*2.44. The remaining is the case N=7, ord=1 [21] which is <= 32M.
+
+[21b] Apply 1A to [(1,4)]. Apply 1D to [(2,4),(3,4),(4,4)]. Apply 11B to [(4,5),(4,6),(4,7)].
+These terms together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [- + - + - -] (number [45]) which is <= 64.
+....................................................
+
+[22a-b]
+[+ + - + - + +]/[- + - + - + +]
+
++ + - - + + +'                            - - + + - - -'
+  + - - + + +'           <=  64             + - - + + +'           <=  151.8
+    - - + + +'                                - - + + +'
+      + - - -'                                  + - - -'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[22a] Apply 3A to [(1,1),(1,3)] and [(1,2),(1,4)]. Apply 1A to [(1,5)]. Apply 3B to [(1,6),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 chamber [22] which is <= 64.
+
+[22b][(1,1)] is <= 2. Apply 1D to [(2,2),(2,3),(2,4)]. Apply 1A to [(2,5)]. Apply 3B to [(2,6),(2,7)].
+All terms we have mentioned together are <= 2*32/27.
+The remaining part of the scheme is the case N=8, ord=1 chamber [- - + - + +] (number [54]) which is <= 64.
+....................................................
+
+[23a-b]
+[+ + - + - + -]/[- + - + - + -]
+
++ + - - + + -'                            - - + + - - +'
+  + - - + + -'           <=  39.58          + - - + + -'           <=  64M
+    - - + + -'                                - - + + -'
+      + - - +'                                  + - - +'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[23a] Apply 3A to [(1,1),(1,3)] and [(1,2),(1,4)]. Apply 4B to [(1,5),(1,6),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 chamber [23] which is <= 39.58.
+
+[23b] Apply 7A to [(1,2),(1,3),(2,2),(2,3)]. Apply 9C to the remaining part of lines 1-2. Lines 1-2 together are <= 2.
+The remaining is the case N=7, ord=1 chamber [23] which is <= 32M.
+
+....................................................
+
+[24a-b]
+[+ + - + - - +]/[- + - + - - +]
+
++ + - - + - -'                            - - + + - + +'
+  + - - + - -'           <=  108            + - - + - -'           <=  64M
+    - - + - -'                                - - + - -'
+      + - + +'                                  + - + +'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[24a] Apply 3A to [(1,1),(1,3)] and [(1,2),(1,4)]. Apply 5E to [(1,5),(1,6),(1,7)]. First line is <= 27/16.
+The remaining is the case N=8, ord=1 chamber [24] which is <= 64.
+
+[24b] Apply 5A to [(1,3),(2,3)] and [(1,4),(2,4)]. Apply 8C to the remaining part of lines 1-2. Lines 1-2 together are <= 2.
+The remaining is the case N=7, ord=1 chamber [24] which is <= 32M.
+....................................................
+
+[25a-b]
+[+ + - + - - -]/[- + - + - - -]
+
++ + - - + - +'                            - - + + - + -'
+  + - - + - +'           <=  39.58          + - - + - +'           <=  108M
+    - - + - +'                                - - + - +'
+      + - + -'                                  + - + -'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[25a] Apply 3A to [(1,1),(1,3)] and [(1,2),(1,4)]. Apply 11B to [(1,5),(1,6),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 chamber [25] which is <= 39.58.
+
+[25b] Apply 2D to [(1,2),(2,2),(2,3),(2,4)]. Apply 11B to [(2,5),(2,6),(2,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=1 chamber [- - + - - -] [57] which is <= 64M.
+....................................................
+
+[26a-b]
+[+ + - - + + +]/[- + - - + + +]
+
++ + - + + + +'                            - - + - - - -'
+  + - + + + +'           <=  32M            + - + + + +'           <=  128
+    - + + + +'                                - + + + +'
+      - - - -'                                  - - - -'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[26a] Apply 1A to [(1,1)], [(1,4)] and [(1,5)]. Apply 3A to [(1,2),(1,3)]. Apply 3B to [(1,6),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [26] which is <= 32M.
+
+[26b] [(1,1)] is <= 2. Apply 3A to [(2,2),(2,3)]. Apply 1A to [(2,4)] and [(2,5)]. Apply 3B to [(2,6),(2,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=1 chamber [- - - + + +] [58] which is <= 64.
+....................................................
+
+[27a-b]
+[+ + - - + + -]/[- + - - + + -]
+
++ + - + + + -'                            - - + - - - +'
+  + - + + + -'           <=  29.6           + - + + + -'           <=  58.4
+    - + + + -'                                - + + + -'
+      - - - +'                                  - - - +'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[27a] Apply 1A to [(1,1)] and [(1,4)]. Apply 3A to [(1,2),(1,3)]. Apply 4B to [(1,5),(1,6),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [27] which is <= 29.6.
+
+[27b] [(1,1)] is <= 2. Apply 3A to [(2,2),(2,3)]. Apply 1A to [(2,4)]. Apply 4B to [(2,5),(2,6),(2,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=1 chamber [- - - + + -] [58] which is <= 29.20.
+....................................................
+
+[28a-b]
+[+ + - - + - +]/[- + - - + - +]
+
++ + - + + - -'                            - - + - - + +'
+  + - + + - -'           <=  39.58          + - + + - -'           <=  141.6
+    - + + - -'                                - + + - -'
+      - - + +'                                  - - + +'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[28a] Apply 3A to [(1,2),(1,3)] and [(1,5),(1,6)]. Apply 4B to [(1,1),(1,4),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [28] which is <= 39.58.
+
+[28b] [(1,1)] is <= 2. Apply 3A to [(2,2),(2,3)]. Apply 14E to [(2,4),(2,5),(2,6),(2,7)].
+All terms we have mentioned together are <= 2*3456/3125. The remaining part of the scheme is the case N=8, ord=1 chamber [- - - + - +] [60] which is <= 64.
+....................................................
+
+[29a-b]
+[+ + - - + - -]/[- + - - + - -]
+
++ + - + + - +'                            - - + - - + -'
+  + - + + - +'           <=  32M            + - + + - +'           <=  128
+    - + + - +'                                - + + - +'
+      - - + -'                                  - - + -'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[29a] Apply 1A to [(1,1)]. Apply 3A to [(1,2),(1,3)] and [(1,5),(1,6)]. Apply 3B to [(1,4),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [29] which is <= 32M.
+
+[29b] [(1,1)] is <= 2.  Apply 3A to [(2,2),(2,3)] and [(2,5),(2,6)]. Apply 3B to [(2,4),(2,7)].
+All terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=1 chamber [- - - + - -] [61] which is <= 64.
+....................................................
+
+[30a-b]
+[+ + - - - + +]/[- + - - - + +]
+
++ + - + - - -'                            - - + - + + +'
+  + - + - - -'           <=  108            + - + - - -'           <=  75.9
+    - + - - -'                                - + - - -'
+      - + + +'                                  - + + +'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[30a] Apply 3A to [(1,2),(1,3)] and [(1,4),(1,5)]. Apply 5E to [(1,1),(1,6),(1,7)].
+First line is <= 27/16. The remaining is the case N=8, ord=1 chamber [30] which is <= 64.
+
+[30b] Apply 1A to [(1,6)]. Apply 1D to [(2,6),(3,6),(4,6)]. Apply 4E to [(5,6),(6,6),(6,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [- + - - - +] [48] which is <= 64.
+....................................................
+
+[31a-b]
+[+ + - - - + -]/[- + - - - + -]
+
++ + - + - - +'                            - - + - + + -'
+  + - + - - +'           <=  39.58          + - + - - +'           <=  108M
+    - + - - +'                                - + - - +'
+      - + + -'                                  - + + -'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[31a]  Apply 3A to [(1,2),(1,3)] and [(1,4),(1,5)]. Apply 11B to [(1,1),(1,6),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [31] which is <= 39.58.
+
+[31b] Apply 2D to [(1,2),(2,2),(2,3),(2,5)]. Apply 11B to [(2,4),(2,6),(2,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=1 chamber [- - - - + -] [63] which is <= 64M.
+....................................................
+
+[32a-b]
+[+ + - - - - +]/[- + - - - - +]
+
++ + - + - + +'                            - - + - + - -'
+  + - + - + +'           <=  32M            + - + - + +'           <=  128
+    - + - + +'                                - + - + +'
+      - + - -'                                  - + - -'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[32a] Apply 1A to [(1,1)]. Apply 3A to [(1,2),(1,3)] and [(1,4),(1,5)]. Apply 3B to [(1,6),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [32] which is <= 32M.
+
+[32b] [(1,1)] is <= 2. Apply 3A to [(2,2),(2,3)] and [(2,4),(2,5)]. Apply 3B to [(2,6),(2,7)].
+The mentioned terms together are <= 2. The remaining is the case N=8, ord=1 chamber [- - - - - +] number [64] which is <= 64.
+....................................................
+
+[33a-b]
+[+ + - - - - -]/[- + - - - - -]
+
++ + - + - + -'                            - - + - + - +'
+  + - + - + -'           <=  39.58          + - + - + -'           <=  108
+    - + - + -'                                - + - + -'
+      - + - +'                                  - + - +'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[33a] Apply 3A to [(1,2),(1,3)] and [(1,4),(1,5)]. Apply 4B to [(1,1),(1,6),(1,7)].
+First line is <= 1. The remaining is the case N=8, ord=1 chamber [32] which is <= 39.58.
+
+[33b] Apply 2D to [(1,2),(2,2),(2,3),(2,5)]. Apply 4B to [(2,4),(2,6),(2,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the case N=8, ord=1 chamber [- - - - - -] [1] which is <= 64.
+....................................................
+
+[34a-b]
+[+ - + + + + +]/[- - + + + + +]
+
++ - - - - - -'                            - + + + + + +'
+  - - - - - -'           <=  75.9           - - - - - -'           <=  16
+    + + + + +'                                + + + + +'
+      + + + +'                                  + + + +'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[34a] Apply 1D to [(1,3),(2,3),(3,3)]. Apply 1A to [(3,4)] and [(3,5)]. Apply 3B to [(3,6),(3,7)].
+The terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + + + +] number [18] which is <= 64.
+
+[34b] [(1,1)] is <=2. Apply 1A to [(1,2)], [(1,3)], [(1,4)] and [(1,5)]. Apply 3B to [(1,6),(1,7)].
+The terms we have mentioned together are <= 2. The remaining part of the scheme is the case N=8, ord=1 chamber [- + + + + +] number [34] which is <= 8.
+....................................................
+
+[35a-b]
+[+ - + + + + -]/[- - + + + + -]
+
++ - - - - - +'                            - + + + + + -'
+  - - - - - +'           <=  60.1           - - - - - +'           <=  29.3
+    + + + + -'                                + + + + -'
+      + + + -'                                  + + + -'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[35a] Apply 1D to [(1,3),(2,3),(3,3)]. Apply 1A to [(3,4)]. Apply 4B to [(3,5),(3,6),(3,7)].
+The terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + + + -] number [19] which is <= 50.65.
+
+[35b] Apply 1A to [(1,3)] and [(3,4)]. Apply 5A to [(2,3),(3,3)]. Apply 4B to [(3,5),(3,6),(3,7)].
+The terms we have mentioned together are <= 1. The remaining part of the scheme is the case N=8, ord=1 chamber [- - + + + -] number [51] which is <= 29.22.
+....................................................
+
+[36a-b]
+[+ - + + + - +]/[- - + + + - +]
+
++ - - - - + +'                            - + + + + - -'
+  - - - - + +'           <=  73.9           - - - - + +'           <=  73.9
+    + + + - -'                                + + + - -'
+      + + - -'                                  + + - -'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[36a] Apply 1D to [(1,3)(2,3),(3,3)]. Apply 14E to [(3,4),(3,5),(3,6),(3,7)].
+The terms we have mentioned together are <= (32/27)*(3456/3125). The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + + - +] number [20] which is <= 54M.
+
+[36b] Apply 1A to [(1,3)]. Apply 5A to [(2,3),(3,3)]. Apply 14E to [(3,4),(3,5),(3,6),(3,7)].
+The terms we have mentioned together are <= 3456/3125. The remaining part of the scheme is the case N=8, ord=1 chamber [- - + + - +] number [52] which is <= 64M.
+....................................................
+
+[37a-b]
+[+ - + + + - -]/[- - + + + - -]
+
++ - - - - + -'                            - + + + + - +'
+  - - - - + -'           <=  75.9           - - - - + -'           <=  64
+    + + + - +'                                + + + - +'
+      + + - +'                                  + + - +'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[37a] Apply 1D to [(1,3),(2,3),(3,3)]. Apply 1A to [(3,4)]. Apply 11B to [(3,5),(3,6),(3,7)].
+The terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + + - -] number [21] which is <= 64.
+
+[37b] [(1,1)] is <= 2. Apply 1A to [(1,2)] and [(1,3)]. Apply 3A to [(1,4),(1,6)]. Apply 3B to [(1,5),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [37] which is <= 32.
+....................................................
+
+[38a-b]
+[+ - + + - + +]/[- - + + - + +]
+
++ - - - + + +'                            - + + + - - -'
+  - - - + + +'           <=  108            - - - + + +'           <=  151.8
+    + + - - -'                                + + - - -'
+      + - - -'                                  + - - -'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[38a] Apply 2D to [(1,1),(1,2),(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3B to [(1,6),(1,7)]. First line is <= 27/16.
+The remaining is the case N=8, ord=1 [38] which is <= 64.
+
+[38b] Apply 8H to [(1,1),(1,2),(1,7)]. Apply 3A to [(1,2),(1,5)] and [(1,3),(1,6)]. First line is <= 64/27.
+The remaining is the case N=8, ord=1 [38] which is <= 64.
+....................................................
+
+[39a-b]
+[+ - + + - + -]/[- - + + - + -]
+
++ - - - + + -'                            - + + + - - +'
+  - - - + + -'           <=  66.2            - - - + + -'           <=  93.5
+    + + - - +'                                + + - - +'
+      + - - +'                                  + - - +'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[39a] Apply 16B to [(1,3),(2,3),(3,3),(3,7)]. Apply 1D to [(3,5),(3,6),(3,7)].
+These terms together are <= 1.41*32/27. The remaining of the scheme is the case N=8, ord=1 chamber [+ - + - + -] (number [23]) which is <= 39.58.
+
+[39b] [(1,1)] is <=2. Apply 3A to [(1,2),(1,5)] and [(1,3),(1,6)]. Apply 3B to [(1,4),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [39] which is <= 46.74.
+....................................................
+
+[40a-b]
+[+ - + + - - +]/[- - + + - - +]
+
++ - - - + - -'                            - + + + - + +'
+  - - - + - -'           <=  75.9           - - - + - -'           <=  128
+    + + - + +'                                + + - + +'
+      + - + +'                                  + - + +'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[40a] Apply 1D to [(1,3),(2,3),(3,3)]. Apply 3A to [(3,4),(3,5)]. Apply 3B to [(3,6),(3,7)].
+The terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + - - +] number [24] which is <= 64.
+
+[40b] [(1,1)] is <=2. Apply 3A to [(1,2),(1,5)]. Apply 1A to [(1,3)], [(1,4)]. Apply 3B to [(1,6),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [40] which is <= 64.
+....................................................
+
+[41a-b]
+[+ - + + - - -]/[- - + + - - -]
+
++ - - - + - +'                            - + + + - + -'
+  - - - + - +'           <=  55.6           - - - + - +'           <=  47
+    + + - + -'                                + + - + -'
+      + - + -'                                  + - + -'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[41a] Apply 1D to [(1,3),(2,3),(3,3)]. Apply 3A to [(3,4),(3,5)]. Apply 5B to [(3,6),(3,7)].
+The terms we have mentioned together are <= (32/27)*(32/27). The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + - - -] number [25] which is <= 39.58.
+
+[41b] Apply 1A to [(1,3)]. Apply 5A to [(2,3),(3,3)]. Apply 3A to [(3,4),(3,5)]. Apply 5B to [(3,6),(3,7)].
+The terms we have mentioned together are <= 32/27. The remaining part of the scheme is the case N=8, ord=1 chamber [+ - + - - -] number [25] which is <= 39.58.
+....................................................
+
+[42a-b]
+[+ - + - + + +]/[- - + - + + +]
+
++ - - + + + +'                            - + + - - - -'
+  - - + + + +'           <=  128            - - + + + +'           <=  128
+    + - - - -'                                + - - - -'
+      - - - -'                                  - - - -'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[42a] [(1,3)] is <= 2. Apply 3A to [(1,1),(1,2)]. Apply 1A to [(1,4)] and [(1,5)]. Apply 3B to [(1,6),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [42] which is <= 64.
+
+[42b] Apply 5A to [(1,6),(2,6)], [(3,6),(5,6)] and [(4,6),(6,6)]. Apply 7B to [(6,7)]. All terms we have mentioned together are <= 2.
+The remaining part of the scheme is the N=8, ord=1 [- - + - + +], number [54] which is <= 64.
+....................................................
+
+[43a-b]
+[+ - + - + + -]/[- - + - + + -]
+
++ - - + + + -'                            - + + - - - +'
+  - - + + + -'           <=  138.5          - - + + + -'           <=  155.03
+    + - - - +'                                + - - - +'
+      - - - +'                                  - - - +'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[43a] Apply 3A to [(1,1),(1,2)]. Apply 8H to [(1,3),(1,4),(1,7)]. Apply 1A to [(1,5)] and [(1,6)]. First line is <= 64/27.
+The remaining is the case N=8, ord=1 [43] which is <= 58.4.
+
+[43b] [(2,2)] is <=2. Apply 1A [(1,2)]. Apply 5A to [(1,5),(2,5)] and [(1,6),(2,6)]. Apply 5C to the remaining part of lines 1-2.
+Lines 1-2 together are <= 2*64/27. The remaining is the case N=7, ord=1 [11] which is <= 32.7.
+....................................................
+
+[44a-b]
+[+ - + - + - +]/[- - + - + - +]
+
++ - - + + - -'                            - + + - - + +'
+  - - + + - -'           <=  104.1          - - + + - -'           <=  108
+    + - - + +'                                + - - + +'
+      - - + +'                                  - - + +'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[44a] Apply 14H to [(1,3),(2,3),(3,3),(3,4),(3,5)]. Apply 3B to [(3,6),(3,7)].
+All terms we have mentioned together are <= 2.63. The remaining part of the scheme is the N=8, ord=1 [+ - - + - +], number [28] which is <= 39.58.
+
+[44b] Apply 1A to [(1,3)]. Apply 2D to [(2,3),(3,3),(3,4),(3,5)]. Apply 3B to [(3,6),(3,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the N=8, ord=1 [- - - + - +], number [60] which is <= 64.
+....................................................
+
+[45a-b]
+[+ - + - + - -]/[- - + - + - -]
+
++ - - + + - +'                            - + + - - + -'
+  - - + + - +'           <=  128            - - + + - +'           <=  151.8
+    + - - + -'                                + - - + -'
+      - - + -'                                  - - + -'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[45a] [(1,3)] is <=2. Apply 3A to [(1,1),(1,2)] and [(1,4),(1,6)]. Apply 3B to [(1,5),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [45] which is <= 64.
+
+[45b] Apply 3A to [(1,2),(1,4)] and [(1,3),(1,5)]. Apply 8H to [(1,1),(1,6),(1,7)]. First line is <= 64/27.
+The remaining is the case N=8, ord=1 [45] which is <= 64.
+....................................................
+
+[46a-b]
+[+ - + - - + +]/[- - + - - + +]
+
++ - - + - - -'                            - + + - + + +'
+  - - + - - -'           <=  108            - - + - - -'           <=  75.9
+    + - + + +'                                + - + + +'
+      - + + +'                                  - + + +'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[46a] Apply 2D to [(1,3),(2,3),(3,3),(3,4)]. Apply 1A to [(3,5)]. Apply 3B to [(3,6),(3,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the N=8, ord=1 [+ - - - + +], number [30] which is <= 64.
+
+[46b] Apply 1A to [(1,3)]. Apply 1D to [(2,3),(3,3),(3,4)]. Apply 1A to [(3,5)]. Apply 3B to [(3,6),(3,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the N=8, ord=1 [- - - - + +], number [62] which is <= 64.
+....................................................
+
+[47a-b]
+[+ - + - - + -]/[- - + - - + -]
+
++ - - + - - +'                            - + + - + + -'
+  - - + - - +'           <=  66.8           - - + - - +'           <=  79.2
+    + - + + -'                                + - + + -'
+      - + + -'                                  - + + -'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[47a] Apply 2D to [(1,3),(2,3),(3,3),(3,4)]. Apply 4B to [(3,5),(3,6),(3,7)].
+All terms we have mentioned together are <= 27/16. The remaining part of the scheme is the N=8, ord=1 [+ - - - + -], number [31] which is <= 39.58.
+
+[47b] Apply 1A to [(1,3)]. Apply 1D to [(2,3),(3,3),(3,4)]. Apply 1A to [(3,5)]. Apply 3B to [(3,6),(3,7)].
+All terms we have mentioned together are <= 32/27. The remaining part of the scheme is the N=8, ord=1 [- - - - + -], number [63] which is <= 64M.
+....................................................
+
+[48a-b]
+[+ - + - - - +]/[- - + - - - +]
+
++ - - + - + +'                            - + + - + - -'
+  - - + - + +'           <=  128            - - + - + +'           <=  151.8
+    + - + - -'                                + - + - -'
+      - + - -'                                  - + - -'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[48a] [(1,3)] is <= 2. Apply 3A to [(1,1),(1,2)] and [(1,5),(1,6)]. Apply 3B to [(1,6),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [48] which is <= 64.
+
+[48b] Apply 3A to [(1,3),(1,4)] and [(1,5),(1,6)]. Apply 8H to [(1,1),(1,2),(1,7)]. First line is <= 64/27.
+The remaining is the case N=8, ord=1 [48] which is <= 64.
+....................................................
+
+[49a-b]
+[+ - + - - - -]/[- - + - - - -]
+
++ - - + - + -'                            - + + - + - +'
+  - - + - + -'           <=   151.8         - - + - + -'           <=  128
+    + - + - +'                                + - + - +'
+      - + - +'                                  - + - +'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[49a] Apply 3A to [(1,1),(1,3)] and [(1,4),(1,5)]. Apply 8H to [(1,2),(1,6),(1,7)]. First line is <= 64/27.
+The remaining is the case N=8, ord=1 [49] which is <= 64.
+
+[49b] [(1,1)] is <= 2. Apply 3A to [(1,3),(1,4)] and [(1,5),(1,6)]. Apply 3B to [(1,2),(1,7)]. First line is <= 2.
+The remaining is the case N=8, ord=1 [49] which is <= 64.
+....................................................
+
+[50a-b]
+[+ - - + + + +]/[- - - + + + +]
+
++ - + + + + +'                            - + - - - - -'
+  - + + + + +'           <=  64             - + + + + +'           <=  64
+    - - - - -'                                - - - - -'
+      + + + +'                                  + + + +'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[50a] Apply 3A to [(1,1),(1,2)]. Apply [(1,3)], [(1,4)] and [(1,5)]. Apply 3B to [(1,6),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 [50] which is <= 64.
+
+[50b] Apply 5A to [(1,4),(2,4)] and [(3,4),(4,4)]. Apply 1A to [(4,5)]. Apply 3B to [(4,6),(4,7)].
+All terms we have mentioned together are <= 1. The remaining part of the scheme is the N=8, ord=1 [- - - + + +], number [58] which is <= 64.
+....................................................
+
+[51a-b]
+[+ - - + + + -]/[- - - + + + -]
+
++ - + + + + -'                            - + - - - - +'
+  - + + + + -'           <=  29.3           - + + + + -'           <=  29.2
+    - - - - +'                                - - - - +'
+      + + + -'                                  + + + -'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[51a] Apply 3A to [(1,1),(1,2)]. Apply 1A to [(1,3)]. Apply 4B to [(1,5),(1,6),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 [51] which is <= 29.22.
+
+[51b] Apply 5A to [(1,4),(2,4)] and [(3,4),(4,4)]. Apply 4B to [(4,5),(4,6),(4,7)].
+All terms we have mentioned together are <= 1. The remaining is the case N=8, ord=1 [- - - + + -] number [59] which is <= 29.20.
+....................................................
+
+[52a-b]
+[+ - - + + - +]/[- - - + + - +]
+
++ - + + + - -'                            - + - - - + +'
+  - + + + - -'           <=  64M            - + + + - -'           <=  89.9
+    - - - + +'                                - - - + +'
+      + + - -'                                  + + - -'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[52a] Apply 3A to [(1,1),(1,2)] and [(1,3),(1,6)]. Apply 4B to [(1,4),(1,5),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 [52] which is <= 64M.
+
+[52b] Apply 5A to [(1,4),(2,4)]. Apply 1D to [(3,4),(4,4),(4,6)]. Apply 5B to [(4,5),(4,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining is the case N=8, ord=1 [- - - + - +] number [60] which is <= 64.
+....................................................
+
+[53a-b]
+[+ - - + + - -]/[- - - + + - -]
+
++ - + + + - +'                            - + - - - + -'
+  - + + + - +'           <=  64             - + + + - +'           <=  64
+    - - - + -'                                - - - + -'
+      + + - +'                                  + + - +'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[53a] Apply 3A to [(1,1),(1,2)] and [(1,3),(1,6)]. Apply 1A to [(1,4)]. Apply 3B to [(1,5),(1,7)]. First line is <= 1.
+The remaining is the case N=8, ord=1 [52] which is <= 64.
+
+[53b] Apply 5A to [(1,4),(2,4)] and [(3,4),(4,4)]. Apply 11B to [(4,5),(4,6),(4,7)].
+All terms we have mentioned together are <= 1. The remaining is the case N=8, ord=1 [- - - + - -] number [61] which is <= 64.
+....................................................
+
+[54a-b]
+[+ - - + - + +]/[- - - + - + +]
+
++ - + + - - -'                            - + - - + + +'
+  - + + - - -'           <=  66.2           - + + - - -'           <=  151.8
+    - - + + +'                                - - + + +'
+      + - - -'                                  + - - -'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[54a] Apply 1D to [(1,6),(2,6),(3,6)]. Apply 16B to [(4,6),(5,6),(6,6),(6,7)].
+All terms we have mentioned together are <= (32/27)*1.41. The remaining is the case N=8, ord=1 [+ - - + - +] number [28] which is <= 39.58.
+
+[54b] [(1,1)] is <= 2. Apply 1D to [(1,2),(1,3),(1,4)]. Apply 1A to [(1,6)]. Apply 3B to [(1,6),(1,7)].
+First line is <= 2*32/27. The remaining is the case N=8, ord=1 [54] which is <= 64.
+....................................................
+
+[55a-b]
+[+ - - + - + -]/[- - - + - + -]
+
++ - + + - - +'                            - + - - + + -'
+  - + + - - +'           <=  64M            - + + - - +'           <=  149.7
+    - - + + -'                                - - + + -'
+      + - - +'                                  + - - +'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/4)                               -' 2R^(1/4)
+
+[55a] Apply 3A to [(1,1),(1,2)], [(1,3),(1,5)] and [(1,4),(1,6)]. Apply 7B to [(1,7)].
+First line is <= 2. The remaining is the case N=8, ord=1 [55] which is <= 64M.
+
+[55b] Apply 5A to [(1,4),(2,4)]. Apply 11H to [(3,4),(4,4),(4,5),(4,6),(4,7)].
+All terms we have mentioned together are <= 2.24. The remaining is the case N=8, ord=1 [- - - - + -] number [63] which is <= 64M.
+....................................................
+
+[56a-b]
+[+ - - + - - +]/[- - - + - - +]
+
++ - + + - + +'                            - + - - + - -'
+  - + + - + +'           <=  64             - + + - + +'           <=  75.9
+    - - + - -'                                - - + - -'
+      + - + +'                                  + - + +'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[56a] Apply 3A to [(1,1),(1,2)] and [(1,3),(1,5)]. Apply 1A to [(1,4)]. Apply 3B to [(1,6),(1,7)].
+First line <= 1. The remaining is the case N=8, ord=1 [56] which is <= 64.
+
+[56b] Apply 5A to [(1,4),(2,4)]. Apply 1D to [(3,4),(4,4),(4,5)]. Apply 3B to [(4,6),(4,7)].
+All terms we have mentioned together are <= 32/27. The remaining is the case N=8, ord=1 [- - - - - +] number [64] which is <= 64.
+....................................................
+
+[57a-b]
+[+ - - + - - -]/[- - - + - - -]
+
++ - + + - + -'                            - + - - + - +'
+  - + + - + -'           <=  64M            - + + - + -'           <=  89.9
+    - - + - +'                                - - + - +'
+      + - + -'                                  + - + -'
+        - + -'                                    - + -'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[57a] Apply 3A to [(1,1),(1,2)] and [(1,3),(1,5)]. Apply 4B to [(1,4),(1,6),(1,7)].
+First line <= 1. The remaining is the case N=8, ord=1 [57] which is <= 64M.
+
+[57b] Apply 5A to [(1,4),(2,4)]. Apply 1D to [(3,4),(4,4),(4,5)]. Apply 5B to [(4,6),(4,7)].
+All terms we have mentioned together are <= (32/27)*(32/27). The remaining is the case N=8, ord=1 [- - - - - -] number [1] which is <= 64.
+....................................................
+
+[58a-b]
+[+ - - - + + +]/[- - - - + + +]
+
++ - + - - - -'                            - + - + + + +'
+  - + - - - -'           <=  75.9           - + - - - -'           <=  128
+    - + + + +'                                - + + + +'
+      - - - -'                                  - - - -'
+        + + +'                                    + + +'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[58a] Apply 1D to [(1,6),(2,6),(3,6)] Apply 5A to [(4,6),(5,6)]. Apply 3B to [(6,6),(6,7)].
+All terms we have mentioned together are <= 32/27. The remaining is the case N=8, ord=1 [+ - - - + +] number [40] which is <= 64.
+
+[58b] [(1,1)] is <= 2. Apply 3A to [(1,2),(1,3)]. Apply 1A to [(1,3)], [(1,4)]. Apply 3B to [(1,6),(1,7)].
+First line <= 2. The remaining is the case N=8, ord=1 [58] which is <= 64.
+....................................................
+
+[59a-b]
+[+ - - - + + -]/[- - - - + + -]
+
++ - + - - - +'                            - + - + + + -'
+  - + - - - +'           <=  55.6           - + - - - +'           <=  58.4
+    - + + + -'                                - + + + -'
+      - - - +'                                  - - - +'
+        + + -'                                    + + -'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[59a] Apply 1D to [(1,5),(2,5),(3,5)]. Apply 5A to [(4,5),(5,5)]. Apply 5B to [(5,6),(5,7)].
+All terms we have mentioned together are <= (32/16)*(32/16). The remaining is the case N=8, ord=1 [+ - - - + -] number [31] which is <= 39.58.
+
+[59b] [(1,1)] is <= 2. Apply 3A to [(1,2),(1,3)]. Apply 1A to [(1,4)]. Apply 3B to [(1,5),(1,6),(1,7)].
+First line <= 2. The remaining is the case N=8, ord=1 [59] which is <= 29.20.
+....................................................
+
+[60a-b]
+[+ - - - + - +]/[- - - - + - +]
+
++ - + - - + +'                            - + - + + - -'
+  - + - - + +'           <=  75.9           - + - - + +'           <=  151.8
+    - + + - -'                                - + + - -'
+      - - + +'                                  - - + +'
+        + - -'                                    + - -'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[60a] Apply 3A to [(1,1),(1,2)]. Apply 1D to [(1,3),(1,4),(1,5)]. Apply 3B to [(1,6),(1,7)].
+First line <= 32/27. The remaining is the case N=8, ord=1 [60] which is <= 64.
+
+[60b] [(1,1)] is <=2. Apply 1D to [(1,2),(1,3),(1,6)]. Apply 3B to [(1,4),(1,5),(1,7)].
+First line <= 2*(32/27). The remaining is the case N=8, ord=1 [60] which is <= 64.
+....................................................
+
+[61a-b]
+[+ - - - + - -]/[- - - - + - -]
+
++ - + - - + -'                            - + - + + - +'
+  - + - - + -'           <=  93.9           - + - - + -'           <=  128
+    - + + - +'                                - + + - +'
+      - - + -'                                  - - + -'
+        + - +'                                    + - +'
+          - +'                                      - +'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[61a] [(5,6)] is <=2. Apply 1D to [(1,5),(2,5),(3,5)]. Apply 4E to [(4,5),(5,5),(5,7)].
+All terms we have mentioned together are <= 2*(32/27). The remaining is the case N=8, ord=1 [+ - - - - -] number [33] which is <= 39.58.
+
+[61b] [(1,1)] is <=2. ]Apply 3A to [(1,1),(1,2)] and [(1,4),(1,6)]. Apply 3B to [(1,5),(1,7)].
+First line <= 2. The remaining is the case N=8, ord=1 [61] which is <= 64.
+....................................................
+
+[62a-b]
+[+ - - - - + +]/[- - - - - + +]
+
++ - + - + + +'                            - + - + - - -'
+  - + - + + +'           <= 64              - + - + + +'           <= 128
+    - + - - -'                                - + - - -'
+      - + + +'                                  - + + +'
+        - - -'                                    - - -'
+          + +'                                      + +'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[62a] Apply 3A to [(1,1),(1,2)] and [(1,3),(1,4)]. Apply 1A to [(1,5)]. Apply 3B to [(1,6),(1,7)].
+First line <= . The remaining is the case N=8, ord=1 [62] which is <= 64.
+
+[62b] Apply 5A to [(1,6),(2,6)], [(3,6),(4,6)] and [(5,6),(6,6)]. Apply 7B to [(6,7)].
+All terms we have mentioned together are <= 2. The remaining is the case N=8, ord=1 [- - - - - +] number [64] which is <= 64.
+....................................................
+
+[63a-b]
+[+ - - - - + -]/[- - - - - + -]
+
++ - + - + + -'                            - + - + - - +'
+  - + - + + -'           <=  64M            - + - + + -'           <=  108
+    - + - - +'                                - + - - +'
+      - + + -'                                  - + + -'
+        - - +'                                    - - +'
+          + -'                                      + -'
+            -' 2R^(1/2)                               -' 2R^(1/2)
+
+[63a] Apply 3A to [(1,1),(1,2)] and [(1,3),(1,4)]. Apply 4B to [(1,5),(1,6),(1,7)].
+First line <= 1. The remaining is the case N=8, ord=1 [63] which is <= 64M.
+
+[63b] Apply 5A to [(1,6),(2,6)], [(3,6),(4,6)]. Apply 5E to [(5,6),(6,6),(6,7)].
+All terms we have mentioned together are <= 27/16. The remaining is the case N=8, ord=1 [- - - - - -] number [1] which is <= 64.
+....................................................
+
+[64a-b]
+[+ - - - - - +]/[- - - - - - +]
+
++ - + - + - -'                            - + - + - + +'
+  - + - + - -'           <=  108            - + - + - -'           <=  128
+    - + - + +'                                - + - + +'
+      - + - -'                                  - + - -'
+        - + +'                                    - + +'
+          - -'                                      - -'
+            +' 2R^(1/2)                               +' 2R^(1/2)
+
+[64a] Apply 2D to [(1,1),(1,2),(1,4),(1,6)]. 4B to [(1,3),(1,5),(1,7)].
+First line <= 27/16. The remaining is the case N=8, ord=1 [64] which is <= 64.
+
+[64b] [(1,1)] is <= 2. Apply 3A to [(1,2),(1,3)] and [(1,4),(1,5)]. Apply 3B to [(1,6),(1,7)].
+First line <= 2. The remaining is the case N=8, ord=1 [64] which is <= 64.
+....................................................

@@ -1,0 +1,927 @@
+N=8, FOURTH ORDER
+
+The function is  (1-b)*(1-b*a)*(1-2*b*a*x*g+(b*a*x)^2)*(1-b*a*x*y)*(1-b*a*x*y*z)*(1-b*a*x*y*z*t)*(1-a)*(1-2*a*x*g+(a*x)^2)*(1-a*x*y)*(1-a*x*y*z)*(1-a*x*y*z*t)*(1-2*x*g+x^2)*(1-x*y)*(1-x*y*z)*(1-x*y*z*t)*(1-2*y*g+y^2)*(1-2*y*z*g+(y*z)^2)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1-z*t)*(1-t)*2*sqrt(1-g^2).
+
+We assume g >= 0 and we examine the 64 cases depending on the possible signs of the variables (b, a, x, y, z, t).
+
+We represent the function as a graphical scheme. In every graphical scheme, the variables are positive and the sign information is seen in the sign in front of the variables, Rules are the following:
+
+ + : it represents the factor (1-x_1 * ... * x_n )
+
+ - : it represents the factor (1+x_1 * ... * x_n )
+
+ +': it represents the factor (1 - 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ -': it represents the factor (1 + 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ R = (1-g^2)
+
+ M = 3^(15/2)/4/7^(7/2)
+
+
+THE UPPER BOUND WE FOUND IS 83.90
+==========================================================================
+[1]
+[- - - - - -]
+
+- + -' +  -  +         <=  83.2
+  - +' -  +  -
+    -' +  -  +
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+Apply 3E to [(3,3),(3,4),(4,4)] multiplied by 2R^(1/2). This is <= 5.2.
+Apply 3A to [(1,4),(1,5)], 1A to [(1,6)] and 5A to [(2,6),(3,6)]. These pieces together are <= 1.
+Apply 17G to the remaining. This is <= 16.
+....................................................
+
+[2]
+[+ + + + + +]
+
++ + +' +  +  +         <=  8
+  + +' +  +  +
+    +' +  +  +
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+Apply 1G to [(4,6),(5,6)] and 1A to the remaining + in the last column. Column 6 is <= 1.
+The remaining is the function for N=7 third ordering in the case [+ + + + +] (chamber [2]), which is <= 8.
+....................................................
+
+[3]
+[+ + + + + -]
+
++ + +' +  +  -         <=  9.49
+  + +' +  +  -
+    +' +  +  -
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+Apply 3B to [(1,2),(1,3)], 3A to [(1,5),(1,6)] and 1A to [(1,1)] and [(1,4)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ + + + -], which coincides with the function
+for N=7 third ordering in the case [- + + + +] (chamber [18]) which is <= 9.49
+....................................................
+
+[4]
+[+ + + + - +]
+
++ + +' +  -  -         <=  32.48
+  + +' +  -  -
+    +' +  -  -
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+Apply 3B to [(1,2),(1,3)] and 3A to [(1,1),(1,5)] and [(1,4),(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ + + - +], which coincides with the function
+for N=7 third ordering in the case [+ - + + +] (chamber [10]) which is <= 32.48
+....................................................
+
+[5]
+[+ + + + - -]
+
++ + +' +  -  +         <=  32M
+  + +' +  -  +
+    +' +  -  +
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+Apply 3B to [(1,2),(1,3)], 3A to [(1,4),(1,5)] and 1A to [(1,1)] and [(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ + + - -], which coincides with the function
+for N=7 third ordering in the case [- - + + +] (chamber [26]) which is <= 32M
+....................................................
+
+[6]
+[+ + + - + +]
+
++ + +' -  -  -         <=  39.21
+  + +' -  -  -
+    +' -  -  -
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+Apply 4E to [(1,2),(1,3),(1,4)] and 1D to [(1,1),(1,5),(1,6)]. Line 1 is <= 32/27.
+The remaining is the function for N=7 fourth ordering in the case [+ + - + +], which coincides with the function
+for N=7 third ordering in the case [+ + - + +] (chamber [6]) which is <= 33.08
+....................................................
+
+[7]
+[+ + + - + -]
+
++ + +' -  -  +         <=  46.48
+  + +' -  -  +
+    +' -  -  +
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 4E to [(1,2),(1,3),(1,4)], 3A to [(1,1),(1,5)] and 1A to [(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ + - + -], which coincides with the function
+for N=7 third ordering in the case [- + - + +] (chamber [22]) which is <= 46.48
+....................................................
+
+[8]
+[+ + + - - +]
+
++ + +' -  +  +         <=  16M
+  + +' -  +  +
+    +' -  +  +
+       -' +  +'
+          -  -
+             + 2R^(1/2)
+
+Apply 4E to [(1,2),(1,3),(1,4)], and 1A to the remaining + in the first line. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ + - - +], which coincides with the function
+for N=7 third ordering in the case [+ - - + +] (chamber [14]) which is <= 16M
+....................................................
+
+[9]
+[+ + + - - -]
+
++ + +' -  +  -         <=  32.48
+  + +' -  +  -
+    +' -  +  -
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+Apply 4E to [(1,2),(1,3),(1,4)], 3A to [(1,5),(1,6)] and 1A to [(1,1)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ + - - -], which coincides with the function
+for N=7 third ordering in the case [- - - + +] (chamber [30]) which is <= 32.48
+....................................................
+
+[10]
+[+ + - + + +]
+
++ + -' -  -  -         <=  39.21
+  + -' -  -  -
+    -' -  -  -
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + - + +] (chamber [6]).
+....................................................
+
+[11]
+[+ + - + + -]
+
++ + -' -  -  +         <=  70.78
+  + -' -  -  +
+    -' -  -  +
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+Apply 11G to the last two columns. Column 5 and 6 together are <= 64/27.
+The remaining is the function for N=6 second ordering in the case [+ + - +] (chamber [4]), which is <= 29.86
+....................................................
+
+[12]
+[+ + - + - +]
+
++ + -' -  +  +         <=  52.59
+  + -' -  +  +
+    -' -  +  +
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+Apply 6E to [(1,1),(1,2),(1,3),(1,4)] and 1A to [(1,5)] and [(1,6)]. Line 1 is <= 3456/3125.
+The remaining is the function for N=7 fourth ordering in the case [+ - + - +], which coincides with the function
+for N=7 third ordering in the case [+ - + - +] (chamber [12]) which is <= 47.55
+....................................................
+
+[13]
+[+ + - + - -]
+
++ + -' -  +  -         <=  62.32
+  + -' -  +  -
+    -' -  +  -
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+Apply 6E to [(1,1),(1,2),(1,3),(1,4)] and 3A to [(1,5),(1,6)]. Line 1 is <= 3456/3125.
+The remaining is the function for N=7 fourth ordering in the case [+ - + - -], which coincides with the function
+for N=7 third ordering in the case [- - + - +] (chamber [28]) which is <= 54M
+....................................................
+
+[14]
+[+ + - - + +]
+
++ + -' +  +  +         <=  19.79
+  + -' +  +  +
+    -' +  +  +
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+Apply 4B to [(1,1),(1,2),(1,3)] and 1A to the remaining + in the first line. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ - - + +], which coincides with the function
+for N=7 third ordering in the case [+ + - - +] (chamber [8]) which is <= 19.79
+....................................................
+
+[15]
+[+ + - - + -]
+
++ + -' +  +  -         <=  39.58
+  + -' +  +  -
+    -' +  +  -
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 4B to [(1,1),(1,2),(1,3)], 1A to [(1,4)] and 3A to [(1,5),(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ - - + -], which coincides with the function
+for N=7 third ordering in the case [- + - - +] (chamber [24]) which is <= 39.58
+....................................................
+
+[16]
+[+ + - - - +]
+
++ + -' +  -  -         <=  39.21
+  + -' +  -  -
+    -' +  -  -
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+Apply 4B to [(1,1),(1,2),(1,3)],  and 1D to [(1,4),(1,5),(1,6)]. Line 1 is <= 32/27.
+The remaining is the function for N=7 fourth ordering in the case [+ - - - +], which coincides with the function
+for N=7 third ordering in the case [+ - - - +] (chamber [16]) which is <= 33.08
+....................................................
+
+[17]
+[+ + - - - -]
+
++ + -' +  -  +         <=  32M
+  + -' +  -  +
+    -' +  -  +
+       -' +' -'
+          -  +
+            - 2R^(1/2)
+
+Apply 4B to [(1,1),(1,2),(1,3)], 3A to [(1,4),(1,5)] and 1A to [(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [+ - - - -], which coincides with the function
+for N=7 third ordering in the case [- - - - +] (chamber [32]) which is <= 32M
+....................................................
+
+[18]
+[+ - + + + +]
+
++ - -' -  -  -         <=  32.48
+  - -' -  -  -
+    +' +  +  +
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + + - +] (chamber [4]).
+....................................................
+
+[19]
+[+ - + + + -]
+
++ - -' -  -  +         <=  79.16
+  - -' -  -  +
+    +' +  +  -
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+Apply 7G to [(2,5),(4,5),(5,5)] and 5A to [(1,5),(3,5)]. Column 5 is <= 1.
+Apply 5D to [(6,6)]. This is <= 2.
+The remaining is the function for N=7 third ordering in the case [+ - + + -] (chamber [11]), which is <= 39.58
+....................................................
+
+[20]
+[+ - + + - +]
+
++ - -' -  +  +         <=  83.90
+  - -' -  +  +
+    +' +  -  -
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+Apply 13G to the first line and the last column together. This is <= 8192/3125.
+The remaining is the function for N=6 third ordering in the case [- + + -] (chamber [11]), which is <= 32.
+....................................................
+
+[21]
+[+ - + + - -]
+
++ - -' -  +  -         <=  79.16
+  - -' -  +  -
+    +' +  -  +
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- - + + - +] (chamber [52]).
+....................................................
+
+[22]
+[+ - + - + +]
+
++ - -' +  +  +         <=  52.59
+  - -' +  +  +
+    +' -  -  -
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the case [+ + - + - +] (chamber [12]).
+....................................................
+
+[23]
+[+ - + - + -]
+
++ - -' +  +  -         <=  66.8
+  - -' +  +  -
+    +' -  -  +
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 5E to [(1,1),(1,2),(1,3)], 1A to [(1,4)] and 3A to [(1,5),(1,6)]. Line 1 is <= 27/16.
+The remaining is the function for N=7 fourth ordering in the case [- + - + -], which coincides with the function
+for N=7 third ordering in the case [- + - + -] (chamber [23]) which is <= 39.58
+....................................................
+
+[24]
+[+ - + - - +]
+
++ - -' +  -  -         <=  69.71
+  - -' +  -  -
+    +' -  +  +
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+Apply 9G to [(4,6),(5,6),(6,6)]  and 10G to [(1,6),(2,6),(3,6)]. Column 6 is <= 32/27.
+The remaining is the function for N=7 third ordering in the case [+ - + - -] (chamber [13]) which is <= 58.81
+....................................................
+
+[25]
+[+ - + - - -]
+
++ - -' +  -  +         <=  66.7
+  - -' +  -  +
+    +' -  +  -
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+Apply 5E to [(1,1),(1,2),(1,3)], 3A to [(1,4),(1,5)] and 1A to [(1,6)]. Line 1 is <= 27/16.
+The remaining is the function for N=7 fourth ordering in the case [- + - - -], which coincides with the function
+for N=7 third ordering in the case [- - - + -] (chamber [31]) which is <= 39.5
+....................................................
+
+[26]
+[+ - - + + +]
+
++ - +' +  +  +         <=  16M
+  - +' +  +  +
+    -' -  -  -
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + - - +] (chamber [8]).
+....................................................
+
+[27]
+[+ - - + + -]
+
++ - +' +  +  -         <=  49.14
+  - +' +  +  -
+    -' -  -  +
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+Apply 11B to [(1,1),(1,2),(1,3)], 1A to [(1,4)] and 3A to [(1,5),(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [- - + + -], which coincides with the function
+for N=7 third ordering in the case [- + + - -] (chamber [21]) which is <= 49.14
+....................................................
+
+[28]
+[+ - - + - +]
+
++ - +' +  -  -         <=  69.71
+  - +' +  -  -
+    -' -  +  +
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ - + - - +] (chamber [24]).
+....................................................
+
+[29]
+[+ - - + - -]
+
++ - +' +  -  +         <=  64
+  - +' +  -  +
+    -' -  +  -
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+Apply 11B to [(1,1),(1,2),(1,3)], 3A to [(1,4),(1,5)] and 1A to [(1,6)]. Line 1 is <= 1.
+The remaining is the function for N=7 fourth ordering in the case [- - + - -], which coincides with the function
+for N=7 third ordering in the case [- - + - -] (chamber [29]) which is <= 64
+....................................................
+
+[30]
+[+ - - - + +]
+
++ - +' -  -  -         <=  39.21
+  - +' -  -  -
+    -' +  +  +
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + - - - +] (chamber [16]).
+....................................................
+
+[31]
+[+ - - - + -]
+
++ - +' -  -  +         <=  55.83
+  - +' -  -  +
+    -' +  +  -
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- + - - - +] (chamber [48]).
+....................................................
+
+[32]
+[+ - - - - +]
+
++ - +' -  +  +         <=  69.38
+  - +' -  +  +
+    -' +  -  -
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+Apply 16B to [(1,1),(1,2),(1,3),(1,4)] and 1A to [(1,5)] and [(1,6)]. Line 1 is <= 1.41.
+The remaining is the function for N=7 fourth ordering in the case [- - - - +], which coincides with the function
+for N=7 third ordering in the case [+ - - - -] (chamber [17]) which is <= 49.2
+....................................................
+
+[33]
+[+ - - - - -]
+
++ - +' -  +  -         <=  82
+  - +' -  +  -
+    -' +  -  +
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+This chamber is divided into two blocks.
+The first one is formed by [(1,4),(1,5),(2,3),(2,6),(3,3),(4,4),(4,5)] multiplied by 2R^(1/2). This is <= 9.482 by 22G.
+The remaining one is exactly described by 21G, so it is <= 8.641
+....................................................
+
+[34]
+[- + + + + +]
+
+- - -' -  -  -         <=  9.49
+  + +' +  +  +
+    +' +  +  +
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + + + -] (chamber [3]).
+....................................................
+
+[35]
+[- + + + + -]
+
+- - -' -  -  +         <=  79.16
+  + +' +  +  -
+    +' +  +  -
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+Apply 1G to [(4,5),(5,5)], 1A to [(3,5)] and 5A to [(1,5),(2,5)]. Column 5 is <= 1.
+Apply 5D to [(6,6)]. This is <= 2.
+The remaining is the function for N=7 third ordering in the case [- + + + -] (chamber [19]), which is <= 39.58.
+....................................................
+
+[36]
+[- + + + - +]
+
+- - -' -  +  +         <=  79.16
+  + +' +  -  -
+    +' +  -  -
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of [+ - + + + -] (chamber [19]).
+....................................................
+
+[37]
+[- + + + - -]
+
+- - -' -  +  -         <=  64M
+  + +' +  -  +
+    +' +  -  +
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+Apply 7A to [(1,4),(1,5),(2,4),(2,5)]. This is <= 1.
+Apply 6B to [(1,3),(2,3)]: apply then 9A to [(1,1),(1,6),(2,6)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. These together are <= 64/27. So Lines 1 and 2 together are <= 64/27.
+The remaining is the function for N=6 fourth ordering in the case [+ + - -], which coincides with the function
+for N=6 second ordering in the case [- - + +] (chamber [14]) which is <= 27M
+....................................................
+
+[38]
+[- + + - + +]
+
+- - -' +  +  +         <=  70.78
+  + +' -  -  -
+    +' -  -  -
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + - + + -] (chamber [11]).
+....................................................
+
+[39]
+[- + + - + -]
+
+- - -' +  +  -         <=   78.13
+  + +' -  -  +
+    +' -  -  +
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 6A to [(1,6),(2,6)] then apply 12G to the resulting first two lines.
+The first two lines are <= 64/27. The remaining part of the scheme is the case N=6, ord=4 chamber [+ - + -] (coinciding with N=6 ord 2, chamber [- + - +] [12]) which is <= 32.96.
+....................................................
+
+[40]
+[- + + - - +]
+
+- - -' +  -  -         <=  69.696
+  + +' -  +  +
+    +' -  +  +
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ - - + + -] (chamber [27]).
+....................................................
+
+[41]
+[- + + - - -]
+
+- - -' +  -  +         <=  77
+  + +' -  +  -
+    +' -  +  -
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+Apply 7A to [(1,5),(1,6),(2,5),(2,6)].
+Apply then 6B to [(1,3),(2,3)], and apply 9A to [(1,1),(1,4),(2,4)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. Lines 1 and 2 together are <= 64/27.
+The remaining is the function for N=6 fourth ordering in the case [+ - - -], which coincides with the function
+for N=6 second ordering in the case [- - - +] (chamber [16]) which is <= 32.48
+....................................................
+
+[42]
+[- + - + + +]
+
+- - +' +  +  +         <=  46.48
+  + -' -  -  -
+    -' -  -  -
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + - + -] (chamber [7]).
+....................................................
+
+[43]
+[- + - + + -]
+
+- - +' +  +  -         <=  78.13
+  + -' -  -  +
+    -' -  -  +
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- + + - + -] (chamber [39]).
+....................................................
+
+[44]
+[- + - + - +]
+
+- - +' +  -  -         <=  66.8
+  + -' -  +  +
+    -' -  +  +
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ - + - + -] (chamber [23]).
+....................................................
+
+[45]
+[- + - + - -]
+
+- - +' +  -  +         <=  79.16
+  + -' -  +  -
+    -' -  +  -
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+Apply 7A to [(1,5),(1,6),(2,5),(2,6)].
+Apply then  9A to [(1,1),(1,4),(2,4)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. Lines 1 and 2 together are <= 64/27.
+The remaining is the function for N=6 fourth ordering in the case [- + - -], which coincides with the function
+for N=6 second ordering in the case [- - + -] (chamber [15]) which is <= 32M
+....................................................
+
+[46]
+[- + - - + +]
+
+- - +' -  -  -         <=  39.58
+  + -' +  +  +
+    -' +  +  +
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + - - + -] (chamber [15]).
+....................................................
+
+[47]
+[- + - - + -]
+
+- - +' -  -  +         <=  29.23
+  + -' +  +  -
+    -' +  +  -
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 7A to [(1,5),(1,6),(2,5),(2,6)].
+Apply then  9A to [(1,1),(1,4),(2,4)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. Lines 1 and 2 together are <= 64/27.
+The remaining is the function for N=6 fourth ordering in the case [- - + -], which coincides with the function
+for N=6 second ordering in the case [- + - -] (chamber [13]) which is <= 12.33
+....................................................
+
+[48]
+[- + - - - +]
+
+- - +' -  +  +         <=  55.83
+  + -' +  -  -
+    -' +  -  -
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+Apply 7A to [(1,4),(1,6),(2,4),(2,6)].
+Apply then  9A to [(1,1),(1,5),(2,5)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. Lines 1 and 2 together are <= 64/27.
+The remaining is the function for N=6 fourth ordering in the case [- - - +], which coincides with the function
+for N=6 second ordering in the case [+ - - -] (chamber [9]) which is <= 23.55
+....................................................
+
+[49]
+[- + - - - -]
+
+- - +' -  +  -         <=  64M
+  + -' +  -  +
+    -' +  -  +
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+Apply 7A to [(1,4),(1,5),(2,4),(2,5)] and 5A to [(1,6),(2,6)].
+Apply then  5D to [(1,1)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. Lines 1 and 2 together are <= 64/27.
+The remaining is the function for N=6 fourth ordering in the case [- - - -], which coincides with the function
+for N=6 second ordering in the case [- - - -] (chamber [1]) which is <= 27M
+....................................................
+
+[50]
+[- - + + + +]
+
+- + +' +  +  +         <=  32M
+  - -' -  -  -
+    +' +  +  +
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + + - -] (chamber [5]).
+....................................................
+
+[51]
+[- - + + + -]
+
+- + +' +  +  -         <=  64M
+  - -' -  -  +
+    +' +  +  -
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- + + + - -] (chamber [37]).
+....................................................
+
+[52]
+[- - + + - +]
+
+- + +' +  -  -         <=  79.16
+  - -' -  +  +
+    +' +  -  -
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+Apply 5D to [(1,1)], 4E to [(1,2),(1,3),(1,6)] and 3A to [(1,4),(1,5)]. Line 1 is <= 2.
+The remaining is the function for N=7 fourth ordering in the case [- + + - +], which coincides with the function
+for N=7 third ordering in the case [+ - + + -] (chamber [11]) which is <= 39.58
+....................................................
+
+[53]
+[- - + + - -]
+
+- + +' +  -  +         <=  79
+  - -' -  +  -
+    +' +  -  +
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+Apply 12B to [(1,3)], 4A to [(1,4),(1,5)] and 2A to [(1,6)].
+Apply 6B to [(2,3),(3,3)], 8A to [(2,4),(2,5),(3,4),(3,5)] and 6A to [(2,6),(3,6)].
+We end with the case [- - - + - -] (chamber [61]), which we proved is <  79
+....................................................
+
+[54]
+[- - + - + +]
+
+- + +' -  -  -         <=  62.32
+  - -' +  +  +
+    +' -  -  -
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + - + - -] (chamber [13]).
+....................................................
+
+[55]
+[- - + - + -]
+
+- + +' -  -  +         <=  79.16
+  - -' +  +  -
+    +' -  -  +
+       -' -' +'
+          +  -
+             - 2R^(1/4)
+
+This is the symmetrical of the chamber [- + - + - -] (chamber [45]).
+....................................................
+
+[56]
+[- - + - - +]
+
+- + +' -  +  +         <=  64
+  - -' +  -  -
+    +' -  +  +
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ - - + - -] (chamber [29]).
+....................................................
+
+[57]
+[- - + - - -]
+
+- + +' -  +  -         <=  79
+  - -' +  -  +
+    +' -  +  -
+       -' +' -'
+          -  +
+             - 2R^(1/2)
+
+Apply 5D to [(1,1)], 4E to [(1,2),(1,3),(1,4)] and 3A to [(1,5),(1,6)]. Line 1 is <= 2.
+The remaining is the function for N=7 fourth ordering in the case [- + - - -], which coincides with the function
+for N=7 third ordering in the case [- - - + -] (chamber[31]) which is <= 39.5
+....................................................
+
+[58]
+[- - - + + +]
+
+- + -' -  -  -         <=  32.48
+  - +' +  +  +
+    -' -  -  -
+       +' +' +'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + + - - -] (chamber [9]).
+....................................................
+
+[59]
+[- - - + + -]
+
+- + -' -  -  +         <=  77
+  - +' +  +  -
+    -' -  -  +
+       +' +' -'
+          +  -
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- + + - - -] (chamber [41]).
+....................................................
+
+[60]
+[- - - + - +]
+
+- + -' -  +  +         <=  66.7
+  - +' +  -  -
+    -' -  +  +
+       +' -' -'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ - + - - -] (chamber [25]).
+....................................................
+
+[61]
+[- - - + - -]
+
+- + -' -  +  -         <=  79
+  - +' +  -  +
+    -' -  +  -
+       +' -' +'
+          -  +
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- - + - - -] (chamber [57]).
+....................................................
+
+[62]
+[- - - - + +]
+
+- + -' +  +  +         <=  32M
+  - +' -  -  -
+    -' +  +  +
+       -' -' -'
+          +  +
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ + - - - -] (chamber [17]).
+....................................................
+
+[63]
+[- - - - + -]
+
+- + -' +  +  -         <=  64M
+  - +' -  -  +
+    -' +  +  -
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+This is the symmetrical of the chamber [- + - - - -] (chamber [49]).
+....................................................
+
+[64]
+[- - - - - +]
+
+- + -' +  -  -         <=  82
+  - +' -  +  +
+    -' +  -  -
+       -' +' +'
+          -  -
+             + 2R^(1/2)
+
+This is the symmetrical of the chamber [+ - - - - -] (chamber [33]).
+....................................................

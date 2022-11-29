@@ -1,0 +1,494 @@
+N=7, THIRD ORDER
+
+The function is (1-a)*(1-a*x)*(1-2*a*x*y*g+(a*x*y)^2)*(1-a*x*y*z)*(1-a*x*y*z*t)*(1-x)*(1-2*x*y*g+(x*y)^2)*(1-x*y*z)*(1-x*y*z*t)*(1-2*y*g+y^2)*(1-y*z)*(1-y*z*t)*(1-2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*(1-t)*2*sqrt(1-g^2).
+
+We assume g >= 0 and we examine the 32 cases depending on the possible signs of the variables (a, x, y, z, t).
+
+We represent the function as a graphical scheme. In every graphical scheme, the variables are positive and the sign information is seen in the sign in front of the variables, Rules are the following:
+
+ + : it represents the factor (1-x_1 * ... * x_n )
+
+ - : it represents the factor (1+x_1 * ... * x_n )
+
+ +': it represents the factor (1 - 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ -': it represents the factor (1 + 2*x_1 * ... * x_n*g +(x_1 * ... * x_n)^2 )
+
+ R = (1-g^2)
+
+ M = 3^(15/2)/4/7^(7/2)
+
+
+THE UPPER BOUND WE FOUND IS 65.81
+==========================================================================
+[1]
+[- - - - -]
+
+- + -' +  -            <=  65.81
+  - +' -  +
+    -' +  -
+       -' +'
+          - 2R^(1/2)
+
+The function we have to estimate is the following:
+F= (1+x)*(1-x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1+x*y*z*t*a)
+        *(1+y)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t)    *(1-y*z*t*a)
+              *(1+2*z*g+z^2)      *(1-z*t)      *(1+z*t*a)
+                                  *(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)
+                                                *(1+a)
+                                                * 2*sqrt(1-g^2)
+
+
+Let P be the polynomial corresponding to positions [(2,3),(3,3),(3,4),(4,4),(4,5)], i.e.,
+P(x,y,z,t,a,g):= (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)
+
+Let Q be the polynomial corresponding to positions [(1,1),(1,4),(1,5),(2,2),(2,4),(2,5),(3,5),(5,5)], i.e.,
+Q(x,y,z,t,a,g):= (1+x)*(1-x*y*z*t)*(1+x*y*z*t*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1+a)
+
+We further notice that Q(x,y,z,t,a,g) = Q'(x,y,z*t,a)
+where Q'(u,v,w,s) := (1+u)*(1-u*v*w)*(1+u*v*w*s)*(1+v)*(1+v*w)*(1-v*w*s)*(1+w*s)*(1+s) is the polynomial
+associated to symbols: - x + -  (pay attention to the empty place in first line)
+                         - - +
+                             -
+                             -
+
+Let S be the polynomial corresponding to positions [(1,2),(1,3)], i.e. (1-x*y)*(1+2*g*x*y*z+(x*y*z)^2).
+
+Thus, F = (P*2*(1-g^2)^(1/4)) * Q * (S*(1-g^2)^(1/4)). We split the domain into three regions:
+
+CASE 1: x*y in [3/100,1] AND z*t in [0,1/18]: in this case P*2*(1-g^2)^(1/4) <= 8     (by 15G)    , Q <= 8.393 (by 31Gbis)  and S*(1-g^2)^(1/4) <= 0.975 (by computation here below)
+CASE 2: x*y in [3/100,1] AND z*t in [1/18,1]: in this case P*2*(1-g^2)^(1/4) <= 7.603 (by 15Gbis) , Q <= 8.85  (by 31G)     and S*(1-g^2)^(1/4) <= 0.975 (by computation here below)
+CASE 3: x*y in [1,3/100]                    : in this case P*2*(1-g^2)^(1/4) <= 8     (by 15G)    , Q <= 8.226 (by 31Gtris) and S*(1-g^2)^(1/4) <= 1     (by 20G)
+
+Therefore
+max(F) <= max(8*8.393*0.975, 7.603*8.85*0.975, 8*8.226*1) <= max([65.466, 65.61, 65.81) <= 65.81.
+
+CLAIM: Assume x*y > 3/100. Then (1-x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1-g^2)^(1/4) <= 0.975
+PROOF
+  We set u:=x*y and maximized for z = 1, getting
+  (1-u)*(1+2*g*u+u^2)*(1-g^2)^(1/4)
+  /* INNER */
+  L=(1-u)*(1+2*g*u+u^2)   /* times (1-g^2)^(1/4) */
+  Tu=factor(deriv(L,u))
+  Tg=factor(deriv(L,g)*(1-g^2)*2-g*L)
+  Lu=Tu[1,1];
+  Lg=Tg[2,1];
+
+  T1=factor(polresultant(Lu,Lg,g))
+  res1g=T1[3,1];
+
+  polrootsreal(res1g,[0,1]) /* no roots */
+
+  /* BORDERS */
+  my(u=3/100);ploth(g=0,1,(1-u)*(1+2*g*u+u^2)*(1-g^2)^(1/4))
+  my(g=0);ploth(u=3/100,1,(1-u)*(1+2*g*u+u^2)*(1-g^2)^(1/4))
+END PROOF
+....................................................
+
+[2]
+[+ + + + +]
+
++ + +' +  +            <=  8
+  + +' +  +
+    +' +  +
+       +' +'
+          + 2R^(1/2)
+
+Apply 3B to [(1,2),(1,3)] and 1A to the remaining + in the first line. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [+ + + +] (chamber [2]), which is <= 8.
+....................................................
+
+[3]
+[+ + + + -]
+
++ + +' +  -            <=  16M
+  + +' +  -
+    +' +  -
+       +' -'
+          - 2R^(1/2)
+
+Apply 1A to [(1,1)], 3B to [(1,2),(1,3)] and 3A to [(1,4),(1,5)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [+ + + -] (chamber [3]), which is <= 16M.
+....................................................
+
+[4]
+[+ + + - +]
+
++ + +' -  -            <=  23.55
+  + +' -  -
+    +' -  -
+       -' -'
+          + 2R^(1/2)
+
+Apply 3A to [(1,1),(1,5)] and 4E to [(1,2),(1,3),(1,4)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [+ + - +] (chamber [4]), which is <= 23.55.
+....................................................
+
+[5]
+[+ + + - -]
+
++ + +' -  +            <=  16M
+  + +' -  +
+    +' -  +
+       -' +'
+          - 2R^(1/2)
+
+Apply 4E to [(1,2),(1,3),(1,4)] and 1A to [(1,1)] and [(1,5)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [+ + - -] (chamber [5]), which is <= 16M
+....................................................
+
+[6]
+[+ + - + +]
+
++ + -' -  -            <=  33.08
+  + -' -  -
+    -' -  -
+       +' +'
+          + 2R^(1/2)
+
+Apply 13E to the first line. Line 1 is <= (32/27)^2.
+The remaining is the function for N=6 third ordering in the case [+ - + +] (chamber []), which is <= 23.55
+....................................................
+
+[7]
+[+ + - + -]
+
++ + -' -  +            <=  31.16
+  + -' -  +
+    -' -  +
+       +' -'
+          - 2R^(1/2)
+
+Apply 1A to [(1,5)] and 6E to the remaining of the first line. Line 1 is <= 3456/3125.
+The remaining is the function for N=6 third ordering in the case [+ - + -] (chamber [7]), which is <= 27M
+....................................................
+
+[8]
+[+ + - - +]
+
++ + -' +  +            <=  19.79
+  + -' +  +
+    -' +  +
+       -' -'
+          + 2R^(1/2)
+
+Apply 4B to [(1,1),(1,2),(1,3)] and 1A to [(1,4)] and [(1,5)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [+ - - +] (chamber [8]), which is <= 19.79
+....................................................
+
+[9]
+[+ + - - -]
+
++ + -' +  -            <=  19.79
+  + -' +  -
+    -' +  -
+       -' +'
+          - 2R^(1/2)
+
+Apply 4B to [(1,1),(1,2),(1,3)] and 3A to [(1,4),(1,5)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [+ - - -] (chamber [9]), which is <= 19.79
+....................................................
+
+[10]
+[+ - + + +]
+
++ - -' -  -            <=  32.48
+  - -' -  -
+    +' +  +
+       +' +'
+          + 2R^(1/2)
+
+Apply 7G to [(2,5),(4,5),(5,5)] and 5A to [(1,5),(3,5)]. Column 5 is <= 1.
+The remaining is the function for N=6 second ordering in the case [+ - + +] (chamber [6]), which is <= 32.48
+....................................................
+
+[11]
+[+ - + + -]
+
++ - -' -  +            <=  39.58
+  - -' -  +
+    +' +  -
+       +' -'
+          - 2R^(1/2)
+
+Apply 4A to [(1,1),(1,2)].
+Apply 6B to [(2,3),(3,3)].
+Apply 8A to [(2,4),(2,5),(3,4),(3,5)].
+You end up with the case [- - - + -] (chamber [31]), which is <= 39.58
+....................................................
+
+[12]
+[+ - + - +]
+
++ - -' +  +            <=  47.55
+  - -' +  +
+    +' -  -
+       -' -'
+          + 2R^(1/2)
+
+Apply 5E to [(1,1),(1,2),(1,3)] and 1A to [(1,4)] and [(1,5)]. Line 1 is <= 27/16.
+The remaining is the function for N=6 third ordering in the case [- + - +] (chamber [12]), which is <= 27M
+....................................................
+
+[13]
+[+ - + - -]
+
++ - -' +  -            <=  58.81
+  - -' +  -
+    +' -  +
+       -' +'
+          - 2R^(1/2)
+
+Apply 5E to [(1,1),(1,2),(1,3)] and 3A to [(1,4),(1,5)]. Line 1 is <= 27/16.
+The remaining is the function for N=6 third ordering in the case [- + - -] (chamber [13]), which is <= 34.848
+....................................................
+
+[14]
+[+ - - + +]
+
++ - +' +  +            <=  16M
+  - +' +  +
+    -' -  -
+       +' +'
+          + 2R^(1/2)
+
+Apply 11B to [(1,1),(1,2),(1,3)] and 1A to [(1,4)] and [(1,5)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [- - + +] (chamber [14]), which is <= 16M
+....................................................
+
+[15]
+[+ - - + -]
+
++ - +' +  -            <=  34.848
+  - +' +  -
+    -' -  +
+       +' -'
+          - 2R^(1/2)
+
+Apply 11B to [(1,1),(1,2),(1,3)] and 3A to [(1,4), (1,5)]. Line 1 is <= 1.
+The remaining is the function for N=6 third ordering in the case [- - + -] (chamber [15]), which is <= 34.848
+....................................................
+
+[16]
+[+ - - - +]
+
++ - +' -  -            <=  33.08
+  - +' -  -
+    -' +  +
+       -' -'
+          + 2R^(1/2)
+
+Apply 8G to [(4,5),(5,5)] and 10G to [(1,5),(2,5),(3,5)]. Column 5 is <= (32/27)^2.
+The remaining is the function for N=6 second ordering in the case [+ - - -] (chamber [9]), which is <= 23.55
+....................................................
+
+[17]
+[+ - - - -]
+
++ - +' -  +            <=  49.2
+  - +' -  +
+    -' +  -
+       -' +'
+          - 2R^(1/2)
+
+Apply 1A to [(1,5)] and apply 16B to the remaining of the first line. Line 1 is <= 1.41.
+The remaining is the function for N=6 third ordering in the case [- - - -] (chamber [1]), which is <= 34.89
+....................................................
+
+[18]
+[- + + + +]
+
+- - -' -  -            <=  9.49
+  + +' +  +
+    +' +  +
+       +' +'
+          + 2R^(1/2)
+
+Apply 5A to [(1,4),(2,4)] and [(1,5),(2,5)]. Apply 18E to the remaining of the first two lines. Lines 1 and 2 together are <= 64/27.
+Apply 1A to [(3,5)]: this is <=1
+Apply 1E to [(3,3),(3,4),(4,4)] and 2R^(1/2): this is <= 4
+Apply 1G to [(4,5),(5,5)]: this is <=1
+....................................................
+
+[19]
+[- + + + -]
+
+- - -' -  +            <=  39.58
+  + +' +  -
+    +' +  -
+       +' -'
+          - 2R^(1/2)
+
+Apply 7A to [(1,4),(2,4),(1,5),(2,5)]. Apply 18E to the remaining of the first two lines. Lines 1 and 2 together are <= 64/27.
+The remaining is a function for N=5 third ordering, which is <= 16M.
+....................................................
+
+[20]
+[- + + - +]
+
+- - -' +  +            <=  39.58
+  + +' -  -
+    +' -  -
+       -' -'
+          + 2R^(1/2)
+
+Apply 25G to the first two lines. This is <= 64/27.
+The remaining is a function for N=5 third ordering, which is <= 16M.
+....................................................
+
+[21]
+[- + + - -]
+
+- - -' +  -            <=  49.14
+  + +' -  +
+    +' -  +
+       -' +'
+          - 2R^(1/2)
+
+Apply 16B to [(1,2),(2,2),(2,3),(2,4)]. This is <= 1.41.
+The remaining is the function for N=6 third ordering in the case [- + - -] (chamber [13]), which is <= 34.848.
+....................................................
+
+[22]
+[- + - + +]
+
+- - +' +  +            <=  46.48
+  + -' -  -
+    -' -  -
+       +' +'
+          + 2R^(1/2)
+
+Apply 1A to [(1,5)] and 16G to the remaining of the last column. Column 5 is <= 1.41.
+The remaining is the function for N=6 second ordering in the case [- + - +] (chamber [12]), which is <= 32.96
+....................................................
+
+[23]
+[- + - + -]
+
+- - +' +  -            <=  39.58
+  + -' -  +
+    -' -  +
+       +' -'
+          - 2R^(1/2)
+
+Apply 9A to [(1,1),(1,4),(2,4)], 5A to [(1,5),(2,5)] and 10E to [(1,2),(1,3),(2,2),(2,3)]. The first two lines together are <= 64/27.
+The remaining is a function for N=5 third ordering, which is <= 16M.
+....................................................
+
+[24]
+[- + - - +]
+
+- - +' -  -            <=  39.58
+  + -' +  +
+    -' +  +
+       -' -'
+          + 2R^(1/2)
+
+Apply 5A to [(1,4),(2,4)] and [(1,5),(2,5)]. Apply 11E to the remaining of the first two lines. Lines 1 and 2 together are <= 64/27.
+The remaining is a function for N=5 third ordering, which is <= 16M.
+....................................................
+
+[25]
+[- + - - -]
+
+- - +' -  +            <=  39.58
+  + -' +  -
+    -' +  -
+       -' +'
+          - 2R^(1/2)
+
+Apply 7A to [(1,4),(2,4),(1,5),(2,5)]. Apply 11E to the remaining of the first two lines. Lines 1 and 2 together are <= 64/27.
+The remaining is a function for N=5 third ordering, which is <= 16M.
+....................................................
+
+[26]
+[- - + + +]
+
+- + +' +  +            <=  32M
+  - -' -  -
+    +' +  +
+       +' +'
+          + 2R^(1/2)
+
+Apply 5D to [(1,1)], 3B to [(1,2),(1,3)] and 1A to [(1,4)] and [(1,5)]. Line 1 is <= 2.
+The remaining is the function for N=6 third ordering in the case [- + + +] (chamber [10]), which is <= 16M
+....................................................
+
+[27]
+[- - + + -]
+
+- + +' +  -            <=  64
+  - -' -  +
+    +' +  -
+       +' -'
+          - 2R^(1/2)
+
+Apply 5D to [(1,1)], 3B to [(1,2),(1,3)] and 3A to [(1,4),(1,5)]. Line 1 is <= 2.
+The remaining is the function for N=6 third ordering in the case [- + + -] (chamber [11]), which is <= 32
+....................................................
+
+[28]
+[- - + - +]
+
+- + +' -  -            <=  54M
+  - -' +  +
+    +' -  -
+       -' -'
+          + 2R^(1/2)
+
+Apply 5A to [(1,5),(2,5)] and 5E to [(3,5),(4,5),(5,5)]. The last column is <= 27/16.
+The remaining is the function for N=6 second ordering in the case [- - + -] (chamber [15]), which is <= 32M
+....................................................
+
+[29]
+[- - + - -]
+
+- + +' -  +            <=  64
+  - -' +  -
+    +' -  +
+       -' +'
+          - 2R^(1/2)
+
+Apply 7D) to [(1,1),(1,5),(2,5),(3,4),(3,4),(5,5)], 4E) to [(1,2),(1,3),(1,4)] and 6G) to the remaining part.
+The chamber is estimated by 4*1*16.
+....................................................
+
+[30]
+[- - - + +]
+
+- + -' -  -            <=  32.48
+  - +' +  +
+    -' -  -
+       +' +'
+          + 2R^(1/2)
+
+Apply 7G to [(3,5),(4,5),(5,5)] and 5A to [(1,5),(2,5)]. Column 5 is <= 1.
+The remaining is the function for N=6 second ordering in the case [- - - +] (chamber [16]), which is <= 32.48
+....................................................
+
+[31]
+[- - - + -]
+
+- + -' -  +            <=  39.5
+  - +' +  -
+    -' -  +
+       +' -'
+          - 2R^(1/2)
+
+Apply 18G to [(1,1),(1,2),(1,3),(2,2)] multiplied by 2*R^(1/2). This is <= 4.6.
+Apply 19G to the remaining. This is <= 8.58.
+The chamber is lower than 4.6*8.58 <= 39.5.
+....................................................
+
+[32]
+[- - - - +]
+
+- + -' +  +            <=  32M
+  - +' -  -
+    -' +  +
+       -' -'
+          +  2R^(1/2)
+
+Apply 1A to [(1,5)], 5A to [(2,5),(3,5)] and 8G to [(4,5),(5,5)]. Column 5 is <= 32/27.
+The remaining is the function for N=6 second ordering in the case [- - - -] (chamber [1]), which is <= 27M
+....................................................
