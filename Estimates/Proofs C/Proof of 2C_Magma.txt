@@ -1,0 +1,712 @@
+/* Study of Inequality 2C */
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1-x)*(1+x*y)*(1-x*y*z)*(1+2*x*y*z*t*g+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+2*y*z*t*g+(y*z*t)^2);  /* This is our function without the factor 2*(1-g^2)^(1/4) */
+
+/* We begin looking at the values at the boundaries */
+
+/* g = 0: the function becomes
+
+   (1-x)*(1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+(y*z*t)^2)*2.
+
+   Since (1-x)*(1+x*y) <= (1+x)*(1-x*y) and (1-x*y*z) <= (1+x*y*z), the function at g = 0 is <= the function described in 1C at g = 0. So this is <= 4. */
+
+
+/* g = 1: the function is 0 */
+
+
+/* x = 0: the function becomes
+
+   (1+y)*(1-y*z)*(1+2*y*z*t*g+(y*z*t)^2);  /* times 2*(1-g^2)^(1/4) */
+
+   which is the function described in 1C at x = 0, so it is <= 4 */
+
+
+/* y = 0: the function becomes
+
+   (1-x)*2*(1-g^2)^(1/4)
+
+   which is <= 2 */
+
+
+/* z = 0: the function becomes
+
+   (1-x)*(1+x*y)*(1+y)*2*(1-g^2)^(1/4).
+
+   The term (1-x)*(1+x*y)*(1+y) is <= 2 (apply 9A) and (1-g^2)^(1/4) is <= 1, so all of this is <= 4. */
+
+
+/* t = 0: the function becomes
+
+   (1-x)*(1+x*y)*(1-x*y*z)*(1+y)*(1-y*z)*2*(1-g^2)^(1/4).
+
+   This is <=  (1+x)*(1-x*y)*(1+x*y*z)*(1+y)*(1-y*z)*2*(1-g^2)^(1/4), which is the same function described in 1C at t=0, so that it is <= 4 */
+
+
+/* x = 1: the function is zero */
+
+
+/* y = 1: the function becomes
+
+   2*(1-x^2)*(1-x*z)*(1+2*x*z*t*g+(x*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*2*(1-g^2)^(1/4)
+
+   We have to discuss it */
+
+
+L:=2*(1-x^2)*(1-x*z)*(1+2*x*z*t*g+(x*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2);  /* times 2*(1-g^2)^(1/4)  */
+
+Tx:=Factorization(Derivative(L,x));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+
+
+Lx:=Tx[3,1];
+
+Lz:=Tz[3,1];
+
+Lt:=Tt[6,1];
+
+Lg:=Tg[5,1];
+
+
+T:=Factorization(Resultant(Lx,Lz,g));
+
+res1g:=T[7,1];
+
+T:=Factorization(Resultant(Lx,Lt,g));
+
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+
+res3g:=T[6,1];
+
+
+
+T:=Factorization(Resultant(res1g,res2g,x));
+
+res1xa:=T[8,1];
+
+res1xb:=T[9,1];
+
+res1xc:=T[10,1];
+
+
+T:=Factorization(Resultant(res3g,res1g,x));
+
+res2xa:=T[8,1];
+
+res2xb:=T[9,1];
+
+res2xc:=T[10,1];
+
+
+/* We have res1xa = res2xa and res1xb = res2xb. We have 3 different cases to consider */
+
+/* CASE 1: We are on the curve defined by res1xa = 0:   z^2*t^3 - 2*z^2*t^2 - 3*t + 4 = 0.
+
+   This is quadratic in z and, with no linear term in z */
+
+A:=-Coefficient(res1xa,z,0);
+B:=Coefficient(res1xa,z,2);
+
+/* This gives the substitution in res1g and res2g */
+
+S:=0;
+N:=res1g;
+for j1 in [0 .. Floor(Degree(N,z)/2)] do
+    S:=S+Coefficient(N,z,2*j1)*A^j1*B^(Floor(Degree(N,z)/2)-j1);
+end for;
+for j2 in [0 .. Floor((Degree(N,z)-1)/2)] do
+    S:=S+t*Coefficient(N,z,2*j2+1)*A^j2*B^(Floor((Degree(N,z))/2)-j2);
+end for;
+T:=Factorization(S);
+
+res1gSz:=T[2,1];
+
+
+S:=0;
+N:=res2g;
+for j1 in [0 .. Floor(Degree(N,z)/2)] do
+    S:=S+Coefficient(N,z,2*j1)*A^j1*B^(Floor(Degree(N,z)/2)-j1);
+end for;
+for j2 in [0 .. Floor((Degree(N,z)-1)/2)] do
+    S:=S+t*Coefficient(N,z,2*j2+1)*A^j2*B^(Floor((Degree(N,z))/2)-j2);
+end for;
+T:=Factorization(S);
+
+res2gSz:=T[2,1];
+
+
+T:=Factorization(Resultant(res1gSz,res2gSz,t));
+
+rest:=T[5,1]*T[6,1]*T[7,1];
+
+
+PrintFile("2C_Pari.gp","\{rest=");
+PrintFile("2C_Pari.gp",rest);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1gSz=");
+PrintFile("2C_Pari.gp",res1gSz);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1xa=");
+PrintFile("2C_Pari.gp",res1xa);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{Lx=");
+PrintFile("2C_Pari.gp",Lx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+/* Computations in GP give no roots in z, so we move on */
+
+
+/* CASE 2: We are on the curve defined by res1xb = 0:   z^2*t^3 + 2*z^2*t^2 - 3*t - 4 = 0.
+
+   This is quadratic in z and, with no linear term in z */
+
+A:=-Coefficient(res1xb,z,0);
+B:=Coefficient(res1xb,z,2);
+
+/* This gives the substitution in res1g and res2g */
+
+S:=0;
+N:=res1g;
+for j1 in [0 .. Floor(Degree(N,z)/2)] do
+    S:=S+Coefficient(N,z,2*j1)*A^j1*B^(Floor(Degree(N,z)/2)-j1);
+end for;
+for j2 in [0 .. Floor((Degree(N,z)-1)/2)] do
+    S:=S+t*Coefficient(N,z,2*j2+1)*A^j2*B^(Floor((Degree(N,z))/2)-j2);
+end for;
+T:=Factorization(S);
+
+res1gSz:=T[2,1];
+
+
+S:=0;
+N:=res2g;
+for j1 in [0 .. Floor(Degree(N,z)/2)] do
+    S:=S+Coefficient(N,z,2*j1)*A^j1*B^(Floor(Degree(N,z)/2)-j1);
+end for;
+for j2 in [0 .. Floor((Degree(N,z)-1)/2)] do
+    S:=S+t*Coefficient(N,z,2*j2+1)*A^j2*B^(Floor((Degree(N,z))/2)-j2);
+end for;
+T:=Factorization(S);
+
+res2gSz:=T[2,1];
+
+
+T:=Factorization(Resultant(res1gSz,res2gSz,t));
+
+rest:=T[5,1]*T[6,1]*T[7,1];
+
+
+PrintFile("2C_Pari.gp","\{rest=");
+PrintFile("2C_Pari.gp",rest);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1gSz=");
+PrintFile("2C_Pari.gp",res1gSz);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1xb=");
+PrintFile("2C_Pari.gp",res1xb);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{Lx=");
+PrintFile("2C_Pari.gp",Lx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+/* Computations in GP show that there are no stationary points */
+
+
+/* CASE 3: Look at the remaining resultant */
+
+T:=Factorization(Resultant(res1xc,res2xc,t));
+
+rest:=T[4,1]*T[5,1];
+
+/* This has no roots in z. This concludes the interior of y = 1 */
+
+/* y = 1, z = 1: the function is zero */
+
+/* y = 1, t = 1:
+
+   2*(1-x^2)*(1-x*z)*(1+2*x*z*g+(x*z)^2)*(1-z)*(1+2*z*g+z^2)*2*(1-g^2)^(1/4)  */
+
+L:=2*(1-x^2)*(1-x*z)*(1+2*x*z*g+(x*z)^2)*(1-z)*(1+2*z*g+z^2);  /* times 2*(1-g^2)^(1/4) */
+
+
+Tx:=Factorization(Derivative(L,x));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+
+
+Lx:=Tx[3,1];
+
+Lz:=Tz[3,1];
+
+Lg:=Tg[5,1];
+
+
+T:=Factorization(Resultant(Lx,Lz,g));
+
+res1g:=T[5,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+
+res2g:=T[5,1];
+
+
+
+T:=Factorization(Resultant(res1g,res2g,z));
+
+resz:=T[6,1]*T[7,1];
+
+PrintFile("2C_Pari.gp","\{resz=");
+PrintFile("2C_Pari.gp",resz);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1g=");
+PrintFile("2C_Pari.gp",res1g);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{Lx=");
+PrintFile("2C_Pari.gp",Lx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+/* Computation in GP gives no roots. This concludes y = 1. */
+
+
+/* z = 1: the function becomes
+
+   (1-x)*(1-(x*y)^2)*(1+2*x*y*t*g+(x*y*t)^2)*(1-y^2)*(1+2*y*t*g+(y*t)^2)*2*(1-g^2)^(1/4)  */
+
+L:=(1-x)*(1-(x*y)^2)*(1+2*x*y*t*g+(x*y*t)^2)*(1-y^2)*(1+2*y*t*g+(y*t)^2);  /* times 2*(1-g^2)^(1/4)  */
+
+
+Tx:=Factorization(Derivative(L,x));
+
+Ty:=Factorization(Derivative(L,y));
+
+Tt:=Factorization(Derivative(L,t));
+
+Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+
+
+Lx:=Tx[4,1];
+
+Ly:=Ty[2,1];
+
+Lt:=Tt[7,1];
+
+Lg:=Tg[6,1];
+
+
+T:=Factorization(Resultant(Lx,Ly,g));
+
+res1g:=T[8,1];
+
+T:=Factorization(Resultant(Lx,Lt,g));
+
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+
+res3g:=T[6,1];
+
+
+T:=Factorization(Resultant(res1g,res2g,t));
+
+res1ta:=T[3,1];
+
+res1tb:=T[4,1];
+
+res1tc:=T[5,1];
+
+
+T:=Factorization(Resultant(res3g,res2g,t));
+
+res2ta:=T[5,1];
+
+res2tb:= T[6,1];
+
+res2tc:=T[7,1];
+
+res2td:=T[8,1];
+
+
+/* We have res2ta = res2tb and res1tc = res2tc. We have 3 different cases to consider */
+
+/* CASE 1: we stay on the curve defined by res1tb=0: x^2*y^2 - 2/5*x*y^2 - 3/5 =0.
+
+   Notice that res1g and res2g are both quadratic in y of degree 6, so we can substitute with no problems */
+
+A:=-Coefficient(res1tb,y,0);
+B:=Coefficient(res1tb,y,2);
+
+/* here we make substitution, first in res1g and then in res2g */
+
+S:=0;
+N:=res1g;
+for j in [0 .. 3] do
+   S:=S+Coefficient(N,y,2*j)*A^(2*j)*B^(6-2*j);
+end for;
+T:=Factorization(S);
+
+res1gSy:=T[3,1];
+
+S:=0;
+N:=res2g;
+for j in [0 .. 3] do
+   S:=S+Coefficient(N,y,2*j)*A^(2*j)*B^(6-2*j);
+end for;
+T:=Factorization(S);
+
+res2gSy:=T[3,1];
+
+
+T:=Factorization(Resultant(res1gSy,res2gSy,t));
+
+resx:=T[3,1]*T[5,1]*T[6,1];
+
+PrintFile("2C_Pari.gp","\{resx=");
+PrintFile("2C_Pari.gp",resx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1gSy=");
+PrintFile("2C_Pari.gp",res1gSy);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{ysq=");
+PrintFile("2C_Pari.gp",A/B);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{Lx=");
+PrintFile("2C_Pari.gp",Lx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+/* This does not give acceptable values of y */
+
+
+/* CASE 2: we stay on the curve defined by res1tc=0: x^3*y^2 - 3/4*x^2*y^2 - 1/2*x + 1/4=0. */
+
+A:=-Coefficient(res1tc,y,0);
+B:=Coefficient(res1tc,y,2);
+
+/* here we make substitution, first in res1g and then in res2g */
+
+S:=0;
+N:=res1g;
+for j in [0 .. 3] do
+   S:=S+Coefficient(N,y,2*j)*A^(2*j)*B^(6-2*j);
+end for;
+T:=Factorization(S);
+
+res1gSy:=T[3,1];
+
+
+S:=0;
+N:=res2g;
+for j in [0 .. 3] do
+   S:=S+Coefficient(N,y,2*j)*A^(2*j)*B^(6-2*j);
+end for;
+T:=Factorization(S);
+
+res2gSy:=T[3,1];
+
+T:=Factorization(Resultant(res1gSy,res2gSy,t));
+
+resx:=T[3,1]*T[4,1]*T[5,1]*T[6,1]*T[7,1];
+
+PrintFile("2C_Pari.gp","\{resx=");
+PrintFile("2C_Pari.gp",resx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1gSy=");
+PrintFile("2C_Pari.gp",res1gSy);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{ysq=");
+PrintFile("2C_Pari.gp",A/B);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{Lx=");
+PrintFile("2C_Pari.gp",Lx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+/* This does not give acceptable values of y */
+
+/* CASE 3: WE HAVE TO CONSIDER THE REMAINING RESULTANTS */
+
+/* We have to consider res1ta with res2ta and res2td */
+
+T:=Factorization(Resultant(res1ta,res2ta,x));
+
+/* This gives no roots in y */
+
+T:=Factorization(Resultant(res1ta,res2td,x));
+
+resx:=T[3,1];
+
+/* This has no roots in y */
+
+/* This concludes the interior of z = 1 */
+
+/* z = 1, t = 1:  the function becomes
+
+    (1-x)*(1-(x*y)^2)*(1+2*x*y*g+(x*y)^2)*(1-y^2)*(1+2*y*g+y^2)*2*(1-g^2)^(1/4)  */
+
+L:=(1-x)*(1-(x*y)^2)*(1+2*x*y*g+(x*y)^2)*(1-y^2)*(1+2*y*g+y^2);  /* times 2*(1-g^2)^(1/4) */
+
+
+Tx:=Factorization(Derivative(L,x));
+
+Ty:=Factorization(Derivative(L,y));
+
+Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+
+Lx:=Tx[4,1];
+
+Ly:=Ty[2,1];
+
+Lg:=Tg[6,1];
+
+
+
+T:=Factorization(Resultant(Lx,Ly,g));
+
+res1g:=T[5,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+
+res2g:=T[5,1];
+
+
+
+T:=Factorization(Resultant(res1g,res2g,x));
+
+resx:=T[4,1];
+
+/* This has no roots in y. It concludes the discussion of z = 1 */
+
+
+
+/* t = 1: the function becomes
+
+   (1-x)*(1+x*y)*(1-x*y*z)*(1+2*x*y*z*g+(x*y*z)^2)*(1+y)*(1-y*z)*(1+2*y*z*g+(y*z)^2)*2*(1-g^2)^(1/4)  */
+
+
+L:=(1-x)*(1+x*y)*(1-x*y*z)*(1+2*x*y*z*g+(x*y*z)^2)*(1+y)*(1-y*z)*(1+2*y*z*g+(y*z)^2);  /* times 2*(1-g^2)^(1/4) */
+
+
+Tx:=Factorization(Derivative(L,x));
+
+Ty:=Factorization(Derivative(L,y));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+
+
+Lx:=Tx[4,1];
+
+Ly:=Ty[2,1];
+
+Lz:=Tz[5,1];
+
+Lg:=Tg[6,1];
+
+
+
+
+T:=Factorization(Resultant(Lx,Ly,g));
+
+res1g:=T[7,1];
+
+T:=Factorization(Resultant(Lx,Lz,g));
+
+res2g:=T[6,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+
+res3g:=T[6,1];
+
+
+
+
+T:=Factorization(Resultant(res1g,res2g,z));
+
+res1za:=T[6,1];
+
+res1zb:=T[7,1];
+
+res1zc:=T[8,1];
+
+
+T:=Factorization(Resultant(res3g,res2g,z));
+
+res2za:=T[5,1];
+
+res2zb:=T[6,1];
+
+res2zc:=T[7,1];
+
+res2zd:=T[8,1];
+
+res2ze:=T[9,1];
+
+/* We have res1za = res2zb and res1zb = res2zc. 3 different cases to consider */
+
+
+/* CASE 1: we are on the curve defined by res1za = 0:  x*y - 1/5*y + 4/5 = 0.
+
+   It is linear in y, so we substitute in res1g and res2g */
+
+A:=-Coefficient(res1za,y,0);
+B:=Coefficient(res1za,y,1);
+
+
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res1gSa:=T[2,1];
+res1gSb:=T[3,1];
+
+
+S:=0;
+N:=res2g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res2gSa:=T[2,1];
+res2gSb:=T[3,1];
+
+
+/* Notice that res1gSa = res2gSa. This gives z = -5/4*x+1/4 = (-5*x+1)/4. But we have y=(4/5)/(x+1/5) = 4/(-5*x+1). So y*z=1, i.e. we are on the boundary (and we studied this before) */
+
+T:=Factorization(Resultant(res1gSb,res2gSb,z));
+
+/* The unique root is 1/5 which however is not acceptable for y */
+
+
+/* CASE 2: we are on the curve defined by res1zb=0:  x^2*y + 2/5*x*y + 4/5*x - 1/5*y + 2/5=0.
+
+   It is linear in y, so we substitute in res1g and res2g */
+
+A:=-Coefficient(res1zb,y,0);
+B:=Coefficient(res1zb,y,1);
+
+
+S:=0;
+N:=res1g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res1gSa:=T[3,1];
+res1gSb:=T[4,1];
+
+
+S:=0;
+N:=res2g;
+for j in [0 .. Degree(N,y)] do
+   S:=S+Coefficient(N,y,j)*A^j*B^(Degree(N,y)-j);
+end for;
+T:=Factorization(S);
+
+res2gSa:=T[3,1];
+res2gSb:=T[4,1];
+
+/* We have res1gSb = res2gSa. This gives z = (-5*x^2-2*x+1)/(-4*x-2). But we have y=(-4*x-2)/(5*x^2+2*x-1), so y*z=-1, which is not possible */
+
+T:=Factorization(Resultant(res1gSb,res2gSb,z));
+
+resx:=T[5,1]*T[6,1];
+
+PrintFile("2C_Pari.gp","\{resx=");
+PrintFile("2C_Pari.gp",resx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{res1gSb=");
+PrintFile("2C_Pari.gp",res1gSb);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{y0=");
+PrintFile("2C_Pari.gp",A/B);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+PrintFile("2C_Pari.gp","\{Lx=");
+PrintFile("2C_Pari.gp",Lx);
+PrintFile("2C_Pari.gp",";}\n\n");
+
+/* This gives a root in x which gives a not acceptable value in y */
+
+
+/* CASE 3: we are left with the final resultants */
+
+T:=Factorization(Resultant(res1za,res2za,x));
+
+/* This does not give roots in the interior */
+
+
+T:=Factorization(Resultant(res1za,res2zd,x));
+
+/* This gives y = 2/3. Substitution in res1za gives x = -1 */
+
+T:=Factorization(Resultant(res1za,res2ze,x));
+
+/* This gives a unique value for y, which however gives a non acceptable value for x */
+
+
+/* This concludes the interior for t=1, so it concludes t=1 since we have examined every other boundary */
+
+
+/* Then we just have to check the general interior */
+
+L:=(1-x)*(1+x*y)*(1-x*y*z)*(1+2*x*y*z*t*g+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+2*y*z*t*g+(y*z*t)^2);  /* This is our function without the factor 2*(1-g^2)^(1/4) */
+
+Tx:=Factorization(Derivative(L,x));
+
+Ty:=Factorization(Derivative(L,y));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+Tg:=Factorization(2*Derivative(L,g)*(1-g^2)-L*g);
+
+
+
+Lx:= Tx[4,1];
+
+Ly:= Ty[2,1];
+
+Lz:= Tz[5,1];
+
+Lt:= Tt[8,1];
+
+Lg:= Tg[6,1];
+
+
+T:=Factorization(Resultant(Lz,Lt,g));
+
+/* This has no zeros on the interior, so we have finished our analysis */
+
+/* The function is <= 4 */

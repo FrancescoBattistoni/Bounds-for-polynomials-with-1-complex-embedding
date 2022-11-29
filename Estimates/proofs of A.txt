@@ -1,0 +1,113 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK A
+
+These estimates are already in:
+"An elementary proof for a generalization of a Pohst's inequality", J. Number Theory 228, 73-86, 2021.
+DOI = {10.1016/j.jnt.2021.04.014
+
+Here below less verbose (but more computational) proofs.
+==========================================================================
+1A)  CLAIM: 1-x <= 1
+     PROOF
+     Evident
+     END PROOF
+
+2A)  CLAIM: (1-x) <= (1+x)
+     PROOF
+     Evident
+     END PROOF
+
+3A)  CLAIM: (1-x)*(1+x*y) <=  1
+     PROOF
+     (1-x)*(1+x*y) maximized for y=1, giving
+     <= (1-x^2)
+     <= 1
+     END PROOF
+
+4A)  CLAIM: (1-x)*(1+x*y)  <=   (1+x)*(1-x*y)
+     PROOF
+     RHS-LHS
+     =(1+x)*(1-x*y) - (1-x)*(1+x*y)
+     =2*x*(1-y)
+     >= 0.
+     END PROOF
+
+5A)  CLAIM: (1+x*y)*(1-y) <= 1
+     PROOF
+     (1+x*y)*(1-y) is maximized at x=1, giving
+     <= (1-y^2)
+     <= 1
+     END PROOF
+
+6A)  CLAIM: (1+x*y)*(1-y) <= (1-x*y)*(1+y)
+     PROOF
+     RHS-LHS
+     = (1-x*y)*(1+y) - (1+x*y)*(1-y)
+     = 2*y*(1-x)
+     >= 0
+     END PROOF
+
+7A)  CLAIM: (1+x*y)*(1-x*y*z)*(1-y)*(1+y*z) <= 1
+     PROOF
+     interior (in PARI code)
+      L=(1+x*y)*(1-x*y*z)*(1-y)*(1+y*z)
+      T=factor(deriv(L,x))
+      Lx=T[4,1]
+      T=factor(deriv(L,y))
+      Ly=T[1,1]
+      T=factor(deriv(L,z))
+      Lz=T[4,1]
+      T=factor(polresultant(Lx,Ly,z))
+      no roots inside
+     border
+      x=0 L becomes (1-y)*(1+y*z) <= (1-y)*(1+y) <=1                         <---- maximum
+      x=1 L becomes (1+y)*(1-y*z)*(1-y)*(1+y*z) <= (1-y^2)*(1-(y*z)^2) <= 1  <---- maximum
+      y=0 L becomes 1                                                        <---- maximum
+      y=1 L becomes 0
+      z=0 L becomes (1+x*y)*(1-y) <= (1+y)*(1-y) <= 1                        <---- maximum
+      z=1 L becomes (1+x*y)*(1-x*y)*(1-y)*(1+y) <= (1-(x*y)^2)*(1-y^2) <= 1  <---- maximum
+     END PROOF
+
+8A)  CLAIM:(1+x*y)*(1-x*y*z)*(1-y)*(1+y*z) <= (1-x*y)*(1+x*y*z)*(1+y)*(1-y*z)
+     PROOF
+     R.H.S. - L.H.S.
+     = (1-x*y)*(1+x*y*z)*(1+y)*(1-y*z) - (1+x*y)*(1-x*y*z)*(1-y)*(1+y*z)
+     = 2*(1-x)*y*(1-z)*(1+x*y^2*z)
+     >= 0
+     END PROOF
+
+9A)  CLAIMS: (1+x)*(1-x*y)*(1+y) <= 2,
+             (1-x)*(1+x*y)*(1+y) <= 2,
+             (1+x)*(1+x*y)*(1-y) <= 2,
+     PROOFS
+     FIRST:
+     interior (in PARI code)
+      L=(1+x)*(1-x*y)*(1+y)
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[2,1]
+      T=factor(polresultant(Lx,Ly,y))
+      x0=1/2 /*unique roots in (0,1)*/
+      polrootsreal(subst(Ly,x,x0))
+      y0=1/2
+      subst(subst(L,x,x0),y,y0)
+      27/16                             <---- value
+     border
+      x=0 L becomes (1+y) <= 2          <---- maximum
+      x=1 L becomes 2*(1-y)*(1+y) <= 2  <---- maximum
+      y=0 L becomes (1+x) <= 2          <---- maximum
+      y=1 L becomes (1+x)*(1-x)*2 <= 2  <---- maximum
+     SECOND:
+       (1-x)*(1+x*y)*(1+y) maximized for y=1, giving
+       <= (1-x)*(1+x)*2
+       <= 2.
+     THIRD:
+       (1+x)*(1+x*y)*(1-y) maximized for x=1, giving
+       <= 2*(1+y)*(1-y)
+       <= 2
+     END PROOF
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

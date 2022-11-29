@@ -1,0 +1,59 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK C
+==========================================================================
+1C)  PROOF
+     see "Proof C\Proof of 1C_Magma.txt"
+     and then "Proof C\1C_Pari.gp"
+     END PROOF
+
+2C)  PROOF
+     see "Proof C\Proof of 2C_Magma.txt"
+     and then "Proof C\2C_Pari.gp"
+     END PROOF
+
+3C)  PROOF
+     see "Proof C\Proof of 3C_Magma.txt"
+     and then "Proof C\3C_Pari.gp"
+     END PROOF
+
+4C)  PROOF
+     see "Proof C\Proof of 4C_Magma.txt"
+     and then "Proof C\4C_Pari.gp"
+     END PROOF
+
+5C)  PROOF
+     see "Proof C\Proof of 5C_Magma.txt"
+     and then "Proof C\5C_Pari.gp"
+     END PROOF
+
+6C)  PROOF
+     see "Proof C\Proof of 6C_Magma.txt"
+     and then "Proof C\6C_Pari.gp"
+     END PROOF
+
+7C)  PROOF
+     see "Proof C\Proof of 7C_Magma.txt"
+     and then "Proof C\7C_Pari.gp".
+     alternatively,
+     apply 7A to columns 2 and 3 getting the configuration in 9C.
+     Apply 9C (whose proof is independent of 7C).
+     END PROOF
+
+8C)  PROOF
+     apply 7A to columns 3 and 4 getting the configuration in 7C.
+     apply 7C.
+     END PROOF
+
+9C)  PROOF
+     see "Proof C\Proof of 9C_Magma.txt"
+     and then "Proof C\9C_Pari.gp"
+     END PROOF
+
+10C) PROOF
+     see "Proof C\Proof of 10C_Magma.txt"
+     and then "Proof C\10C_Pari.gp"
+     END PROOF
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

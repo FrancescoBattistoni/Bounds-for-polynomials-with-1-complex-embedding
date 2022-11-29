@@ -1,0 +1,55 @@
+/* Study of inequality 11Ebis)
+
+       - - +'              <= 1.94    for y in [4/5,1]
+         + -'
+
+*/
+
+/* (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-y)*(1+2*g*y*z+(y*z)^2) */
+
+
+  Q:=RationalField();
+  R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+  L:= (1+x)*(1+x*y)*(1-2*g*x*y*z+(x*y*z)^2)*(1-y)*(1+2*g*y*z+(y*z)^2);
+
+/* INNER */
+
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lg:= Tg[6,1];
+
+  T1:= Factorization(Resultant(Lx,Lg,g));
+  T2:= Factorization(Resultant(Ly,Lg,g));
+  T3:= Factorization(Resultant(Lz,Lg,g));
+  /* All factors in T3 are strictly positive in the open set */
+
+/* BORDER */
+
+  /* x = 0: (1-y)*(1+2*g*y*z+(y*z)^2) maximized for  z = g = 1
+            (1-y)*(1+2*y+y^2) <= 32/27 (this is the bound in the full range y in [0,1]) */
+
+  /* y = 4/5: (1+x)*(1+x*(4/5))*(1-2*g*x*(4/5)*z+(x*(4/5)*z)^2)*(1-(4/5))*(1+2*g*(4/5)*z+((4/5)*z)^2) <= 1.94 (see "11Ebis_Pari.gp") */
+
+  /* z = 0: (1+x)*(1+x*y)*(1-y) <= 2*(1+y)*(1-y) <= 18/25 (recall that y in [4/5,1]) */
+
+  /* g = 0: (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-y)*(1+(y*z)^2) maximized for x = z = 1
+            2*(1+y)*(1+y^2)*(1-y)*(1+y^2) <= 1.94 */ /*PARI ploth(y=4/5,1,2*(1+y)*(1+y^2)*(1-y)*(1+y^2)) */
+
+  /* x = 1: 2*(1+y)*(1-2*g*y*z+(y*z)^2)*(1-y)*(1+2*g*y*z+(y*z)^2) decreasing in g, maximized for g = 0
+            2*(1+y)*(1+(y*z)^2)*(1-y)*(1+(y*z)^2) maximized for z = 1
+            2*(1+y)*(1+y^2)*(1-y)*(1+y^2) <= 1.94 */ /*PARI ploth(y=4/5,1,2*(1+y)*(1+y^2)*(1-y)*(1+y^2)) */
+
+  /* y = 1: NULL */
+
+  /* z = 1: (1+x)*(1+x*y)*(1-2*g*x*y+(x*y)^2)*(1-y)*(1+2*g*y+y^2) <= 1.94 (see "11Ebis_Pari.gp") */
+
+  /* g = 1: (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-y)*(1+(y*z)^2) <= 1.94 (see "11Ebis_Pari.gp") */
+
+/* This concludes the proof: the function is <= 2  when y in [4/5,1] */
+..............................

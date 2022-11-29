@@ -1,0 +1,153 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK B
+==========================================================================
+1B)  PROOF
+     (1-2*x*g+x^2)*2*sqrt(1-g^2)
+     <= (1+x^2)*2*sqrt(1-g^2)
+     <= 2*2*1
+      = 4
+     END PROOF
+
+2B)  CLAIM: (1+2*x*g+x^2)*2*sqrt(1-g^2) <= 3*sqrt(3)
+     PROOF
+     (1+2*x*g+x^2)*2*sqrt(1-g^2)  maximum for x=1, getting
+     4*(1+g)*sqrt(1-g^2)
+     Stationary point in (0,1) is 1/2 and gives the value 3*sqrt(3)
+     Border values are 0 and 4.
+     END PROOF
+
+3B)  PROOF
+     (1-x)*(1-2*x*y*g+(x*y)^2) <= (1-x)*(1+(x*y)^2)
+     <= (1-x)*(1+x^2)
+     <= (1-x)*(1+x)
+     <= 1-x^2
+     <= 1
+     END PROOF
+
+4B)  PROOF
+     (1-x)*(1-x*y)*(1+2*x*y*z*g+(x*y*z)^2)
+     <= (1-x)*(1-x*y)*(1+x*y*z)^2
+     <= (1-x)*(1-x*y)*(1+x*y)^2
+     this is <= 1
+     PROOF (in PARI code)
+      L=(1-x)*(1-x*y)*(1+x*y)^2
+      /* In the open subset: no stationary points*/
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      polresultant(Lx,Ly,x)
+      /* - 8*y^2 : no roots inside */
+      /* Border */
+      x=0  L is 1
+      x=1  L is 0
+      y=0  L is 1-x  <= 1
+      y=1  L becomes (1-x)*(1-x)*(1+x)^2 = (1-x^2)^2 <= 1
+     END PROOF
+     END PROOF
+
+5B)  PROOF
+     (1-x)*(1+2*x*y*g+(x*y)^2)
+     <= (1-x)*(1+x*y)^2
+     <= (1-x)*(1+x)^2
+     Stationary point in (0,1) is 1/3 and gives the value 32/27
+     Border values are 0 and 1.
+     END PROOF
+
+6B)  PROOF
+     the difference RHS - LHS is
+     (1-2*x*y*g+(x*y)^2)*(1+2*y*g+y^2) - (1+2*x*y*g+(x*y)^2)*(1-2*y*g+y^2))
+     = 4*g*y^3*x^2 + (-4*g*y^3 - 4*g*y)*x + 4*g*y
+     = 4*g*y*(1-x)*(1-x*y^2)
+     which is always >=0
+     END PROOF
+
+7B) PROOF
+     (1-2*x*g+x^2)
+     <= (1+x^2)
+     <= 2
+     END PROOF
+
+8B)  PROOF
+     apply 5B to the first line and 2B to the second line, getting
+      + -'                  <= (32/27) *(3*sqrt(3)) <=  6.16
+        -' 2R^(1/2)
+
+9B)  PROOF
+     (1+x)*(1-2*x*y*g+(x*y)^2)
+          *(1+2*y*g+y^2)
+     <=   (1+x)*2*(1-x*y*g)
+               *2*(1+y*g)
+     <=   8.   (by 9A)
+     END PROOF
+
+10B) PROOF
+     Apply 6B to the last column and obtain 9B
+     END PROOF
+
+11B) PROOF
+     (1-x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)   maximum for y=1 and g=0, getting
+     <= (1-x)*(1+x)*(1+x^2)
+      = (1-x^4)
+     <= 1
+     END PROOF
+
+12B) (1-2*x*g+x^2) <= (1+2*x*g+x^2)
+     PROOF
+     Evident, since x,g >= 0.
+     END PROOF
+
+13B) PROOF
+     The first one:
+     (1-t)*(1+z*t)*(1+y*z*t)*(1+x*y*z*t)*(1-2*g*a*x*y*z*t+(a*x*y*z*t)^2)  maximized g = 0
+     (1-t)*(1+z*t)*(1+y*z*t)*(1+x*y*z*t)*(1+(a*x*y*z*t)^2)  maximized for a = 1, x = 1, y = 1, z = 1
+     (1-t)*(1+t)*(1+t)*(1+t)*(1+t^2)
+     = (1-t^4)*(1+t)^2 <= 2.239 /* value assumed at the root 0.63502422495604132031664121702435867025 of 3*t^3 - t^2 + t - 1 in (0,1) */
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+14B) PROOF
+     (1-x)*(1+x*y)*(1+x*y*z)*(1+x*y*z*t)*(1+x*y*z*t*u)*(1-2*x*y*z*t*u*v*g+(x*y*z*t*u*v)^2)
+     This is maximized at g=0 and y=z=t=u=v=1, giving
+     (1-x)*(1+x)*(1+x)*(1+x)*(1+x)*(1+x^2)
+     Stationary point in (0,1) gives a value <= 3.74
+     border values are 0 and 1.
+     END PROOF
+
+15B) PROOF
+     END PROOF
+
+15B) PROOF
+     (1-x)*(1+x*y)*(1+x*y*z)*(1+x*y*z*t)*(1-x*y*z*t*u)*(1-2*x*y*z*t*u*v*g+(x*y*z*t*u*v)^2)
+     This is maximized at g = 0 and v=1, giving
+     (1-x)*(1+x*y)*(1+x*y*z)*(1+x*y*z*t)*(1-x*y*z*t*u)*(1+(x*y*z*t*u)^2)
+     This is maximized at u=0 and y=z=t=1, giving
+     (1-x)*(1+x)*(1+x)*(1+x)
+     Stationary point in (0,1) is 1/2 and gives the value 27/16
+     Border values are 0 and 1.
+     END PROOF
+
+16B) PROOF
+     The first one:
+     (1-t)*(1+z*t)*(1+y*z*t)*(1-2*g*x*y*z*t+(x*y*z*t)^2) maximized for g = 0
+     (1-t)*(1+z*t)*(1+y*z*t)*(1+(x*y*z*t)^2) maximized for = x = y = z = 1
+     (1-t^4)*(1+t)*(1+t)*(1+t^2)
+     = (1-t^4)*(1+t) <= 1.4093 /* value assumed at the root 0.53156445661717746128795289655859468869 of 5*t^3 - t^2 + t - 1 in (0,1) */
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+17B) PROOF
+     (1-x)*(1+x*y)*(1+x*y*z)*(1-2*x*y*z*t*g+(x*y*z*t)^2)*(1+x*y*z*t*u).
+     This is maximized at g=0 and y=z=t=u=1 giving
+     (1-x)*(1+x)^3*(1+x^2)
+     = (1+x)^2*(1-x^4).
+     Stationary point in (0,1) is 0.63502422495604132031664121702435867025 and gives a value <= 2.24
+     Border values are 0 and 1.
+     END PROOF
+
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

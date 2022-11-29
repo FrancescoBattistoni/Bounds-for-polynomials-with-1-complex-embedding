@@ -1,0 +1,116 @@
+/* Study of inequality 10E */
+
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1+2*y*z*g+(y*z)^2);
+
+
+/* 0-boundaries */
+
+/* x = 0:
+
+  (1-y)*(1+2*y*z*g+(y*z)^2). This is maximized at g=z=1 giving (1-y)*(1+y)^2 <= 32/27.  */
+
+/* y = 0:
+
+   This is equal to 1 */
+
+/* z = 0:
+
+   (1+x*y)*(1-y) <= 1 */
+
+/* g = 0:
+
+   (1+x*y)*(1+(x*y*z)^2)*(1-y)*(1+(y*z)^2). Maximized at z=x=1 giving
+
+   (1+y)*(1+y^2)*(1-y)*(1+y^2) = (1-y^4)*(1+y^2)  <=  32/27.  */
+
+
+/* 1-boundaries */
+
+/* x = 1:
+
+   (1-y^2)*(1-2*y*z*g+(y*z)^2)*(1+2*y*z*g+(y*z)^2). This is maximized at g=0, so we already know it */
+
+/* y = 1: the function is zero */
+
+/* z = 1:
+
+   (1+x*y)*(1-2*x*y*g+(x*y)^2)*(1-y)*(1+2*y*g+y^2)   */
+
+
+L:=(1+x*y)*(1-2*x*y*g+(x*y)^2)*(1-y)*(1+2*y*g+y^2);
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tg:=Factorization(Derivative(L,g));
+Lx:=Tx[4,1];
+Ly:=Ty[1,1];
+Lg:=Tg[4,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+res1g:=T[1,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[5,1];
+
+T:=Factorization(Resultant(res1g,res2g,x));
+
+/* This has no roots in the interior */
+
+
+/* z = 1, g = 1:
+
+   (1+x*y)*(1-x*y)^2*(1-y)*(1+y)^2   */
+
+
+L:=(1+x*y)*(1-x*y)^2*(1-y)*(1+y)^2;
+
+
+Tx:=Factorization(Derivative(L,x));
+
+/* This has no zeros in the interior: so you have to pick further boundaries, which give the previous estimates */
+
+
+/* g = 1:  */
+
+L:=(1+x*y)*(1-x*y*z)^2*(1-y)*(1+y*z)^2;
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Lx:=Tx[5,1];
+Ly:=Ty[3,1];
+Lz:=Tz[6,1];
+
+T:=Factorization(Resultant(Lx,Lz,z));
+res1z:=T[1,1];
+T:=Factorization(Resultant(Ly,Lz,z));
+/* This has no zeros in the interior: the case g = 1 is thus concluded and so are the boundary cases */
+
+
+/* We study now the interior */
+
+
+L:=(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1+2*y*z*g+(y*z)^2);
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Tg:=Factorization(Derivative(L,g));
+Lx:=Tx[4,1];
+Ly:=Ty[1,1];
+Lz:=Tz[4,1];
+Lg:=Tg[5,1];
+
+T:=Factorization(Resultant(Lx,Lg,g));
+res1g:=T[2,1];
+T:=Factorization(Resultant(Ly,Lg,g));
+res2g:=T[6,1];
+T:=Factorization(Resultant(Lz,Lg,g));
+res3g:=T[5,1];
+
+/* this has no roots in the interior */
+
+/* Hence our function is <= 32/27 */

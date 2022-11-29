@@ -1,0 +1,93 @@
+==========================================================================
+PROOFS OF REMARKS
+==========================================================================
+RMK1)  CLAIM: (1+2*x*y*g+(x*y)^2)*(1-2*x*g+x^2) <=  (1+(x*y)^2)*(1+y^2)
+       PROOF
+       LHS is quadratic in g.
+       The coefficient of degree 2 in g of LHS is: -4*x^2*y < 0
+       The coefficient of degree 1 in g of LHS is:
+          -2*x*(1+(x*y)^2) +2*x*y*(1+x^2)
+          = -2*x*(1-y) -2*x^3*y *(y-1)
+          = -2*x*(1-y)*(1-x^2*y)
+          < 0
+       END PROOF
+
+RMK2)  PROOF
+       interior (in PARI code)
+        L=(1+a)*(1-a*b)*(1+(a*b)^2)*(1+b)
+        T=factor(deriv(L,a))
+        La=T[2,1]
+        T=factor(deriv(L,b))
+        Lb=T[2,1]
+        T=factor(polresultant(La,Lb,b))
+        res=T[3,1]
+        polrootsreal(res,[0,1])
+        a0=0.63036657694868056912859953574401523353
+        polrootsreal(subst(La,a,a0))
+        b0=0.63036657694868056912859953574401523353
+        subst(subst(L,a,a0),b,b0)
+        1.8547987501444598157921518517626714085   <---- value
+       border
+        a=0 L becomes (1+b)     <= 2              <---- maximum
+        a=1 L becomes 2*(1-b^4) <= 2              <---- maximum
+        b=0 L becomes (1+a)     <= 2              <---- maximum
+        b=1 L becomes 2*(1-a^4) <= 2              <---- maximum
+       END PROOF
+
+RMK3)  PROOF
+       interior (in PARI code)
+        L=(1+a^2)*(1+a)*(1-a*b)*(1+b)*(1+b^2)
+        T=factor(deriv(L,a))
+        La=T[3,1]
+        T=factor(deriv(L,b))
+        Lb=T[2,1]
+        T=factor(polresultant(La,Lb,b))
+        res=T[3,1]
+        polrootsreal(res,[0,1])
+        a0=0.72527008507203464922864206786224544020
+        polrootsreal(subst(La,a,a0))
+        b0=0.72527008507203464922864206786224544020
+        subst(subst(L,a,a0),b,b0)
+        3.2854570820718519149100458947640051564   <---- value
+       border
+        a=0 L becomes (1+b)*(1+b^2) <= 4          <---- maximum
+        a=1 L becomes 4*(1-b^4)     <= 4          <---- maximum
+        b=0 L becomes (1+a)*(1+a^2) <= 4          <---- maximum
+        b=1 L becomes 4*(1-a^4)     <= 4          <---- maximum
+       END PROOF
+
+
+RMK4)  PROOF
+       interior (in PARI code)
+        L=(1+z^2)*(1+z*t)*(1-z*t*a)*(1+a)*(1+(t*a)^2)
+        Tz=factor(deriv(L,z))
+        Tt=factor(deriv(L,t))
+        Ta=factor(deriv(L,a))
+        Lz=Tz[3,1]
+        Lt=Tt[3,1]
+        La=Ta[2,1]
+        T1=factor(polresultant(Lz,La,a))
+        T2=factor(polresultant(Lt,La,a))
+        res1a=T1[4,1]
+        res2a=T2[5,1]
+        T11=factor(polresultant(res1a,res2a,t))
+        rest=T11[4,1]*T11[6,1]
+        polrootsreal(rest,[0,1])
+        z0=0.72527008507203464922864206786224544020
+        polrootsreal(subst(res1a,z,z0))
+        /* no roots in the open set */
+       border
+        z=0 L becomes (1+a)*(1+(t*a)^2) <= 4
+        z=1 L becomes 2*(1+t)*(1-t*a)*(1+a)*(1+(t*a)^2) <= 2*2(by RMK2) <= 4
+
+        t=0 L becomes (1+z^2)*(1+a) <= 4
+        t=1 L becomes (1+z^2)*(1+z)*(1-z*a)*(1+a)*(1+a^2) <= 4(by RKM3)
+
+        a=0 L becomes (1+z^2)*(1+z*t) <= 4
+        a=1 L becomes 2*(1+z^2)*(1-(z*t)^2)*(1+t^2) <= 2*2(by 9A) <= 4
+       END PROOF
+
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

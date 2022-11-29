@@ -1,0 +1,46 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK F
+==========================================================================
+1F)  PROOF
+     see "Proof F\Proof of 1F_Magma.txt"
+     and then "Proof F\1F_Pari.gp"
+     END PROOF
+
+2F)  PROOF
+     see "Proof F\Proof of 2F_Magma.txt"
+     and then "Proof F\2F_Pari.gp"
+     END PROOF
+
+3F)  PROOF
+     see "Proof F\Proof of 3F_Magma.txt"
+     and then "Proof F\3F_Pari.gp"
+     END PROOF
+
+4F)  PROOF
+     see "Proof F\Proof of 4F_Magma.txt"
+     and then "Proof F\4F_Pari.gp"
+     END PROOF
+
+5F)  PROOF
+     see "Proof F\Proof of 5F_Magma.txt"
+     and then "Proof F\5F_Pari.gp"
+     END PROOF
+
+6F)  PROOF
+     see "Proof F\Proof of 6F_Magma.txt"
+     and then "Proof F\6F_Pari.gp"
+     END PROOF
+
+7F)  PROOF
+     see "Proof F\Proof of 7F_Magma.txt"
+     and then "Proof F\7F_Pari.gp"
+     END PROOF
+
+8F)  PROOF
+     see "Proof F\Proof of 8F_Magma.txt"
+     END PROOF
+
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

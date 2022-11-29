@@ -1,0 +1,80 @@
+/* Study of Inequality 3E */
+
+Q:=RationalField();
+R<x,y,g>:=PolynomialRing(Q,3);
+
+L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
+
+/* We begin with the boundaries. Notice that, since this function is symmetrical in x and y, we do not have to check all the boundaries to obtain all the results. */
+
+/* x = 0:
+
+  (1+2*y*g+y^2)*2*sqrt(1-g^2). This is known to be maximized at y=1 and g=1/2 giving 3*sqrt(3) < 5.2
+
+  Same result for y = 0. */
+
+/* g = 0:
+
+   (1+x^2)*(1-x*y)*(1+y^2)*2 <= (1+x)*(1-x*y)*(1+y)*2 <= 4 by 9A */
+
+
+/* x = 1:
+
+   (1+g)*(1-y)*(1+2*y*g+y^2)*4*sqrt(1-g^2)  */
+
+L:=4*(1+g)*(1-y)*(1+2*y*g+y^2);   /* times sqrt(1-g^2)  */
+
+
+Ty:=Factorization(Derivative(L,y));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Ly:=Ty[2,1];
+
+Lg:=Tg[3,1];
+
+
+T:=Factorization(Resultant(Ly,Lg,g));
+
+/* Only interior point is y = 1/5: evaluation in Ly gives g = 3, which is not acceptable */
+
+/* Hence x = 1 requires further boundaries. Additional 0-boundaries give the previous estimates. Additional 1-boundaries force the function to be zero.
+
+   x = 1 is concluded, and same result for y = 1 */
+
+/* g = 1 annihilates the function */
+
+
+
+/* Finally, we study the interior */
+
+L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
+
+Tx:=Factorization(Derivative(L,x));
+
+Ty:=Factorization(Derivative(L,y));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Lx:=Tx[2,1];
+
+Ly:=Ty[1,1];
+
+Lg:=Tg[2,1];
+
+
+T:=Factorization(Resultant(Ly,Lx,g));
+
+res1g:=T[3,1];
+
+T:=Factorization(Resultant(Lg,Lx,g));
+
+res1g:=T[3,1];
+
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));
+
+/* This has only trivial factors */
+
+/* Hence the function is < 5.2 */

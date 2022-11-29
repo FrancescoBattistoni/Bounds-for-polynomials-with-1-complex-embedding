@@ -1,0 +1,320 @@
+/* Study of inequality 5F */
+
+  Q:=RationalField();
+  R<a,x,y,z,t,g>:=PolynomialRing(Q,6);
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+2*x*y*z*t*g+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1+y)*(1-y*z)*(1+2*y*z*t*g+(y*z*t)^2)*(1+y*z*t*a);
+
+  /* This is maximized at g=0 thanks to RMK 1  */
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1+y)*(1-y*z)*(1+(y*z*t)^2)*(1+y*z*t*a);
+
+/* We begin with the 0-boundaries */
+
+/* x = 0:
+     (1+y)*(1-y*z)*(1+(y*z*t)^2)*(1+y*z*t*a). Maximized at a=t=1 giving
+     (1+y)*(1-(y*z)^4) <= (1+y) <= 2  */
+
+/* y = 0:
+     (1+x) <= 2  */
+
+/* z = 0:
+     (1+x)*(1-x*y)*(1+y)  <=  2  (apply 9A)  */
+
+/* t = 0:
+     (1+x)*(1-x*y)*(1+x*y*z)*(1+y)*(1-y*z)  =    (1+x)*(1-x*y)*(1+y)  *   (1+x*y*z)*(1-y*z)   <=  2 * 1  <=  2   */
+
+/* a = 0:
+     (1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+(y*z*t)^2). This is maximized at t = 1 giving
+     (1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z)^2)*(1+y)*(1-y*z)*(1+(y*z)^2)   */
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z)^2)*(1+y)*(1-y*z)*(1+(y*z)^2);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Lx:=Tx[4,1];
+  Ly:=Ty[2,1];
+  Lz:=Tz[5,1];
+
+  T:=Factorization(Resultant(Lx,Ly,x));
+  res1x:=T[8,1];
+  T:=Factorization(Resultant(Lx,Lz,x));
+  res2x:=T[5,1];
+
+  T:=Factorization(Resultant(res1x,res2x,y));
+  resy:=T[4,1]*T[5,1];
+
+  PrintFile("5F_Pari.gp","\{resy=");
+  PrintFile("5F_Pari.gp",resy);
+  PrintFile("5F_Pari.gp",";}\n\n");
+
+  PrintFile("5F_Pari.gp","\{Lx=");
+  PrintFile("5F_Pari.gp",Lx);
+  PrintFile("5F_Pari.gp",";}\n\n");
+  /* GP computations show there are no stationary interior points */
+
+/* a = 0, x = 1:
+     2*(1-y^2)*(1+(x*y*z)^2)*(1-(y*z)^2)*(1+(y*z)^2)  <=   2*(1-y^2)*(1+y^2)*(1-(y*z)^4)  <=   2  */
+
+/* a = 0, y = 1:
+     2*(1+x)*(1-x)*(1+x*z)*(1+(x*z)^2)*(1-z)*(1+z^2)   =
+     2 * (1+x)*(1-x)*(1+(x*z)^2)  *  (1+x*z)*(1-z)*(1+z^2)   <=   2  *  (1-x^4)   *  (1-z^4)   <=  2   */
+
+/* a = 0, z = 1:
+     (1+x)*(1-x*y)*(1+x*y)*(1+(x*y)^2)*(1+y)*(1-y)*(1+y^2) =
+     (1+x)*(1-(x*y)^4)*(1-y^4)  <=   2  */
+  /* This concludes the 0-boundary case  */
+
+
+/* Now we study the 1-boundaries */
+
+/* x = 1:
+     2*(1-y^2)*(1-(y*z)^2)*(1-(y*z*t*a)^2)*(1+(y*z*t)^2)*(1+(y*z*t)^2)  <=
+     2*(1-y^2)*(1-(y*z)^2)*(1+y^2)*(1+(y*z)^2)  <=  2  */
+
+/* y = 1:
+     2*(1-x^2)*(1+x*z)*(1+(x*z*t)^2)*(1-x*z*t*a)*(1-z)*(1+(z*t)^2)*(1+z*t*a)  */
+
+  L:= 2*(1-x^2)*(1+x*z)*(1+(x*z*t)^2)*(1-x*z*t*a)*(1-z)*(1+(z*t)^2)*(1+z*t*a);
+
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lt:=Tt[6,1];
+  La:=Ta[9,1];
+
+  T:=Factorization(Resultant(Lt,La,a));
+  /* This has no roots in the interior */
+
+
+/* y = 1, z = 1: this is zero */
+
+
+/* y = 1, t = 1:
+     2*(1-x^2)*(1+x*z)*(1+(x*z)^2)*(1-x*z*a)*(1-z)*(1+z^2)*(1+z*a)    */
+
+  L:=2*(1-x^2)*(1+x*z)*(1+(x*z)^2)*(1-x*z*a)*(1-z)*(1+z^2)*(1+z*a);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Ta:=Factorization(Derivative(L,a));
+  Lx:=Tx[4,1];
+  Lz:=Tz[3,1];
+  La:=Ta[8,1];
+
+  T:=Factorization(Resultant(Lx,La,a));
+  res1a:=T[3,1];
+  T:=Factorization(Resultant(Lz,La,a));
+  res2a:=T[4,1];
+
+  T:=Factorization(Resultant(res1a,res2a,x));
+  resx:=T[4,1];
+  /* This has no roots in the interior */
+
+
+/* y = 1, t = 1, a = 1:
+     2*(1-x^2)*(1+x*z)*(1+(x*z)^2)*(1-x*z)*(1-z)*(1+z^2)*(1+z)  =
+     2*(1-x^2)*(1-(x*z)^4)*(1-z^4)  <=  2   */
+
+
+/* y = 1, a = 1:
+     2*(1-x^2)*(1+x*z)*(1+(x*z*t)^2)*(1-x*z*t)*(1-z)*(1+(z*t)^2)*(1+z*t)  */
+
+  L:=2*(1-x^2)*(1+x*z)*(1+(x*z*t)^2)*(1-x*z*t)*(1-z)*(1+(z*t)^2)*(1+z*t);
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Lx:=Tx[4,1];
+  Lz:=Tz[3,1];
+  Lt:=Tt[6,1];
+
+  T:=Factorization(Resultant(Lx,Lt,x));
+  res1x:=T[5,1];
+  T:=Factorization(Resultant(Lz,Lt,x));
+  res2x:=T[5,1];
+
+  T:=Factorization(Resultant(res1x,res2x,z));
+  resz:=T[5,1];
+
+  /* This has no roots in the interior. The case y = 1 is concluded */
+
+
+/* z = 1:
+     (1+x)*(1-x*y)*(1+x*y)*(1+(x*y*t)^2)*(1-x*y*t*a)*(1+y)*(1-y)*(1+(y*t)^2)*(1+y*t*a)   */
+
+  L:=(1+x)*(1-x*y)*(1+x*y)*(1+(x*y*t)^2)*(1-x*y*t*a)*(1+y)*(1-y)*(1+(y*t)^2)*(1+y*t*a);
+
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lt:=Tt[7,1];
+  La:=Ta[10,1];
+
+  T:=Factorization(Resultant(Lt,La,a));
+
+  /* This has no roots in the interior */
+
+
+/* z = 1, t = 1:
+     (1+x)*(1-x*y)*(1+x*y)*(1+(x*y)^2)*(1-x*y*a)*(1+y)*(1-y)*(1+y^2)*(1+y*a)   */
+
+  L:=(1+x)*(1-x*y)*(1+x*y)*(1+(x*y)^2)*(1-x*y*a)*(1+y)*(1-y)*(1+y^2)*(1+y*a);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Ta:=Factorization(Derivative(L,a));
+  Lx:=Tx[5,1];
+  Ly:=Ty[2,1];
+  La:=Ta[9,1];
+
+  T:=Factorization(Resultant(Lx,La,a));
+  res1a:=T[3,1];
+
+  T:=Factorization(Resultant(Ly,La,a));
+  res2a:=T[4,1];
+
+  T:=Factorization(Resultant(res1a,res2a,x));
+  resx:=T[4,1];
+
+  /* This has no roots in the interior */
+
+
+/* z = 1, t = 1, a = 1:
+     (1+x)*(1-x*y)*(1+x*y)*(1+(x*y)^2)*(1-x*y)*(1+y)*(1-y)*(1+y^2)*(1+y) */
+
+  L:=(1+x)*(1-x*y)*(1+x*y)*(1+(x*y)^2)*(1-x*y)*(1+y)*(1-y)*(1+y^2)*(1+y);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Lx:=Tx[5,1];
+  Ly:=Ty[4,1];
+
+  T:=Factorization(Resultant(Lx,Ly,x));
+  resx:=T[5,1];
+
+  /* This has no roots in the interior: the case z = 1 is concluded */
+
+
+/* t = 1 */
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z)^2)*(1-x*y*z*a)*(1+y)*(1-y*z)*(1+(y*z)^2)*(1+y*z*a);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Ta:=Factorization(Derivative(L,a));
+  Lx:=Tx[5,1];
+  Ly:=Ty[2,1];
+  Lz:=Tz[5,1];
+  La:=Ta[10,1];
+
+  T:=Factorization(Resultant(Lx,La,a));
+  res1a:=T[4,1];
+  T:=Factorization(Resultant(Ly,La,a));
+  res2a:=T[5,1];
+  T:=Factorization(Resultant(Lz,La,a));
+  res3a:=T[5,1];
+
+  T:=Factorization(Resultant(res1a,res3a,x));
+  res1x:=T[5,1];
+  T:=Factorization(Resultant(res2a,res3a,x));
+  res2x:=T[5,1];
+
+  T:=Factorization(Resultant(res1x,res2x,y));
+  resy:=T[5,1]*T[6,1];
+  /* This has no roots in the interior */
+
+/* t = 1, a = 1 */
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z)^2)*(1-x*y*z)*(1+y)*(1-y*z)*(1+(y*z)^2)*(1+y*z);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Lx:=Tx[5,1];
+  Ly:=Ty[2,1];
+  Lz:=Tz[6,1];
+
+  T:=Factorization(Resultant(Lx,Lz,x));
+  res1x:=T[4,1];
+  T:=Factorization(Resultant(Ly,Lz,x));
+  res2x:=T[4,1];
+
+  T:=Factorization(Resultant(res1x,res2x,y));
+  resy:=T[4,1]*T[5,1]*T[6,1];
+
+  /* This has no roots in the interior: this concludes the case t = 1 */
+
+
+/* a = 1 */
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t)*(1+y)*(1-y*z)*(1+(y*z*t)^2)*(1+y*z*t);
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Lx:=Tx[5,1];
+  Ly:=Ty[2,1];
+  Lz:=Tz[5,1];
+  Lt:=Tt[8,1];
+
+  T:=Factorization(Resultant(Lx,Lt,x));
+  res1x:=T[6,1];
+  T:=Factorization(Resultant(Ly,Lt,x));
+  res2x:=T[6,1];
+  T:=Factorization(Resultant(Lz,Lt,x));
+  res3x:=T[6,1];
+
+  T:=Factorization(Resultant(res1x,res3x,y));
+  res1ya:=T[6,1];
+  res1yb:=T[7,1];
+
+  T:=Factorization(Resultant(res2x,res3x,y));
+  res2y:=T[7,1];
+
+  T:=Factorization(Resultant(res1ya,res2y,z));
+  res1z:=T[8,1]*T[9,1]*T[10,1];
+
+  PrintFile("5F_Pari.gp","\{res1z=");
+  PrintFile("5F_Pari.gp",res1z);
+  PrintFile("5F_Pari.gp",";}\n\n");
+
+  PrintFile("5F_Pari.gp","\{res2y=");
+  PrintFile("5F_Pari.gp",res2y);
+  PrintFile("5F_Pari.gp",";}\n\n");
+
+  PrintFile("5F_Pari.gp","\{res3x=");
+  PrintFile("5F_Pari.gp",res3x);
+  PrintFile("5F_Pari.gp",";}\n\n");
+
+  PrintFile("5F_Pari.gp","\{Lt=");
+  PrintFile("5F_Pari.gp",Lt);
+  PrintFile("5F_Pari.gp",";}\n\n");
+  /* GP computations show res1z has no roots */
+
+
+  T:=Factorization(Resultant(res1yb,res2y,z));
+  res2z:=T[7,1]*T[8,1]*T[9,1]*T[10,1];
+
+  PrintFile("5F_Pari.gp","\{res2z=");
+  PrintFile("5F_Pari.gp",res2z);
+  PrintFile("5F_Pari.gp",";}\n\n");
+  /* GP computations show res2z has no roots */
+
+  /* No roots in the interior: this concludes the case a = 1. */
+
+
+/* Finally, we study the general interior */
+
+  L:=(1+x)*(1-x*y)*(1+x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1+y)*(1-y*z)*(1+(y*z*t)^2)*(1+y*z*t*a);
+
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lt:=Tt[8,1];
+  La:=Ta[11,1];
+
+  T:=Factorization(Resultant(Lt,La,a));
+  /* This has no roots */
+
+/* Hence the function is <= 2 */

@@ -1,0 +1,305 @@
+/* Study of Inequality 1F */
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1-x*y*z*t)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2); /* times 2*sqrt(1-g^2)  */
+
+/* This is maximized at x = 0, giving
+
+   (1-2*y*z*g+(y*z)^2)*(1+y*z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2)  */
+
+/* We begin with the 0-boundaries */
+
+/* y = 0:
+
+   (1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2). This is  < 5.2 thanks to 3E.   */
+
+
+/* z = 0:
+
+   (1+2*t*g+t^2)*2*sqrt(1-g^2). This is <= 3*sqrt(3) < 5.2 */
+
+
+/* t = 0:
+
+   (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*2*sqrt(1-g^2). This is maximized at either y = 0 (which we already know) or y = 1 (since the term in y is a positive oriented parabola).
+
+   t = 0, y = 1:
+
+   2*(1-2*z*g+z^2)*(1+2*z*g+z^2)*sqrt(1-g^2). This is maximized at g = 0, giving the value 8 */
+
+
+/* g = 0:
+
+   2*(1+(y*z)^2)*(1+y*z*t)*(1+z^2)*(1-z*t)*(1+t^2).  This is maximized at y = 1, giving
+
+   2*(1+z^2)*(1+z*t)*(1+z^2)*(1-z*t)*(1+t^2)   */
+
+
+L:=2*(1+z^2)*(1+z*t)*(1+z^2)*(1-z*t)*(1+t^2);
+
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+Lz:=Tz[4,1];
+
+Lt:=Tt[3,1];
+
+
+T:=Factorization(Resultant(Lz,Lt,z));
+
+/* This has no zeros in the interior */
+
+/* g = 0, y = 1, z = 1:
+
+   8*(1+t)*(1-t)*(1+t^2)  <=   8  */
+
+
+/* g = 0, y = 1, t = 1:
+
+   4*(1+z^2)*(1+z)*(1+z^2)*(1-z) = 4*(1-z^4)*(1+z^2)  <=  4*32/27 < 8 */
+
+
+/* This concludes the 0-boundaries  */
+
+
+/* Let us begin with the 1-boundaries */
+
+/* g = 1: the function is zero */
+
+/* t = 1:
+
+   (1-2*y*z*g+(y*z)^2)*(1+y*z)*(1+2*z*g+z^2)*(1-z)*(1+g)*4*sqrt(1-g^2)  */
+
+L:=4*(1-2*y*z*g+(y*z)^2)*(1+y*z)*(1+2*z*g+z^2)*(1-z)*(1+g);   /* times sqrt(1-g^2)   */
+
+Ty:=Factorization(Derivative(L,y));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Ly:=Ty[5,1];
+
+Lz:=Tz[2,1];
+
+Lg:=Tg[4,1];
+
+
+T:=Factorization(Resultant(Ly,Lz,g));
+
+/* This has no zeros in the interior */
+
+
+/* t = 1, z = 1:  the function is zero */
+
+/* t = 1, y = 1:
+
+   (1-2*z*g+z^2)*(1+z)*(1+2*z*g+z^2)*(1-z)*(1+g)*4*sqrt(1-g^2) =
+
+   (1-z^2)*((1+z^2)^2-4*z^2*g^2)*(1+g)*4*sqrt(1-g^2)  */
+
+
+L:=4*(1-z^2)*((1+z^2)^2-4*z^2*g^2)*(1+g);  /* times sqrt(1-g^2)  */
+
+Tz:=Factorization(Derivative(L,z));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Lz:=Tz[3,1];
+
+Lg:=Tg[4,1];
+
+
+T:=Factorization(Resultant(Lz,Lg,g));
+
+resg:=T[5,1];
+
+/* This has no solutions */
+
+/* This concludes the case the case t = 1 */
+
+
+/* z = 1:
+
+   (1-2*y*g+y^2)*(1+y*t)*(1+g)*(1-t)*(1+2*t*g+t^2)*4*sqrt(1-g^2)  */
+
+L:=4*(1-2*y*g+y^2)*(1+y*t)*(1+g)*(1-t)*(1+2*t*g+t^2);  /* times sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+
+Tt:=Factorization(Derivative(L,t));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Ly:=Ty[4,1];
+
+Lt:=Tt[2,1];
+
+Lg:=Tg[4,1];
+
+
+T:=Factorization(Resultant(Ly,Lt,g));
+
+res1g:=T[2,1];
+
+T:=Factorization(Resultant(Ly,Lg,g));
+
+res2g:=T[4,1];
+
+
+T:=Factorization(Resultant(res1g,res2g,t));
+
+rest:=T[4,1];
+
+
+PrintFile("1F_Pari.gp","\{rest=");
+PrintFile("1F_Pari.gp",rest);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{res1g=");
+PrintFile("1F_Pari.gp",res1g);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{Ly=");
+PrintFile("1F_Pari.gp",Ly);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+/* The computation in GP shows that there are no stationary points giving values beyond 8 */
+
+
+/* z = 1, y = 1:
+
+   (1-g)*(1+t)*(1+g)*(1-t)*(1+2*t*g+t^2)*8*sqrt(1-g^2) =
+
+   8*(1-t^2)*(1+2*t*g+t^2)*(1-g^2)*sqrt(1-g^2)
+
+   This is maximized at t=1/sqrt(7), g=1/2/sqrt(7) giving the value 8M */
+
+
+/* This concludes z = 1 */
+
+/* y = 1:
+
+   (1-2*z*g+z^2)*(1+z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*2*sqrt(1-g^2)  */
+
+L:=2*(1-2*z*g+z^2)*(1+z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2);   /* times sqrt(1-g^2)  */
+
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Lz:=Tz[3,1];
+
+Lt:=Tt[3,1];
+
+Lg:=Tg[3,1];
+
+
+T:=Factorization(Resultant(Lz,Lt,g));
+
+res1g:=T[3,1];
+
+T:=Factorization(Resultant(Lt,Lg,g));
+
+res2g:=T[6,1];
+
+
+T:=Factorization(Resultant(res1g,res2g,t));
+
+rest:=T[6,1];
+
+
+PrintFile("1F_Pari.gp","\{rest=");
+PrintFile("1F_Pari.gp",rest);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{res1g=");
+PrintFile("1F_Pari.gp",res1g);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{Lt=");
+PrintFile("1F_Pari.gp",Lt);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+/* Computations in GP give no stationary points with values beyond 8 */
+
+
+/* This concludes y = 1. */
+
+/* We study now the general interior */
+
+L:=(1-2*y*z*g+(y*z)^2)*(1+y*z*t)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2); /* times 2*sqrt(1-g^2)  */
+
+Ty:=Factorization(Derivative(L,y));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+
+Ly:=Ty[5,1];
+
+Lz:=Tz[2,1];
+
+Lt:=Tt[2,1];
+
+Lg:=Tg[3,1];
+
+
+
+T:=Factorization(Resultant(Ly,Lz,g));
+
+res1g:=T[6,1];
+
+T:=Factorization(Resultant(Ly,Lt,g));
+
+res2g:=T[2,1];
+
+T:=Factorization(Resultant(Ly,Lg,g));
+
+res3g:=T[4,1];
+
+
+T:=Factorization(Resultant(res1g,res2g,t));
+
+res1t:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res3g,t));
+
+res2t:=T[7,1];
+
+
+T:=Factorization(Resultant(res1t,res2t,y));
+
+resy:=T[4,1];
+
+
+
+PrintFile("1F_Pari.gp","\{resy=");
+PrintFile("1F_Pari.gp",resy);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{res1t=");
+PrintFile("1F_Pari.gp",res1t);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{res1g=");
+PrintFile("1F_Pari.gp",res1g);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+PrintFile("1F_Pari.gp","\{Ly=");
+PrintFile("1F_Pari.gp",Ly);
+PrintFile("1F_Pari.gp",";}\n\n");
+
+/* GP computations show that there are no stationary points giving values of the function beyond 8 */
+
+
+/* Thus the function is <= 8M */

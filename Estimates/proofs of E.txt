@@ -1,0 +1,329 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK E
+==========================================================================
+1E)  PROOF
+     (1-2*x*g+x^2)*(1-x*y)*(1-2*y*g+y^2)*2*sqrt(1-g^2)    maximum for g=0, getting
+     <=  2*(1+x^2)*(1-x*y)*(1+y^2)
+     <=  2*(1+x  )*(1-x*y)*(1+y  )
+     <=  4 (apply 9A)
+     END PROOF
+
+2E)  PROOF
+     (1-2*x*g+x^2)*(1+x*y)*(1+2*y*g+y^2)*2*sqrt(1-g^2). This is known to be <= 16, since it corresponds to
+     the function for N = 4,  and is exactly 16 by taking x = y = 1, g = 0.
+     Alternatively, it is bounded by th DOUBLE of the function in 19E, since 2R <= 2, so that the bound follows by 19E.
+
+     Similarly for the other (it is sufficient to exchange x <---> y).
+     END PROOF
+
+2E)  PROOF
+bis) (1-2*x*g+x^2)*(1+x*y)*(1+2*y*g+y^2)*2*sqrt(1-g^2).
+     /* When y <= 3/4
+     (1-2*x*g+x^2)*(1+x*y)*(1+2*y*g+y^2)*2*sqrt(1-g^2) increases in y, thus it is maximized for y = 3/4
+     (1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2) */
+
+     L = (1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)   /* times 2*sqrt(1-g^2) */
+     Tx=factor(deriv(L,x))
+     Tg=factor(deriv(L,g)*(1-g^2)-g*L)
+     Lx=Tx[3,1]
+     Lg=Tg[2,1]
+
+     T1=factor(polresultant(Lx,Lg,g))
+     res1g=T1[2,1]
+     u=polrootsreal(res1g,[0,1]) /* length 1 */
+     x0=u[1]
+     v=polrootsreal(subst(Lx,x,x0),[0,1]) /* length 1 */
+     g0=v[1]
+     subst(subst(L,x,x0),g,g0)*2*sqrt(1-g0^2)
+     \\  3.8568328155343421019222033849302093013
+
+     /* BORDER */
+     /* x = 0: (1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2) <= 4.1 */ /* PARI ploth(g=0,1,my(x=0);(1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2)) */
+     /* x = 1: (1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2) <= 9.4 */ /* PARI ploth(g=0,1,my(x=1);(1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2)) */
+     /* g = 0: (1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2) <= 9.4 */ /* PARI ploth(x=0,1,my(g=0);(1-2*x*g+x^2)*(1+x/2)*(1+2*(3/4)*g+(3/4)^2)*2*sqrt(1-g^2)) */
+     /* g = 1: NULL */
+
+     /* When x <= 3/4:
+     (1-2*x*g+x^2)*(1+x*y)*(1+2*y*g+y^2)*2*sqrt(1-g^2) increases in y, thus it is maximized for y = 1
+     (1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2) */
+
+     L = (1-2*x*g+x^2)*(1+x)*2*(1+g)   /* times 2*sqrt(1-g^2) */
+     Tx=factor(deriv(L,x))
+     Tg=factor(deriv(L,g)*(1-g^2)-g*L)
+     Lx=Tx[2,1]
+     Lg=Tg[3,1]
+
+     T1=factor(polresultant(Lx,Lg,g))
+     /* All factors are strictly positive in the open set */
+
+     /* BORDER */
+     /* x = 0  : (1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2) <= 5.2 */ /* PARI ploth(g=0,1,my(x=0)  ;(1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2)) */
+     /* x = 3/4: (1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2) <= 11  */ /* PARI ploth(g=0,1,my(x=3/4);(1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2)) */
+     /* g = 0  : (1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2) <= 11  */ /* PARI ploth(x=0,3/4,my(g=0);(1-2*x*g+x^2)*(1+x)*2*(1+g)*2*sqrt(1-g^2)) */
+     /* g = 1  : NULL */
+     END PROOF
+
+3E)  PROOF
+     see "Proof E\Proof of 3E_Magma.txt"
+     END PROOF
+
+4E)  PROOF
+     The first one:
+     (1-y)*(1+y*x)*(1-2*g*y*z+(y*z)^2) maximized for g = 0
+     (1-y)*(1+y*x)*(1+(y*z)^2) maximized for x = 1, z = 1
+     (1-y)*(1+y)*(1+y^2) = 1-y^4 <= 1.
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+5E)  PROOF
+     The first one:
+     (1-t)*(1+z*t)*(1+2*g*y*z*t+(y*z*t)^2) maximized for g = 1, y = 1, z = 1
+     (1-t)*(1+t)^3 <= 27/16 /* value assumed at the stationary point 1/2 in (0,1) */
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+6E)  PROOF
+     (1-x)*(1-x*y)*(1+2*x*y*z*g+(x*y*z)^2)*(1+x*y*z*t). This is maximized at g=t=z=1, giving
+     <= (1-x)*(1-x*y)*(1+x*y)^3.
+     interior (in PARI code):
+      L=(1-x)*(1-x*y)*(1+x*y)^3
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      T=factor(polresultant(Lx,Ly,y))
+      no roots in the open (0,1)
+     Border:
+      x=0 L becomes 1
+      x=1 L becomes 0
+      y=0 L becomes (1-x) <= 1
+      y=1 L becomes (1-x)^2*(1+x)^3
+     maximized for x0=1/5 giving the value 3456/3125 which is <= 1.11
+     END PROOF
+
+7E)  PROOF
+     this is the 'vertical' version of 4E and has the same proof.
+     END PROOF
+
+8E)  PROOF
+     (1+x)*(1-x*y)*(1+2*x*y*z*g+(x*y*z)^2)*(1+y). This is maximized at g=z=1 giving
+     <= (1+x)*(1-x*y)*(1+x*y)^2*(1+y).
+     interior (in PARI code):
+      L=(1+x)*(1-x*y)*(1+x*y)^2*(1+y)
+      T=factor(deriv(L,x))
+      Lx=T[3,1]
+      T=factor(deriv(L,y))
+      Ly=T[3,1]
+      T=factor(polresultant(Lx,Ly,y))
+      res=T[3,1]
+      polrootsreal(res,[0,1])
+      x0=0.72527008507203464922864206786224544020
+      polrootsreal(subst(Ly,x,x0))
+      y0=0.72527008507203464922864206786224544021
+      subst(subst(L,x,x0),y,y0)
+      3.2854570820718519149100458947640051564     <---- value
+     border
+      x=0 L becomes (1+y)  <= 2
+      x=1 L becomes 2*(1-y)*(1+y)^3 <= 27/8       <---- maximum
+      y=0 L becomes (1+x)
+      y=1 L becomes 2*(1-x)*(1+x)^3 <= 27/8       <---- maximum
+     END PROOF
+
+9E)  PROOF
+     (1+2*z*g+z^2)*(1-2*t*g+t^2)*2*sqrt(1-g^2). This is maximized at z=1, giving
+     <= 4*(1+g)*(1-2*t*g+t^2)*sqrt(1-g^2).
+     This is maximized at either t=0 or t=1 (by convexity):
+     at t=0 we obtain 4*(1+g)*sqrt(1-g^2)   <= 3*sqrt(3),
+     at t=1 we obtain 8*(1+g)*(1-g)*sqrt(1-g^2) <= 8, which is bigger.
+     END PROOF
+
+10E) PROOF
+     see "Proof E\Proof of 10E_Magma.txt"
+     END PROOF
+
+11E) PROOF
+     (1+x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1+2*y*z*g+(y*z)^2) <=
+     2    *(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1+2*y*z*g+(y*z)^2) <=
+     by 10E
+     END PROOF
+
+12E) PROOF
+     (1+x)*(1-x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1+y).  This is maximized at g=0 and z=1, giving
+     <= (1+x)*(1-x*y)*(1+(x*y)^2)*(1+y).
+     interior (in PARI code):
+      L=(1+x)*(1-x*y)*(1+(x*y)^2)*(1+y)
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[2,1]
+      T=factor(polresultant(Lx,Ly,y))
+      res=T[3,1]
+      polrootsreal(res,[0,1])
+      x0=0.63036657694868056912859953574401523353
+      polrootsreal(subst(Ly,x,x0))
+      y0=0.63036657694868056912859953574401523352
+      subst(subst(L,x,x0),y,y0)
+      1.8547987501444598157921518517626714085               <---- value
+     border
+      x=0 L becomes (1+y) <= 2
+      x=1 L becomes 2*(1-y)*(1+y^2)*(1+y) = 2*(1-y^4) <= 2  <---- maximum
+      y=0 L becomes (1+x) <= 2
+      y=1 L becomes 2*(1+x)*(1-x)*(1+x^2) = 2*(1-x^4) <= 2  <---- maximum
+     END PROOF
+
+13E) PROOF
+     (1-x)*(1-x*y)*(1+x*y*z)*(1+2*x*y*z*t*g+(x*y*z*t)^2)*(1+x*y*z*t*u). This is maximized at g=u=t=z=1 giving
+     <= (1-x)*(1-x*y)*(1+x*y)^4
+     interior (in PARI code):
+      L=(1-x)*(1-x*y)*(1+x*y)^4
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      T=factor(polresultant(Lx,Ly,y))
+      res=T[3,1]
+      polrootsreal(res,[0,1])
+      no roots in (0,1)
+     border
+      x=0 L becomes 1
+      x=1 L becomes 0
+      y=0 L becomes (1-x) <= 1
+      y=1 L becomes (1-x^2)^2*(1+x)^2 <= (32/27)^2    <---- maximum
+     END PROOF
+
+14E) PROOF
+     (1-x)*(1-x*y)*(1+x*y*z)*(1+2*x*y*z*t*g+(x*y*z*t)^2). This is maximized at g=t=z=1 giving
+     <= (1-x)*(1-x*y)*(1+x*y)^3.
+     interior (in PARI code):
+      L=(1-x)*(1-x*y)*(1+x*y)^3
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      T=factor(polresultant(Lx,Ly,y))
+      // No roots in (0,1)
+     border
+      x=0 L becomes 1
+      x=1 L becomes 0
+      y=0 L becomes (1-x) <= 1
+      y=1 L becomes (1-x)*(1-x)*(1+x)^3 <= 3456/3125 <= 1.11 (value at the stationary point x0=1/5)      <---- maximum
+     END PROOF
+
+15E) PROOF
+     (1-x)*(1-x*y)*(1+x*y*z)*(1+x*y*z*t)*(1+2*x*y*z*t*a*g+(x*y*z*t*u)^2)*(1+x*y*z*t*u*v). This is maximized at g=v=u=t=z=1 giving
+     <= (1-x)*(1-x*y)*(1+x*y)^5.
+     interior (in PARI code):
+      L=(1-x)*(1-x*y)*(1+x*y)^5
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      T=factor(polresultant(Lx,Ly,y))
+      // No roots in (0,1)
+     border
+      x=0 L becomes 1
+      x=1 L becomes 0
+      y=0 L becomes (1-x) <= 1
+      y=1 L becomes (1-x)*(1-x)*(1+x)^5  stationary point at x0=3/7 with value <= 1.95      <---- maximum
+     END PROOF
+
+16E) PROOF
+     (1-x)*(1+x*y)*(1-x*y*z)*(1+2*x*y*z*t*g+(x*y*z*t)^2). This is maximized at g=t=1 giving
+     <= (1-x)*(1+x*y)*(1-x*y*z)*(1+x*y*z)^2.
+     interior (in PARI code):
+      L=(1-x)*(1+x*y)*(1-x*y*z)*(1+x*y*z)^2
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      T=factor(deriv(L,z))
+      Lz=T[6,1]
+      T=factor(polresultant(Ly,Lz,z))
+      // No roots in (0,1)
+     border
+      x=0 L becomes 1
+      y=0 L becomes (1-x) <= 1
+      z=0 L becomes (1-x)*(1+x*y) <= (1-x)*(1+x) = 1-x^2 <= 1
+      x=1 L becomes 0
+      y=1 L becomes (1-x)*(1+x)*(1-x*z)*(1+x*z)^2
+            L=(1-x)*(1+x)*(1-x*z)*(1+x*z)^2
+            T=factor(deriv(L,x))
+            Lx=T[2,1]
+            T=factor(deriv(L,z))
+            Lz=T[5,1]
+            T=factor(polresultant(Lx,Lz,z))
+            // No roots
+            border
+            z=1 becomes (1-x)^2*(1+x)^3  <= 3456/3125 <= 1.11 (value at the stationary point x0=1/5)      <---- maximum
+      z=1 L becomes (1-x)*(1+x*y)*(1-x*y)*(1+x*y)^2
+            L=(1-x)*(1+x*y)*(1-x*y)*(1+x*y)^2
+            T=factor(deriv(L,x))
+            Lx=T[2,1]
+            T=factor(deriv(L,y))
+            Ly=T[4,1]
+            T=factor(polresultant(Lx,Ly,y))
+            // No roots
+            border
+            no new border to consider
+     END PROOF
+
+17E) PROOF
+     The first one:
+     (1-t)*(1+z*t)*(1+y*z*t)*(1+2*g*x*y*z*t+(x*y*z*t)^2) maximized for g = 1, x = 1
+     (1-t)*(1+z*t)*(1+y*z*t)*(1+y*z*t)^2 maximized for y = 1, z = 1.
+     (1-t)*(1+t)^4 <= 8192/3125 <= 2.63 /* value at t= 3/5 which is the stationary point */
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+18E) PROOF
+      Apply 6B to 3rd column getting the configuration in 11E. Then apply 11E.
+     END PROOF
+
+19E) PROOF
+     (1-2*x*g+x^2)*(1+x*y)*(1+2*y*g+y^2). This is maximized at y = 1 giving
+     <= (1-2*x*g+x^2)*(1+x)*(1+g)*2
+     interior
+      L=(1-2*x*g+x^2)*(1+x)*(1+g)*2
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,g))
+      Lg=T[2,1]
+      T=factor(polresultant(Lx,Lg,g))
+      root x0=1/4
+      subst(Lg,x,1/4)
+      root g0=9/16
+      subst(subst(L,x,1/4),g,9/16)
+      3125/512 <= 3.2                           <---- value
+     border
+      x=0 L becomes (1+g)*2  <= 4
+      x=1 L becomes (1-g)*(1+g)*8   <= 8        <---- maximum
+      g=0 L becomes (1+x^2)*(1+x)*2  <= 8       <---- maximum
+      g=1 L becomes (1-2*x+x^2)*(1+x)*4 <= 4
+
+     Similarly for the other (it is sufficient to exchange x <---> y).
+     END PROOF
+
+20E) PROOF
+     (1-x)*(1-x*y)*(1+x*y*z)*(1+2*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*u)*(1+x*y*z*t*u*v). This is maximized at g=v=u=t=z=1 giving
+     <= (1-x)*(1-x*y)*(1+x*y)^5
+     which is the same function we got in 15E; we repeat here the computations for the search of its maximum.
+     interior (in PARI code):
+      L=(1-x)*(1-x*y)*(1+x*y)^5
+      T=factor(deriv(L,x))
+      Lx=T[2,1]
+      T=factor(deriv(L,y))
+      Ly=T[4,1]
+      T=factor(polresultant(Lx,Ly,y))
+      // No roots in (0,1)
+     border
+      x=0 L becomes 1
+      x=1 L becomes 0
+      y=0 L becomes (1-x) <= 1
+      y=1 L becomes (1-x)*(1-x)*(1+x)^5  stationary point at x0=3/7 with value <= 1.95      <---- maximum
+     END PROOF
+
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

@@ -1,0 +1,31 @@
+/* Study of inequality 11E */
+
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1+x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1-y)*(1+2*y*z*g+(y*z)^2);
+
+/* 0-boundaries */
+
+/* x = 0:
+   (1-y)*(1+2*y*z*g+(y*z)^2). Maximized at z=g=1 giving (1-y)*(1+y)^2  <=  32/27.  */
+
+/* y = 0:
+   (1+x)  <=  2  */
+
+
+/* z = 0:
+   (1+x)*(1+x*y)*(1-y)  <=  2   (apply 9A) */
+
+
+/* g = 0:
+   (1+x)*(1+x*y)*(1+(x*y*z)^2)*(1-y)*(1+(y*z)^2). Maximized at x=z=1 giving
+   2*(1+y)*(1+y^2)*(1-y)*(1+y^2)  = 2*(1-y^4)*(1+y^2)  <=  64/27.  */
+
+
+/* x=z=1, g=1/2, y=1/sqrt(3) give exactly the value 64/27.
+
+   But the estimate 64/27 can be obtained by the fact that (1+x) is <= 2 plus the remaining factor is <= 32/27 thanks to 10E. So our estimate is sharp */
+
+/* The function is <= 64/27 */

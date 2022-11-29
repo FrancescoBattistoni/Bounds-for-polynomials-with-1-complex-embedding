@@ -1,0 +1,87 @@
+/* Study of inequality 8F)
+
+      + + -' -              <= 2.442
+      - - +' +
+        + -' -
+
+ */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+/*
+
+
+  (1-x*y)*(1-x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  (1+y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1-y*z*t*a)
+       (1-z)*(1+2*g*z*t+(z*t)^2)*(1+z*t*a)
+
+
+  This polynomial depends on 6 variables, so it is too complicated to compute its maximum with the usual approach.
+  However, let F denote the polynomial. We split F as PQ, with
+  P = (1-x*y)*(1-x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  Q = (1+y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1-y*z*t*a)*(1-z)*(1+2*g*z*t+(z*t)^2)*(1+z*t*a)
+
+
+  Actually:
+  P is the polynomial corresponding to    + + -' -   ,
+  and Q the one corresponding to          - - +' +
+                                            + -' -
+
+  We split the domain into two regions:
+
+  CASE 1: t AND a BOTH are >= 1/2: under this assumption P <= 3456/3125 (by 6E) and Q <= 2.1973 (by 29Gtris).
+
+  CASE 2: t OR a is <= 1/2: under this assumption P <= 1.03 (proved here below) and Q <= 64/27 by 29G.
+
+  Thus F is <= max(3456/3125 * 2.1973, 1.03 * 64/27) = max(2.442,2.431) = 2.442.
+
+
+========================
+PROOF OF P <= 1.03 when t OR a is <= 1/2.
+
+  P depends on x,y only via x*y: we simplify it by setting w:=x*y, getting
+  (1-w)*(1-w*z)*(1+2*g*w*z*t+(w*z*t)^2)*(1+w*z*t*a)
+  It is increasing in g, so it is maximized for g = 1, getting
+  (1-w)*(1-w*z)*(1+2*w*z*t+(w*z*t)^2)*(1+w*z*t*a).
+
+  ASSUME a <= 1/2: it is increasing in a, so it is maximized for a = 1/2
+  (1-w)*(1-w*z)*(1+2*w*z*t+(w*z*t)^2)*(1+w*z*t*(1/2))  increasing in t: maximized for t = 1
+  (1-w)*(1-w*z)*(1+2*w*z+(w*z)^2)*(1+w*z*(1/2))
+
+  L=(1-w)*(1-w*z)*(1+2*w*z+(w*z)^2)*(1+w*z*(1/2))
+  Tw=factor(deriv(L,w))
+  Tz=factor(deriv(L,z))
+  Lw=Tw[2,1]
+  Lz=Tz[4,1]
+
+  T1=factor(polresultant(Lw,Lz,z))
+  /* All factors in T1 are strictly positive in the open set */
+
+  /* w = 0: the function is constant = 1 */
+  /* z = 0: (1-w)*(1-w*z)*(1+2*w*z+(w*z)^2)*(1+w*z*1/2) <= 1    */ /* PARI my(z=0);ploth(w=0,1,(1-w)*(1-w*z)*(1+2*w*z+(w*z)^2)*(1+w*z*1/2)) */
+  /* w = 1: NULL */
+  /* z = 1: (1-w)*(1-w*z)*(1+2*w*z+(w*z)^2)*(1+w*z*1/2) <= 1.03 */ /* PARI my(z=1);ploth(w=0,1,(1-w)*(1-w*z)*(1+2*w*z+(w*z)^2)*(1+w*z*1/2)) */
+
+
+  ASSUME t <= 1/2: it is increasing in t, so it is maximized for t = 1/2
+  (1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2)*a)  increasing in a: maximized for a = 1
+  (1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2))
+
+  L=(1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2))
+
+  Tw=factor(deriv(L,w))
+  Tz=factor(deriv(L,z))
+  Lw=Tw[2,1]
+  Lz=Tz[4,1]
+
+  T1=factor(polresultant(Lw,Lz,z))
+  /* All factors in T1 are strictly positive in the open set */
+
+  /* w = 0: the function is constant = 1 */
+  /* z = 0: (1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2)) <= 1 */ /* PARI my(z=0);ploth(w=0,1,(1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2))) */
+  /* w = 1: NULL */
+  /* z = 1: (1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2)) <= 1 */ /* PARI my(z=1);ploth(w=0,1,(1-w)*(1-w*z)*(1+2*w*z*(1/2)+(w*z*(1/2))^2)*(1+w*z*(1/2))) */
+
+END PROOF
+========================

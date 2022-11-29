@@ -1,0 +1,314 @@
+/* Study of Inequality 3C */
+
+  Q:=RationalField();
+  R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+  L:=(1+x*y*z)*(1-2*x*y*z*t*g+(x*y*z*t)^2)*(1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2);  /* times 2*sqrt(1-g^2) */
+
+/* 0-BOUNDARY */
+
+/* g = 0: the function becomes
+      2*(1+x*y*z)*(1+(x*y*z*t)^2)*(1+y*z)*(1+(y*z*t)^2)*(1-z)*(1+(z*t)^2)*(1+t^2). This is maximized at x = 1, y = 1 and t = 1, giving
+      4*(1+z)*(1+z^2)*(1+z)*(1+z^2)*(1-z)*(1+z^2) =   4*(1-z^4)*(1+z)*(1+z^2)^2.
+      This is maximized at z0 = 0.7514581560123378065497355858742606918135424838652168769636758103431758626684125409068547604545949588, giving a value of
+      11.68270546726767752676420126994549458244391392917823814138963859224220412188970172055747661611345383  < 11.683   */
+
+
+/* t = 0: the function becomes
+     (1+x*y*z)*(1+y*z)*(1-z)*2*sqrt(1-g^2). This is maximized at g=0, so it's < 11.69   */
+
+
+/* z = 0: the function becomes
+    (1+2*t*g+t^2)*2*sqrt(1-g^2) <= 4*(1+g)*sqrt(1-g^2) <= 3*sqrt(3)  */
+
+
+/* y = 0: the function becomes
+     (1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2*sqrt(1-g^2). This is <= 6.16 by 8B  */
+
+
+/* x = 0: the function becomes
+     (1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2*sqrt(1-g^2) */
+
+  L:=2*(1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2);  /*times sqrt(1-g^2) */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:= Ty[5,1];
+  Lz:= Tz[2,1];
+  Lt:= Tt[3,1];
+  Lg:= Tg[3,1];
+
+  T:=Factorization(Resultant(Ly,Lz,g));
+  res1g:=T[7,1];
+  T:=Factorization(Resultant(Ly,Lt,g));
+  res2g:=T[5,1];
+  T:=Factorization(Resultant(Ly,Lg,g));
+  res3g:=T[5,1];
+
+  T:=Factorization(Resultant(res1g,res2g,y));
+  res1y:=T[8,1];
+  T:=Factorization(Resultant(res1g,res3g,y));
+  res2y:=T[8,1];
+
+  T:=Factorization(Resultant(res1y,res2y,t));
+  /* The only admissible roots is z=1/2. Evaluation in res1y gives no admissible roots in t.
+     So we have to check x = 0 together with the 1-boundaries */
+
+/* x = 0, g = 1: the function is zero */
+
+/* x = 0, t = 1: the function becomes
+   (1+y*z)*(1-2*y*z*g+(y*z)^2)*(1-z)*(1+2*z*g+z^2)*(1+g)*4*sqrt(1-g^2)  */
+
+  L:=4*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1-z)*(1+2*z*g+z^2)*(1+g);  /* times sqrt(1-g^2)  */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:= Ty[5,1];
+  Lz:= Tz[2,1];
+  Lg:= Tg[4,1];
+
+  T:=Factorization(Resultant(Ly,Lz,g));
+  /* This has no roots in the interior */
+
+/* x = 0, t = 1, z = 1: the function is zero */
+
+/* x = 0, t = 1, y = 1: the function becomes
+     (1+z)*(1-2*z*g+z^2)*(1-z)*(1+2*z*g+z^2)*(1+g)*4*sqrt(1-g^2) =
+     (1-z^2)*((1+z^2)^2-4*z^2^g^2)*(1+g)*4*sqrt(1-g^2)  <=   (1-z^2)*(1+z^2)^2   *    4*(1+g)*sqrt(1-g^2)   <=   32/27*3*sqrt(3)  <=   6.16   */
+
+
+/* x = 0, z = 1: the function is zero  */
+
+
+/* x = 0, y = 1: the function becomes
+     (1+z)*(1-2*z*t*g+(z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2*sqrt(1-g^2) <=
+     (1-z^2)*(1+z^2)^2   *   (1+2*t*g+t^2)*2*sqrt(1-g^2)  <=  32/27  * 3*sqrt(3)    <=  6.16
+*/
+
+
+/* 1-BOUNDARY */
+
+/* g = 1: the function is zero */
+
+/* z = 1: the function is zero */
+
+/* t = 1: the function becomes
+   (1+x*y*z)*(1-2*x*y*z*g+(x*y*z)^2)*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1-z)*(1+2*z*g+z^2)*(1+g)*4*sqrt(1-g^2).  */
+
+  L:=4*(1+x*y*z)*(1-2*x*y*z*g+(x*y*z)^2)*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1-z)*(1+2*z*g+z^2)*(1+g);  /* times sqrt(1-g^2) */
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lx:=Tx[8,1];
+  Ly:= Ty[5,1];
+  Lz:= Tz[2,1];
+  Lg:= Tg[5,1];
+
+  T:=Factorization(Resultant(Lx,Ly,g));
+  /* This has no roots in the interior */
+
+/* t = 1, y = 1: the function becomes
+     4*(1+x*z)*(1-2*x*z*g+(x*z)^2)*(1+z)*(1-2*z*g+z^2)*(1-z)*(1+2*z*g+z^2)*(1+g)*sqrt(1-g^2) */
+
+  L:=4*(1+x*z)*(1-2*x*z*g+(x*z)^2)*(1+z)*(1-2*z*g+z^2)*(1-z)*(1+2*z*g+z^2)*(1+g); /* times sqrt(1-g^2)  */
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lx:=Tx[7,1];
+  Lz:= Tz[2,1];
+  Lg:= Tg[5,1];
+
+  T:=Factorization(Resultant(Lx,Lz,g));
+  res1g:=T[4,1];
+  T:=Factorization(Resultant(Lx,Lg,g));
+  res2g:=T[4,1];
+
+  T:=Factorization(Resultant(res1g,res2g,x));
+  resx:=T[5,1];  /* This has no roots in [0,1] */
+
+
+/* t = 1, y = 1, x = 1:
+     4*(1+z)*(1-2*z*g+z^2)*(1+z)*(1-2*z*g+z^2)*(1-z)*(1+2*z*g+z^2)*(1+g)*sqrt(1-g^2)  */
+
+  L:=4*(1+z)*(1-2*z*g+z^2)*(1+z)*(1-2*z*g+z^2)*(1-z)*(1+2*z*g+z^2)*(1+g);  /* times sqrt(1-g^2)  */
+
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lz:= Tz[4,1];
+  Lg:= Tg[5,1];
+
+  T:=Factorization(Resultant(Lz,Lg,g));
+  resg:=T[5,1];
+  /* This has a unique acceptable root in z:
+     z0 = 0.7512662733821866183601529862288335894199673282264917441455053374920508954803167754100845400310581247.
+     Substitution in Lz gives a unique root in g:
+     g0 = 0.008296535442358591083939950462383496306069256898244117501170157380333115743357925012413896488536041113
+     Evaluation gives the value
+     11.68461876949556397721489000402330019462833097798736471548622017490025151120087575560418187454320203  <   11.685 */
+
+
+/* t = 1, x = 1 */
+
+  L:=4*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1+y*z)*(1-2*y*z*g+(y*z)^2)*(1-z)*(1+2*z*g+z^2)*(1+g);  /* times sqrt(1-g^2) */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[7,1];
+  Lz:= Tz[4,1];
+  Lg:= Tg[5,1];
+
+  T:=Factorization(Resultant(Ly,Lz,g));
+
+   /* This has no roots in [0,1]. It concludes the case t = 1 */
+
+
+/* y = 1:  the function becomes
+     (1+x*z)*(1-2*x*z*t*g+(x*z*t)^2)*(1+z)*(1-2*z*t*g+(z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2*sqrt(1-g^2)   */
+
+  L:=2*(1+x*z)*(1-2*x*z*t*g+(x*z*t)^2)*(1+z)*(1-2*z*t*g+(z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2);  /* times sqrt(1-g^2) */
+
+  Tx:=Factorization(Derivative(L,x));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lx:=Tx[7,1];
+  Lz:= Tz[2,1];
+  Lt:=Tt[4,1];
+  Lg:= Tg[4,1];
+
+  T:=Factorization(Resultant(Lx,Lz,g));
+  res1g:=T[6,1];
+  T:=Factorization(Resultant(Lx,Lt,g));
+  res2g:=T[5,1];
+  T:=Factorization(Resultant(Lx,Lg,g));
+  res3g:=T[5,1];
+
+  T:=Factorization(Resultant(res1g,res2g,x));
+  res1x:=T[10,1];
+  T:=Factorization(Resultant(res1g,res3g,x));
+  res2x:=T[10,1];
+
+  T:=Factorization(Resultant(res1x,res2x,z));
+  resz:=T[7,1]*T[8,1]*T[9,1];
+
+  PrintFile("3C_Pari.gp","\{resz=");
+  PrintFile("3C_Pari.gp",resz);
+  PrintFile("3C_Pari.gp",";}\n\n");
+
+  PrintFile("3C_Pari.gp","\{res1x=");
+  PrintFile("3C_Pari.gp",res1x);
+  PrintFile("3C_Pari.gp",";}\n\n");
+
+  PrintFile("3C_Pari.gp","\{res1g=");
+  PrintFile("3C_Pari.gp",res1g);
+  PrintFile("3C_Pari.gp",";}\n\n");
+
+  PrintFile("3C_Pari.gp","\{Lx=");
+  PrintFile("3C_Pari.gp",Lx);
+  PrintFile("3C_Pari.gp",";}\n\n");
+  /* resz has no roots in t in the open set */
+
+
+/* y = 1, x = 1: the function becomes
+     (1+z)*(1-2*z*t*g+(z*t)^2)*(1+z)*(1-2*z*t*g+(z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2*sqrt(1-g^2)   */
+
+  L:=(1+z)*(1-2*z*t*g+(z*t)^2)*(1+z)*(1-2*z*t*g+(z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2;  /* times sqrt(1-g^2)  */
+
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lz:= Tz[4,1];
+  Lt:=Tt[4,1];
+  Lg:= Tg[4,1];
+
+  T:=Factorization(Resultant(Lz,Lt,g));
+  res1g:=T[8,1];
+  T:=Factorization(Resultant(Lz,Lg,g));
+  res2g:=T[8,1];
+
+  T:=Factorization(Resultant(res1g,res2g,t));
+  rest:=T[4,1]*T[5,1]*T[6,1]*T[7,1];
+
+  PrintFile("3C_Pari.gp","\{rest=");
+  PrintFile("3C_Pari.gp",rest);
+  PrintFile("3C_Pari.gp",";}\n\n");
+
+  PrintFile("3C_Pari.gp","\{res1g=");
+  PrintFile("3C_Pari.gp",res1g);
+  PrintFile("3C_Pari.gp",";}\n\n");
+
+  PrintFile("3C_Pari.gp","\{Lz=");
+  PrintFile("3C_Pari.gp",Lz);
+  PrintFile("3C_Pari.gp",";}\n\n");
+  /* The procedure in GP does not find stationary points which give values beyond 11.685 */
+
+
+/* x = 1:
+   (1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2)*2*sqrt(1-g^2)  */
+
+  L:=2*(1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2);   /*  times sqrt(1-g^2)  */
+
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Ly:=Ty[7,1];
+  Lz:= Tz[4,1];
+  Lt:=Tt[4,1];
+  Lg:= Tg[4,1];
+
+  T:=Factorization(Resultant(Ly,Lz,g));
+  res1g:=T[7,1];
+  T:=Factorization(Resultant(Ly,Lt,g));
+  res2g:=T[5,1];
+
+  T:=Factorization(Resultant(Ly,Lg,g));
+  res3g:=T[5,1];
+
+  T:=Factorization(Resultant(res1g,res2g,y));
+  res1y:=T[8,1];
+  T:=Factorization(Resultant(res1g,res3g,y));
+  res2y:=T[8,1];
+
+  T:=Factorization(Resultant(res1y,res2y,z));
+  /* This has no roots in t */
+
+  /* We have concluded the analysis on the boundaries */
+
+
+/* INNER */
+
+  L:=(1+x*y*z)*(1-2*x*y*z*t*g+(x*y*z*t)^2)*(1+y*z)*(1-2*y*z*t*g+(y*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)*(1+2*t*g+t^2);  /* times 2*sqrt(1-g^2) */
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+  Lx:=Tx[8,1];
+  Ly:= Ty[5,1];
+  Lz:= Tz[2,1];
+  Lt:= Tt[4,1];
+  Lg:= Tg[4,1];
+
+  T:=Factorization(Resultant(Lx,Ly,g));
+  res1g:=T[8,1];
+  T:=Factorization(Resultant(Lx,Lz,g));
+  res2g:=T[6,1];
+  T:=Factorization(Resultant(Lx,Lt,g));
+  res3g:=T[5,1];
+  T:=Factorization(Resultant(Lx,Lg,g));
+  res4g:=T[5,1];
+
+  T:=Factorization(Resultant(res1g,res2g,x));
+  res1x:=T[10,1];
+
+  /* This has no roots in the interior */
+
+  /* This concludes our study: the function is <= 11.685 */

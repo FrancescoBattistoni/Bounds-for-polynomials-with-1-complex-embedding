@@ -1,0 +1,95 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK D
+==========================================================================
+1D   PROOF
+     The first one:
+     (1-z)*(1+y*z)*(1+x*y*z)  maximized for x = 1, y = 1.
+     (1-z)*(1+z)^2 <= 32/27 (assumed at z0=1/3)
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+2D)  PROOF
+     The first one:
+     (1-t)*(1+z*t)*(1+y*z*t)*(1+x*y*z*t) maximized for x = 1, y = 1, z = 1
+     (1-t)*(1+t)^3 <= 27/16 /* value assumed at the stationary point 1/2 in (0,1) */
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+3D)  PROOF
+     (1-x*y)*(1+y)
+     This is maximized at x=0 giving
+     (1+y)
+     <= 2
+     END PROOF
+
+4D)  PROOF
+     (1+x)*(1-x*y)
+     This is maximized at y=0 giving
+     (1+x)
+     <= 2
+     END PROOF
+
+5D)  PROOF
+     (1+x)
+     <= 2
+     END PROOF
+
+6D)  PROOF
+     (1+x*y*z*t)*(1+y*z)*(1-y*z*t)*(1+t) maximized for x = 1, giving
+     (1+y*z*t)*(1+y*z)*(1-y*z*t)*(1+t). Setting y*z = w yields
+     (1+w*t)*(1+w)*(1-w*t)*(1+t).
+     In PARI code:
+     /* STATIONARY POINTS IN THE FULL INNER REGION: */
+     L=(1+w*t)*(1+w)*(1-w*t)*(1+t)
+
+     Tw=factor(deriv(L,w))
+     Tt=factor(deriv(L,t))
+     Lw=Tw[2,1]
+     Lt=Tt[2,1]
+
+     T=factor(polresultant(Lw,Lt))
+     res1t=T[3,1]
+     u=polrootsreal(res1t,[0,1]) /* length 1 */
+     w0=u[1] /* 0.63502422495604132031664121702435867025 */
+     v=polrootsreal(subst(Lt,w,w0),[0,1]) /* length 1 */
+     t0=v[1] /* 0.63502422495604132031664121702435867025 */
+     subst(subst(L,w,w0),t,t0)
+     \\ 2.2385842815590901006370559240226558776  <----
+
+     /* BORDER OF (t,w) in [0,1]x[0,1]: */
+     /* w = 0: (1+t) <= 2 */
+     /* w = 1: (1+t)*2*(1-t)*(1+t) <= 64/27 assumed for t = 1/3 */
+     /* t = 0: (1+w) <= 2 */
+     /* t = 1: (1+w)*(1+w)*(1-w)*2 <= 64/27 assumed for w = 1/3 */
+     /* This proves that the function is always <= 64/27 */.
+
+     /* (t,w) in [0,1]x[0,1/10] */
+     /* The stationary point is not here. */
+     /* BORDER OF (t,w) in [0,1]x[0,1/10] */
+     ploth(t=0,1,   my(w=0)   ;(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 2 */
+     ploth(w=0,1/10,my(t=1)   ;(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 2.178 */
+     ploth(t=0,1,   my(w=1/10);(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 2.178 */
+     ploth(w=0,1/10,my(t=0)   ;(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 1.1 */
+     /* This proves that the function in <= 2.178 when (t,w) in [0,1]x[0,1/10]. */
+
+     /* (t,w) in [22/25,1]x[3/5,1] */
+     /* The stationary point is not here. */
+     /* BORDER OF (t,w) in [22/25,1]x[3/5,1] */
+     ploth(t=22/25,1,my(w=3/5)  ;(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 2.17 */
+     ploth(w=3/5  ,1,my(t=1)    ;(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 2.05 */
+     ploth(t=22/25,1,my(w=1)    ;(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 0.85 */
+     ploth(w=3/5,  1,my(t=22/25);(1+w*t)*(1+w)*(1-w*t)*(1+t)) /* <= 2.17 */
+     /* This proves that the function in <= 2.17 <= 2.178 when (t,w) in [22/25,1]x[3/5,1]. */
+     END PROOF
+
+7D)  PROOF
+     see "Proof D\Proof of 7D_Magma.txt"
+     END PROOF
+
+
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

@@ -1,0 +1,189 @@
+/* Study of Inequality 6C */
+
+Q:=RationalField();
+R<x,y,z,t,a,g>:=PolynomialRing(Q,6);
+
+L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+2*x*y*z*t*a*g+(x*y*z*t*a)^2)*(1+y)*(1-y*z)*(1+y*z*t)*(1-2*y*z*t*a*g+(y*z*t*a)^2);
+
+
+/* This is maximized at g = 0 thanks to RMK 1.
+
+   (1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+(x*y*z*t*a)^2)*(1+y)*(1-y*z)*(1+y*z*t)*(1+(y*z*t*a)^2).
+
+   This is maximized at a = 1.
+
+   (1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+y*z*t)*(1+(y*z*t)^2)   */
+
+
+
+/* Let us begin with the study of the 0-boundaries */
+
+
+/* x = 0:
+
+   (1+y)*(1-y*z)*(1+y*z*t)*(1+(y*z*t)^2)  <=  (1+y)   *   (1-y*z)*(1+y*z)*(1+(y*z)^2)  =  (1+y)   *   (1-(y*z)^4)  <=  2*1 = 2.  */
+
+/* y = 0:
+
+   (1+x)  <=  2  */
+
+
+/* z = 0:
+
+   (1+x)*(1-x*y)*(1+y)  <=  2   (Apply 9A)  */
+
+
+/* t = 0:
+
+   (1+x)*(1-x*y)*(1+x*y*z)*(1+y)*(1-y*z)   =     (1+x)*(1-x*y)*(1+y)  *   (1+x*y*z)*(1-y*z)     <=    2 * 1 = 2   */
+
+
+
+/* Now we study the 1-boundaries */
+
+
+/* x = 1:
+
+   2*(1-y)*(1+y*z)*(1-y*z*t)*(1+(y*z*t)^2)*(1+y)*(1-y*z)*(1+y*z*t)*(1+(y*z*t)^2) =
+
+   2*(1-y^2)*(1-(y*z)^2)*(1-(y*z*t)^2)*(1+(y*z*t)^2)^2  <=
+
+   2*(1-y^2)  * (1-(y*z)^2)*(1+(y*z)^2)  *  (1-(y*z*t)^2)*(1+(y*z*t)^2)  <= 2   */
+
+
+/* y = 1:
+
+   2*(1+x)*(1-x)*(1+x*z)*(1-x*z*t)*(1+(x*z*t)^2)*(1-z)*(1+z*t)*(1+(z*t)^2)   */
+
+L:=2*(1+x)*(1-x)*(1+x*z)*(1-x*z*t)*(1+(x*z*t)^2)*(1-z)*(1+z*t)*(1+(z*t)^2);
+
+
+Tx:=Factorization(Derivative(L,x));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+Lx:= Tx[4,1];
+
+Lz:= Tz[3,1];
+
+Lt:= Tt[6,1];
+
+
+T:=Factorization(Resultant(Lx,Lt,x));
+
+res1x:=T[5,1];
+
+T:=Factorization(Resultant(Lz,Lt,x));
+
+res2x:=T[5,1];
+
+
+T:=Factorization(Resultant(res1x,res2x,z));
+
+resz:=T[5,1];
+
+PrintFile("6C_Pari.gp","\{resz=");
+PrintFile("6C_Pari.gp",resz);
+PrintFile("6C_Pari.gp",";}\n\n");
+
+/* This has no roots in the interior */
+
+/* y = 1, z = 1: the function is zero */
+
+/* y = 1, t = 1:
+
+  2*(1+x)*(1-x)*(1+x*z)*(1-x*z)*(1+(x*z)^2)*(1-z)*(1+z)*(1+z^2) =
+
+  2*(1-x^2)*(1-(x*z)^4)*(1-z^4) <= 2  */
+
+
+/* z = 1
+
+   (1+x)*(1-x*y)*(1+x*y)*(1-x*y*t)*(1+(x*y*t)^2)*(1+y)*(1-y)*(1+y*t)*(1+(y*t)^2)  =
+
+
+   (1+x)*(1-x*y*t)*(1+y*t) *   (1-x*y)*(1+x*y)*(1+(x*y*t)^2)  *   (1+y)*(1-y)*(1+(y*t)^2)  <=
+
+            2  (apply 9A)  *         1                        *     1        = 2  */
+
+
+/* t = 1
+
+    (1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z)*(1+(x*y*z)^2)*(1+y)*(1-y*z)*(1+y*z)*(1+(y*z)^2)  =
+
+
+    (1+x)*(1-x*y)*(1+y)   *   (1+x*y*z)*(1-x*y*z)*(1+(x*y*z)^2)  *   (1-y*z)*(1+y*z)*(1+(y*z)^2)  <=
+
+           2 (apply 9A)   *     1         *  1   =   2   */
+
+
+/* We are left with the study of the interior */
+
+L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)*(1+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+y*z*t)*(1+(y*z*t)^2);
+
+
+Tx:=Factorization(Derivative(L,x));
+
+Ty:=Factorization(Derivative(L,y));
+
+Tz:=Factorization(Derivative(L,z));
+
+Tt:=Factorization(Derivative(L,t));
+
+
+Lx:= Tx[5,1];
+
+Ly:= Ty[2,1];
+
+Lz:= Tz[5,1];
+
+Lt:= Tt[8,1];
+
+
+
+T:=Factorization(Resultant(Lx,Lt,x));
+
+res1x:=T[6,1];
+
+T:=Factorization(Resultant(Ly,Lt,x));
+
+res2x:=T[6,1];
+
+T:=Factorization(Resultant(Lz,Lt,x));
+
+res3x:=T[6,1];
+
+
+
+
+T:=Factorization(Resultant(res1x,res3x,y));
+
+res1ya:=T[6,1];
+
+res1yb:=T[7,1];
+
+res1y:=res1ya*res1yb;
+
+
+T:=Factorization(Resultant(res2x,res3x,y));
+
+res2y:=T[7,1];
+
+
+
+T:=Factorization(Resultant(res1y,res2y,z));
+
+resz:=T[11,1]*T[12,1]*T[14,1];
+
+/* The excluded factors are either trivial or with positive coefficients */
+
+PrintFile("6C_Pari.gp","\{resz=");
+PrintFile("6C_Pari.gp",resz);
+PrintFile("6C_Pari.gp",";}\n\n");
+
+/* This polynomial has no roots in the interior */
+
+
+/* This end our study: the function is <= 2 */

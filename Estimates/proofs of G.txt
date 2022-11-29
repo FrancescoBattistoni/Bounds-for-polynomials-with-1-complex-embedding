@@ -1,0 +1,217 @@
+==========================================================================
+PROOFS OF THE ESTIMATES IN BLOCK G
+==========================================================================
+1G)  PROOF
+     This is the 'vertical' version of 3B and has the same proof.
+     END PROOF
+
+2G)  PROOF
+     (1-x)*(1-2*x*y*g+(x*y)^2)*(1+x*y*z)*(1+x*y*z*t). This is maximized at g=0 and t=z=y=1 giving
+     <= (1-x^4)*(1+x)
+     This already appeared in the proof of 7E. Anyway:
+     Stationary point in (0,1) is 0.53156445661717746128795289655859468869 and gives the value <= 1.4093
+     Border values are 0 and 1.
+     END PROOF
+
+3G)  PROOF
+     see "Proof G\Proof of 3G_Magma.txt"
+     and then "Proof G\3G_Pari.gp"
+     END PROOF
+
+3G)  PROOF
+bis) see "Proof G\Proof of 3Gbis_Magma.txt"
+     and then "Proof G\3Gbis_Pari.gp"
+     END PROOF
+
+4G)  PROOF
+     see "Proof G\Proof of 4G_Magma.txt"
+     and then "Proof G\4G_Pari.gp"
+     END PROOF
+
+4G)  PROOF
+bis) see "Proof G\Proof of 4Gbis_Magma.txt"
+     and then "Proof G\4Gbis_Pari.gp"
+     END PROOF
+
+5G)  PROOF
+     This is the 'horizontal' version of 6B and has the same proof.
+     END PROOF
+
+6G)  PROOF
+     see "Proof G\Proof of 6G_Magma.txt"
+     and then "Proof G\6G_Pari.gp"
+     END PROOF
+
+6Gbis)PROOF
+     see "Proof of 6G_zone_C_Magma.txt"
+     and then "Proof of 6G_zone_C_Pari.gp"
+     END PROOF
+
+7G)  PROOF
+     This is the 'vertical' version of 4E and has the same proof.
+     END PROOF
+
+8G)  PROOF
+     This is the 'vertical' version of 5B and has the same proof.
+     END PROOF
+
+9G)  PROOF
+     This is the 'vertical' version of 11B and has the same proof.
+     END PROOF
+
+10G) PROOF
+     This is the 'vertical' version of 1D and has the same proof.
+     END PROOF
+
+11G) PROOF
+     see "Proof G\Proof of 11G_Magma.txt"
+     and then "Proof G\11G_Pari.gp"
+     END PROOF
+
+12G) PROOF
+     This is the 'horizontal' version of 11G and has the same proof.
+     END PROOF
+
+13G) PROOF
+     see "Proof G\Proof of 13G_Magma.txt"
+     END PROOF
+
+14G) PROOF
+     see "Proof G\Proof of 14G_Magma.txt"
+     and then "Proof G\14G_Pari.gp"
+     END PROOF
+
+15G) PROOF
+     see "Proof G\Proof of 15G_Magma.txt"
+     and then "Proof G\15G_Pari.gp"
+     END PROOF
+
+15G) PROOF
+bis) see "Proof G\Proof of 15Gbis_Magma.txt"
+     and then "Proof G\15Gbis_Pari.gp"
+     END PROOF
+
+16G) PROOF
+     This is the 'vertical' version of 2G and has the same proof.
+     END PROOF
+
+17G) PROOF
+     see "Proof G\Proof of 17G_Magma.txt"
+     END PROOF
+
+18G) PROOF
+     see "Proof G\Proof of 18G_Magma.txt"
+     and then "Proof G\18G_Pari.gp"
+     END PROOF
+
+20G) PROOF
+     (1-x)*(1+2*x*y*g+(x*y)^2)*(1-g^2)^(1/4). This is maximized at y = 1. giving
+     <= (1-x)*(1+2*x*g+(x)^2)*(1-g^2)^(1/4)
+     interior (in PARI code):
+      L=(1-x)*(1+2*x*g+(x)^2)   /* times (1-g^2)^(1/4) */
+      T=factor(deriv(L,x))
+      Lx=T[1,1]
+      T=factor(2*deriv(L,g)*(1-g^2) - g*L)   /* g derivative of L*(1-g^2)^(1/4) */
+      Lg=T[2,1]
+      T=factor(polresultant(Lx,Lg,g))
+      no roots in the open (0,1)
+     Border:
+      x=0 L becomes (1-g^2)^(1/4) <= 1
+      x=1 L becomes 0
+      g=0 L becomes (1-x)*(1+x^2) <= 1
+      g=1 L becomes 0
+     END PROOF
+
+21G) PROOF
+     see "Proof G\Proof of 21G_Magma.txt"
+     END PROOF
+
+22G) PROOF
+     see "Proof G\Proof of 22G_Magma.txt"
+     and then "Proof G\22G_Pari.gp"
+     END PROOF
+
+23G-A)PROOF
+     see "Proof G\Proof of 23G-A_Magma.txt"
+     and then "Proof G\23G-A_Pari.gp"
+     END PROOF
+
+23G-B)PROOF
+     see "Proof G\Proof of 23G-B_Magma.txt"
+     and then "Proof G\23G-B_Pari.gp"
+     END PROOF
+
+23G-C)PROOF
+     see "Proof G\Proof of 23G-C_Magma.txt"
+     and then "Proof G\23G-C_Pari.gp"
+     END PROOF
+
+24G) PROOF
+     see "Proof G\Proof of 24G_Magma.txt"
+     and then "Proof G\24G_Pari.gp"
+     END PROOF
+
+25G) PROOF
+     This is a special case of the function at 12G: it corresponds to 12G with the variable of the last column set to 0.
+     END PROOF
+
+25G) PROOF
+bis) see "Proof G\Proof of 25Gbis_Magma.txt"
+     and then "Proof G\25Gbis_Pari.gp"
+     END PROOF
+
+26G) PROOF
+     (1-y)*(1+x*y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2) maximized for g = 1, x = 1, z = 1, t = 1
+     (1-y)*(1+y)^4 <= 2.63 /* value at y0 = 3/5 which is the stationary point */
+     /* border values are 0 and 1 */
+     Each other inequality reduces to this one.
+     END PROOF
+
+27G) PROOF
+     see "Proof G\Proof of 27G_Magma.txt"
+     and then "Proof G\27G_Pari.gp"
+     END PROOF
+
+28G) PROOF
+     (1+x*y)*(1-y)*(1-2*g*y*z+(y*z)^2)*(1+y*z*t)*(1+y*z*t*a)  maximized for g = 0
+     (1+x*y)*(1-y)*(1+(y*z)^2)*(1+y*z*t)*(1+y*z*t*a)  maximized for x = z = t = a = 1
+     (1+y)*(1-y)*(1+y^2)*(1+y)*(1+y)
+     (1-y^4)*(1+y)^2 <= 2.24 /* value assumed at the root 0.63502422495604132031664121702435867025 of 3*t^3 - t^2 + t - 1 in (0,1) */
+     /* border values are 0 and 1 */
+     END PROOF
+
+29G) PROOF
+       - - +' +
+         + -' -
+     Apply 9A to [(1,1),(1,4),(2,4)]. This is <= 2.
+     Apply 10E to [(1,2),(1,3),(2,2),(2,3)]. This is <= 32/27.
+     END PROOF
+
+29G) PROOF
+bis) see "Proof G\Proof of 29Gbis_Magma.txt"
+     and then "Proof G\29Gbis_Pari.gp"
+     END PROOF
+
+29G) PROOF
+tris)see "Proof G\Proof of 29Gtris_Magma.txt"
+     and then "Proof G\29Gtris_Pari.gp"
+     END PROOF
+
+30G) PROOF
+     see "Proof G\Proof of 30G_Magma.txt"
+     END PROOF
+
+31G) PROOF
+     see "Proof G\Proof of 31_Magma.txt"
+     and then "Proof G\31_Pari.gp"
+     END PROOF
+
+31G) PROOF
+bis) see "Proof G\Proof of 31Gbis_Magma.txt"
+     and then "Proof G\31Gbis_Pari.gp"
+     END PROOF
+
+
+==========================================================================
+/* END OF PROOFS IN THIS SECTION */
+==========================================================================

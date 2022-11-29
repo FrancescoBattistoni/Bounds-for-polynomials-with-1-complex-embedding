@@ -1,0 +1,210 @@
+/* Study of inequality 7F)
+
+          - + -' +            <= 1.4093
+          + - +' -
+
+ */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+/*
+  (1+x*y)*(1-x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1+y*z*t*a)
+  by RMK 1 it is maximized by g = 0.
+  (1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a)
+*/
+
+  L:= (1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t*a)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a);
+
+/* INNER */
+
+  Tx:=Factorization(Derivative(L,x));
+  Ty:=Factorization(Derivative(L,y));
+  Tz:=Factorization(Derivative(L,z));
+  Tt:=Factorization(Derivative(L,t));
+  Ta:=Factorization(Derivative(L,a));
+  Lx:=Tx[6,1];
+  Ly:=Ty[1,1];
+  Lz:=Tz[4,1];
+  Lt:=Tt[7,1];
+  La:=Ta[9,1];
+
+  T1:=Factorization(Resultant(Lx,La,a));
+  T2:=Factorization(Resultant(Ly,La,a));
+  T3:=Factorization(Resultant(Lz,La,a));
+  T4:=Factorization(Resultant(Lt,La,a));
+  /* All factors in T4 are strictly positive in the open set */
+
+/* BORDER */
+  /* x = 0: (1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a) maximized for z = t = a = 1
+            (1-y)*(1+y)*(1+y^2)*(1+y) <=  1.4093 */
+  /* This completes the border x = 0 */
+
+  /* y = 0: the function is constant = 1 */
+  /* This completes the border y = 0 */
+
+  /* z = 0: (1+x*y)*(1-y) <= (1+y)*(1-y) <= 1  */
+  /* This completes the border z = 0 */
+
+  /* t = 0: (1+x*y)*(1-x*y*z)*(1-y)*(1+y*z) <= 1 (by 7A) */
+  /* This completes the border t = 0 */
+
+  /* a = 0: (1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-y)*(1+y*z)*(1+(y*z*t)^2) maximized for t = 1
+            (1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-y)*(1+y*z)*(1+(y*z)^2) <= 1 (by 5H) */
+  /* This completes the border a = 0 */
+
+  /* x = 1: (1+y)*(1-y*z)*(1+(y*z*t)^2)*(1-y*z*t*a)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t*a) maximized for a = 0:
+             we have already verified that for a  = 0 the function is <= 1 */
+  /* This completes the border x = 1 */
+
+  /* y = 1: NULL */
+  /* This completes the border y = 1 */
+
+  /* z = 1: (1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t*a) */
+    L:= (1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t*a)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t*a);
+
+    Tx:=Factorization(Derivative(L,x));
+    Ty:=Factorization(Derivative(L,y));
+    Tt:=Factorization(Derivative(L,t));
+    Ta:=Factorization(Derivative(L,a));
+    Lx:=Tx[6,1];
+    Ly:=Ty[1,1];
+    Lt:=Tt[6,1];
+    La:=Ta[8,1];
+
+    T11:=Factorization(Resultant(Lx,La,a));
+    T12:=Factorization(Resultant(Ly,La,a));
+    T13:=Factorization(Resultant(Lt,La,a));
+    /* All factors in T13 are strictly positive in the open set */
+
+    /* BORDERS */
+    /* 0 borders have already been discussed in greater generality (it is <= 1.4093) */
+    /* x = 1: (1+y)*(1-y)*(1+(y*t)^2)*(1-y*t*a)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t*a) decreasing in a.
+              maximized for a = 0: we already know that it is <= 1.4093 in this case */
+
+    /* y = 1: NULL */
+
+    /* t = 1: (1+x*y)*(1-x*y)*(1+(x*y)^2)*(1-x*y*a)*(1-y)*(1+y)*(1+y^2)*(1+y*a)  <= 1.4093 (see "7F_Pari.gp") */
+
+    /* a = 1: (1+x*y)*(1-x*y)*(1+(x*y*t)^2)*(1-x*y*t)*(1-y)*(1+y)*(1+(y*t)^2)*(1+y*t)  <= 1.4093 (see "7F_Pari.gp") */
+  /* This completes the border z = 1 */
+
+
+  /* t = 1: (1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-x*y*z*a)*(1-y)*(1+y*z)*(1+(y*z)^2)*(1+y*z*a) */
+
+    L:= (1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-x*y*z*a)*(1-y)*(1+y*z)*(1+(y*z)^2)*(1+y*z*a);
+
+    Tx:=Factorization(Derivative(L,x));
+    Ty:=Factorization(Derivative(L,y));
+    Tz:=Factorization(Derivative(L,z));
+    Ta:=Factorization(Derivative(L,a));
+    Lx:=Tx[6,1];
+    Ly:=Ty[1,1];
+    Lz:=Tz[4,1];
+    La:=Ta[8,1];
+
+    T11:=Factorization(Resultant(Lx,La,a));
+    T12:=Factorization(Resultant(Ly,La,a));
+    T13:=Factorization(Resultant(Lz,La,a));
+    res1a:=T11[2,1];
+    res2a:=T12[5,1];
+    res3a:=T13[5,1];
+
+    T111:=Factorization(Resultant(res2a,res1a,z));
+    T112:=Factorization(Resultant(res3a,res1a,z));
+    res1z:=T111[5,1];
+    res2z:=T112[4,1];
+
+    T1111:=Factorization(Resultant(res1z,res2z,y));
+    res1y:=T1111[3,1]*T1111[4,1]*T1111[5,1];
+
+    PrintFile("7F_Pari.gp","\{res1y=");
+    PrintFile("7F_Pari.gp",res1y);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    PrintFile("7F_Pari.gp","\{res1z=");
+    PrintFile("7F_Pari.gp",res1z);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    PrintFile("7F_Pari.gp","\{res1a=");
+    PrintFile("7F_Pari.gp",res1a);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    PrintFile("7F_Pari.gp","\{La=");
+    PrintFile("7F_Pari.gp",La);
+    PrintFile("7F_Pari.gp",";}\n\n");
+    /* GP computations find no critical points */
+
+    /* BORDER */
+
+      /* 0 border have already been discussed in greater generality (it is <= 1.4093) */
+
+      /* x = 1: already discussed in greater generality (it is <= 1.4093) */
+
+      /* y = 1: NULL */
+
+      /* z = 1: already discussed in greater generality (it is <= 1.4093) */
+
+      /* a = 1: (1+x*y)*(1-x*y*z)*(1+(x*y*z)^2)*(1-x*y*z)*(1-y)*(1+y*z)*(1+(y*z)^2)*(1+y*z) <= 1.4093 (see "7F_Pari.gp") */
+  /* This completes the border t = 1 */
+
+  /* a = 1: (1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t) */
+
+    L:= (1+x*y)*(1-x*y*z)*(1+(x*y*z*t)^2)*(1-x*y*z*t)*(1-y)*(1+y*z)*(1+(y*z*t)^2)*(1+y*z*t);
+
+    Tx:=Factorization(Derivative(L,x));
+    Ty:=Factorization(Derivative(L,y));
+    Tz:=Factorization(Derivative(L,z));
+    Tt:=Factorization(Derivative(L,t));
+    Lx:=Tx[6,1];
+    Ly:=Ty[1,1];
+    Lz:=Tz[4,1];
+    Lt:=Tt[7,1];
+
+    T11:=Factorization(Resultant(Lx,Lt,t));
+    T12:=Factorization(Resultant(Ly,Lt,t));
+    T13:=Factorization(Resultant(Lz,Lt,t));
+    res1t:=T11[4,1];
+    res2t:=T12[7,1];
+    res3t:=T13[6,1];
+
+    T111:=Factorization(Resultant(res1t,res3t,z));
+    T112:=Factorization(Resultant(res2t,res3t,z));
+    res1z:=T111[4,1];
+    res2z:=T112[4,1];
+
+    T1111:=Factorization(Resultant(res1z,res2z,y));
+    res1y:=T1111[4,1];
+
+    PrintFile("7F_Pari.gp","\{res1y=");
+    PrintFile("7F_Pari.gp",res1y);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    PrintFile("7F_Pari.gp","\{res2z=");
+    PrintFile("7F_Pari.gp",res2z);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    PrintFile("7F_Pari.gp","\{res3t=");
+    PrintFile("7F_Pari.gp",res3t);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    PrintFile("7F_Pari.gp","\{Lt=");
+    PrintFile("7F_Pari.gp",Lt);
+    PrintFile("7F_Pari.gp",";}\n\n");
+
+    /* GP computations find no critical points */
+
+    /* BORDER */
+
+      /* 0 border have already been discussed in greater generality (it is <= 1.4093) */
+
+      /* x = 1: already discussed in greater generality (it is <= 1.4093) */
+
+      /* y = 1: NULL */
+
+      /* z = 1: already discussed in greater generality (it is <= 1.4093) */
+
+      /* t = 1: already discussed in greater generality (it is <= 1.4093) */
+  /* This completes the border a = 1 */
+
+/* Hence this function is <= 1.4093 in this case */
