@@ -1,5 +1,3 @@
-# Bounds-for-polynomials-with-1-complex-embedding
-
 
 
 ===================
@@ -7,10 +5,9 @@
 ===================
 
  We collect here all computations which are necessary to prove the bounds
- announced in " Maximum of polynomials and small regulators"
- http://arxiv....
+ announced in " Maximum of polynomials and small regulators", available at https://arxiv.org/abs/2211.16842
 
- the archive is organized in the following way:
+ The archive is organized in the following way:
 
  readme.txt                                                  this file
  bounds.txt                                                  contains the final bounds for every degree n and for each ordering
