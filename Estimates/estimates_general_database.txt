@@ -28,12 +28,13 @@ variables, rules are the following:
   + - <= 1
  this means that the symbol + and the symbol - have to stay on the same line but there can be
  any set of positions in the between.
- Thus, not only + - <= 1, but also + x -, + x x -, + x x x - and so on, are <= 1.
+ Thus, not only + - <= 1, but also the contribution of the + and - in   + x -, + x x -, + x x x - and so on, is <= 1.
  A more elaborated example: 7A reads:
   - +   <= 1.
   + -
- This implies that also
-  - x +  ,   - +  ,  - x +  and so on, are <= 1.
+ This implies that also the contribution of  the block - +  in
+                                                       + -
+  - x +  ,   - +  ,  - x +  and so on, is <= 1.
   + x -      x x     x x x
              + -     + x -
 =============
