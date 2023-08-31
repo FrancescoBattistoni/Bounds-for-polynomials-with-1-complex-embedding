@@ -69,8 +69,6 @@ res1g:=T[3,1];
 
 T:=Factorization(Resultant(Lg,Lx,g));
 
-res1g:=T[3,1];
-
 res2g:=T[4,1];
 
 T:=Factorization(Resultant(res1g,res2g,y));
