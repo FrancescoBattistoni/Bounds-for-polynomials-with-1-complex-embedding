@@ -449,7 +449,7 @@ The remaining is the function for N=6 second ordering in the case [- - + -] (cha
        -' +'
           - 2R^(1/2)
 
-Apply 7D) to [(1,1),(1,5),(2,5),(3,4),(3,4),(5,5)], 4E) to [(1,2),(1,3),(1,4)] and 6G) to the remaining part.
+Apply 7D) to [(1,1),(1,5),(2,5),(3,4),(3,5),(5,5)], 4E) to [(1,2),(1,3),(1,4)] and 6G) to the remaining part.
 The chamber is estimated by 4*1*16.
 ....................................................
 
