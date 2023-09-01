@@ -492,7 +492,7 @@ for N=7 third ordering in the case [+ - - - -] (chamber [17]) which is <= 49.2
              - 2R^(1/2)
 
 This chamber is divided into two blocks.
-The first one is formed by [(1,4),(1,5),(2,3),(2,6),(3,3),(4,4),(4,5)] multiplied by 2R^(1/2). This is <= 9.482 by 22G.
+The first one is formed by [(1,4),(1,5),(2,3),(2,6),(3,3),(3,4),(4,4),(4,5)] multiplied by 2R^(1/2). This is <= 9.482 by 22G.
 The remaining one is exactly described by 21G, so it is <= 8.641
 ....................................................
 

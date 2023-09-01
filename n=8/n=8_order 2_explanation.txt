@@ -442,7 +442,7 @@ The remaining is the case [- - + - -] for the function N=7 second ordering (cham
            +' 2R^(1/2)
 
 Apply 3A to [(1,1),(1,2)].
-Apply 6A to [(2,6),(3,6)] and then 5F to [(2,2),(2,3),(2,4),(2,5),(3,3)(3,4),(3,5)]. These terms contribute by 1*2, at most.
+Apply 6A to [(2,6),(3,6)] and then 5F to [(2,2),(2,3),(2,4),(2,5),(2,6),(3,3),(3,4),(3,5),(3,6)]. These terms contribute by 1*2, at most.
 The remaining is the case [+ - + +] for the function N=6 second ordering (chamber [6]), which is <= 32.48
 ....................................................
 
