@@ -168,8 +168,8 @@ You end with the case [- - + -] (chamber [15]), which is <= 32M.
 
 Let F1 and F2 denote respectively the functions represented in first two lines and in last two lines (including
 the factor 2R^(1/2)), respectively.
-By 2E and 2Ebis, function F1 is <= 16 in general, and <= 11 when variables z OR t are in [0,3/4].
-By 29G and 29Gbis function F2 is <= 64/27 in general, and <= 2.0594 when BOTH variables z AND t are in [3/4,1].
+By 29G and 29Gbis, function F1 is <= 16 in general, and <= 11 when variables z OR t are in [0,3/4].
+By 2E and 2Ebis, function F2 is <= 64/27 in general, and <= 2.0594 when BOTH variables z AND t are in [3/4,1].
 In this way the chamber is estimated by max(11*64/27, 16*2.0594) <= max(26.075, 32.9504) <= 32.96
 ....................................................
 
@@ -182,7 +182,7 @@ In this way the chamber is estimated by max(11*64/27, 16*2.0594) <= max(26.075, 
        -' 2R^(1/2)
 
 Apply 9A to [(1,1),(1,4),(2,4)]. This is <= 2.
-Apply 10E to [(1,2),(1,3),(2,3),(2,4)]. This is <= 32/27.
+Apply 10E to [(1,2),(1,3),(2,2),(2,3)]. This is <= 32/27.
 Apply 3E to Line 3 and 4. This is <= 5.2
 ....................................................
 
