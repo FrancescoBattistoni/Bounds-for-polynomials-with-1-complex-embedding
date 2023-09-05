@@ -255,7 +255,7 @@ NOTE: This bounds holds only in case the TWO LINES containing the patterns are C
 or the TWO COLUMNS containing the pattern are CONTIGUOUS (it is not necessary that both
 pairs of lines and columns be contiguous).
 ....................................................
-3E)   -' +                                  <= 5.2
+3E)   -' +                                  <= 16384/3125 <= 5.25
          -' 2R^(1/2)
 
 NOTE: This bounds holds only in case the TWO LINES containing the patterns are CONTIGUOUS
