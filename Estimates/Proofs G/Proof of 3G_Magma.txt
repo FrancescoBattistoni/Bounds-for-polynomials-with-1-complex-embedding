@@ -15,7 +15,7 @@ R<x,y,z,t,g>:=PolynomialRing(Q,5);
   /* x = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*sqrt(1-g^2).
      This is maximized at either t = 0 or t = 1 */
 
-     /* x = 0, t = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*sqrt(1-g^2). This is < 5.2 (apply 3E).  */
+     /* x = 0, t = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*sqrt(1-g^2). This is < 5.25 (apply 3E).  */
 
      /* x = 0, t = 1: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2)  */
         L:=(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2);  /* times 2*sqrt(1-g^2)  */
