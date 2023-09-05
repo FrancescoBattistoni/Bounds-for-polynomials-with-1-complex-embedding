@@ -147,7 +147,7 @@ The remaining is the function for N=6 third ordering in the case [+ + - -] (cham
           + 2R^(1/2)
 
 Apply 13E to the first line. Line 1 is <= (32/27)^2.
-The remaining is the function for N=6 third ordering in the case [+ - + +] (chamber []), which is <= 23.55
+The remaining is the function for N=6 third ordering in the case [+ - + +] (chamber [6]), which is <= 23.55
 ....................................................
 
 [7]

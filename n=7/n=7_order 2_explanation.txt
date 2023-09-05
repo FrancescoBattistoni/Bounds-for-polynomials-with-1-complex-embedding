@@ -76,14 +76,14 @@ The remaining is the case [+ + - +] for N=6 second ordering (chamber [4]), which
 [5]
 [+ + + - -]
 
-+ + + -' +             <=  6.17
++ + + -' +             <=  6.23
   + + -' +
     + -' +
       -' +
          -' 2R^(1/2)
 
 Apply 4B to [(1,2),(1,3),(1,4)] and 1A to the remaining + in the first line. Line 1 is <= 1.
-The remaining is the case [+ + - -] for N=6 second ordering (chamber [5]), which is <= 6.17.
+The remaining is the case [+ + - -] for N=6 second ordering (chamber [5]), which is <= 6.23.
 ....................................................
 
 [6]
@@ -185,14 +185,14 @@ The remaining is the case [- + - +] for N=6 second ordering (chamber [12]), whic
 [13]
 [+ - + - -]
 
-+ - - +' -             <=  27.62
++ - - +' -             <=  27.89
   - - +' -
     + -' +
       -' +
          -' 2R^(1/2)
 
 Apply 17B to the first line. Line 1 is <= 2.24.
-The remaining is the case [- + - -] for N=6 second ordering (chamber [13]), which is <= 12.33.
+The remaining is the case [- + - -] for N=6 second ordering (chamber [13]), which is <= 12.45.
 ....................................................
 
 [14]
@@ -397,14 +397,14 @@ Apply 19E to the remaining. This is <= 8.
 [29]
 [- - + - -]
 
-- + + -' +             <=  24.66
+- + + -' +             <=  24.9
   - - +' -
     + -' +
       -' +
          -' 2R^(1/2)
 
 Apply 5D to [(1,1)], 4B to [(1,2),(1,3),(1,4)] and 1A to [(1,5)]. Line 1 is <= 2.
-The remaining is the case [- + - -] for N=6 second ordering (chamber [13]), which is <= 12.33
+The remaining is the case [- + - -] for N=6 second ordering (chamber [13]), which is <= 12.45
 ....................................................
 
 [30]
