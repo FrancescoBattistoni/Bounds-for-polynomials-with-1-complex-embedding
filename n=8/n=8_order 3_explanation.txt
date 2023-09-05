@@ -376,7 +376,7 @@ The remaining is the function for N=7 third ordering in the case [- + - + -] (ch
 [24]
 [+ - + - - +]
 
-+ - - +' -  -          <=  32.74
++ - - +' -  -          <=  33.06
   - - +' -  -
     + -' +  +
       -' +  +
@@ -384,7 +384,7 @@ The remaining is the function for N=7 third ordering in the case [- + - + -] (ch
             + 2R^(1/2)
 
 Apply 8G to [(5,6),(6,6)] and 5A to [(1,6),(3,6)] and [(2,6),(4,6)]. Column 6 is <= 32/27.
-The remaining is the function for N=7 second ordering in the case [+ - + - -] (chamber [13]), which is <=  27.62
+The remaining is the function for N=7 second ordering in the case [+ - + - -] (chamber [13]), which is <=  27.89
 ....................................................
 
 [25]
