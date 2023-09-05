@@ -1,5 +1,15 @@
 /* Study of Inequality 3E */
 
+/*
+3E)   -' +                                  <= 16384/3125 <= 5.25
+         -' 2R^(1/2)
+
+NOTE: This bounds holds only in case the TWO LINES containing the patterns are CONTIGUOUS
+or the TWO COLUMNS containing the pattern are CONTIGUOUS (it is not necessary that both
+pairs of lines and columns be contiguous).
+*/
+
+
 Q:=RationalField();
 R<x,y,g>:=PolynomialRing(Q,3);
 
@@ -24,19 +34,15 @@ L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
 
 L:=4*(1+g)*(1-y)*(1+2*y*g+y^2);   /* times sqrt(1-g^2)  */
 
-
 Ty:=Factorization(Derivative(L,y));
-
 Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
-
 Ly:=Ty[2,1];
-
 Lg:=Tg[3,1];
 
-
 T:=Factorization(Resultant(Ly,Lg,g));
+res1g:=T[4,1];
 
-/* Only interior point is y = 1/5: evaluation in Ly gives g = 3, which is not acceptable */
+/* The unique root in the open set is y = 1/5: evaluation of Ly for y = 1/5 gives g = 6/10, which produces the value 16384/3125 <= 5.25 */
 
 /* Hence x = 1 requires further boundaries. Additional 0-boundaries give the previous estimates. Additional 1-boundaries force the function to be zero.
 
@@ -51,28 +57,19 @@ T:=Factorization(Resultant(Ly,Lg,g));
 L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
-
 Lx:=Tx[2,1];
-
 Ly:=Ty[1,1];
-
 Lg:=Tg[2,1];
 
-
 T:=Factorization(Resultant(Ly,Lx,g));
-
 res1g:=T[3,1];
 
 T:=Factorization(Resultant(Lg,Lx,g));
-
 res2g:=T[4,1];
 
 T:=Factorization(Resultant(res1g,res2g,y));
-
 /* This has only trivial factors */
 
-/* Hence the function is < 5.2 */
+/* Hence the function is < 16384/3125 */
