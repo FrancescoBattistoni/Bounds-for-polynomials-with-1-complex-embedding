@@ -26,6 +26,11 @@ PROOFS OF THE ESTIMATES IN BLOCK C
      and then "Proof C\5C_Pari.gp"
      END PROOF
 
+5C)  PROOF
+bis  see "Proof C\Proof of 5Cbis_Magma.txt"
+     and then "Proof C\5Cbis_Pari.gp"
+     END PROOF
+
 6C)  PROOF
      see "Proof C\Proof of 6C_Magma.txt"
      and then "Proof C\6C_Pari.gp"
