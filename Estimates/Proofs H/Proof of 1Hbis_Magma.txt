@@ -1,0 +1,274 @@
+/* Study of inequality 1Hbis */
+
+/*
+1H)   - + -'                                <= 3.3  when g in [3/10,3/4]
+bis     - +'
+
+*/
+
+Q:=RationalField();
+R<x,y,z,g>:=PolynomialRing(Q,4);
+
+  L:= (1+x)*(1-x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1+y)*(1-2*g*y*z+(y*z)^2);
+
+/* INNER */
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+  Lg:= Tg[6,1];
+
+  T:= Factorization(Resultant(Lx,Lz,g));
+  res1g:= T[6,1];
+  T:= Factorization(Resultant(Ly,Lz,g));
+  res2g:= T[7,1];
+  T:= Factorization(Resultant(Lg,Lz,g));
+  /* all factors are positive in the open set */
+
+
+/* BORDER */
+/* x = 0:
+  (1+y)*(1-2*g*y*z+(y*z)^2);
+  maximized for g = 3/10, and z = 0 or z = 1
+  z = 0  (1+y) <= 2
+  z = 1  (1+y)*(1-2*(3/10)*y+(y)^2) <= 2.8 */
+
+
+/* x = 1
+  2*(1-y)*(1+2*g*y*z+(y*z)^2)*(1+y)*(1-2*g*y*z+(y*z)^2)
+  maximized at g=3/10
+  2*(1-y)*(1+2*(3/10)*y*z+(y*z)^2)*(1+y)*(1-2*(3/10)*y*z+(y*z)^2)
+  maximized at z=1 ((1+a*u+u^2)*(1-a*u+u^2) increases in u when a in [0,1])
+  2*(1-y)*(1+2*(3/10)*y+y^2)*(1+y)*(1-2*(3/10)*y+y^2) <= 2.3 */
+
+
+/* y = 0:
+  (1+x) <= 2  */
+
+
+/* y = 1:
+  (1+x)*(1-x)*(1+2*g*x*z+(x*z)^2)*2*(1-2*g*z+z^2)  */
+  L:= (1+x)*(1-x)*(1+2*g*x*z+(x*z)^2)*2*(1-2*g*z+z^2);
+  Tx:= Factorization(Derivative(L,x));
+  Tz:= Factorization(Derivative(L,z));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[2,1];
+  Lz:= Tz[3,1];
+  Lg:= Tg[4,1];
+
+  T:= Factorization(Resultant(Lx,Lz,g));
+  res1g:= T[5,1];
+  T:= Factorization(Resultant(Lg,Lz,g));
+  /* all factors are positive in the open set */
+
+/* y = 1, z = 0:
+  (1+x)*(1-x)*(1+y) <= 2 */
+
+/* y = 1, z = 1:
+  L:= (1+x)*(1-x)*(1+2*g*x+x^2)*4*(1-g);
+  Tx:= Factorization(Derivative(L,x));
+  Lx:= Tx[2,1];
+  Tg:= Factorization(Derivative(L,g));
+  Lg:= Tg[3,1];
+
+  T:= Factorization(Resultant(Lx,Lg,g));
+  /* No roots in (0,1) */
+
+/* y = 1, z = 1, g = 3/10:
+  (1+x)*(1-x)*(1+2*(3/10)*x+x^2)*4*(1-3/10) <= 3.3 */
+
+
+/* y = 1, z = 1, g = 3/4:
+  (1+x)*(1-x)*(1+2*(3/4)*x+x^2)*4*(1-3/4) <= 1.51 */
+
+
+/* y = 1, g = 3/10:
+  (1+x)*(1-x)*(1+2*(3/10)*x*z+(x*z)^2)*2*(1-2*(3/10)*z+z^2) <= 3.3 */
+  PROOF (in PARI code)
+  /* border */
+  /* x=0: already done */
+  /* z=0: (1+x)*(1-x)*2 <= 2 */
+  /* x=1: NULL */
+  /* z=1: (1+x)*(1-x)*(1+2*(3/10)*x+x^2)*2*(1-2*(3/10)+1) <= 3.3 */
+  /* inner */
+  L=(1+x)*(1-x)*(1+2*(3/10)*x*z+(x*z)^2)*2*(1-2*(3/10)*z+z^2)
+  Tx=factor(deriv(L,x))
+  Tz=factor(deriv(L,z))
+  Lx=Tx[2,1];
+  Lz=Tz[3,1];
+  T=factor(polresultant(Lx,Lz,z))
+  res=T[3,1];
+  v=polrootsreal(res,[0,1]) /* length one */
+  x0=v[1]
+  u=polrootsreal(subst(Lx,x,x0),[0,1]) /* length one */
+  z0=u[1]
+  my(x=x0,z=z0);eval(L)  \\ 1.8344455581712861597990017985596876442
+  END PROOF
+
+
+/* y = 1, g = 3/4:
+  (1+x)*(1-x)*(1+2*(3/4)*x*z+(x*z)^2)*2*(1-2*(3/4)*z+z^2) <= ??????? */
+  PROOF (in PARI code)
+  /* border */
+  /* x=0: already done */
+  /* z=0: (1+x)*(1-x)*2 <= 2 */
+  /* x=1: NULL */
+  /* z=1: (1+x)*(1-x)*(1+2*(3/4)*x+x^2)*2*(1-2*(3/4)+1) <= 1.51 */
+  /* inner */
+  L=(1+x)*(1-x)*(1+2*(3/4)*x*z+(x*z)^2)*2*(1-2*(3/4)*z+z^2)
+  Tx=factor(deriv(L,x))
+  Tz=factor(deriv(L,z))
+  Lx=Tx[2,1];
+  Lz=Tz[3,1];
+  T=factor(polresultant(Lx,Lz,z))
+  res=T[3,1];
+  v=polrootsreal(res,[0,1]) /* length one */
+  x0=v[1]
+  u=polrootsreal(subst(Lx,x,x0),[0,1]) /* length one */
+  z0=u[1]
+  my(x=x0,z=z0);eval(L)  \\ 1.0953088511395924450764181039697021783
+  END PROOF
+
+
+/* z = 0:
+  (1+x)*(1-x*y)*(1+y) <= 2 */
+
+
+/* z = 1:
+  (1+x)*(1-x*y)*(1+2*g*x*y+(x*y)^2)*(1+y)*(1-2*g*y+y^2);  */
+
+  L:= (1+x)*(1-x*y)*(1+2*g*x*y+(x*y)^2)*(1+y)*(1-2*g*y+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tg:= Factorization(Derivative(L,g));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+  Lg:= Tg[5,1];
+
+  T:= Factorization(Resultant(Lx,Lg,g));
+  res1g:= T[3,1];
+  T:= Factorization(Resultant(Ly,Lg,g));
+  res2g:= T[5,1];
+
+  T:= Factorization(Resultant(res1g,res2g,y));
+  resy:= T[3,1];
+
+  PrintFile("1Hbis_Pari.gp","\{resy=");
+  PrintFile("1Hbis_Pari.gp",resy);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+/* GP computations show that resy has no roots in (0,1) (see 1Hbis_Pari.gp) */
+
+
+
+/* z = 1, g = 3/10:
+  (1+x)*(1-x*y)*(1+2*3/10*x*y+(x*y)^2)*(1+y)*(1-2*3/10*y+y^2) */
+  L:= (1+x)*(1-x*y)*(1+2*3/10*x*y+(x*y)^2)*(1+y)*(1-2*3/10*y+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1Hbis_Pari.gp","\{resy=");
+  PrintFile("1Hbis_Pari.gp",resy);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+/* GP computations show that resy has no roots in (0,1) (see 1Hbis_Pari.gp) */
+
+
+
+/* z = 1, g = 3/4:
+  (1+x)*(1-x*y)*(1+2*3/4*x*y+(x*y)^2)*(1+y)*(1-2*3/4*y+y^2) */
+  L:=(1+x)*(1-x*y)*(1+2*3/4*x*y+(x*y)^2)*(1+y)*(1-2*3/4*y+y^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+
+  T:= Factorization(Resultant(Lx,Ly,y));
+  resy:= T[3,1];
+
+  PrintFile("1Hbis_Pari.gp","\{resy=");
+  PrintFile("1Hbis_Pari.gp",resy);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+  PrintFile("1Hbis_Pari.gp","\{Lx=");
+  PrintFile("1Hbis_Pari.gp",Lx);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+/* GP computations show that there is one stationary point with value <= 1.3 (see 1Hbis_Pari.gp) */
+
+
+/* g = 3/10:
+  (1+x)*(1-x*y)*(1+2*(3/10)*x*y*z+(x*y*z)^2)*(1+y)*(1-2*(3/10)*y*z+(y*z)^2); */
+  L:= (1+x)*(1-x*y)*(1+2*(3/10)*x*y*z+(x*y*z)^2)*(1+y)*(1-2*(3/10)*y*z+(y*z)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+
+  T:= Factorization(Resultant(Lx,Ly,z));
+  res1z:= T[5,1];
+  T:= Factorization(Resultant(Lx,Lz,z));
+  res2z:= T[4,1];
+
+  T:= Factorization(Resultant(res1z,res2z,y));
+  resy:= T[2,1]*T[3,1]*T[4,1];
+
+  PrintFile("1Hbis_Pari.gp","\{resy=");
+  PrintFile("1Hbis_Pari.gp",resy);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+  PrintFile("1Hbis_Pari.gp","\{res1z=");
+  PrintFile("1Hbis_Pari.gp",res1z);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+  PrintFile("1Hbis_Pari.gp","\{Lx=");
+  PrintFile("1Hbis_Pari.gp",Lx);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+/* GP computations show that there are two stationary points where the function is <= 1.7 (see 1Hbis_Pari.gp) */
+
+
+
+/* g = 3/4:
+  (1+x)*(1-x*y)*(1+2*(3/4)*x*y*z+(x*y*z)^2)*(1+y)*(1-2*(3/4)*y*z+(y*z)^2) */
+  L:=  (1+x)*(1-x*y)*(1+2*(3/4)*x*y*z+(x*y*z)^2)*(1+y)*(1-2*(3/4)*y*z+(y*z)^2);
+  Tx:= Factorization(Derivative(L,x));
+  Ty:= Factorization(Derivative(L,y));
+  Tz:= Factorization(Derivative(L,z));
+  Lx:= Tx[3,1];
+  Ly:= Ty[2,1];
+  Lz:= Tz[5,1];
+
+  T:= Factorization(Resultant(Lx,Ly,z));
+  res1z:= T[5,1];
+  T:= Factorization(Resultant(Lx,Lz,z));
+  res2z:= T[4,1];
+
+  T:= Factorization(Resultant(res1z,res2z,y));
+  resy:= T[2,1]*T[3,1]*T[4,1];
+
+  PrintFile("1Hbis_Pari.gp","\{resy=");
+  PrintFile("1Hbis_Pari.gp",resy);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+  PrintFile("1Hbis_Pari.gp","\{res1z=");
+  PrintFile("1Hbis_Pari.gp",res1z);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+  PrintFile("1Hbis_Pari.gp","\{Lx=");
+  PrintFile("1Hbis_Pari.gp",Lx);
+  PrintFile("1Hbis_Pari.gp",";}\n\n");
+
+/* GP computations show that there is one stationary point where the function is <= 1.6 (see 1Hbis_Pari.gp) */
+
+/* This ends our study: the function is <= 3.3 */
