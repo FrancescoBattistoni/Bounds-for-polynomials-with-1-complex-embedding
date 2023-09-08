@@ -1,0 +1,479 @@
+===============================
+IDEE
+===============================
+
+
+
+
+
+N=7 ord 3 [1]
+[- - - - -]
+
+- + -' +  -            <=  65.81
+  - +' -  +
+    -' +  -
+       -' +'
+          - 2R^(1/2)
+
+The function we have to estimate is the following:
+F= (1+x)*(1-x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1+x*y*z*t*a)
+        *(1+y)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t)    *(1-y*z*t*a)
+              *(1+2*z*g+z^2)      *(1-z*t)      *(1+z*t*a)
+                                  *(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)
+                                                *(1+a)
+                                                * 2*sqrt(1-g^2)
+
+
+Let P be the polynomial corresponding to positions [(2,3),(3,3),(3,4),(4,4),(4,5)], i.e.,
+P(x,y,z,t,a,g):= (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)
+
+Let Q be the polynomial corresponding to positions [(1,1),(1,4),(1,5),(2,2),(2,4),(2,5),(3,5),(5,5)], i.e.,
+Q(x,y,z,t,a,g):= (1+x)*(1-x*y*z*t)*(1+x*y*z*t*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1+a)
+
+We further notice that Q(x,y,z,t,a,g) = Q'(x,y,z*t,a)
+where Q'(u,v,w,s) := (1+u)*(1-u*v*w)*(1+u*v*w*s)*(1+v)*(1+v*w)*(1-v*w*s)*(1+w*s)*(1+s) is the polynomial
+associated to symbols: - x + -  (pay attention to the empty place in first line)
+                         - - +
+                             -
+                             -
+
+Let S be the polynomial corresponding to positions [(1,2),(1,3)], i.e. (1-x*y)*(1+2*g*x*y*z+(x*y*z)^2).
+
+Thus, F = (P*2*(1-g^2)^(1/4)) * Q * (S*(1-g^2)^(1/4)). We split the domain into three regions:
+
+CASE 1: x*y in [3/100,1] AND z*t in [0,1/18]: in this case P*2*(1-g^2)^(1/4) <= 8     (by 15G)    , Q <= 8.393 (by 31Gbis)  and S*(1-g^2)^(1/4) <= 0.975 (by computation here below)
+CASE 2: x*y in [3/100,1] AND z*t in [1/18,1]: in this case P*2*(1-g^2)^(1/4) <= 7.603 (by 15Gbis) , Q <= 8.85  (by 31G)     and S*(1-g^2)^(1/4) <= 0.975 (by computation here below)
+CASE 3: x*y in [1,3/100]                    : in this case P*2*(1-g^2)^(1/4) <= 8     (by 15G)    , Q <= 8.226 (by 31Gtris) and S*(1-g^2)^(1/4) <= 1     (by 20G)
+
+Therefore
+max(F) <= max(8*8.393*0.975, 7.603*8.85*0.975, 8*8.226*1) <= max([65.466, 65.61, 65.81) <= 65.81
+
+
+CLAIM: Assume x*y > 3/100. Then (1-x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1-g^2)^(1/4) <= 0.975
+PROOF
+  We set u:=x*y and maximized for z = 1, getting
+  (1-u)*(1+2*g*u+u^2)*(1-g^2)^(1/4)
+  /* INNER */
+  L=(1-u)*(1+2*g*u+u^2)   /* times (1-g^2)^(1/4) */
+  Tu=factor(deriv(L,u))
+  Tg=factor(deriv(L,g)*(1-g^2)*2-g*L)
+  Lu=Tu[1,1];
+  Lg=Tg[2,1];
+
+  T1=factor(polresultant(Lu,Lg,g))
+  res1g=T1[3,1];
+
+  polrootsreal(res1g,[0,1]) /* no roots */
+
+  /* BORDERS */
+  my(u=3/100);ploth(g=0,1,(1-u)*(1+2*g*u+u^2)*(1-g^2)^(1/4))
+  my(g=0);ploth(u=3/100,1,(1-u)*(1+2*g*u+u^2)*(1-g^2)^(1/4))
+END PROOF
+
+====================================================
+N=7 ord 3 [29]
+
+- + +' -  +            <=  64
+  - -' +  -
+    +' -  +
+       -' +'
+          - 2R^(1/2)
+
+Apply 7D) to [(1,1),(1,5),(2,5),(3,4),(3,4),(5,5)].
+Apply 4E) to [(1,2),(1,3),(1,4)].
+Apply 6G) to the remaining part of the chamber.
+The chamber is estimated by 4*1*16.
+====================================================
+N=7 ord 3 [1]
+
+- + -' +  -            <=  67.3
+  - +' -  +
+    -' +  -
+       -' +'
+          - 2R^(1/2)
+
+The function we have to estimate is the following:
+F= (1+x)*(1-x*y)*(1+2*g*x*y*z+(x*y*z)^2)*(1-x*y*z*t)*(1+x*y*z*t*a)
+        *(1+y)*(1-2*y*z*g+(y*z)^2)*(1+y*z*t)    *(1-y*z*t*a)
+              *(1+2*z*g+z^2)      *(1-z*t)      *(1+z*t*a)
+                                  *(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)
+                                                *(1+a)
+                                                * 2*sqrt(1-g^2)
+
+Apply 20G to [(1,2),(1,3)] multiplied by R^(1/4). This is <= 1.
+
+Let P be the polynomial corresponding to positions [(2,3),(3,3),(3,4),(4,4),(4,5)], i.e.,
+P(x,y,z,t,a,g):= (1-2*y*z*g+(y*z)^2)*(1+2*z*g+z^2)*(1-z*t)*(1+2*t*g+t^2)*(1-2*t*a*g+(t*a)^2)
+
+and let Q be the polynomial corresponding to positions [(1,1),(1,4),(1,5),(2,2),(2,34,(2,5),(3,5),(5,5)], i.e.,
+Q(x,y,z,t,a,g):= (1-x)*(1-x*y*z*t)*(1+x*y*z*t*a)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1+a)
+
+We further notice that Q(x,y,z,t,a,g) = Q'(x,y,z*t,a)
+where Q'(u,v,w,s) := (1-u)*(1-u*v*w)*(1+u*v*w*s)*(1+v)*(1+v*w)*(1-v*w*s)*(1+w*s)*(1+s) is the polynomial
+associated to symbols: -   + -  (pay attention to the empty place in first line)
+                         - - +
+                             -
+                             -
+Thus, F <= PQ*2*(1-g^2)^(1/4). We split the domain into two regions:
+
+CASE 1: z*t in [0,1/18]: in this case P*2*(1-g^2)^(1/4) <= 8     (by 15G)    and Q <= 8.393 (by 31Gbis)
+CASE 2: z*t in [1/18,1]: in this case P*2*(1-g^2)^(1/4) <= 7.603 (by 15Gbis) and Q <= 8.85  (by 31)
+
+Therefore
+max(F) <= max(8*8.393, 7.603*8.85) <= max(67.144, 67.29555) <= 67.3
+====================================================
+N=8 ord 3 [20]
+
++ - - -' +  +          <=  87.83
+  - - -' +  +
+    + +' -  -
+      +' -  -
+         -' -'
+            + 2R^(1/2)
+
+Let F be the function we have to estimate.
+
+Let P be the polynomial corresponding to positions [(1,1),(1,2),(1,3),(1,4)], i.e.,
+P:=(1-x)*(1+x*y)*(1+x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2)
+
+and let Q be the polynomial corresponding to the second and third lines:
+Q:=(1+y)*(1+y*z)*(1+2*g*y*z*t+(y*z*t)^2)*(1-y*z*t*a)*(1-y*z*t*a*b)*(1-z)*(1-2*g*z*t+(z*t)^2)*(1+z*t*a)*(1+z*t*a*b)
+
+We further notice that Q equals the polynomial in 25Gbis but for a renaming of variables and that
+in this renaming the variable which now is called 'z' corresponds with what in 25Gbis is called 'y'
+(it is '+' symbol appearing in position [(3,3)]).
+
+The terms [(1,5)] and [(1,6)] are <= 1 (by 1A) and lines 4-5-6 together correspond to a certain
+chamber for N = 5, and therefore are <= 16M.
+
+Thus, F <= PQ*16M. We split the domain into two regions:
+
+CASE 1: z in [0,81/100]: in this case P <= 2.109 (proved here below)  and Q <= 64/27 (by 25G)
+CASE 2: z in [81/100,1]: in this case P <= 2.63 (by 24H)              and Q <= 1.887 (by 25Gbis)
+
+Therefore
+max(F) <= max(2.109*(64/27), 2.63*1.887)*16M <= max(5, 4.97)*16M <= 80M = 83.49
+
+CLAIM: assume z in [0,81/100]. Then P <= 2.109.
+PROOF
+P is (1-x)*(1+x*y)*(1+x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2) which is increasing in y,z,t,g.
+Thus it is maximized for y = t = g = 1 and z = 81/100, getting
+(1-x)*(1+x)*(1+x*(81/100))^3 which is <= 2.109.
+END PROOF
+====================================================
+N=8 ord 3 [1]
+
+questa dipende dalla stima di
+N=6 ord 3 [1] e posso far scendere la N=8 sotto 84 mandando la N=6 sotto 35.4
+
+osservo che
+N=6 ord 3 [1]
+
+- +' -  +              <=  37.93
+  -' +  -
+     -' +'
+        - 2R^(1/2)
+
+La funzione e':
+F= (1+x)*(1-2*x*y*g+(x*y)^2)*(1+x*y*z)   *(1-x*y*z*t)*
+         (1+2*y*g+y^2)      *(1-y*z)     *(1+y*z*t)*
+                            (1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*
+                                         *(1+t)
+                                         * 2*sqrt(1-g^2)
+Definisco
+
+P(x,y,z,t,g):=(1-2*x*y*g+(x*y)^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)
+Q(x,y,z,t,g):=(1+x)*(1+x*y*z)*(1-x*y*z*t)*(1+y*z*t)*(1+t)
+             =Q'(x,y*z,t)
+Q'(u,v,w) := (1+u)*(1+u*v)*(1-u*v*w)*(1+v*w)*(1+w)
+
+ed osservo che F = PQ*2*sqrt(1-g^2)
+
+Originariamente F è stimata componendo due stime, precisamente
+
+P e' [(1,2),(2,2),(2,3),(3,3),(3,4)]*2*sqrt(1-g^2) che per la 3G e' <= 8.
+Q e' [(1,1),(1,3),(1,4),(2,4),(4,4)] che per la 4G e' <= 128/27.
+
+Analizzo la 3G e vedo che P*2*sqrt(1-g^2) raggiunge il suo massimo quando
+x   y    z     t    g
+0   0    1     1    0   da' 8
+1   1    0     0    0   da' 8
+1   1    0     1    0   da' 8
+1   0    1     1    0   da' 8
+
+Analizzo la 4G e vedo che Q raggiunge il suo massimo quando
+x (=u)   y*z (=v)   t(=w)    (tra parentesi le variabili come appaiono nella 4G)
+1        1          1/3      da' 128/27 = 4.741...
+1        1/3        1        da' 128/27 = 4.741...
+2/3      1          2/3      da' 4.29
+a        a          1        da' 4.48
+1        a          a        da' 4.48
+
+dove a è una certa costante pari a circa 0.62.
+
+Osservo che per avere valori grandi in Q si deve avere y*z vicino a 1 oppure 1/3 oppure a,
+ma che quando questo succede non si puo' avere valori grandi per P.
+
+Quindi, divido il dominio in due regioni:
+
+CASO 1: y*z è in [0,1/10] qui P*2*sqrt(1-g^2) <= 8     (per la 3G)     e  Q è <= 4.36 (per la 4Gbis)
+CASO 2: y*z è in [1/10,1] qui P*2*sqrt(1-g^2) <= 7.345 (per la 3Gbis)  e  Q è <= 128/27 (per la 4G)
+
+cosi' la camera e' <= max(8*4.36, 7.345*128/27) <= max(34.88, 34.821) <= 34.88
+
+====================================================
+N=8 ord 3 [25]
+
++ - - +' -            <=  4.35 (e' la 30G)
+  - - +'
+    + -'
+
+
+[25]
+[+ - + - - -]
+
++ - - +' -  +          <=  72.63
+  - - +' -  +
+    + -' +  -
+      -' +  -
+         -' +'
+            - 2R^(1/2)
+
+Apply 1A to [(1,6)]. Apply 7A to [(2,5),(2,6),(3,5),(3,6)]. Apply 30G to the remaining of lines 1-2-3. Lines 1-2-3 are <= 1*1*4.35, together.
+The remaining is the function for N=5 which is <= 16M
+====================================================
+
+N=8 ord 3 [55]:  e' vero che
+ + + -' -
+ - - +' +   <= 2.51 ?   Si, anzi, e' <= 2.442
+   + -' -
+
+[55]
+[- - + - + -]
+
+- + + -' -  +          <=  81.55
+  - - +' +  -
+    + -' -  +
+      -' -  +
+         +' -'
+            - 2R^(1/2)
+
+Apply 9A to [(1,1),(1,6),(2,6)]. Apply 8F to [(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5),(3,3),(3,4),(3,5)].
+Apply 1A to [(3,6)]. All terms we have mentioned contribute by 2*2.442*1, at most. The remaining is the function for N=5 which is <= 16M
+====================================================
+
+N=8 ord 2 [1] e' vero che
+7F
+ - + -' +   <= 1.41
+ + - +' -
+
+[1]
+- + - + -' +           <=  79.42
+  - + - +' -
+    - + -' +
+      - +' -
+        -' +
+           -' 2R^(1/2)
+
+Apply 9A to [(1,1),(1,2),(2,2)]. Apply 7F to [(1,3),(1,4),(1,5),(1,6),(2,3),(2,4),(2,5),(2,6)].
+The first two lines, together are estimated by  <= 2*1.4093 = 2.8186.
+The remaining is the case [- - - -] for the function N=6 second ordering (chamber [1]), which is <= 27M
+
+====================================================
+[19]
+[+ - + + + -]
+
++ - - -' -  +          <=  55.81
+  - - -' -  +
+    + +' +  -
+      +' +  -
+         +' -'
+            - 2R^(1/2)
+
+Apply 20H to [(1,3),(2,3),(3,3),(3,4)]. Apply 3A to [(3,5),(3,6)]. These terms contribute by 1.41*1, at most.
+The remaining is the function for N=7 third ordering in the case [+ - + + -] (chamber [11]), which is <= 39.58.
+====================================================
+[18]
+[+ - + + + +]
+
++ - - - -' -           <=  39.58
+  - - - -' -
+    + + +' +
+      + +' +
+        +' +
+           +' 2R^(1/2)
+
+Apply 5A to [(1,4),(3,4)]. Apply 19H to [(2,4),(4,4),(4,5)]. Apply 1A to [(4,6)]. These terms contribute by 1*1*1, at most
+The remaining is the case [+ - + + +] for the function N=7 second ordering (chamber [10]), which is <= 39.58.
+====================================================
+[20]
+[+ - + + - +]
+
++ - - - +' +           <=  78.2
+  - - - +' +
+    + + -' -
+      + -' -
+        -' -
+           +' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,2)]. Apply 9A to [(2,2),(2,6),(3,6)]. Apply 5A to [(2,3),(3,3)]. Apply 10E to [(2,4),(2,5),(3,4),(3,5)].
+These terms contribute by 1*2*1*(32/27).
+The remaining is the case [- + - +] for the function N=6 second ordering (chamber [12]), which is <= 32.96.
+====================================================
+[30]
+[+ - - - + +]
+
++ - + - -' -           <=  65
+  - + - -' -
+    - + +' +
+      - -' -
+        +' +
+           +' 2R^(1/2)
+
+Apply 3A to [(1,1),(1,2)].
+Apply 6A to [(2,6),(3,6)] and then 5F to [(2,2),(2,3),(2,4),(2,5),(3,3)(3,4),(3,5)]. These terms contribute by 1*2, at most.
+The remaining is the case [+ - + +] for the function N=6 second ordering (chamber [6]), which is <= 32.48
+====================================================
+[55]
+[- - + - + -]
+
+- + + - -' +           <=  73.87
+  - - + +' -
+    + - -' +
+      - -' +
+        +' -
+           -' 2R^(1/2)
+
+
+Apply 9A to [(1,1),(1,6),(2,6)]. Apply 14E to [(1,2),(1,3),(1,4),(1,5)]. Apply 2H to [(2,2),(2,3),(2,4),(2,5),(3,3),(3,4),(3,5)].
+Apply 1A to [(3,6)]. These term together are <= 2*(3456/3125)*2*1.
+The remaining is a function for N=5 which is <= 16M.
+
+====================================================
+
+N=8 ord 3
+[33]
+[+ - - - - -]
+
++ - + -' +  -          <=  79.28
+  - + -' +  -
+    - +' -  +
+      -' +  -
+         -' +'
+            - 2R^(1/2)
+
+Apply 16E to [(1,1),(1,2),(1,3),(1,4)]. Apply 3A to [(1,5),(1,6)]. Line 1 is <= 3456/3125*1.
+The remaining is the function for N=7 third ordering in the case [- - - - -] (chamber [1]), which is <=  71.68
+====================================================
+
+
+N=8 ord 3
+[52]
+[- - + + - +]
+
+- + + +' -  -          <=  79.16
+  - - -' +  +
+    + +' -  -
+      +' -  -
+         -' -'
+            + 2R^(1/2)
+
+Apply 5D to [(1,1)]. Apply 3A to [(1,2),(1,6)]. Apply 4E to [(1,3),(1,4),(1,5)]. The first line is <= 2.
+The remaining is the function for N=7 third ordering in the case [- + + - +] (chamber [20]), which is <= 39.58.
+
+===============================
+N=8 ord 4
+
+[39]
+[- + + - + -]
+
+- - -' +  +  -         <=   88.66
+  + +' -  -  +
+    +' -  -  +
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 28G to [(1,2),(2,2),(2,3),(2,4),(2,5)]. Apply 1A to [(2,6)].
+All terms we have mentioned together are <= 2.24. The remaining part of the scheme is the case N=7, ord=4 chamber [- + - + -] (coinciding with N=7 ord 3, chamber [- + - + -] [23]) which is <= 39.58.
+
+------------>
+
+N=8 ord 4
+
+[39]
+[- + + - + -]
+
+- - -' +  +  -         <=   78.13
+  + +' -  -  +
+    +' -  -  +
+       -' -' +'
+          +  -
+             - 2R^(1/2)
+
+Apply 6A to [(1,6),(2,6)] then apply 12G to the resulting first two lines.
+The first two lines are <= 64/27. The remaining part of the scheme is the case N=6, ord=4 chamber [+ - + -] (coinciding with N=6 ord 2, chamber [- + - +] [12]) which is <= 32.96.
+===============================
+
+Migliorare la stima della N=8, ord 4 camera [33].
+Attualmente e' stimata scomponendo la camera in due pezzi.
+Il primo e' stimato dalla 22G con 9.49 (in realta' 256/27=9.481481481....) e penso sia sostanzialmente ottimale.
+
+Il secondo e' stimato dall 21G con 9.42 e secondo me e' migliorabile.
+
+La 21G e' questa:
+(1-x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b)
+che noi abbiamo spezzato in due parti, rispettivamente
+P1:=(1-x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)
+e
+P2:=(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b)
+
+Il P1 è poi a sua volta stimato con (1-x^4).
+
+Osserva che P2 e' monotono crescente anche in g. e che P1 è invece decrescente in g.
+
+In particolare quando g>1/2 si ha P1 <= (1-x)*(1+x*y)*(1-x*y*z+(x*y*z)^2) <= (1-x)*(1+x*y) <= 1-x^2 <= 1-x^2.
+Abbiamo cosi':
+
+CASO 1: assumo g>1/2: stimo P1 con 1-x^2 e poi calcolo il max di (1-x^2)*P2(x,y,z,t,a,b,g): e' 8.641
+CASO 2: assumo g<1/2 e x <1/2 : stimo P1 con 1 e P2 con P2(1/2,y,z,t,a,b,1/2): e' 8.23
+CASO 3: assumo g<1/2 e x >1/2 : stimo P1 con 1-x^4 e P2 con P2(1,y,z,t,a,b,1/2) che e' <= 8.79. Questo da' (1-(1/2)^4)*8.79 <= 8.25
+
+QUINDI la stima finale e' 8.641
+e la stima della camera e' 8.641*9.482 = 81.933962 <= 82.
+
+===============================
+
+N=6, ord. 3, camera [13] e' stimata con 37.926.
+decomporre la camera nei due soliti blocchi ma "zonare" le stime, ovvero verificare che:
+
+1) Cambiato la 6D che ora afferma che: (1+x*y*z*t)*(1+y*z)*(1-y*z*t)*(1+t) <= 64/27 con
+questa
+
+        -                   <= 64/27  sempre
+     -  +              <=   <= 2.178  when t in [0    ,1] and y*z in [0  ,1/10]
+                            <= 2.17   when t in [22/25,1] and y*z in [3/5,1   ]
+        -
+
+(quindi cambiato "estimates_general_database.txt" e "proof of D.txt").
+
+
+2) Aggiunto la 6GBis che afferma che
+
+- -' +                     1024/27 sempre
+  +'                   <=  14.6895 se t in [0,1    ] e y*z in [1/10,3/5]
+     -' +'                 14.6895 se t in [0,22/25] e y*z in [3/5  ,1 ]
+          2R^(1/2)
+
+
+(quindi aggiornato i files "estimates_general_database.txt" e "Proof of G.txt", nonché aggiunti i files:
+"Proof of 6G_zone_C_Magma.txt",
+"Proof of 6G_zone_C_Magma.gp" ed anche
+"...\Estimates\Proofs G\auxiliary_files_6G_Pari.gp")
+
+
+3) Aggiornato N=6, ord. 3, camera [13] che passa a 34.848 (da 37.926 che era).
+   Aggiornato "elenco stime N=6.txt" e "bounds.txt"
+4) Aggiornato tutte le camere dipendenti da questa (e tutte quelle dipendenti da quelle dipendenti da questa,
+   in modo ricorsivo). In particolare, la N=8, ord 3 [45] da 89.90 passa a 82.61.
+===============================

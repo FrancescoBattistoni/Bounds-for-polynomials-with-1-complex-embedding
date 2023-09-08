@@ -5,9 +5,10 @@
 ===================
 
  We collect here all computations which are necessary to prove the bounds
- announced in " Maximum of polynomials and small regulators", available at https://arxiv.org/abs/2211.16842
+ announced in " Maximum of polynomials and small regulators"
+ http://arxiv....
 
- The archive is organized in the following way:
+ the archive is organized in the following way:
 
  readme.txt                                                  this file
  bounds.txt                                                  contains the final bounds for every degree n and for each ordering
