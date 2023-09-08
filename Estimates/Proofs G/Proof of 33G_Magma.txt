@@ -1,0 +1,218 @@
+/* Study of Inequality 33G */
+/*
+33G)  x x  - +
+        -' + -                              <= 7.15
+          -' x 2R^(1/2)
+
+*/
+
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+L:=(1+x*y*z)*(1-x*y*z*t)*(1+2*g*y+y^2)*(1-y*z)*(1+y*z*t)*(1+2*g*z+z^2);  /* times 2*sqrt(1-g^2) */
+
+/* NOTE the symmetries: L(x,y,z,t,g) = L(t,y,z,x,g) and L(x,y,z,t,g) = L(x,z,y,t,g) */
+
+/* We begin with the boundaries. */
+
+/* x = 0:
+   (1+2*g*y+y^2)*(1-y*z)*(1+y*z*t)*(1+2*g*z+z^2)*2*sqrt(1-g^2) maximized at t=1
+   (1+2*g*y+y^2)*(1-y*z)*(1+y*z)*(1+2*g*z+z^2)*2*sqrt(1-g^2) */
+
+   L:=(1+2*g*y+y^2)*(1-y*z)*(1+y*z)*(1+2*g*z+z^2); /* times 2*sqrt(1-g^2) */
+   Ty:= Factorization(Derivative(L,y));
+   Tz:= Factorization(Derivative(L,z));
+   Tg:= Factorization(Derivative(L,g)*(1-g^2)-L*g);
+   Ly:= Ty[2,1];
+   Lz:= Tz[2,1];
+   Lg:= Tg[3,1];
+
+   T:= Factorization(Resultant(Lz,Ly,g));
+   res1g:= T[4,1];
+   T:= Factorization(Resultant(Lg,Ly,g));
+   res2g:= T[4,1];
+
+   T:= Factorization(Resultant(res1g,res2g,z));
+   /* all factors are positive in the open set */
+
+   /* x = 0, y = 0: (1+2*g*z+z^2)*2*sqrt(1-g^2) <= 2*(1+g)*2*sqrt(1-g^2) <= 3*sqrt(3) <= 5.2 */
+
+   /* x = 0, z = 0: already done by symmetry */
+
+   /* x = 0, g = 0: (1+y^2)*(1-y*z)*(1+y*z)*(1+z^2)*2 = (1+y^2)*(1-y^2*z^2)*(1+z^2)*2 <= 2(by 9A)*2 = 4 */
+
+   /* x = 0, y = 1: 2*(1+g)*(1-z)*(1+z)*(1+2*g*z+z^2)*2*sqrt(1-g^2) */
+      L:=2*(1+g)*(1-z)*(1+z)*(1+2*g*z+z^2);  /* times 2*sqrt(1-g^2) */
+      Tz:= Factorization(Derivative(L,z));
+      Tg:= Factorization(Derivative(L,g)*(1-g^2)-L*g);
+      Lz:= Tz[2,1];
+      Lg:= Tg[4,1];
+
+      T:= Factorization(Resultant(Lz,Lg,g));
+      res1g:= T[3,1];
+      /* GP computations show that there is one stationary point with value <= 7.16 (see 33G_Pari.gp) */
+
+   /* x = 0, y = 1, z = 1: NULL */
+
+   /* x = 0, y = 1, g = 1: NULL */
+
+   /* x = 0, z = 1: already done by symmetry */
+
+   /* x = 0, g = 1: NULL */
+
+
+/* y = 0:
+   (1+2*g*z+z^2)*2*sqrt(1-g^2) maximized at z = 1
+   2*(1+g)*2*sqrt(1-g^2) <= 3*sqrt(3) <= 5.2 */
+
+/* z = 0: already done by symmetry */
+
+/* t = 0: already done by symmetry */
+
+/* g = 0:
+   (1+x*y*z)*(1-x*y*z*t)*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*2 */
+   L:=(1+x*y*z)*(1-x*y*z*t)*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*2;
+   Tx:= Factorization(Derivative(L,x));
+   Ty:= Factorization(Derivative(L,y));
+   Tz:= Factorization(Derivative(L,z));
+   Tt:= Factorization(Derivative(L,t));
+   Lx:= Tx[7,1];
+   Ly:= Ty[2,1];
+   Lz:= Tz[2,1];
+   Lt:= Tt[7,1];
+
+   T:= Factorization(Resultant(Lx,Lt,t));
+   res1t:= T[1,1];
+   T:= Factorization(Resultant(Ly,Lt,t));
+   res2t:= T[5,1];
+   T:= Factorization(Resultant(Lz,Lt,t));
+   res3t:= T[5,1];
+
+   T:= Factorization(Resultant(res1t,res3t,z));
+   res1z:= T[5,1];
+   T:= Factorization(Resultant(res2t,res3t,z));
+   res2z:= T[5,1]*T[6,1];
+
+   T:= Factorization(Resultant(res1z,res2z,y));
+   resy:= T[5,1]*T[6,1];
+   /* GP computations show that there is one stationary point with value <= 3.2 (see 33G_Pari.gp) */
+
+   /* g = 0: x = 1: (1+y*z)*(1-y*z*t)*(1+y^2)*(1-y*z)*(1+y*z*t)*(1+z^2)*2
+      maximized at t = 0 already done in greater generality */
+
+   /* g = 0: y = 1: (1+x*z)*(1-x*z*t)*2*(1-z)*(1+z*t)*(1+z^2)*2 */
+      L:= (1+x*z)*(1-x*z*t)*2*(1-z)*(1+z*t)*(1+z^2)*2;
+      Tx:= Factorization(Derivative(L,x));
+      Tz:= Factorization(Derivative(L,z));
+      Tt:= Factorization(Derivative(L,t));
+      Lx:= Tx[5,1];
+      Lz:= Tz[1,1];
+      Lt:= Tt[5,1];
+
+      T:= Factorization(Resultant(Lx,Lt,t));
+      res1t:= T[1,1];
+      T:= Factorization(Resultant(Lz,Lt,t));
+      res2t:= T[4,1];
+
+      T:= Factorization(Resultant(res1t,res2t,z));
+      resz:= T[4,1];  \\ x^4 - 1/4*x^2 - 3/4*x + 1/2
+      /* no roots in (0,1) */
+
+   /* g = 0, y = 1, z = 1: NULL */
+
+   /* g = 0, y = 1, t = 1: (1+x*z)*(1-x*z)*2*(1-z)*(1+z)*(1+z^2)*2
+      by symmetry this equals g = 0, y = 1, x = 1 which is a subcase of g = 0, x = 1 which we have already considered */
+
+   /* g = 0: z = 1: already done by symmetry */
+
+   /* g = 0: t = 1: already done by symmetry */
+
+
+/* x = 1:
+   (1+y*z)*(1-y*z*t)*(1+2*g*y+y^2)*(1-y*z)*(1+y*z*t)*(1+2*g*z+z^2)*2*sqrt(1-g^2)
+   maximized at t = 0.
+   So we are in case x = 1, t = 0 which is a subcase of t = 0 that we have already considered. */
+
+
+/* y = 1:
+   (1+x*z)*(1-x*z*t)*2*(1+g)*(1-z)*(1+z*t)*(1+2*g*z+z^2)*2*sqrt(1-g^2) */
+   L:= (1+x*z)*(1-x*z*t)*2*(1+g)*(1-z)*(1+z*t)*(1+2*g*z+z^2);   /* times 2*sqrt(1-g^2) */
+
+   Tx:= Factorization(Derivative(L,x));
+   Tz:= Factorization(Derivative(L,z));
+   Tt:= Factorization(Derivative(L,t));
+   Tg:= Factorization(Derivative(L,g)*(1-g^2)-L*g);
+   Lx:= Tx[6,1];
+   Lz:= Tz[2,1];
+   Lt:= Tt[6,1];
+   Lg:= Tg[4,1];
+
+   T:= Factorization(Resultant(Lx,Lg,g));
+   res1g:= T[1,1];
+   T:= Factorization(Resultant(Lz,Lg,g));
+   res2g:= T[3,1];
+   T:= Factorization(Resultant(Lt,Lg,g));
+   res3g:= T[1,1];
+
+   T:= Factorization(Resultant(res1g,res3g,t));
+   res1t:= T[1,1];
+   T:= Factorization(Resultant(res2g,res3g,t));
+   res2t:= T[4,1];
+
+   T:= Factorization(Resultant(res1t,res2t,z));
+   resz:= T[3,1];
+   /* GP computations show that there is one stationary point with value <= 6.7 (see 33G_Pari.gp) */
+
+/* y = 1, z = 1: NULL */
+
+/* y = 1, t = 1: by symmetry this is the same as y = 1, x = 1 which is a subcase of x = 1 that we have already considered. */
+
+/* y = 1, g = 1: NULL */
+
+/* z = 1: already done by symmetry */
+
+/* t = 1: already done by symmetry */
+
+/* g = 1: NULL */
+
+/* INNER */
+   L:=(1+x*y*z)*(1-x*y*z*t)*(1+2*g*y+y^2)*(1-y*z)*(1+y*z*t)*(1+2*g*z+z^2); /* times 2*sqrt(1-g^2) */
+
+   Tx:= Factorization(Derivative(L,x));
+   Ty:= Factorization(Derivative(L,y));
+   Tz:= Factorization(Derivative(L,z));
+   Tt:= Factorization(Derivative(L,t));
+   Tg:= Factorization(Derivative(L,g)*(1-g^2)-L*g);
+   Lx:= Tx[7,1];
+   Ly:= Ty[2,1];
+   Lz:= Tz[2,1];
+   Lt:= Tt[7,1];
+   Lg:= Tg[3,1];
+
+   T:= Factorization(Resultant(Lx,Lg,g));
+   res1g:= T[1,1];
+   T:= Factorization(Resultant(Ly,Lg,g));
+   res2g:= T[4,1];
+   T:= Factorization(Resultant(Lz,Lg,g));
+   res3g:= T[4,1];
+   T:= Factorization(Resultant(Lt,Lg,g));
+   res4g:= T[1,1];
+
+   T:= Factorization(Resultant(res1g,res4g,t));
+   res1t:= T[1,1];
+   T:= Factorization(Resultant(res2g,res4g,t));
+   res2t:= T[5,1];
+   T:= Factorization(Resultant(res3g,res4g,t));
+   res3t:= T[5,1];
+
+   T:= Factorization(Resultant(res2t,res1t,z));
+   res1z:= T[4,1];
+   T:= Factorization(Resultant(res3t,res1t,z));
+   res2z:= T[4,1];
+
+   T:= Factorization(Resultant(res1z,res2z,y));
+   resy:= T[4,1]*T[5,1]*T[6,1]*T[7,1];
+   /* GP computations show that there is one stationary point with value <= 6.2 (see 33G_Pari.gp) */
+
+/* Hence the function is < 7.15 */

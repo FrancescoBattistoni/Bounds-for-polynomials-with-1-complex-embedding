@@ -1,0 +1,218 @@
+/* Study of inequality 3Gtris */
+
+/*
+3G)   +'                                    <= 5.25 when  g in [1/2,1]
+tris  -' +
+         -' +'
+            2R^(1/2)
+
+*/
+
+Q:=RationalField();
+R<x,y,z,t,g>:=PolynomialRing(Q,5);
+
+   L:=(1-2*x*y*g+(x*y)^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2);  /* times 2*sqrt(1-g^2)  */
+
+/* Notice that this function is symmetrical, in the sense that L(x,y,z,t,g) = L(t,z,y,x,g) */
+
+/* Notice that the function is maximized at either x = 0 or x = 1. */
+
+/* 0-boundary */
+
+  /* x = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*sqrt(1-g^2).
+     This is maximized at either t = 0 or t = 1 */
+
+     /* x = 0, t = 0: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*sqrt(1-g^2). This is < 5.25 (apply 3E).  */
+
+     /* x = 0, t = 1: (1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2)  */
+        L:=(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2);  /* times 2*sqrt(1-g^2)  */
+
+        Ty:=Factorization(Derivative(L,y));
+        Tz:=Factorization(Derivative(L,z));
+        Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+        Ly:=Ty[3,1];
+        Lz:=Tz[1,1];
+        Lg:=Tg[2,1];
+
+        T:=Factorization(Resultant(Ly,Lz,g));
+        res1g:=T[2,1];
+        T:=Factorization(Resultant(Ly,Lg,g));
+        res2g:=T[4,1];
+
+        T:=Factorization(Resultant(res1g,res2g,z));
+        resz:=T[4,1]*T[8,1];
+
+        PrintFile("3Gtris_Pari.gp","\{resz=");
+        PrintFile("3Gtris_Pari.gp",resz);
+        PrintFile("3Gtris_Pari.gp",";}\n\n");
+
+        PrintFile("3Gtris_Pari.gp","\{res1g=");
+        PrintFile("3Gtris_Pari.gp",res1g);
+        PrintFile("3Gtris_Pari.gp",";}\n\n");
+
+        PrintFile("3Gtris_Pari.gp","\{Ly=");
+        PrintFile("3Gtris_Pari.gp",Ly);
+        PrintFile("3Gtris_Pari.gp",";}\n\n");
+
+        /* There are no stationary points (see 3Gtris_Pari.gp) */
+
+        /* x = 0, t = 1, y = 0:
+          (1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2). This is maximized at g = 1/2 giving
+          (1+z+z^2)*(1-z+z^2)*sqrt(3). Maximized at z = 1 giving the value 3*sqrt(3) <= 5.2 */
+
+        /* x = 0, t = 1, z = 0:
+           (1+2*y*g+y^2)*2*sqrt(1-g^2). Maximized at y = 1 and g = 1/2 giving 3*sqrt(3) <= 5.2 */
+
+        /* x = 0, t = 1, g = 1/2:
+           (1+y+y^2)*(1-y*z)*(1+z+z^2)*(1-z+z^2)*sqrt(3)  <= 5.2   (see "3Gtris_Pari.gp") */
+
+
+        /* x = 0, t = 1, y = 1:
+           (1+g)*(1-z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*4*sqrt(1-g^2)  */
+        L:=4*(1+g)*(1-z)*(1+2*z*g+z^2)*(1-2*z*g+z^2);  /* times sqrt(1-g^2)  */
+
+        Tz:=Factorization(Derivative(L,z));
+        Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+        Lz:=Tz[2,1];
+        Lg:=Tg[3,1];
+
+        T:=Factorization(Resultant(Lg,Lz,g));
+        resg:=T[5,1]; \\ z^6 - 18/35*z^5 + 18/35*z^4 - 74/245*z^3 + 3/35*z^2 - 4/245*z + 4/245
+        /* This has no roots in the interior */
+           /* x = 0, t = 1, y = 1, z = 0: (1+g)*4*sqrt(1-g^2)  <=   3*sqrt(3) <= 5.2  */
+           /* x = 0, t = 1, y = 1, z = 1: the function is zero   */
+           /* x = 0, t = 1, y = 1, g = 1/2: (2+1)*(1-z)*(1+z+z^2)*(1-z+z^2)*sqrt(3) <=  3*sqrt(3) <= 5.2. */
+           /* x = 0, t = 1, y = 1, g = 1: the function is zero */
+
+        /* x = 0, t = 1, z = 1:
+           (1+2*y*g+y^2)*(1-y)*(1-g^2)*8*sqrt(1-g^2)  */
+        L:=8*(1+2*y*g+y^2)*(1-y)*(1-g^2);   /* times sqrt(1-g^2) */
+
+        Ty:=Factorization(Derivative(L,y));
+        Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+        Ly:=Ty[3,1];
+        Lg:=Tg[4,1];
+
+        T:=Factorization(Resultant(Lg,Ly,g));
+        /* This has no roots in the interior */
+          /* x = 0, t = 1, z = 1, g = 1/2: (1+y+y^2)*(1-y)*(3/4)*8*sqrt(3/4) <= 3*sqrt(3) <=  5.2 */
+          /* x = 0, t = 1, z = 1, g = 1: the function is zero  */
+
+
+        /* x = 0, t = 1, g = 1: the function is zero */
+/* This concludes the case x = 0 */
+
+
+
+/* We study now the case x = 1 */
+
+  /* x = 1: (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*t*g+(z*t)^2)*2*sqrt(1-g^2).
+     This is maximized at either t = 0 or t = 1  */
+
+     /* x = 1, t = 0:
+        (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*2*sqrt(1-g^2)  */
+     L:=(1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2);  /* Times 2*sqrt(1-g^2)  */
+     Ty:=Factorization(Derivative(L,y));
+     Tz:=Factorization(Derivative(L,z));
+     Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+     Ly:=Ty[2,1];
+     Lz:=Tz[1,1];
+     Lg:=Tg[2,1];
+
+     T:=Factorization(Resultant(Ly,Lz,g));
+     res1g:=T[2,1];
+     T:=Factorization(Resultant(Lz,Lg,g));
+     res2g:=T[4,1];
+
+     T:=Factorization(Resultant(res1g,res2g,z));
+     resz:=T[4,1]*T[7,1];
+
+     PrintFile("3Gtris_Pari.gp","\{resz=");
+     PrintFile("3Gtris_Pari.gp",resz);
+     PrintFile("3Gtris_Pari.gp",";}\n\n");
+
+     PrintFile("3Gtris_Pari.gp","\{res1g=");
+     PrintFile("3Gtris_Pari.gp",res1g);
+     PrintFile("3Gtris_Pari.gp",";}\n\n");
+
+     PrintFile("3Gtris_Pari.gp","\{Lz=");
+     PrintFile("3Gtris_Pari.gp",Lz);
+     PrintFile("3Gtris_Pari.gp",";}\n\n");
+
+     /* There are no stationary points in the open set (recall that g is now in [1/2,1]) (see 3Gtris_Pari.gp) */
+
+
+       /* x = 1, t = 0, y = 0:
+          (1+2*z*g+z^2)*2*sqrt(1-g^2) <= 3*sqrt(3)  */
+
+       /* x = 1, t = 0, y = 1:
+          (1-g)*(1+g)*(1-z)*(1+2*z*g+z^2)*8*sqrt(1-g^2)  */
+       L:=8*(1-g)*(1+g)*(1-z)*(1+2*z*g+z^2);  /* times sqrt(1-g^2) */
+       Tz:=Factorization(Derivative(L,z));
+       Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+       Lz:=Tz[3,1];
+       Lg:=Tg[4,1];
+
+       T:=Factorization(Resultant(Lg,Lz,g));
+       /* This has no roots in the interior */
+
+         /* x = 1, t = 0, y = 1, z = 0: (1-g)*(1+g)*8*sqrt(1-g^2)  <=  3*sqrt(3) <= 5.2  */
+         /* x = 1, t = 0, y = 1, z = 1: the function is zero  */
+         /* x = 1, t = 0, y = 1, g = 1/2: (1/2)*(3/2)*(1-z)*(1+z+z^2)*8*sqrt(3/4)  <= 3*sqrt(3) <= 5.2  */
+         /* x = 1, t = 0, y = 1, g = 1: the function is zero */
+
+       /* x = 1, t = 0, z = 0:
+          (1-2*y*g+y^2)*(1+2*y*g+y^2)*2*sqrt(1-g^2). This is maximized at g = 1/2 giving
+          (1-y+y^2)*(1+y+y^2)*sqrt(3)  <=  3*sqrt(3) <= 5.2  */
+
+       /* x = 1, t = 0, z = 1:
+          (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y)*(1+g)*4*sqrt(1-g^2)    */
+       L:=4*(1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y)*(1+g);  /* times sqrt(1-g^2)  */
+       Ty:=Factorization(Derivative(L,y));
+       Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+       Ly:=Ty[2,1];
+       Lg:=Tg[3,1];
+
+       T:=Factorization(Resultant(Lg,Ly,g));
+       resg:=T[5,1]; \\ y^6 - 18/35*y^5 + 18/35*y^4 - 74/245*y^3 + 3/35*y^2 - 4/245*y + 4/245
+       /* No roots in the interior */
+
+         /* x = 1, t = 0, z = 1, g = 1/2: (1-y+y^2)*(1+y+y^2)*(1-y)*(3/2)*4*sqrt(3/4) <= 3*sqrt(3) <= 5.2 */
+         /* x = 1, t = 0, z = 1, g = 1  : the function is zero */
+
+
+       /* x = 1, t = 0, g = 1/2:
+          (1-y+y^2)*(1+y+y^2)*(1-y*z)*(1+z+z^2)*sqrt(3)  <=  5.2 (see "3Gtris_Pari.gp")  */
+
+       /* x = 1, t = 0, g = 1: the function is zero */
+
+     /* x = 1, t = 1:
+       (1-2*y*g+y^2)*(1+2*y*g+y^2)*(1-y*z)*(1+2*z*g+z^2)*(1-2*z*g+z^2)*2*sqrt(1-g^2). This is maximized at g = 1/2 giving
+       (1-y+y^2)*(1+y+y^2)*(1-y*z)*(1+z+z^2)*(1-z+z^2)*sqrt(3)  */
+     L:=(1-y+y^2)*(1+y+y^2)*(1-y*z)*(1+z+z^2)*(1-z+z^2);  /* times sqrt(3) */
+     Ty:=Factorization(Derivative(L,y));
+     Tz:=Factorization(Derivative(L,z));
+     Ly:=Ty[3,1];
+     Lz:=Tz[1,1];
+
+     T:=Factorization(Resultant(Lz,Ly,z));
+     res1z:=T[4,1]; \\ y^4 - 1/5*y^2 - 1/5
+     /* This is maximized at (y0,z0) with y0=z0=0.74716635998657220104142831965021085143  giving a value <= 2.7 */
+
+       /* x = 1, t = 1, y = 0:
+          (1+z+z^2)*(1-z+z^2)*sqrt(3) <= 3*sqrt(3) <= 5.2 */
+
+       /* x = 1, t = 1, y = 1:
+           3*(1-z)*(1+z+z^2)*(1-z+z^2)*sqrt(3) <= 3*sqrt(3) <= 5.2 */
+
+       /* x = 1, t = 1, z = 0:
+           (1-y+y^2)*(1+y+y^2)*sqrt(3) <= 3*sqrt(3) <= 5.2 */
+
+       /* x = 1, t = 1, z = 1:
+           (1-y+y^2)*(1+y+y^2)*(1-y)*3*sqrt(3) <= 3*sqrt(3) <= 5.2 */
+
+/* This concludes the case x = 1 */
+
+
+/* We don't need to study the interior thanks to the considerations about x.
+So the function is <= 5.25 */
