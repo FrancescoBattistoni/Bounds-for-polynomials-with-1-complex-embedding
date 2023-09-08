@@ -7,6 +7,11 @@ PROOFS OF THE ESTIMATES IN BLOCK H
      and then "Proof H\1H_Pari.gp"
      END PROOF
 
+1H)  PROOF
+bis  see "Proof H\Proof of 1Hbis_Magma.txt"
+     and then "Proof H\1Hbis_Pari.gp"
+     END PROOF
+
 2H)  PROOF
      see "Proof H\Proof of 2H_Magma.txt"
      and then "Proof H\2H_Pari.gp"

@@ -67,6 +67,10 @@ bis) (1-2*x*g+x^2)*(1+x*y)*(1+2*y*g+y^2)*2*sqrt(1-g^2).
      see "Proof E\Proof of 3E_Magma.txt"
      END PROOF
 
+3E)  PROOF
+bis  see "Proof E\Proof of 3Ebis_Magma.txt"
+     END PROOF
+
 4E)  PROOF
      The first one:
      (1-y)*(1+y*x)*(1-2*g*y*z+(y*z)^2) maximized for g = 0

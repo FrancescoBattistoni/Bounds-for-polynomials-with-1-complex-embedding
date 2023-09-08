@@ -23,6 +23,11 @@ bis) see "Proof G\Proof of 3Gbis_Magma.txt"
      and then "Proof G\3Gbis_Pari.gp"
      END PROOF
 
+3G)  PROOF
+tris)see "Proof G\Proof of 3Gtris_Magma.txt"
+     and then "Proof G\3Gtris_Pari.gp"
+     END PROOF
+
 4G)  PROOF
      see "Proof G\Proof of 4G_Magma.txt"
      and then "Proof G\4G_Pari.gp"
@@ -74,6 +79,11 @@ bis) see "Proof G\Proof of 4Gbis_Magma.txt"
 
 13G) PROOF
      see "Proof G\Proof of 13G_Magma.txt"
+     END PROOF
+
+13G) PROOF
+bis  see "Proof G\Proof of 13Gbis_Magma.txt"
+     and then "Proof G\13Gbis_Pari.gp"
      END PROOF
 
 14G) PROOF
@@ -211,6 +221,14 @@ bis) see "Proof G\Proof of 31Gbis_Magma.txt"
      and then "Proof G\31Gbis_Pari.gp"
      END PROOF
 
+32G) PROOF
+     see "Proof G\Proof of 32_Pari.gp"
+     END PROOF
+
+33G) PROOF
+bis) see "Proof G\Proof of 33Gbis_Magma.txt"
+     and then "Proof G\33Gbis_Pari.gp"
+     END PROOF
 
 ==========================================================================
 /* END OF PROOFS IN THIS SECTION */
