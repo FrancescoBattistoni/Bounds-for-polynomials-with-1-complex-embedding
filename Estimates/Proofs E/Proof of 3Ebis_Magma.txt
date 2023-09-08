@@ -1,0 +1,187 @@
+/* Study of Inequality 3Ebis */
+/*
+3E)   -' +                                  <= 5  for g in [3/10,3/4]^c
+bis      -' 2R^(1/2)
+
+NOTE: This bounds holds only in case the TWO LINES containing the patterns are CONTIGUOUS
+or the TWO COLUMNS containing the pattern are CONTIGUOUS (it is not necessary that both
+pairs of lines and columns be contiguous).
+*/
+
+
+Q:=RationalField();
+R<x,y,g>:=PolynomialRing(Q,3);
+
+L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
+
+
+=============
+g in [0,3/10]
+=============
+/* We begin with the boundaries. */
+
+/* x = 0:
+  (1+2*y*g+y^2)*2*sqrt(1-g^2). This is maximized at y=1
+  2*(1+g)*2*sqrt(1-g^2) <= 4.97 (recall that g in [0,3/10]) */
+
+/* y = 0:
+   already done, by symmetry */
+
+/* g = 0:
+   (1+x^2)*(1-x*y)*(1+y^2)*2  <= (1+x)*(1-x*y)*(1+y)*2 <= 2(by 9A)*2 = 4 */
+
+
+/* x = 1:
+   (1+g)*(1-y)*(1+2*y*g+y^2)*4*sqrt(1-g^2) <= 4.97 */
+   PROOF (in Pari code)
+   /* border */
+   /* y = 0: already done in greater generality */
+   /* g = 0: already done in greater generality */
+   /* y = 1: NULL */
+   /* g = 3/10: (1+3/10)*(1-y)*(1+2*y*(3/10)+y^2)*4*sqrt(1-(3/10)^2) <= 4.97 */
+   /* inner */
+   L=2*(1+g)*(1-y)*(1+2*y*g+y^2);   /* times 2*sqrt(1-g^2)  */
+   Ty=factor(deriv(L,y))
+   Tg=factor(deriv(L,g)*(1-g^2)-L*g)
+   Ly=Ty[2,1];
+   Lg=Tg[3,1];
+   T=factor(polresultant(Ly,Lg,g))
+   res=T[4,1];
+   u=polrootsreal(res,[0,1])  /* length one */
+   y0=u[1]
+   v=polrootsreal(subst(Ly,y,y0),[0,3/10])  /* no roots */
+   END PROOF
+
+/* y = 1:
+   already done, by symmetry  */
+
+/* g = 3/10:
+   (1+2*x*(3/10)+x^2)*(1-x*y)*(1+2*y*(3/10)+y^2)*2*sqrt(1-(3/10)^2) <= 4.97 */
+   PROOF (in Pari code)
+   /* border */
+   /* x = 0: already done in greater generality */
+   /* y = 0: already done in greater generality */
+   /* x = 1: already done in greater generality */
+   /* y = 1: already done in greater generality */
+
+   /* inner */
+   L=(1+2*x*(3/10)+x^2)*(1-x*y)*(1+2*y*(3/10)+y^2)   /* times 2*sqrt(1-(3/10)^2) */
+   Tx=factor(deriv(L,x))
+   Ty=factor(deriv(L,y))
+   Lx=Tx[2,1];
+   Ly=Ty[1,1];
+   T=factor(polresultant(Lx,Ly,y))
+   res=T[2,1];
+   v=polrootsreal(res,[0,1]) /* length one */
+   x0=v[1]
+   u=polrootsreal(subst(Lx,x,x0),[0,1]) /* length one */
+   y0=u[1]
+   my(x=x0,y=y0);eval(L)*2*sqrt(1-(3/10)^2)  \\ 3.6248419121516950619893793209072718102
+   END PROOF
+
+/* Finally, we study the interior */
+
+L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[2,1];
+Ly:=Ty[1,1];
+Lg:=Tg[2,1];
+
+T:=Factorization(Resultant(Ly,Lx,g));
+res1g:=T[3,1];
+
+T:=Factorization(Resultant(Lg,Lx,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));
+/* This has only trivial factors */
+
+
+=============
+g in [3/4,1]
+=============
+/* We begin with the boundaries. */
+
+/* x = 0:
+  (1+2*y*g+y^2)*2*sqrt(1-g^2). This is maximized at y=1
+  2*(1+g)*2*sqrt(1-g^2) <= 4.64 (recall that g in [3/4,1]) */
+
+/* y = 0:
+   already done, by symmetry */
+
+/* g = 3/4:
+   (1+2*x*(3/4)+x^2)*(1-x*y)*(1+2*y*(3/4)+y^2)*2*sqrt(1-(3/4)^2) <= 5 */
+   PROOF (in Pari code)
+   /* border */
+   /* x = 0: already done */
+   /* y = 0: already done */
+   /* x = 1: (1+2*1*(3/4)+1)*(1-y)*(1+2*y*(3/4)+y^2)*2*sqrt(1-(3/4)^2) <= 5 */
+   /* y = 1: as above, by symmetry  */
+
+   /* inner */
+   L=(1+2*x*(3/4)+x^2)*(1-x*y)*(1+2*y*(3/4)+y^2)   /* times *2*sqrt(1-(3/4)^2) */
+   Tx=factor(deriv(L,x))
+   Ty=factor(deriv(L,y))
+   Lx=Tx[2,1];
+   Ly=Ty[1,1];
+   T=factor(polresultant(Lx,Ly,y))
+   res=T[2,1];
+   v=polrootsreal(res,[0,1]) /* length one */
+   x0=v[1]
+   u=polrootsreal(subst(Lx,x,x0),[0,1]) /* length one */
+   y0=u[1]
+   my(x=x0,y=y0);eval(L)*2*sqrt(1-(3/4)^2)  \\ 4.3928702647459149695420501495573505760
+   END PROOF
+
+
+/* x = 1:
+   (1+g)*(1-y)*(1+2*y*g+y^2)*4*sqrt(1-g^2) <= 5 */
+   PROOF (in Pari code)
+   /* border */
+   /* y = 0: already done in greater generality */
+   /* g = 3/4: already done in greater generality */
+   /* y = 1: NULL */
+   /* g = 1: NULL */
+   /* inner */
+   L=2*(1+g)*(1-y)*(1+2*y*g+y^2);   /* times 2*sqrt(1-g^2)  */
+   Ty=factor(deriv(L,y))
+   Tg=factor(deriv(L,g)*(1-g^2)-L*g)
+   Ly=Ty[2,1];
+   Lg=Tg[3,1];
+   T=factor(polresultant(Ly,Lg,g))
+   res=T[4,1];
+   u=polrootsreal(res,[0,1])  /* length one */
+   y0=u[1]
+   v=polrootsreal(subst(Ly,y,y0),[3/4,1])  /* no roots */
+   END PROOF
+
+/* y = 1:
+   already done, by symmetry */
+
+/* g = 1: NULL */
+
+
+/* Finally, we study the interior */
+
+L:=(1+2*x*g+x^2)*(1-x*y)*(1+2*y*g+y^2);  /* times 2*sqrt(1-g^2) */
+
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tg:=Factorization(Derivative(L,g)*(1-g^2)-L*g);
+Lx:=Tx[2,1];
+Ly:=Ty[1,1];
+Lg:=Tg[2,1];
+
+T:=Factorization(Resultant(Ly,Lx,g));
+res1g:=T[3,1];
+
+T:=Factorization(Resultant(Lg,Lx,g));
+res2g:=T[4,1];
+
+T:=Factorization(Resultant(res1g,res2g,y));
+/* This has only trivial factors */
+
+/* Hence the function is < 5 */
