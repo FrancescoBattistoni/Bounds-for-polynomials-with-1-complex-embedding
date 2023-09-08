@@ -1,4 +1,10 @@
-/* Study of Inequality 5C */
+/* Study of Inequality 5Cbis */
+
+/*
+5C)   - + - +'          <= 2      when g in [0,1/2]
+bis     - + -'
+
+*/
 
 Q:=RationalField();
 R<x,y,z,t,g>:=PolynomialRing(Q,5);
@@ -8,27 +14,15 @@ L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-2*x*y*z*t*g+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+2*y*z*t*
 /* We begin with the analysis in the interior */
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tz:=Factorization(Derivative(L,z));
-
 Tt:=Factorization(Derivative(L,t));
-
 Tg:=Factorization(Derivative(L,g));
-
 Lx:= Tx[4,1];
-
 Ly:= Ty[2,1];
-
 Lz:= Tz[5,1];
-
 Lt:= Tt[8,1];
-
 Lg:= Tg[9,1];
-
-
-
 T:=Factorization(Resultant(Lz,Lt,g));
 
 /* This has no zeros on the interior, so we go check the boundaries */
@@ -36,121 +30,83 @@ T:=Factorization(Resultant(Lz,Lt,g));
 
 /* x = 0: the function becomes
 
-   (1+y)*(1-y*z)*(1+2*y*z*t*g+(y*z*t)^2). This is maximized at t=g=1 giving
+   (1+y)*(1-y*z)*(1+2*y*z*t*g+(y*z*t)^2). This is maximized at t=1 and g=1/2 giving
 
-   (1+y)*(1-y*z)*(1+y*z)^2. This is maximized at y=1, z=1/3 giving 2*2/3*16/9 = 64/27  */
-
+   (1+y)*(1-y*z)*(1+y*z+(y*z)^2) = (1+y)*(1-(y*z)^3) <= 1+y <= 2 */
 
 /* y = 0: the function becomes (1+x) <= 2   */
 
-
-/* z = 0: the function becomes (1+x)*(1-x*y)*(1+y) which is <= 2 */
+/* z = 0: the function becomes (1+x)*(1-x*y)*(1+y) which is <= 2 (by 9A) */
 
 /* t = 0:  the function becomes (1+x)*(1-x*y)*(1+x*y*z)*(1+y)*(1-y*z) which we know it's <= 2 from 1C at t=0 */
 
 /* g = 0: this is like g = 0 for 1C, so we know it's <= 2 */
 
-
-
 /* x = 1: the function becomes
-
    2*(1-y^2)*(1-(y*z)^2)*(1-2*y*z*t*g+(y*z*t)^2)*(1+2*y*z*t*g+(y*z*t)^2). This is maximized at g=0, so we know it's <= 2 */
 
 /* y = 1: the function becomes
-
    2*(1-x^2)*(1+x*z)*(1-2*x*z*t*g+(x*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2)   */
 
 L:=2*(1-x^2)*(1+x*z)*(1-2*x*z*t*g+(x*z*t)^2)*(1-z)*(1+2*z*t*g+(z*t)^2);
-
 Tx:=Factorization(Derivative(L,x));
-
 Tz:=Factorization(Derivative(L,z));
-
 Tt:=Factorization(Derivative(L,t));
-
 Tg:=Factorization(Derivative(L,g));
-
 Lx:= Tx[3,1];
-
 Lz:= Tz[3,1];
-
 Lt:= Tt[6,1];
-
 Lg:= Tg[7,1];
 
 T:=Factorization(Resultant(Lz,Lt,g));
-
 /* no zeros in the interior */
 
 
 /* y = 1, z = 1: the function is zero */
 
 /* y = 1, t = 1: the function becomes
-
    2*(1-x^2)*(1+x*z)*(1-2*x*z*g+(x*z)^2)*(1-z)*(1+2*z*g+z^2)  */
 
 L:=2*(1-x^2)*(1+x*z)*(1-2*x*z*g+(x*z)^2)*(1-z)*(1+2*z*g+z^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Tz:=Factorization(Derivative(L,z));
-
 Tg:=Factorization(Derivative(L,g));
-
 Lx:= Tx[3,1];
-
 Lz:= Tz[3,1];
-
 Lg:= Tg[6,1];
 
-
 T:=Factorization(Resultant(Lx,Lg,g));
-
 res1g:=T[3,1];
-
 T:=Factorization(Resultant(Lz,Lg,g));
-
 res2g:=T[5,1];
 
-
 T:=Factorization(Resultant(res1g,res2g,z));
-
-resz:=T[3,1];
-
+resz:=T[3,1];  \\ x^6 - 460/147*x^5 + 692/147*x^4 - 200/49*x^3 + 109/49*x^2 - 36/49*x + 6/49
 /* This has no real roots between 0 and 1.*/
 
-/* y = 1, t = 1, g = 1: the function becomes
+/* y = 1, t = 1, g = 1/2: the function becomes
+   2*(1-x^2)*(1+x*z)*(1-x*z+(x*z)^2)*(1-z)*(1+z+z^2)
+   = 2*(1-x^2)*(1+(x*z)^3)*(1-z^3)
+   <= 2*(1-x^2)*(1+x^2)*(1-z^3)
+   <= 2*(1-x^4)*(1-z^3) <= 2 */
 
-   2*(1-x^2)*(1+x*z)*(1-2*x*z+(x*z)^2)*(1-z)*(1+2*z+z^2)
-   = 2*(1-x^2)*(1+x*z)*(1-x*z)^2*(1-z)*(1+z)^2
-   = 2*(1-x^2)*(1-(x*z)^2)*(1-x*z)*(1-z^2)*(1+z) maximized at x = 0
-   <= 2*(1-z^2)*(1+z) <= 64/27 */
 
 
-/* y = 1, g = 1 */
-
-L:=2*(1-x^2)*(1+x*z)*(1-x*z*t)^2*(1-z)*(1+z*t)^2;
+/* y = 1, g = 1/2 */
+L:=2*(1-x^2)*(1+x*z)*(1-x*z*t+(x*z*t)^2)*(1-z)*(1+z*t+(z*t)^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Tz:=Factorization(Derivative(L,z));
-
 Tt:=Factorization(Derivative(L,t));
-
-Lx:= Tx[4,1];
-
-Lz:= Tz[5,1];
-
-Lt:= Tt[8,1];
-
+Lx:= Tx[3,1];
+Lz:= Tz[3,1];
+Lt:= Tt[6,1];
 
 T:=Factorization(Resultant(Lx,Lt,t));
-
-res1t:=T[3,1];
-
+res1t:=T[4,1];
 T:=Factorization(Resultant(Lz,Lt,t));
-
-/* This has no zeros in the interior. This concludes the case y = 1 */
+/*All factors are strictly positive in the open set. This concludes the case y = 1 */
 
 
 /* z = 1 */
@@ -158,226 +114,165 @@ T:=Factorization(Resultant(Lz,Lt,t));
 L:=(1+x)*(1-(x*y)^2)*(1-2*x*y*t*g+(x*y*t)^2)*(1-y^2)*(1+2*y*t*g+(y*t)^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tt:=Factorization(Derivative(L,t));
-
 Tg:=Factorization(Derivative(L,g));
-
 Lx:= Tx[4,1];
-
 Ly:= Ty[2,1];
-
 Lt:= Tt[7,1];
-
 Lg:= Tg[8,1];
 
-
 T:=Factorization(Resultant(Lx,Lg,g));
-
 res1g:=T[4,1];
-
 T:=Factorization(Resultant(Ly,Lg,g));
-
 res2g:=T[6,1];
-
 T:=Factorization(Resultant(Lt,Lg,g));
-
 /* This has no roots in the interior. */
 
 /* z = 1, t = 1 */
 
-
 L:=(1+x)*(1-(x*y)^2)*(1-2*x*y*g+(x*y)^2)*(1-y^2)*(1+2*y*g+y^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tg:=Factorization(Derivative(L,g));
-
 Lx:= Tx[4,1];
-
 Ly:= Ty[2,1];
-
 Lg:= Tg[7,1];
 
-
 T:=Factorization(Resultant(Lx,Lg,g));
-
-res1ga:=T[3,1];
-
-res1gb:=T[4,1];
-
+res1g:=T[3,1]*T[4,1];
 T:=Factorization(Resultant(Ly,Lg,g));
-
 res2g:=T[5,1];
 
+T:=Factorization(Resultant(res1g,res2g,y));
+resy:=T[3,1];
+/* no stationary points. see 5Cbis_Pari.gp */
 
-T:=Factorization(Resultant(res1ga,res2g,y));
+/* z = 1, t = 1, g = 1/2
+  (1+x)*(1-(x*y)^2)*(1-x*y+(x*y)^2)*(1-y^2)*(1+y+y^2)
+  (1+x)*(1+x*y)*(1-x*y)*(1-x*y+(x*y)^2)*(1-y)*(1+y)*(1+y+y^2)
+  (1+x)*(1+(x*y)^3)*(1-x*y)*(1-y^3)*(1+y) */
 
-/* This has no roots in the interior */
-
-T:=Factorization(Resultant(res1gb,res2g,y));
-
-/* Only solution is x=5/9. Substitution in res1gb gives no acceptable y */
-
-/* z = 1, t = 1, g = 1
-  (1+x)*(1-(x*y)^2)*(1-2*x*y+(x*y)^2)*(1-y^2)*(1+2*y+y^2)
-  =(1+x)*(1-(x*y)^2)*(1-x*y)^2*(1-y^2)*(1+y)^2 */
-
-L:=(1+x)*(1-(x*y)^2)*(1-x*y)^2*(1-y^2)*(1+y)^2;
+L:=(1+x)*(1+(x*y)^3)*(1-x*y)*(1-y^3)*(1+y);
 Tx:=Factorization(Derivative(L,x));
 Ty:=Factorization(Derivative(L,y));
 Lx:= Tx[4,1];
-Ly:= Ty[4,1];
+Ly:= Ty[2,1];
 
 T:=Factorization(Resultant(Lx,Ly,y));
-res1y:=T[3,1];
-/* GP computations show that there is one stationary point with value <= 1.65 (see 5C_Pari.gp) */
+res1y:=T[3,1]; \\ x^16 - 4/5*x^15 + 6/25*x^14 - 251/125*x^13 + 71/625*x^12 - 387/625*x^11 + 512/625*x^10 - 472/625*x^9 + 1608/625*x^8 - 68/125*x^7 + 1364/625*x^6 + 264/625*x^5 + 436/625*x^4 - 44/625*x^3 + 576/625*x^2 - 288/625*x + 384/625
+/* no roots in the open set */
 
 
 
-/* z = 1, g = 1 */
+/* z = 1, g = 1/2 */
 
-L:=(1+x)*(1-(x*y)^2)*(1-x*y*t)^2*(1-y^2)*(1+y*t)^2;
-
+L:=(1+x)*(1-(x*y)^2)*(1-x*y*t+(x*y*t)^2)*(1-y^2)*(1+y*t+(y*t)^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tt:=Factorization(Derivative(L,t));
-
-Lx:= Tx[5,1];
-
-Ly:= Ty[4,1];
-
-Lt:= Tt[9,1];
-
+Lx:= Tx[4,1];
+Ly:= Ty[2,1];
+Lt:= Tt[7,1];
 
 T:=Factorization(Resultant(Lx,Lt,t));
-
-res1t:=T[3,1];
-
+res1t:=T[4,1];
 T:=Factorization(Resultant(Ly,Lt,t));
-
-res2t:=T[4,1];
-
-
-T:=Factorization(Resultant(res1t,res2t,y));
-
+res2t:=T[5,1];  \\ x^2*y^2 - 1/2*x^2 - 1/2.   This is <= x^2 - 1/2*x^2 - 1/2 = (x^2-1)/2 < 0 in the open set
 /* This has no roots in the interior. This concludes the case z = 1 */
+
 
 /* t = 1 */
 
 L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-2*x*y*z*g+(x*y*z)^2)*(1+y)*(1-y*z)*(1+2*y*z*g+(y*z)^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tz:=Factorization(Derivative(L,z));
-
 Tg:=Factorization(Derivative(L,g));
-
 Lx:= Tx[4,1];
-
 Ly:= Ty[2,1];
-
 Lz:= Tz[5,1];
-
 Lg:= Tg[8,1];
 
-
 T:=Factorization(Resultant(Lx,Lg,g));
-
 res1g:=T[4,1];
-
 T:=Factorization(Resultant(Ly,Lg,g));
-
 res2g:=T[6,1];
-
 T:=Factorization(Resultant(Lz,Lg,g));
-
 res3g:=T[6,1];
 
-
-
 T:=Factorization(Resultant(res1g,res3g,x));
-
 res1x:=T[4,1];
-
 T:=Factorization(Resultant(res2g,res3g,x));
-
 res2x:=T[4,1];
 
-
 T:=Factorization(Resultant(res1x,res2x,y));
-
 resy:=T[3,1]*T[4,1]*T[5,1];
 
+PrintFile("5Cbis_Pari.gp","\{resy=");
+PrintFile("5Cbis_Pari.gp",resy);
+PrintFile("5Cbis_Pari.gp",";}\n\n");
 
-PrintFile("5C_Pari.gp","\{resy=");
-PrintFile("5C_Pari.gp",resy);
-PrintFile("5C_Pari.gp",";}\n\n");
+PrintFile("5Cbis_Pari.gp","\{res2x=");
+PrintFile("5Cbis_Pari.gp",res2x);
+PrintFile("5Cbis_Pari.gp",";}\n\n");
 
-PrintFile("5C_Pari.gp","\{res2x=");
-PrintFile("5C_Pari.gp",res2x);
-PrintFile("5C_Pari.gp",";}\n\n");
+PrintFile("5Cbis_Pari.gp","\{res3g=");
+PrintFile("5Cbis_Pari.gp",res3g);
+PrintFile("5Cbis_Pari.gp",";}\n\n");
 
-PrintFile("5C_Pari.gp","\{res3g=");
-PrintFile("5C_Pari.gp",res3g);
-PrintFile("5C_Pari.gp",";}\n\n");
+PrintFile("5Cbis_Pari.gp","\{Lg=");
+PrintFile("5Cbis_Pari.gp",Lg);
+PrintFile("5Cbis_Pari.gp",";}\n\n");
 
-PrintFile("5C_Pari.gp","\{Lg=");
-PrintFile("5C_Pari.gp",Lg);
-PrintFile("5C_Pari.gp",";}\n\n");
-
-/* 2 roots in z from resy, but no roots in z with substitution in res2x */
-
-/* t = 1, g = 1 */
-
-L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z)^2*(1+y)*(1-y*z)*(1+y*z)^2;
-
-/* This is <=  (1+x)*(1-x*y)*(1+y)  *   (1+x*y*z)*(1-x*y*z)^2    *   (1-y*z)*(1+y*z)^2 <=   2 * 1 * 32/27  = 64/27  */
+/* no stationary points, see 5Cbis_Pari.gp */
 
 
-/* g = 1 */
 
-L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t)^2*(1+y)*(1-y*z)*(1+y*z*t)^2;
+/* t = 1, g = 1/2 */
+
+L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z+(x*y*z)^2)*(1+y)*(1-y*z)*(1+y*z+(y*z)^2);
+Tx:=Factorization(Derivative(L,x));
+Ty:=Factorization(Derivative(L,y));
+Tz:=Factorization(Derivative(L,z));
+Lx:= Tx[4,1];
+Ly:= Ty[2,1];
+Lz:= Tz[6,1];
+
+T:=Factorization(Resultant(Lx,Lz,z));
+res1z:=T[4,1];
+T:=Factorization(Resultant(Ly,Lz,z));
+res2z:=T[4,1];
+
+T:=Factorization(Resultant(res1z,res2z,y));
+res1y:=T[3,1];
+/* no stationary points, see 5Cbis_Pari.gp */
+/* This concludes the case t = 1 */
+
+
+
+/* g = 1/2 */
+
+L:=(1+x)*(1-x*y)*(1+x*y*z)*(1-x*y*z*t+(x*y*z*t)^2)*(1+y)*(1-y*z)*(1+y*z*t+(y*z*t)^2);
 
 Tx:=Factorization(Derivative(L,x));
-
 Ty:=Factorization(Derivative(L,y));
-
 Tz:=Factorization(Derivative(L,z));
-
 Tt:=Factorization(Derivative(L,t));
-
-Lx:= Tx[5,1];
-
-Ly:= Ty[4,1];
-
-Lz:= Tz[7,1];
-
-Lt:= Tt[10,1];
-
+Lx:= Tx[4,1];
+Ly:= Ty[2,1];
+Lz:= Tz[5,1];
+Lt:= Tt[8,1];
 
 T:=Factorization(Resultant(Lx,Lt,t));
-
-res1t:=T[4,1];
-
+res1t:=T[5,1];
 T:=Factorization(Resultant(Ly,Lt,t));
-
-res2t:=T[5,1];
-
+res2t:=T[6,1];
 T:=Factorization(Resultant(Lz,Lt,t));
+/* all factors are positive in the open set. There are no stationary points.
+   This concludes the analysis for g = 1/2 since all the other boundaries have been examined */
 
-res3t:=T[5,1];
-
-/* This has no zeros between 0 and 1. This concludes the analysis for g = 1 since all the other boundaries have been examined */
-
-
-/* Thus our function is <= 64/27 */
+/* Thus the function is <= 2 */
