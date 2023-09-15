@@ -1,0 +1,47 @@
+/* Study of inequality 8Fbis)
+
+      + + -' -              <= 64/27   when g is in [0,1/2]
+      - - +' +
+        + -' -
+
+ */
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+/*
+
+
+  (1-x*y)*(1-x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  (1+y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1-y*z*t*a)
+       (1-z)*(1+2*g*z*t+(z*t)^2)*(1+z*t*a)
+
+
+  This polynomial depends on 6 variables, so it is too complicated to compute its maximum with the usual approach.
+  However, let F denote the polynomial. We split F as PQ, with
+  P = (1-x*y)*(1-x*y*z)*(1+2*g*x*y*z*t+(x*y*z*t)^2)*(1+x*y*z*t*a)
+  Q = (1+y)*(1+y*z)*(1-2*g*y*z*t+(y*z*t)^2)*(1-y*z*t*a)*(1-z)*(1+2*g*z*t+(z*t)^2)*(1+z*t*a)
+
+
+  Actually:
+  P is the polynomial corresponding to    + + -' -   ,
+  and Q the one corresponding to          - - +' +
+                                            + -' -
+
+  Let F be the full polynomial, so that F = P*Q.
+  By 29G we know that Q <= 64/27 (Note that 29G does not assume that g in [0,1/2]).
+  Under the assumption that g in [0,1/2] one has P <= 1 (proved here below) and
+  Thus F is <= 1 * 64/27 = 64/27.
+
+
+========================
+PROOF of P <= 1 when g in [0,1/2]
+
+     P depends on x,y only via x*y: we simplify it by setting w:=x*y, getting
+     (1-w)*(1-w*z)*(1+2*g*w*z*t+(w*z*t)^2)*(1+w*z*t*a). This is maximized at a=1, t=1, and g=1/2, giving
+     <= (1-w)*(1-w*z)*(1+w*z+(w*z)^2)*(1+w*z).
+      = (1-w)*(1-(w*z)^3)*(1+w*z)
+     <= (1-w)*(1-(w*z)^3)*(1+w)
+      = (1-w^2)*(1-(w*z)^3) <= 1
+END PROOF
+========================
