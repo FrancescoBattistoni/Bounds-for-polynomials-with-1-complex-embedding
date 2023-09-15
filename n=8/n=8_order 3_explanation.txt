@@ -19,7 +19,7 @@ We represent the function as a graphical scheme. In every graphical scheme, the 
  M = 3^(15/2)/4/7^(7/2)
 
 
-THE UPPER BOUND WE FOUND IS 81.55
+THE UPPER BOUND WE FOUND IS 79.2
 ==========================================================================
 [1]
 [- - - - - -]
@@ -884,15 +884,29 @@ The remaining is the function for N=7 second ordering in the case [- - + - +] (c
 [55]
 [- - + - + -]
 
-- + + -' -  +          <=  81.55
+- + + -' -  +          <=  79.2
   - - +' +  -
     + -' -  +
       -' -  +
          +' -'
             - 2R^(1/2)
 
-Apply 9A to [(1,1),(1,6),(2,6)]. Apply 8F to [(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5),(3,3),(3,4),(3,5)].
-Apply 1A to [(3,6)]. All terms we have mentioned contribute by 2*2.442*1, at most. The remaining is the function for N=5 which is <= 16M
+Let F denote the function we have to estimate.
+
+Apply 9A to [(1,1),(1,6),(2,6)] and 1A to [(3,6)]: these terms together contribute by 2.
+
+Let P be the polynomial corresponding to [(1,2),(1,3),(1,4),(1,5),(2,2),(2,3),(2,4),(2,5),(3,3),(3,4),(3,5)].
+Let Q be the function corresponding to [(4,4),(4,5),(4,6),(5,5),(5,6),(6,6)] times 2R^(1/2).
+
+Therefore F <= 2*P*Q.
+
+We split the domain into two regions according to the value of g.
+
+CASE 1: g in [0,1/2]: in this case P <= 64/27 (by 8Fbis) and  Q <= 16M   (because this is the general upper bound for N=5, where M = 3^(15/2)/4/7^(7/2))
+CASE 2: g in [1/2,1]: in this case P <= 2.442 (by 8F)    and  Q <= 16    (by 34G)
+
+Therefore
+max(F) <= 2*max(64/27*16M, 2.442*16) <= max(79.2,78.2) <= 79.2.
 ....................................................
 
 [56]
