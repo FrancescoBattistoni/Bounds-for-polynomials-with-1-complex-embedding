@@ -40,6 +40,9 @@ PROOFS OF THE ESTIMATES IN BLOCK F
      see "Proof F\Proof of 8F_Magma.txt"
      END PROOF
 
+8F)  PROOF
+bis  see "Proof F\Proof of 8Fbis_Magma.txt"
+     END PROOF
 
 ==========================================================================
 /* END OF PROOFS IN THIS SECTION */
