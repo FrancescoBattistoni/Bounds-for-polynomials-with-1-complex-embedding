@@ -519,7 +519,7 @@ for N=7 third ordering in the case [+ - - - -] (chamber [17]) which is <= 49.2
 [33]
 [+ - - - - -]
 
-+ - +' -  +  -         <=  80
++ - +' -  +  -         <=  78.3
   - +' -  +  -
     -' +  -  +
        -' +' -'
@@ -963,7 +963,7 @@ This is the symmetrical of the chamber [- + - - - -] (chamber [49]).
 [64]
 [- - - - - +]
 
-- + -' +  -  -         <=  80
+- + -' +  -  -         <=  78.3
   - +' -  +  +
     -' +  -  -
        -' +' +'
