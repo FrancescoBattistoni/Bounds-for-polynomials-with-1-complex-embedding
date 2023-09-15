@@ -1,0 +1,44 @@
+/* Study of inequality 21Gbis
+
+      + - +' x x -          <= 8.25   when g in [0,1/2]
+        - x  - +
+               - +
+                 -'
+               - +
+                 -
+
+*/
+
+
+  Q:=RationalField();
+  R<x,y,z,t,a,b,g>:=PolynomialRing(Q,7);
+
+  L:=(1-x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b);
+
+/* Let
+   F(x,y,z,t,a,b,g):=(1-x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)*(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b)
+
+   This function depends on seven variables so that the computation of its maximum with the usual methods is essentially unfeasible.
+   To obtain a convenient bound we take a detour, essentially removing one variable.
+   Let
+   P(x,y,z,t,a,b,g):=(1-x)*(1+x*y)*(1-2*x*y*z*g+(x*y*z)^2)
+   and
+   Q(x,y,z,t,a,b,g):=(1+x*y*z*t*a*b)*(1+y)*(1+y*z*t)*(1-y*z*t*a)*(1+z*t*a)*(1-z*t*a*b)*(1+2*t*a*b*g+(t*a*b)^2)*(1+a)*(1-a*b)*(1+b)
+   so that F = P*Q.
+
+   We notice that
+   P <= (1-x)*(1+x*y)*(1+(x*y*z)^2) <= (1-x)*(1+x)*(1+x^2) = (1-x^4) always,
+
+   Moreover, Q is increasing both in x and g. Thus we split the domain (x,y,z,t,a,b,g) in two cases:
+
+   CASE 1: g in [0,1/2] and x in [0,1/2] (all other variables in [0,1]).
+           Then F <= (1-x^4)*Q <= Q, so that max(F) <= max(Q) <= 8.23
+           according to the bound for max(Q) (under assumptions g in [0,1/2] and x in [0,1/2]) in 23G-B)
+
+   CASE 2: g in [0,1/2] and x in [1/2,1] (all other variables in [0,1]).
+           Then F <= (1-x^4)*Q, so that max(F) <= (1-(1/2)^4)*max(Q) <= (15/16)*8.79 <= 8.25
+           according to the bound for max(Q) (under assumptions g in [0,1/2] and every x) in 23G-C)
+
+   CASES 1-2 cover all possibilities so that max(F) <= 8.25 is proved in complete generality.
+
+*/
